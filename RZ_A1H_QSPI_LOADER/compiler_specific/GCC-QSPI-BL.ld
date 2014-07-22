@@ -100,7 +100,8 @@ SECTIONS
 		__reset_code_rom_end__ = .;
         PROVIDE(__reset_code_rom_end__ = .);                               
 
-		. = ALIGN(0x4);        
+		. = ALIGN(0x4);  
+		      
 	} > QSPI_FLASH
 
     /* .ARM.exidx is sorted, so has to go in its own output section.  */ 
@@ -116,7 +117,7 @@ SECTIONS
              
     } >QSPI_FLASH 
 
-    /* Module for QSPI change */
+    /* Modules for QSPI reconfiguration */
     /* Executes from RAM */
 	
 	.qspi_reconfigure_code_section : 
@@ -168,9 +169,7 @@ SECTIONS
 		. = ALIGN(0x4);
 		
         __qspi_reconfigure_code_end__ = .;
-		PROVIDE(__qspi_reconfigure_code_end__ = .);
-
-        
+		PROVIDE(__qspi_reconfigure_code_end__ = .);       
 		
 	}  > RAM0L AT>QSPI_FLASH         
 	

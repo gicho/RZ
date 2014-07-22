@@ -91,10 +91,126 @@
 <booleanAttribute key="TCP_KILL_ON_EXIT" value="false"/>
 <listAttribute key="TREE_NODE_PROPERTIES:debugger.view.ExpressionsView">
 <listEntry value="NODE CACHE VERSION 1"/>
+<listEntry value="VALUE:(signature)[0]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[2]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[3]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[4]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[5]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[6]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[7]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[8]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[9]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[10]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[11]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[12]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[13]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[14]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[15]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[16]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[17]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[18]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[19]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[20]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[21]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[22]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[23]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[24]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[25]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[26]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[27]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:(signature)[1]"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
 <listEntry value="VALUE:buffer"/>
 <listEntry value="1"/>
 <listEntry value="element formatter"/>
 <listEntry value="Unsigned Decimal"/>
+<listEntry value="VALUE:signature"/>
+<listEntry value="1"/>
+<listEntry value="element formatter"/>
+<listEntry value="Hexadecimal"/>
 </listAttribute>
 <listAttribute key="TREE_NODE_PROPERTIES:debugger.view.NewRegisterView">
 <listEntry value="NODE CACHE VERSION 1"/>
@@ -539,14 +655,6 @@
 <listEntry value="1"/>
 <listEntry value="formatter"/>
 <listEntry value="Hexadecimal"/>
-<listEntry value="FILE_STATICS:0"/>
-<listEntry value="1"/>
-<listEntry value="expanded"/>
-<listEntry value="true"/>
-<listEntry value="GLOBALS:Globals"/>
-<listEntry value="1"/>
-<listEntry value="expanded"/>
-<listEntry value="true"/>
 <listEntry value="VALUE:C:/work/projects/RZ_reference_project/RZ_A1H_QSPI_LOADER/src/qspi_change_config.c::qspi_change_config_and_start_application::st_reg1_device0"/>
 <listEntry value="1"/>
 <listEntry value="formatter"/>
@@ -571,11 +679,31 @@
 <listEntry value="1"/>
 <listEntry value="formatter"/>
 <listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:C:/work/projects/mysoftware/RZ/RZ_A1H_QSPI_LOADER/src/check_image.c::check_image::location"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:C:/work/projects/mysoftware/RZ/RZ_A1H_QSPI_LOADER/src/check_image.c::check_image::sourceData"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="VALUE:C:/work/projects/mysoftware/RZ/RZ_A1H_QSPI_LOADER/src/check_image.c::check_image::sourceDataPtr"/>
+<listEntry value="1"/>
+<listEntry value="formatter"/>
+<listEntry value="Hexadecimal"/>
+<listEntry value="FILE_STATICS:0"/>
+<listEntry value="1"/>
+<listEntry value="expanded"/>
+<listEntry value="true"/>
+<listEntry value="GLOBALS:Globals"/>
+<listEntry value="1"/>
+<listEntry value="expanded"/>
+<listEntry value="true"/>
 </listAttribute>
 <booleanAttribute key="VFS_ENABLED" value="true"/>
 <stringAttribute key="VFS_LOCAL_DIR" value="${workspace_loc}"/>
 <stringAttribute key="VFS_REMOTE_MOUNT" value="/writeable"/>
-<stringAttribute key="breakpoints" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;US-ASCII&quot; ?&gt;&#13;&#10;&lt;breakpoints order=&quot;ALPHA&quot;&gt;&#13;&#10; &lt;condition_history condition=&quot;i == 0x2ad2&quot;&gt;&#13;&#10; &lt;/condition_history&gt;&#13;&#10; &lt;condition_history condition=&quot;i == 0x4ad4&quot;&gt;&#13;&#10; &lt;/condition_history&gt;&#13;&#10; &lt;condition_history condition=&quot;i == 0x4AD3&quot;&gt;&#13;&#10; &lt;/condition_history&gt;&#13;&#10; &lt;condition_history condition=&quot;i == 100&quot;&gt;&#13;&#10; &lt;/condition_history&gt;&#13;&#10; &lt;breakpoint ignorecount=&quot;0&quot; ignorecountstart=&quot;0&quot; threadenabled=&quot;no&quot; continue=&quot;no&quot; verboseBreakpoints=&quot;yes&quot; kind=&quot;SOURCEPOSITION&quot;&gt;&#13;&#10;  &lt;master_location index=&quot;0&quot; enabled=&quot;true&quot; version=&quot;2&quot; address=&quot;S:0x2002023C&quot; debugFile=&quot;C:/work/projects/RZ_reference_project/RZ_A1H_QSPI_LOADER/src/qspi_change_config.c&quot; hostFile=&quot;C:\work\projects\RZ_reference_project\RZ_A1H_QSPI_LOADER\src\qspi_change_config.c&quot; line=&quot;152&quot; function=&quot;test_readBytes&quot;&gt;&#13;&#10;  &lt;/master_location&gt;&#13;&#10;  &lt;location index=&quot;0&quot; enabled=&quot;false&quot; version=&quot;2&quot; address=&quot;S:0x2002022C&quot; debugFile=&quot;C:/work/projects/RZ_reference_project/RZ_A1H_QSPI_LOADER/src/qspi_change_config.c&quot; hostFile=&quot;C:\work\projects\RZ_reference_project\RZ_A1H_QSPI_LOADER\src\qspi_change_config.c&quot; line=&quot;152&quot; function=&quot;test_readBytes&quot;&gt;&#13;&#10;  &lt;/location&gt;&#13;&#10; &lt;/breakpoint&gt;&#13;&#10; &lt;breakpoint ignorecount=&quot;0&quot; ignorecountstart=&quot;0&quot; threadenabled=&quot;no&quot; continue=&quot;no&quot; verboseBreakpoints=&quot;yes&quot; kind=&quot;SOURCEPOSITION&quot;&gt;&#13;&#10;  &lt;master_location index=&quot;0&quot; enabled=&quot;true&quot; version=&quot;2&quot; address=&quot;S:0x2002106C&quot; debugFile=&quot;C:/work/projects/RZ_reference_project/RZ_A1H_QSPI_LOADER/compiler_specific/src/check_image.c&quot; hostFile=&quot;C:\work\projects\RZ_reference_project\RZ_A1H_QSPI_LOADER\compiler_specific\src\check_image.c&quot; line=&quot;88&quot; function=&quot;check_image&quot;&gt;&#13;&#10;  &lt;/master_location&gt;&#13;&#10;  &lt;location index=&quot;0&quot; enabled=&quot;false&quot; version=&quot;2&quot; address=&quot;S:0x20021074&quot; debugFile=&quot;C:/work/projects/RZ_reference_project/RZ_A1H_QSPI_LOADER/compiler_specific/src/check_image.c&quot; hostFile=&quot;C:\work\projects\RZ_reference_project\RZ_A1H_QSPI_LOADER\compiler_specific\src\check_image.c&quot; line=&quot;100&quot; function=&quot;check_image&quot;&gt;&#13;&#10;  &lt;/location&gt;&#13;&#10; &lt;/breakpoint&gt;&#13;&#10; &lt;breakpoint ignorecount=&quot;0&quot; ignorecountstart=&quot;0&quot; threadenabled=&quot;no&quot; continue=&quot;no&quot; verboseBreakpoints=&quot;yes&quot; kind=&quot;SOURCEPOSITION&quot;&gt;&#13;&#10;  &lt;master_location index=&quot;0&quot; enabled=&quot;true&quot; version=&quot;2&quot; address=&quot;S:0x2002101C&quot; debugFile=&quot;C:/work/projects/RZ_reference_project/RZ_A1H_QSPI_LOADER/compiler_specific/src/check_image.c&quot; hostFile=&quot;C:\work\projects\RZ_reference_project\RZ_A1H_QSPI_LOADER\compiler_specific\src\check_image.c&quot; line=&quot;70&quot; function=&quot;check_image&quot;&gt;&#13;&#10;  &lt;/master_location&gt;&#13;&#10;  &lt;location index=&quot;0&quot; enabled=&quot;false&quot; version=&quot;2&quot; address=&quot;S:0x2002100C&quot; debugFile=&quot;C:/work/projects/RZ_reference_project/RZ_A1H_QSPI_LOADER/compiler_specific/src/check_image.c&quot; hostFile=&quot;C:\work\projects\RZ_reference_project\RZ_A1H_QSPI_LOADER\compiler_specific\src\check_image.c&quot; line=&quot;70&quot; function=&quot;check_image&quot;&gt;&#13;&#10;  &lt;/location&gt;&#13;&#10; &lt;/breakpoint&gt;&#13;&#10; &lt;breakpoint ignorecount=&quot;0&quot; ignorecountstart=&quot;0&quot; threadenabled=&quot;no&quot; continue=&quot;no&quot; verboseBreakpoints=&quot;yes&quot; kind=&quot;SOURCEPOSITION&quot;&gt;&#13;&#10;  &lt;master_location index=&quot;0&quot; enabled=&quot;true&quot; version=&quot;2&quot; address=&quot;S:0x180001B8&quot; debugFile=&quot;C:/work/projects/RZ_reference_project/RZ_A1H_QSPI_LOADER/compiler_specific/src/resetprg.c&quot; hostFile=&quot;C:\work\projects\RZ_reference_project\RZ_A1H_QSPI_LOADER\compiler_specific\src\resetprg.c&quot; line=&quot;149&quot; function=&quot;PowerON_Reset&quot;&gt;&#13;&#10;  &lt;/master_location&gt;&#13;&#10;  &lt;location index=&quot;0&quot; enabled=&quot;false&quot; version=&quot;2&quot; address=&quot;S:0x180001B8&quot; debugFile=&quot;C:/work/projects/RZ_reference_project/RZ_A1H_QSPI_LOADER/compiler_specific/src/resetprg.c&quot; hostFile=&quot;C:\work\projects\RZ_reference_project\RZ_A1H_QSPI_LOADER\compiler_specific\src\resetprg.c&quot; line=&quot;149&quot; function=&quot;PowerON_Reset&quot;&gt;&#13;&#10;  &lt;/location&gt;&#13;&#10; &lt;/breakpoint&gt;&#13;&#10; &lt;breakpoint ignorecount=&quot;0&quot; ignorecountstart=&quot;0&quot; threadenabled=&quot;no&quot; continue=&quot;no&quot; verboseBreakpoints=&quot;yes&quot; kind=&quot;SOURCEPOSITION&quot;&gt;&#13;&#10;  &lt;master_location index=&quot;0&quot; enabled=&quot;true&quot; version=&quot;2&quot; address=&quot;S:0x200208C8&quot; debugFile=&quot;C:/work/projects/RZ_reference_project/RZ_A1H_QSPI_LOADER/src/qspi_change_config.c&quot; hostFile=&quot;C:\work\projects\RZ_reference_project\RZ_A1H_QSPI_LOADER\src\qspi_change_config.c&quot; line=&quot;429&quot; function=&quot;qspi_change_config_and_start_application&quot;&gt;&#13;&#10;  &lt;/master_location&gt;&#13;&#10;  &lt;location index=&quot;0&quot; enabled=&quot;false&quot; version=&quot;2&quot; address=&quot;S:0x200208C8&quot; debugFile=&quot;C:/work/projects/RZ_reference_project/RZ_A1H_QSPI_LOADER/src/qspi_change_config.c&quot; hostFile=&quot;C:\work\projects\RZ_reference_project\RZ_A1H_QSPI_LOADER\src\qspi_change_config.c&quot; line=&quot;429&quot; function=&quot;qspi_change_config_and_start_application&quot;&gt;&#13;&#10;  &lt;/location&gt;&#13;&#10; &lt;/breakpoint&gt;&#13;&#10;&lt;/breakpoints&gt;&#13;&#10;"/>
+<stringAttribute key="breakpoints" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;US-ASCII&quot; ?&gt;&#13;&#10;&lt;breakpoints order=&quot;ALPHA&quot;&gt;&#13;&#10; &lt;condition_history condition=&quot;i == 0x2ad2&quot;&gt;&#13;&#10; &lt;/condition_history&gt;&#13;&#10; &lt;condition_history condition=&quot;i == 0x4ad4&quot;&gt;&#13;&#10; &lt;/condition_history&gt;&#13;&#10; &lt;condition_history condition=&quot;i == 0x4AD3&quot;&gt;&#13;&#10; &lt;/condition_history&gt;&#13;&#10; &lt;condition_history condition=&quot;i == 100&quot;&gt;&#13;&#10; &lt;/condition_history&gt;&#13;&#10; &lt;breakpoint ignorecount=&quot;0&quot; ignorecountstart=&quot;0&quot; threadenabled=&quot;no&quot; continue=&quot;no&quot; verboseBreakpoints=&quot;yes&quot; kind=&quot;SOURCEPOSITION&quot;&gt;&#13;&#10;  &lt;master_location index=&quot;0&quot; enabled=&quot;true&quot; version=&quot;2&quot; address=&quot;S:0x20022618&quot; debugFile=&quot;C:/work/projects/mysoftware/RZ/RZ_A1H_QSPI_LOADER/qspi_controller_driver/src/external_address_mode.c&quot; hostFile=&quot;C:\work\projects\mysoftware\RZ\RZ_A1H_QSPI_LOADER\qspi_controller_driver\src\external_address_mode.c&quot; line=&quot;111&quot; function=&quot;qspiConfigureExternalAddressTransfer&quot;&gt;&#13;&#10;  &lt;/master_location&gt;&#13;&#10;  &lt;location index=&quot;0&quot; enabled=&quot;false&quot; version=&quot;2&quot; address=&quot;S:0x20022618&quot; debugFile=&quot;C:/work/projects/mysoftware/RZ/RZ_A1H_QSPI_LOADER/qspi_controller_driver/src/external_address_mode.c&quot; hostFile=&quot;C:\work\projects\mysoftware\RZ\RZ_A1H_QSPI_LOADER\qspi_controller_driver\src\external_address_mode.c&quot; line=&quot;111&quot; function=&quot;qspiConfigureExternalAddressTransfer&quot;&gt;&#13;&#10;  &lt;/location&gt;&#13;&#10; &lt;/breakpoint&gt;&#13;&#10; &lt;breakpoint ignorecount=&quot;0&quot; ignorecountstart=&quot;0&quot; threadenabled=&quot;no&quot; continue=&quot;no&quot; verboseBreakpoints=&quot;yes&quot; kind=&quot;SOURCEPOSITION&quot;&gt;&#13;&#10;  &lt;master_location index=&quot;0&quot; enabled=&quot;true&quot; version=&quot;2&quot; address=&quot;S:0x20020690&quot; debugFile=&quot;C:/work/projects/mysoftware/RZ/RZ_A1H_QSPI_LOADER/src/qspi_change_config.c&quot; hostFile=&quot;C:\work\projects\mysoftware\RZ\RZ_A1H_QSPI_LOADER\src\qspi_change_config.c&quot; line=&quot;264&quot; function=&quot;qspi_change_config_and_start_application&quot;&gt;&#13;&#10;  &lt;/master_location&gt;&#13;&#10;  &lt;location index=&quot;0&quot; enabled=&quot;false&quot; version=&quot;2&quot; address=&quot;S:0x20020690&quot; debugFile=&quot;C:/work/projects/mysoftware/RZ/RZ_A1H_QSPI_LOADER/src/qspi_change_config.c&quot; hostFile=&quot;C:\work\projects\mysoftware\RZ\RZ_A1H_QSPI_LOADER\src\qspi_change_config.c&quot; line=&quot;264&quot; function=&quot;qspi_change_config_and_start_application&quot;&gt;&#13;&#10;  &lt;/location&gt;&#13;&#10; &lt;/breakpoint&gt;&#13;&#10;&lt;/breakpoints&gt;&#13;&#10;"/>
 <stringAttribute key="config_db_activity_name" value="Debug Cortex-A9 via DSTREAM/RVI"/>
 <stringAttribute key="config_db_connection_keys" value="dtsl_tracecapture_option dtsl_config rvi_address config_file dtsl_config_script TCP_KILL_ON_EXIT TCP_DISABLE_EXTENDED_MODE"/>
 <stringAttribute key="config_db_connection_type" value="Bare Metal Debug"/>
@@ -588,12 +716,14 @@
 <listAttribute key="debugger.view.ExpressionsView">
 <listEntry value="ret"/>
 <listEntry value="buffer"/>
+<listEntry value="signature"/>
 </listAttribute>
 <listAttribute key="debugger.view.ExpressionsView.ExpressionTypes">
 <listEntry value="EXPRESSION_ERROR"/>
+<listEntry value="EXPRESSION_ERROR"/>
 <listEntry value=""/>
 </listAttribute>
-<stringAttribute key="debugger.view.MemoryView" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;US-ASCII&quot; ?&gt;&#13;&#10;&lt;memoryView displayWidthTag=&quot;BYTE_4&quot; formatTag=&quot;Hexadecimal&quot; showCharsTag=&quot;yes&quot; showTooltipTag=&quot;yes&quot; historyCountSize=&quot;1&quot; historyAddress0=&quot;0x18080000&quot; historyRange0=&quot;1024&quot;&gt;&#13;&#10;&lt;/memoryView&gt;&#13;&#10;"/>
+<stringAttribute key="debugger.view.MemoryView" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;US-ASCII&quot; ?&gt;&#13;&#10;&lt;memoryView displayWidthTag=&quot;BYTE_4&quot; formatTag=&quot;Hexadecimal&quot; showCharsTag=&quot;yes&quot; showTooltipTag=&quot;yes&quot;&gt;&#13;&#10;&lt;/memoryView&gt;&#13;&#10;"/>
 <listAttribute key="debugger.view.TraceView:TRACE_EXPORT_FILTERS"/>
 <stringAttribute key="ds5_launch_configuration_version" value="5.15.0"/>
 <stringAttribute key="dtsl_config" value="DtslScript_DSTREAM"/>

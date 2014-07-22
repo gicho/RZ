@@ -38,19 +38,9 @@
 #include "r_typedefs.h"
 #include "iodefine.h"
 #include "spibsc.h"
-// #include "r_spibsc_ioset_api.h"
 #include "rza_io_regrw.h"
 
-//#include "sflash.h"
 #include "qspi_setup.h"
-/*
-#include "r_typedefs.h"
-#include "devdrv_common.h"
-#include "devdrv_intc.h"
-#include "stb_init.h"
-#include "port_init.h"
-#include "bsc_userdef.h"
-*/
 
 #if defined(__thumb2__) || (defined(__thumb__) && defined(__ARM_ARCH_6M__))
 # define THUMB_V7_V6M
@@ -77,28 +67,19 @@ extern uint32_t __bss_end__;
 extern void qspi_change_config_and_start_application(void);
 extern void copy_arm_code_section_to_ram(uint32_t* rom_start, uint32_t* ram_start, uint32_t* ram_end);
 
-
-
-
-
-
 /*******************************************************************************
 * Function Name: PowerON_Reset
 * Description  :
 * Arguments    : none
 * Return Value : none
 *******************************************************************************/
-volatile uint8_t halt = 1;
-
-
-
 void PowerON_Reset (void)
 {
     uint32_t *ram_code_start,*ram_code_end;
 	uint32_t *rom_code_start;
 	uint8_t  *src, *dst, *end;
 
-	// add later on one stage to speed up QSPI?
+	// TODO add one stage to speed up QSPI to 33 Mhz first?
 
     /* copy the reconfiguration routine in RAM */
 	/* these are the destination (run-time) locations of the code */
@@ -129,8 +110,7 @@ void PowerON_Reset (void)
 		*dst = 0;
 
     // at this point the qspi reconfigure code is in ram and initialized
-    // reconfigure the QSPI
-	// this does not return !
+    // jump in ram and reconfigure the QSPI
 	qspi_change_config_and_start_application();
 
 	/* Stops program from running off */

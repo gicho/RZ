@@ -22,8 +22,8 @@
 * Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
-* File Name   : spibsc_init2.c
-* Description : Flash boot setting
+* File Name   : qspi_setup.h
+* Description : Flash settings
 *******************************************************************************/
 #ifndef __QSPI_SETUP_H__
 #define __QSPI_SETUP_H__
@@ -52,33 +52,6 @@ Macro definitions
 /* warning: the signature is located just below the ISR table + literals */
 /* if the location is changed, the linker scripts needs to be adapted too */
 #define DEF_USER_SIGNATURE          (DEF_USER_PROGRAM_SRC + 0x40)
-
-// which spi channel is being used - 0 for the boot mode
-#define SPI_CHANNEL				0
-
-// configure for single or dual mode (one or two spi devices per channel)
-#define SINGLE_QSPI_CHIP			(0)
-#define DUAL_QSPI_CHIP				(1)
-
-#define SPI_DEVICES 			DUAL_QSPI_CHIP
-
-#define QUAD_MODE			(1u)
-#define SERIAL_DUAL_MODE	(0u)
-#define CFREG_QUAD_BIT          (0x02)          /* Quad mode bit(Configuration Register) */
-#define PROGRAM_ERASE_ERROR 0x60
-
-/******************************************************************************
-Imported global variables and functions (from other files)
-******************************************************************************/
-
-/******************************************************************************
-Exported global variables and functions (to be accessed by other files)
-******************************************************************************/
-
-/******************************************************************************
-Private global variables and functions
-******************************************************************************/
-
 
 
 #endif /* __QSPI_SETUP_H__ */

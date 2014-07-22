@@ -22,8 +22,8 @@
 * Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
-* File Name   : spibsc_init2.c
-* Description : Flash boot setting
+* File Name   : check_image.c
+* Description : verifies the signature to check if there is a valid application
 *******************************************************************************/
 
 
@@ -33,7 +33,6 @@ Includes   <System Includes> , "Project Includes"
 #include "r_typedefs.h"
 #include "iodefine.h"
 #include "spibsc.h"
-// #include "r_spibsc_ioset_api.h"
 #include "rza_io_regrw.h"
 
 /******************************************************************************
@@ -90,9 +89,9 @@ void check_image(uint32_t location)
 /******************************************************************************
 * Function Name: error_image
 * Description  : This function is only called if the final boot loader stage
-*                cannot recognise that a valid users application is available.
-*                It will not exit and cofigures the LED0 as an output and
-*                flashes the LED with a pre-defined recoginsable pattern.
+*                cannot recognize that a valid users application is available.
+*                It will not exit and configures the LED0 as an output and
+*                flashes the LED
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/

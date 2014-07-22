@@ -33,12 +33,9 @@ Includes   <System Includes> , "Project Includes"
 #include "r_typedefs.h"
 #include "iodefine.h"
 #include "spibsc.h"
-// #include "r_spibsc_ioset_api.h"
 #include "rza_io_regrw.h"
 
-//#include "sflash.h"
 #include "qspi_setup.h"
-
 #include "qspi_controller.h"
 
 /******************************************************************************
@@ -65,7 +62,14 @@ Exported global variables and functions (to be accessed by other files)
 /******************************************************************************
 Private global variables and functions
 ******************************************************************************/
+#if 0
 static void test_readBytes(dataBusSize_t busSize);
+#endif
+
+#define QUAD_MODE			1u
+#define SERIAL_DUAL_MODE	0u
+#define CFREG_QUAD_BIT      0x02          /* Quad mode bit(Configuration Register) */
+#define PROGRAM_ERASE_ERROR 0x60
 
 
 
@@ -151,7 +155,7 @@ void qspi_change_config_and_start_application(void)
 	RZA_IO_RegWrite_16(&GPIO.PIPC2,  1, GPIO_PIPC2_PIPC215_SHIFT,   GPIO_PIPC2_PIPC215);
 
 
-    // configure the SPI controller
+    // configure the SPI controller for dual mode SPI
     spiConfiguration.dataBusSize = DUAL_MEMORY;
     spiConfiguration.operatingMode = SPI;
     spiConfiguration.slaveSelectPolarity = ACTIVE_LOW;
@@ -206,25 +210,24 @@ void qspi_change_config_and_start_application(void)
 	qspiWriteStatusConfigRegister(st_reg1_device0, cf_device0, st_reg1_device1, cf_device1, spiConfiguration.dataBusSize);
 
 	qspiReadConfigRegister(&cf_device0, &cf_device1, spiConfiguration.dataBusSize);
-
 	qspiReadStatusRegister1(&st_reg1_device0, &st_reg1_device1, spiConfiguration.dataBusSize);
 
-
+#if 0
     test_readBytes(spiConfiguration.dataBusSize);
+#endif
 
+    externalAddressTransfer.addressBitSize = ADDRESS_4BIT;
+    externalAddressTransfer.addressEnable = ADDRESS_32_BITS;
 
-    externalAddressTransfer.addressBitSize = ADDRESS_1BIT;
-    externalAddressTransfer.addressEnable = ADDRESS_24_BITS;
-
-    externalAddressTransfer.command = READ;
+    externalAddressTransfer.command = QUAD_IO_READ_4B;
     externalAddressTransfer.commandBitSize = COMMAND_1BIT;
     externalAddressTransfer.commandEnable = COMMAND_ENABLED;
 
-    externalAddressTransfer.dummyCycleBitSize = DUMMY_1BIT;
-    externalAddressTransfer.dummyCycleEnable = DUMMY_CYCLE_DISABLED;
-    externalAddressTransfer.dummyCycles = DUMMY_1CYCLE;
+    externalAddressTransfer.dummyCycleBitSize = DUMMY_4BIT;
+    externalAddressTransfer.dummyCycleEnable = DUMMY_CYCLE_ENABLED;
+    externalAddressTransfer.dummyCycles = DUMMY_4CYCLE;
 
-    externalAddressTransfer.extValidRange  = BITS_24;
+    externalAddressTransfer.extValidRange  = BITS_25;
     externalAddressTransfer.extendedUpperAddress = 0x0;
 
     externalAddressTransfer.optionalCommand = DUMMY_COMMAND;
@@ -232,12 +235,13 @@ void qspi_change_config_and_start_application(void)
     externalAddressTransfer.optionalCommandEnable = OPTIONAL_COMMAND_DISABLED;
 
     externalAddressTransfer.optionalData.UINT32 = 0x0;
-    externalAddressTransfer.optionalDataBitSize = OPTIONAL_DATA_1BIT;
-    externalAddressTransfer.optionalDataEnable = OPTIONAL_DATA_DISABLED;
+    externalAddressTransfer.optionalData.UINT8[3] = 0x20;
+    externalAddressTransfer.optionalDataBitSize = OPTIONAL_DATA_4BIT;
+    externalAddressTransfer.optionalDataEnable = OPTIONAL_DATA_3;
 
-    externalAddressTransfer.readBurstLenght = BURST_LEN_1;
+    externalAddressTransfer.readBurstLenght = BURST_LEN_2;
     externalAddressTransfer.burstMode = READ_BURST_ON;
-    externalAddressTransfer.readDataBitSize = READ_DATA_1BIT;
+    externalAddressTransfer.readDataBitSize = READ_DATA_4BIT;
     externalAddressTransfer.sslNegateAfterBurst = SSL_NEGATE_AFTER_BURST;
 
     externalAddressTransfer.addressRateMode = ADDRESS_SDR_TYPE;
@@ -247,29 +251,31 @@ void qspi_change_config_and_start_application(void)
     // configure the specific registers for external address mode
     qspiConfigureExternalAddressTransfer(&externalAddressTransfer);
 
-    // change the configuration before
-	//has to be done here since the application is programmed in dual mode
-    // and the signature is stored in dual mode
+    // change the controller configuration before reading the signature
+	// has to be done here since the application is programmed in dual mode
+    // and the signature is also stored in dual mode
     spiConfiguration.operatingMode = EXTERNAL_ADDRESS_SPACE;
     spiConfiguration.dataBusSize = DUAL_MEMORY;
 
+    // switch to external address mode
     qspiControllerConfigure(&spiConfiguration);
 
-    // now flush the read cache for safety
+    // now flush the read cache
     qspiExternalAddressFlushReadCache();
 
     // check if there is a valid image
-    // does not return in case of failure
+    // does not return in case of failure, and keeps blinking LED0
 	check_image(DEF_USER_SIGNATURE);
 
 	// jump to the program application entry point
+	// does not return
 	UserProgJmp(DEF_USER_PROGRAM_SRC);
 
+	while(1); // just in case
 }
 
 
-uint8_t buffer[20];
-
+#if 0
 
 #define NUM_BYTES 10
 static void test_readBytes(dataBusSize_t busSize) {
@@ -348,5 +354,8 @@ static void test_readBytes(dataBusSize_t busSize) {
 	}
 
 }
+
+#endif
+
 
 /* End of File */
