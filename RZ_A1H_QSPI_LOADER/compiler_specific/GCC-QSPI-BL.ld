@@ -22,15 +22,16 @@
 * Copyright (C) 2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /******************************************************************************
-* File Name     : GNU_DS-5-QSPI_SpSb.ld
+* File Name     : GCC-QSPI-BL.ld
 * Device(s)     : RZ/A1H RSK2+RZA1H
 * H/W Platform  : RSK2+RZA1H CPU Board
-* Description   : Linker file for projects that require to run from 
-*               : Single Port Single bit SPI multi I/O device ROM 
+* Description   : Linker file for simple QSPI bootloader which reconfigures the
+*				  QSPi flash interface for higher performance and 4-Bit mode 
+*				  using the code relocated in ram (qspi_reconfigure_code_section)
 ******************************************************************************/
 /******************************************************************************
 * History       : DD.MM.YYYY Version Description
-*               : 03.03.2014 1.00
+*               : 17.09.2014 1.00
 ******************************************************************************/
 OUTPUT_FORMAT("elf32-littlearm", "elf32-bigarm", "elf32-littlearm")
 OUTPUT_ARCH(arm)
@@ -64,8 +65,12 @@ MEMORY
 
 	RAM (rwx)	: ORIGIN = 0x20020000, LENGTH = 0x009E0000	/* Complete range of always-on RAM */
 
-	QSPI_FLASH (rw) : ORIGIN = 0x18000000, LENGTH = 0x02000000  /* QSPI ROM attached to H'18000000 to H'19FFFFFF */
-	  
+	/* QSPI ROM attached to H'18000000, 2 chips of 0x4000000 size (64 Mb) */ 
+	/* Total addressable space from the QSPI internal address map is 0x18000000 to H'1BFFFFFF (64Mb page) */
+	/* Size of block is 0x40000, first two blocks are reserved to the BL */
+	/* Defined length accounts for the split between the BL and the application located @ 18080000 */
+	QSPI_FLASH (rw) : ORIGIN = 0x18000000, LENGTH = 0x00080000  
+																
 }
 
 PROGRAM_STACK_SIZE    = 0x8000;      /* Application stack                  */
@@ -107,13 +112,13 @@ SECTIONS
     /* .ARM.exidx is sorted, so has to go in its own output section.  */ 
     .ARM.exidx : { 
     
-            . = ALIGN(0x4);
+		. = ALIGN(0x4);
             
-            __exidx_start = .; 
-            *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+        __exidx_start = .; 
+        *(.ARM.exidx* .gnu.linkonce.armexidx.*)
              
-            . = ALIGN(0x4);
-            __exidx_end = .;
+        . = ALIGN(0x4);
+        __exidx_end = .;
              
     } >QSPI_FLASH 
 
@@ -123,6 +128,7 @@ SECTIONS
 	.qspi_reconfigure_code_section : 
 	{
         /* Any following code must be aligned to a 4 byte boundary. */
+		/* Important since the copy routine works on 4 bytes size */
         . = ALIGN(0x4);
 
 		__qspi_reconfigure_code_rom_start__ = LOADADDR (.qspi_reconfigure_code_section);
@@ -154,18 +160,16 @@ SECTIONS
         KEEP (*crtend.o(.dtors))
 		
 		/* catch-all for remaining sections */
-		
 		*(.glue_7t) *(.glue_7) 				/* veneers */ 		
  		*(.text .text.* .gnu.linkonce.t.*) 
         *(.plt) 
         *(.gnu.warning)
-         
- 		
- 		  
+          		 		 
  		*(.init) 
         *(.fini)
 
-        /* Any following code must be aligned to a 4 byte boundary. */
+        /* Any following code is aligned to a 4 byte boundary. */
+		/* Important since the copy routine works on 4 bytes size */
 		. = ALIGN(0x4);
 		
         __qspi_reconfigure_code_end__ = .;
@@ -177,7 +181,7 @@ SECTIONS
 	.data_section : 
     {
         . = ALIGN(0x4);
-
+		
 		__data_rom_start__ = LOADADDR (.data_section);
 		PROVIDE(__data_rom_start__ = LOADADDR (.data_section));
 
@@ -205,11 +209,11 @@ SECTIONS
     /* zero initialised data section */
     .bss_section (NOLOAD) :
     {
+		. = ALIGN(0x4);
+
         __bss_start__ = .;
         PROVIDE(__bss_start__ = .);         
-		
-		. = ALIGN(0x4);
-		
+				
 		*(.shbss) 
         *(.bss .bss.* .gnu.linkonce.b.*)
         *(COMMON)
@@ -221,10 +225,9 @@ SECTIONS
         
     } > RAM0L
  
-	.irq_stack_section (NOLOAD) :
-	{
-		. = ALIGN(0x4);
-		
+	/* stacks need to be aligned to 8 bytes */
+	.irq_stack_section (NOLOAD) : ALIGN(0x8)
+	{	
 		__irq_stack_start__ = .;
 		PROVIDE(__irq_stack_start__ = .);         
 				
@@ -234,12 +237,12 @@ SECTIONS
 		
 		PROVIDE(__irq_stack_end__ = .);   
 		__irq_stack_end__ = .;
+		
 	} > RAM0L
 		
-	.fiq_stack_section (NOLOAD) :
+	/* stacks need to be aligned to 8 bytes */
+	.fiq_stack_section (NOLOAD) : ALIGN(0x8)
 	{
-		. = ALIGN(0x4);
-		
 		__fiq_stack_start = .;
 		PROVIDE(__fiq_stack_start = .);		
 		
@@ -249,12 +252,12 @@ SECTIONS
 		
 		__fiq_stack_end = .;
 		PROVIDE(__fiq_stack_end = .);
+		
 	} > RAM0L
 		
-	.svc_stack_section (NOLOAD) :
+	/* stacks need to be aligned to 8 bytes */
+	.svc_stack_section (NOLOAD) : ALIGN(0x8)
 	{
-		. = ALIGN(0x4);
-		
 		__svc_stack_start = .;
 		PROVIDE(__svc_stack_start = .);		
 		
@@ -264,12 +267,12 @@ SECTIONS
 		
 		__svc_stack_end__ = .;
 		PROVIDE(__svc_stack_end__ = .);
+		
 	} > RAM0L
 		
-	.abt_stack_section (NOLOAD) :
+	/* stacks need to be aligned to 8 bytes */
+	.abt_stack_section (NOLOAD) : ALIGN(0x8)
 	{
-		. = ALIGN(0x4);
-		
 		__abt_stack_start = .;
 		PROVIDE(__abt_stack_start = .);
 		
@@ -279,19 +282,21 @@ SECTIONS
 		
 		__abt_stack_end = .;
 		PROVIDE(__abt_stack_end = .);
+		
 	} > RAM0L
       
-	.program_stack_section (NOLOAD) :
+	/* stacks need to be aligned to 8 bytes */
+	.program_stack_section (NOLOAD) : ALIGN(0x8)
 	{
-		. = ALIGN(0x4);
-		
 		__program_stack_start__ = .;
 		PROVIDE(__program_stack_start = .);
 		
 		.  += PROGRAM_STACK_SIZE;
 		
 		. = ALIGN(0x4);		
+		
 		PROVIDE(__program_stack_end__ = .); 
+		
 	} > RAM0L	
     
 	.stab 0 (NOLOAD) : { 
