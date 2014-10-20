@@ -117,6 +117,10 @@ SECTIONS
 		
 		*resetprg.o (.text)  
 		*resetprg.o (.rodata)
+
+
+		*rza_io_regrw.o(.text)
+		*rza_io_regrw.o(.rodata)		
 				      
 		*copy_section_to_ram.o (.text)
 		*copy_section_to_ram.o (.rodata) 
@@ -136,11 +140,8 @@ SECTIONS
 		*bsc_init.o(.text)
 		*bsc_init.o(.rodata)
 		*bsc_userdef.o(.text)
-		*bsc_userdef.o(.rodata)
-
-		*rz_io_regw.o(.text)
-		*rz_io_regw.o(.rodata)
-									
+		*bsc_userdef.o(.rodata)			
+							
 		__reset_code_rom_end__ = .;
         PROVIDE(__reset_code_rom_end__ = .);                               
 
@@ -178,8 +179,7 @@ SECTIONS
 
 
     /* Executes from RAM */	
-	.fast_code_section : 
-	{
+	.ram_vector_table : {
         
         /* this is the location in ram where the vector table for the application gets relocated */
 		/* the vector table must be aligned to 32-bytes */
@@ -198,13 +198,20 @@ SECTIONS
 		/* Important since the code copy routine works on 4 bytes size for efficiency */
         . = ALIGN(0x4);
 
+	}  > RAM0L  
+
+	.fast_code_section : 
+	{
+        
+        /* Any following code must be aligned to a 4 byte boundary. */
+		/* Important since the code copy routine works on 4 bytes size for efficiency */
+        . = ALIGN(0x4);
+
 		__fast_code_rom_start__ = LOADADDR (.fast_code_section);
 		PROVIDE(__fast_code_rom_start__ = LOADADDR (.fast_code_section));
 		
         __fast_code_start__ = .;
         PROVIDE(__fast_code_start__ = .);
-
-		*rza_io_regrw.o (.text)
 
 		/* These are for static constructors and destructors under ELF */ 
         . = ALIGN(0x4); 
@@ -363,7 +370,7 @@ SECTIONS
 	} > RAM0U	
      
 	/* L1 translation table must be aligned to 16KB Boundary!           */
-	/* Please refer to Cortex-A Series Version: 4.0 Programmer’s Guide, */
+	/* Please refer to Cortex-A Series Version: 4.0 Programmerï¿½s Guide, */
 	/* section 9.4 First level address translation                      */
 	.ttb_mmu1 : ALIGN(0x4000)
 	{
