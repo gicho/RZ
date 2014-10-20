@@ -252,10 +252,10 @@ void qspi_change_config_and_start_application(void)
     qspiConfigureExternalAddressTransfer(&externalAddressTransfer);
 
     // change the controller configuration before reading the signature
-	// has to be done here since the application is programmed in dual mode
-    // and the signature is also stored in dual mode
+	// has to be done here since the application is programmed in single or dual mode
+    // and the signature is also stored in the same mode
     spiConfiguration.operatingMode = EXTERNAL_ADDRESS_SPACE;
-    spiConfiguration.dataBusSize = DUAL_MEMORY;
+    spiConfiguration.dataBusSize = QSPI_HARDWARE;
 
     // switch to external address mode
     qspiControllerConfigure(&spiConfiguration);

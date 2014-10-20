@@ -47,12 +47,17 @@ Macro definitions
 ******************************************************************************/
 // define where the user program image is located
 // needs to match the application linker script
-#define DEF_USER_PROGRAM_SRC        (0x18080000)
+#define DEF_USER_PROGRAM_SRC        (0x18040000)
 
 /* warning: the signature is located just below the ISR table + literals */
 /* if the location is changed, the linker scripts needs to be adapted too */
 #define DEF_USER_SIGNATURE          (DEF_USER_PROGRAM_SRC + 0x40)
 
+/* used to configure the system for single or dual chip mode before jumping to the application */
+#define QSPI_SINGLE_CHIP	SINGLE_MEMORY
+#define QSPI_DUAL_CHIP		DUAL_MEMORY
+
+#define QSPI_HARDWARE	QSPI_SINGLE_CHIP
 
 #endif /* __QSPI_SETUP_H__ */
 

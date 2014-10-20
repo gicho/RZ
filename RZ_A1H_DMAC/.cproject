@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?fileVersion 4.0.0?>
+
+<cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+	<storageModule moduleId="org.eclipse.cdt.core.settings">
+		<cconfiguration id="com.renesas.cdt.rz.debug.configuration.1399765358">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.renesas.cdt.rz.debug.configuration.1399765358" moduleId="org.eclipse.cdt.core.settings" name="Debug">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.PE" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.VCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.MakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactExtension="x" artifactName="${ProjName}" buildArtefactType="com.arm.eclipse.build.artefact.baremetal.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=com.arm.eclipse.build.artefact.baremetal.exe" cleanCommand="rm -rf *.lst *.lis *.lpp *.map" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.core.CWDLocator;org.eclipse.cdt.core.GmakeErrorParser" id="com.renesas.cdt.rz.debug.configuration.1399765358" name="Debug" parent="com.renesas.cdt.rz.debug.configuration" postannouncebuildStep="" postbuildStep="arm-rz-eabi-objcopy -O binary ${ProjName}.x  ${ProjDirPath}/${ProjName}.bin&amp; " preannouncebuildStep="" prebuildStep="">
+					<folderInfo id="com.renesas.cdt.rz.debug.configuration.1399765358." name="/" resourcePath="">
+						<toolChain errorParsers="org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="com.renesas.cdt.rz.debug.toolchain.740026538" name="KPIT GNUARM-RZ-EABI Toolchain" superClass="com.renesas.cdt.rz.debug.toolchain" unusedChildren="com.renesas.cdt.rz.debug.tool.linker;com.renesas.cdt.rz.debug.tool.assembler;com.renesas.cdt.rz.debug.tool.compiler.cpp">
+							<targetPlatform binaryParser="org.eclipse.cdt.core.ELF;org.eclipse.cdt.core.PE" id="com.renesas.cdt.rz.debug.targetplatform.id.681108305" isAbstract="false" name="Target Platform" osList="all" superClass="com.renesas.cdt.rz.debug.targetplatform.id"/>
+							<builder buildPath="${workspace_loc:/RZ_A1H_DMAC_RSK/Debug}" enableAutoBuild="false" enableCleanBuild="true" enabledIncrementalBuild="true" errorParsers="org.eclipse.cdt.core.MakeErrorParser" id="com.renesas.cdt.rz.debug.builder.id.1887086227" keepEnvironmentInBuildfile="false" name="Builder" parallelBuildOn="true" parallelizationNumber="-1" stopOnErr="false" superClass="com.renesas.cdt.rz.debug.builder.id">
+								<outputEntries>
+									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name="Debug"/>
+									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name="Release"/>
+								</outputEntries>
+							</builder>
+							<tool command="arm-rz-eabi-gcc -c" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="com.renesas.cdt.rz.debug.tool.compiler.c.1871451757" name="GCC C Compiler" superClass="com.renesas.cdt.rz.debug.tool.compiler.c">
+								<option id="com.renesas.cdt.rz.debug.compiler.option.sourcelanguagemode.c.1034705264" name="Source language mode" superClass="com.renesas.cdt.rz.debug.compiler.option.sourcelanguagemode.c" value="com.renesas.cdt.rz.debug.compiler.value.sourcelanguagemode.c99.c" valueType="enumerated"/>
+								<option id="com.renesas.cdt.rz.debug.compiler.option.debuglevel.c.182825936" name="Debug Level" superClass="com.renesas.cdt.rz.debug.compiler.option.debuglevel.c" value="com.renesas.cdt.rz.debug.compiler.value.debuglevel.maximum.c" valueType="enumerated"/>
+								<option id="com.renesas.cdt.rz.debug.compiler.option.verbose.c.1090392635" name="Verbose (-v)" superClass="com.renesas.cdt.rz.debug.compiler.option.verbose.c" value="false" valueType="boolean"/>
+								<option id="com.renesas.cdt.rz.debug.compiler.option.positionindependentcode.c.1862578493" name="Position independent code (-fPIC)" superClass="com.renesas.cdt.rz.debug.compiler.option.positionindependentcode.c" value="false" valueType="boolean"/>
+								<option id="com.renesas.cdt.rz.debug.compiler.option.includepaths.c.237475211" name="Include path (-I)" superClass="com.renesas.cdt.rz.debug.compiler.option.includepaths.c" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${TC_PATH}\arm-rz-eabi\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${TC_PATH}\bin\newlib\libc\sys\arm&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/compiler_specific/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc/iobitmasks}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc/iodefines}&quot;"/>
+								</option>
+								<option id="com.renesas.cdt.rz.debug.compiler.option.includefiles.c.581600168" name="Include Files  (-include)" superClass="com.renesas.cdt.rz.debug.compiler.option.includefiles.c"/>
+								<option id="com.renesas.cdt.rz.debug.compiler.option.disableunalignedaccesses.c.1309981345" name="Disable unaligned accesses (-mno-unaligned-access) " superClass="com.renesas.cdt.rz.debug.compiler.option.disableunalignedaccesses.c" value="true" valueType="boolean"/>
+								<option id="com.renesas.cdt.rz.debug.compiler.option.debugformat.c.108172982" name="Debug Format" superClass="com.renesas.cdt.rz.debug.compiler.option.debugformat.c" value="com.renesas.cdt.rz.debug.compiler.value.debugformat.dwarf2.c" valueType="enumerated"/>
+								<option id="com.renesas.cdt.rz.debug.compiler.option.supportansiprograms.c.1070353638" name="support ANSI programs (-ansi)" superClass="com.renesas.cdt.rz.debug.compiler.option.supportansiprograms.c" value="false" valueType="boolean"/>
+								<option id="com.renesas.cdt.rz.debug.compiler.option.implicitconversionwarnings.c.1597116598" name="Implicit conversion warnings (-Wconversion)" superClass="com.renesas.cdt.rz.debug.compiler.option.implicitconversionwarnings.c" value="true" valueType="boolean"/>
+								<option id="com.renesas.cdt.rz.debug.compiler.option.warningaserrors.c.1194864035" name="Warning as errors (-Werror)" superClass="com.renesas.cdt.rz.debug.compiler.option.warningaserrors.c" value="false" valueType="boolean"/>
+								<option id="com.renesas.cdt.rz.debug.compiler.option.allwarnings.c.329302804" name="All warnings (-Wall)" superClass="com.renesas.cdt.rz.debug.compiler.option.allwarnings.c" value="true" valueType="boolean"/>
+								<inputType id="com.renesas.cdt.rz.debug.compiler.inputtype.c.782321097" name="C InputType" superClass="com.renesas.cdt.rz.debug.compiler.inputtype.c"/>
+							</tool>
+							<tool command="arm-rz-eabi-as" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GASErrorParser" id="com.renesas.cdt.rz.debug.tool.assembler.2012906708" name="Assembler" superClass="com.renesas.cdt.rz.debug.tool.assembler">
+								<option id="com.renesas.cdt.rz.debug.assembler.option.enabledebug.685458384" name="Enable Debug (-g)" superClass="com.renesas.cdt.rz.debug.assembler.option.enabledebug" value="true" valueType="boolean"/>
+								<option id="com.renesas.cdt.rz.debug.assembler.option.debugformat.977450442" name="Debug format" superClass="com.renesas.cdt.rz.debug.assembler.option.debugformat" value="com.renesas.cdt.rz.debug.assembler.value.debugformat.dwarf2" valueType="enumerated"/>
+								<option id="com.renesas.cdt.rz.debug.assembler.option.includepaths.1443582486" name="Include paths (-I)" superClass="com.renesas.cdt.rz.debug.assembler.option.includepaths" valueType="stringList">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/compiler_specific/inc}&quot;"/>
+								</option>
+							</tool>
+							<tool command="arm-rz-eabi-libgen" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG}${OUTPUT_PREFIX} ${INPUTS}${OUTPUT}" errorParsers="" id="com.renesas.cdt.rz.debug.tool.librarygenerator.254606530" name="Library Generator" superClass="com.renesas.cdt.rz.debug.tool.librarygenerator">
+								<option id="com.renesas.cdt.rz.debug.librarygenerator.option.ctype.621894807" name="ctype.h : Handles and checks characters" superClass="com.renesas.cdt.rz.debug.librarygenerator.option.ctype" value="true" valueType="boolean"/>
+								<option id="com.renesas.cdt.rz.debug.librarygenerator.option.math.1501913378" name="math.h : Performs numeric calculations such as trigonometric functions" superClass="com.renesas.cdt.rz.debug.librarygenerator.option.math" value="true" valueType="boolean"/>
+								<option id="com.renesas.cdt.rz.debug.librarygenerator.option.enableall.1608515005" name="Enable All" superClass="com.renesas.cdt.rz.debug.librarygenerator.option.enableall" value="true" valueType="boolean"/>
+								<option id="com.renesas.cdt.rz.debug.librarygenerator.option.mode.678267176" name="Mode" superClass="com.renesas.cdt.rz.debug.librarygenerator.option.mode" value="com.renesas.cdt.rz.debug.librarygenerator.value.mode.buildlibrary" valueType="enumerated"/>
+								<option id="com.renesas.cdt.rz.debug.librarygenerator.option.librarytype.62482954" name="Library Type" superClass="com.renesas.cdt.rz.debug.librarygenerator.option.librarytype" value="com.renesas.cdt.rz.debug.librarygenerator.value.librarytype.projectbuilt" valueType="enumerated"/>
+								<option id="com.renesas.cdt.rz.debug.librarygenerator.option.omitframepointer.57700809" name="Don't keep unneeded function frame pointers(-fomit-frame-pointer)" superClass="com.renesas.cdt.rz.debug.librarygenerator.option.omitframepointer" value="true" valueType="boolean"/>
+								<option id="com.renesas.cdt.rz.debug.librarygenerator.option.selectlibrary.2090052295" name="Select Library" superClass="com.renesas.cdt.rz.debug.librarygenerator.option.selectlibrary" value="com.renesas.cdt.rz.debug.librarygenerator.value.selectlibrary.newlib" valueType="enumerated"/>
+							</tool>
+							<tool command="arm-rz-eabi-ld" commandLinePattern="${COMMAND} ${OUTPUT_FLAG}${OUTPUT_PREFIX} ${OUTPUT}${INPUTS} ${FLAGS}" errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="com.renesas.cdt.rz.debug.tool.linker.1308578050" name="GCC Linker" superClass="com.renesas.cdt.rz.debug.tool.linker">
+								<option id="com.renesas.cdt.rz.debug.linker.option.setstartaddress.331176837" name="Set Start Address (-e ADDRESS)" superClass="com.renesas.cdt.rz.debug.linker.option.setstartaddress" value="" valueType="string"/>
+								<option id="com.renesas.cdt.rz.debug.linker.option.linklittleendianobjects.1963911926" name="Link Little-endian Objects(-EL)" superClass="com.renesas.cdt.rz.debug.linker.option.linklittleendianobjects" value="true" valueType="boolean"/>
+								<option id="com.renesas.cdt.rz.debug.linker.option.generaterelocationsinfinaloutput.1648799973" name="Generate relocations in final output(-q)" superClass="com.renesas.cdt.rz.debug.linker.option.generaterelocationsinfinaloutput" value="true" valueType="boolean"/>
+								<option id="com.renesas.cdt.rz.debug.linker.option.addlinkerscriptfile.332891797" name="Add linker script file(-T FILE)" superClass="com.renesas.cdt.rz.debug.linker.option.addlinkerscriptfile" value="&quot;${ProjDirPath}/compiler_specific/GCC-QSPI-APP.ld&quot;" valueType="string"/>
+								<option id="com.renesas.cdt.rz.debug.linker.option.warnaboutduplicatecommonsymbols.1582910481" name="Warn about duplicate common symbols(--warn-common)" superClass="com.renesas.cdt.rz.debug.linker.option.warnaboutduplicatecommonsymbols" value="true" valueType="boolean"/>
+								<option id="com.renesas.cdt.rz.debug.linker.option.reportunresolvedsymbolsaserrors.1876598044" name="Report unresolved symbols as errors(--error-unresolved-symbols)" superClass="com.renesas.cdt.rz.debug.linker.option.reportunresolvedsymbolsaserrors" value="true" valueType="boolean"/>
+								<option id="com.renesas.cdt.rz.debug.linker.option.reportunresolvedsymbolsaswarnings.1433315865" name="Report unresolved symbols as warnings(--warn-unresolved-symbols)" superClass="com.renesas.cdt.rz.debug.linker.option.reportunresolvedsymbolsaswarnings" value="true" valueType="boolean"/>
+								<option id="com.renesas.cdt.rz.debug.linker.option.outputlotsofinformationduringlink.1112178535" name="Output lots of information during link(--verbose [=NUMBER])" superClass="com.renesas.cdt.rz.debug.linker.option.outputlotsofinformationduringlink" value="true" valueType="boolean"/>
+								<option id="com.renesas.cdt.rz.debug.linker.option.generaterelocatableoutput.1294905644" name="Generate relocatable output(-r)" superClass="com.renesas.cdt.rz.debug.linker.option.generaterelocatableoutput" value="false" valueType="boolean"/>
+								<option id="com.renesas.cdt.rz.debug.linker.option.librarysearchpath.430759501" name="Library search path (--library-path)" superClass="com.renesas.cdt.rz.debug.linker.option.librarysearchpath" valueType="stringList">
+									<listOptionValue builtIn="false" value="&quot;${TC_PATH}\arm-rz-eabi\lib&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${TC_PATH}\lib\gcc\arm-rz-eabi\\${GCC_STRING}&quot;"/>
+								</option>
+								<option id="com.renesas.cdt.rz.debug.linker.option.libraries.404612454" name="Libraries (-L)" superClass="com.renesas.cdt.rz.debug.linker.option.libraries" valueType="stringList"/>
+								<option id="com.renesas.cdt.rz.debug.linker.option.otherflags.2051871849" name="Other flags" superClass="com.renesas.cdt.rz.debug.linker.option.otherflags" value="--start-group -lm -lc -lgcc --end-group" valueType="string"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry excluding="compiler_specific/asm/initsct.S|compiler_specific/asm/proc-macros.S" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+		<cconfiguration id="com.renesas.cdt.rz.release.configuration.176835612">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.renesas.cdt.rz.release.configuration.176835612" moduleId="org.eclipse.cdt.core.settings" name="Release">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.PE" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.VCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.MakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactExtension="x" artifactName="${ProjName}" buildArtefactType="com.arm.eclipse.build.artefact.baremetal.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=com.arm.eclipse.build.artefact.baremetal.exe" cleanCommand="rm -rf *.lst *.lis *.lpp *.map" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.VCErrorParser" id="com.renesas.cdt.rz.release.configuration.176835612" name="Release" parent="com.renesas.cdt.rz.release.configuration" postbuildStep="arm-rz-eabi-objcopy -O binary  ${ProjName}.x  ${ProjName}.bin&amp;" prebuildStep="">
+					<folderInfo id="com.renesas.cdt.rz.release.configuration.176835612." name="/" resourcePath="">
+						<toolChain id="com.renesas.cdt.rz.release.toolchain.560085438" name="KPIT GNUARM-RZ-EABI Toolchain" superClass="com.renesas.cdt.rz.release.toolchain">
+							<targetPlatform binaryParser="org.eclipse.cdt.core.ELF;org.eclipse.cdt.core.PE" id="com.renesas.cdt.rz.release.targetplatform.id.958346305" isAbstract="false" name="Target Platform" osList="all" superClass="com.renesas.cdt.rz.release.targetplatform.id"/>
+							<builder buildPath="${workspace_loc:/RZ_A1H_DMAC_RSK/Release}" enableCleanBuild="true" enabledIncrementalBuild="true" id="com.renesas.cdt.rz.release.builder.id.183218302" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Builder" superClass="com.renesas.cdt.rz.release.builder.id"/>
+							<tool command="" id="com.renesas.cdt.rz.release.tool.librarygenerator.660664189" name="Library Generator" superClass="com.renesas.cdt.rz.release.tool.librarygenerator">
+								<option id="com.renesas.cdt.rz.release.librarygenerator.option.librarytype.976245962" name="Library Type" superClass="com.renesas.cdt.rz.release.librarygenerator.option.librarytype" value="com.renesas.cdt.rz.release.librarygenerator.value.librarytype.prebuilt" valueType="enumerated"/>
+								<option id="com.renesas.cdt.rz.release.librarygenerator.option.selectlibrary.1573669939" name="Select Library" superClass="com.renesas.cdt.rz.release.librarygenerator.option.selectlibrary" value="com.renesas.cdt.rz.release.librarygenerator.value.selectlibrary.newlib" valueType="enumerated"/>
+							</tool>
+							<tool id="com.renesas.cdt.rz.release.tool.compiler.c.32292068" name="GCC C Compiler" superClass="com.renesas.cdt.rz.release.tool.compiler.c">
+								<option id="com.renesas.cdt.rz.release.compiler.option.includepaths.c.636499085" name="Include path (-I)" superClass="com.renesas.cdt.rz.release.compiler.option.includepaths.c" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${TC_INSTALL}\arm-rz-eabi\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${TC_INSTALL}\bin\newlib\libc\sys\arm&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/compiler_specific/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc/iobitmasks}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc/iodefines}&quot;"/>
+								</option>
+								<option id="com.renesas.cdt.rz.release.compiler.option.sourcelanguagemode.c.1402778566" name="Source language mode" superClass="com.renesas.cdt.rz.release.compiler.option.sourcelanguagemode.c" value="com.renesas.cdt.rz.release.compiler.value.sourcelanguagemode.c99.c" valueType="enumerated"/>
+								<option id="com.renesas.cdt.rz.release.compiler.option.optimizationlevel.c.2107991431" name="Optimization level" superClass="com.renesas.cdt.rz.release.compiler.option.optimizationlevel.c" value="com.renesas.cdt.rz.release.compiler.value.optimizationlevel.speedandcodesizeoptimization.c" valueType="enumerated"/>
+								<option id="com.renesas.cdt.rz.release.compiler.option.allwarnings.c.115851754" name="All warnings (-Wall)" superClass="com.renesas.cdt.rz.release.compiler.option.allwarnings.c" value="true" valueType="boolean"/>
+								<option id="com.renesas.cdt.rz.release.compiler.option.implicitconversionwarnings.c.776381985" name="Implicit conversion warnings (-Wconversion)" superClass="com.renesas.cdt.rz.release.compiler.option.implicitconversionwarnings.c" value="true" valueType="boolean"/>
+								<inputType id="com.renesas.cdt.rz.release.compiler.inputtype.c.48981672" name="C InputType" superClass="com.renesas.cdt.rz.release.compiler.inputtype.c"/>
+							</tool>
+							<tool id="com.renesas.cdt.rz.release.tool.compiler.cpp.1334063825" name="GCC C++ Compiler" superClass="com.renesas.cdt.rz.release.tool.compiler.cpp"/>
+							<tool id="com.renesas.cdt.rz.release.tool.assembler.846987246" name="Assembler" superClass="com.renesas.cdt.rz.release.tool.assembler"/>
+							<tool id="com.renesas.cdt.rz.release.tool.linker.1205043070" name="GCC Linker" superClass="com.renesas.cdt.rz.release.tool.linker">
+								<option id="com.renesas.cdt.rz.release.linker.option.setstartaddress.144243686" name="Set Start Address (-e ADDRESS)" superClass="com.renesas.cdt.rz.release.linker.option.setstartaddress" value="start" valueType="string"/>
+								<option id="com.renesas.cdt.rz.release.linker.option.addlinkerscriptfile.1169458369" name="Add linker script file(-T FILE)" superClass="com.renesas.cdt.rz.release.linker.option.addlinkerscriptfile" value="&quot;${ProjDirPath}/compiler_specific/GNU_DS-5-IRAM.ld&quot;" valueType="string"/>
+								<option id="com.renesas.cdt.rz.release.linker.option.linklittleendianobjects.1041382018" name="Link Little-endian Objects(-EL)" superClass="com.renesas.cdt.rz.release.linker.option.linklittleendianobjects" value="true" valueType="boolean"/>
+								<option id="com.renesas.cdt.rz.release.linker.option.reducecodesizebyusingtarget.2108966805" name="Reduce code size by using targe specific optimization(--relax)" superClass="com.renesas.cdt.rz.release.linker.option.reducecodesizebyusingtarget" value="true" valueType="boolean"/>
+								<option id="com.renesas.cdt.rz.release.linker.option.libraries.1692395855" name="Libraries (-L)" superClass="com.renesas.cdt.rz.release.linker.option.libraries" valueType="stringList">
+									<listOptionValue builtIn="false" value="&quot;${CWD}&quot;"/>
+								</option>
+								<option id="com.renesas.cdt.rz.release.linker.option.librarysearchpath.820503276" name="Library search path (--library-path)" superClass="com.renesas.cdt.rz.release.linker.option.librarysearchpath" valueType="stringList">
+									<listOptionValue builtIn="false" value="&quot;${TC_INSTALL}\arm-rz-eabi\lib&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${TC_INSTALL}\lib\gcc\arm-rz-eabi\4.7-GNUARM-RZ_v13.01&quot;"/>
+								</option>
+								<option id="com.renesas.cdt.rz.release.linker.option.otherflags.2116716403" name="Other flags" superClass="com.renesas.cdt.rz.release.linker.option.otherflags" value="--start-group -lm -lc -lgcc --end-group" valueType="string"/>
+								<option id="com.renesas.cdt.rz.release.linker.option.reportunresolvedsymbolsaserrors.1984909663" name="Report unresolved symbols as errors(--error-unresolved-symbols)" superClass="com.renesas.cdt.rz.release.linker.option.reportunresolvedsymbolsaserrors" value="true" valueType="boolean"/>
+								<option id="com.renesas.cdt.rz.release.linker.option.warnaboutduplicatecommonsymbols.467233507" name="Warn about duplicate common symbols(--warn-common)" superClass="com.renesas.cdt.rz.release.linker.option.warnaboutduplicatecommonsymbols" value="true" valueType="boolean"/>
+								<option id="com.renesas.cdt.rz.release.linker.option.reportunresolvedsymbolsaswarnings.54481956" name="Report unresolved symbols as warnings(--warn-unresolved-symbols)" superClass="com.renesas.cdt.rz.release.linker.option.reportunresolvedsymbolsaswarnings" value="true" valueType="boolean"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+	</storageModule>
+	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+		<project id="RZ_A1H_DMAC_RSK.com.renesas.cdt.rz.projecttype.id.718682613" name="Bare-metal Executable" projectType="com.renesas.cdt.rz.projecttype.id"/>
+	</storageModule>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+	</storageModule>
+	<storageModule moduleId="refreshScope" versionNumber="1">
+		<resource resourceType="PROJECT" workspacePath="/RZ_A1H_DMAC_RSK"/>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+</cproject>

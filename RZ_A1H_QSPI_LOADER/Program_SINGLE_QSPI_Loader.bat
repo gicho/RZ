@@ -17,7 +17,7 @@ echo .
 :PROGRAM
 if not exist .\RZ_A1H_QSPI_LOADER.bin goto ERROR 
 echo ------------------------------------------------------------------------
-"C:\work\dev\SEGGER\JLink_V488b\JLink.exe" -speed 12000 -if JTAG -device R7S721001 -CommanderScript Program_SINGLE_QSPI_Loader.Command
+"C:\work\dev\SEGGER\JLink_V492\JLink.exe" -speed 12000 -if JTAG -device R7S721001 -CommanderScript Program_SINGLE_QSPI_Loader.Command
 echo ------------------------------------------------------------------------
 echo Done.
 goto END

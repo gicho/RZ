@@ -1,23 +1,23 @@
-#Fri Jul 11 10:32:08 CEST 2014
+#Tue Sep 23 14:48:52 CEST 2014
 eclipse.preferences.version=1
 environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/GCC_STRING/delimiter=;
 environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/GCC_STRING/operation=replace
-environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/GCC_STRING/value=4.8-GNUARM-RZ_v14.01
+environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/GCC_STRING/value=4.7-GNUARM-RZ_v13.01
 environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/PATH/delimiter=;
 environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/PATH/operation=replace
-environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/PATH/value=${TC_INSTALL}/bin;${TC_INSTALL}/libexec/gcc/arm-rz-eabi/${GCC_STRING};${TC_INSTALL}/../../Other Utilities;C\:/dev/DS-5/bin/../sw/eclipse//../java/bin/server;C\:/dev/DS-5/bin/../sw/eclipse//../java/bin;C\:/dev/DS-5/bin/../sw/eclipse//../java/lib/i386;C\:\\dev\\DS-5\\bin;C\:\\dev\\DS-5\\sw\\java\\bin;C\:\\Python27\\;C\:\\dev\\Python33;C\:\\Windows\\system32;C\:\\Windows;C\:\\Windows\\System32\\Wbem;C\:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C\:\\Program Files\\WIDCOMM\\Bluetooth Software\\;C\:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\\;C\:\\dev\\e2studio\\Tools\\Renesas\\RX\\1_2_1\\bin;C\:\\dev\\Git\\cmd;C\:\\dev\\bin;C\:\\dev\\TortoiseGit\\bin;c\:\\mingw\\bin;C\:\\Windows\\system32
+environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/PATH/value=${TC_PATH}/bin;${TC_PATH}/libexec/gcc/arm-rz-eabi/${GCC_STRING};${TC_PATH}/../../Other Utilities;C\:/dev/DS-5/bin/../sw/eclipse//../java/bin/server;C\:/dev/DS-5/bin/../sw/eclipse//../java/bin;C\:/dev/DS-5/bin/../sw/eclipse//../java/lib/i386;C\:\\dev\\DS-5\\bin;C\:\\dev\\DS-5\\sw\\java\\bin;C\:\\Python27\\;C\:\\dev\\Python33;C\:\\Windows\\system32;C\:\\Windows;C\:\\Windows\\System32\\Wbem;C\:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C\:\\Program Files\\WIDCOMM\\Bluetooth Software\\;C\:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\\;C\:\\dev\\e2studio\\Tools\\Renesas\\RX\\1_2_1\\bin;C\:\\dev\\Git\\cmd;C\:\\dev\\bin;C\:\\dev\\TortoiseGit\\bin;c\:\\mingw\\bin;C\:\\Windows\\system32
 environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/PWD/delimiter=;
 environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/PWD/operation=replace
 environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/PWD/value=C\:\\work\\projects\\RZ_reference_project\\RZ_A1H_QSPI_LOADER\\Debug
-environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/SEGGER_JLINK/delimiter=;
-environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/SEGGER_JLINK/operation=append
-environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/SEGGER_JLINK/value=C\:\\Program Files\\SEGGER\\JLinkARM_V486a\\JLink.exe
 environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/TC_DIR/delimiter=;
 environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/TC_DIR/operation=replace
-environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/TC_DIR/value=C\:\\work\\dev\\toolchains\\KPIT\\GNUARM-RZv14.01-EABI
-environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/TC_INSTALL/delimiter=;
-environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/TC_INSTALL/operation=replace
-environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/TC_INSTALL/value=C\:\\work\\dev\\toolchains\\KPIT\\GNUARM-RZv14.01-EABI\\arm-rz-eabi\\arm-rz-eabi
+environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/TC_DIR/value=C\:\\work\\dev\\toolchains\\KPIT\\GNUARM-RZv13.01-EABI
+environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/TC_PATH/delimiter=;
+environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/TC_PATH/operation=replace
+environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/TC_PATH/value=${TC_DIR}\\\\${TC_PREFIX}\\\\${TC_PREFIX}
+environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/TC_PREFIX/delimiter=;
+environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/TC_PREFIX/operation=append
+environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/TC_PREFIX/value=arm-rz-eabi
 environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/TC_VERSION/delimiter=;
 environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/TC_VERSION/operation=prepend
 environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/TC_VERSION/value=v14.01
@@ -35,6 +35,12 @@ environment/project/com.renesas.cdt.rz.release.configuration.176835612/SEGGER_JL
 environment/project/com.renesas.cdt.rz.release.configuration.176835612/TC_INSTALL/delimiter=;
 environment/project/com.renesas.cdt.rz.release.configuration.176835612/TC_INSTALL/operation=prepend
 environment/project/com.renesas.cdt.rz.release.configuration.176835612/TC_INSTALL/value=C\:\\dev\\KPIT\\GNUARM-RZv14.01-EABI\\arm-rz-eabi\\arm-rz-eabi\\
+environment/project/com.renesas.cdt.rz.release.configuration.176835612/TC_PATH/delimiter=;
+environment/project/com.renesas.cdt.rz.release.configuration.176835612/TC_PATH/operation=append
+environment/project/com.renesas.cdt.rz.release.configuration.176835612/TC_PATH/value=${TC_DIR}
+environment/project/com.renesas.cdt.rz.release.configuration.176835612/TC_PREFIX/delimiter=;
+environment/project/com.renesas.cdt.rz.release.configuration.176835612/TC_PREFIX/operation=append
+environment/project/com.renesas.cdt.rz.release.configuration.176835612/TC_PREFIX/value=arm-rz-eabi
 environment/project/com.renesas.cdt.rz.release.configuration.176835612/TC_VERSION/delimiter=;
 environment/project/com.renesas.cdt.rz.release.configuration.176835612/TC_VERSION/operation=prepend
 environment/project/com.renesas.cdt.rz.release.configuration.176835612/TC_VERSION/value=v14.01

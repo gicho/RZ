@@ -35,8 +35,8 @@
 								<option id="com.renesas.cdt.rz.debug.compiler.option.verbose.c.1090392635" name="Verbose (-v)" superClass="com.renesas.cdt.rz.debug.compiler.option.verbose.c" value="false" valueType="boolean"/>
 								<option id="com.renesas.cdt.rz.debug.compiler.option.positionindependentcode.c.1862578493" name="Position independent code (-fPIC)" superClass="com.renesas.cdt.rz.debug.compiler.option.positionindependentcode.c" value="false" valueType="boolean"/>
 								<option id="com.renesas.cdt.rz.debug.compiler.option.includepaths.c.237475211" name="Include path (-I)" superClass="com.renesas.cdt.rz.debug.compiler.option.includepaths.c" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${TC_INSTALL}\arm-rz-eabi\include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${TC_INSTALL}\bin\newlib\libc\sys\arm&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${TC_PATH}\arm-rz-eabi\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${TC_PATH}\bin\newlib\libc\sys\arm&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/inc/iodefines&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/inc/iobitmasks&quot;"/>
@@ -83,8 +83,8 @@
 								<option id="com.renesas.cdt.rz.debug.linker.option.outputlotsofinformationduringlink.1112178535" name="Output lots of information during link(--verbose [=NUMBER])" superClass="com.renesas.cdt.rz.debug.linker.option.outputlotsofinformationduringlink" value="true" valueType="boolean"/>
 								<option id="com.renesas.cdt.rz.debug.linker.option.generaterelocatableoutput.1294905644" name="Generate relocatable output(-r)" superClass="com.renesas.cdt.rz.debug.linker.option.generaterelocatableoutput" value="false" valueType="boolean"/>
 								<option id="com.renesas.cdt.rz.debug.linker.option.librarysearchpath.430759501" name="Library search path (--library-path)" superClass="com.renesas.cdt.rz.debug.linker.option.librarysearchpath" valueType="stringList">
-									<listOptionValue builtIn="false" value="&quot;${TC_INSTALL}\arm-rz-eabi\lib&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${TC_INSTALL}\lib\gcc\arm-rz-eabi/${GCC_STRING}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${TC_PATH}\arm-rz-eabi\lib&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${TC_PATH}\lib\gcc\arm-rz-eabi/${GCC_STRING}&quot;"/>
 								</option>
 								<option id="com.renesas.cdt.rz.debug.linker.option.libraries.404612454" name="Libraries (-L)" superClass="com.renesas.cdt.rz.debug.linker.option.libraries"/>
 								<option id="com.renesas.cdt.rz.debug.linker.option.otherflags.2051871849" name="Other flags" superClass="com.renesas.cdt.rz.debug.linker.option.otherflags" value="--start-group -lm -lc -lgcc --end-group" valueType="string"/>
