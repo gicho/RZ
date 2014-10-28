@@ -41,9 +41,10 @@
 /******************************************************************************
 Macro definitions
 ******************************************************************************/
-#define INITIALIZATION_CODE(foo)  foo __attribute__ ((section (".hardware_init")))
+#define INITIALIZATION_CODE   __attribute__((section (".hardware_init")))
 
 #define DMA_RAM_BUFFER __attribute__ ((section (".DMA_BUFFER_IRAM")))
+#define DMA_RAM_CACHED_BUFFER __attribute__ ((section (".DMA_BUFFER_CACHED_IRAM")))
 
 // #define BSS_SDRAM_SECTION   __attribute__ ((section (".BSS_DMAC_SAMPLE_SDRAM")))
 #define VRAM_SECTION  __attribute__ ((section (".display_buffer_section")))

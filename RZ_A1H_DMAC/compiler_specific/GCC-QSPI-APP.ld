@@ -61,17 +61,33 @@ MEMORY
 	RAM2U (rwx)   : ORIGIN = 0x20700000, LENGTH = 0x00100000  /* Page 2 Upper bank (1024KB) H'20700000 to H'207FFFFF */
 	RAM3U (rwx)   : ORIGIN = 0x20800000, LENGTH = 0x00100000  /* Page 3 Upper bank (1024KB) H'20800000 to H'208FFFFF */
 	RAM4U (rwx)   : ORIGIN = 0x20900000, LENGTH = 0x00100000  /* Page 4 Upper bank (1024KB) H'20900000 to H'209FFFFF */
-	SDRAM (rwx)   : ORIGIN = 0x48000000, LENGTH = 0x02000000  /* SDRAM 32MB attached to CS2 H'08000000 to H'09FFFFFF */
 
-	RAM (rwx)	: ORIGIN = 0x20020000, LENGTH = 0x009E0000	/* Complete range of always-on RAM */
+	RAM0L_MIRROR (rwx)   : ORIGIN = 0x60020000, LENGTH = 0x000E0000  /* Page 0 Lower bank ( 896KB) H'60020000 to H'600FFFFF */
+	RAM0U_MIRROR (rwx)   : ORIGIN = 0x60100000, LENGTH = 0x00100000  /* Page 0 Upper bank (1024KB) H'60100000 to H'601FFFFF */
+	RAM1U_MIRROR (rwx)   : ORIGIN = 0x60200000, LENGTH = 0x00100000  /* Page 1 Upper bank (1024KB) H'60200000 to H'602FFFFF */
+	RAM1L_MIRROR (rwx)   : ORIGIN = 0x60300000, LENGTH = 0x00100000  /* Page 1 Upper bank (1024KB) H'60300000 to H'603FFFFF */
+	RAM2L_MIRROR (rwx)   : ORIGIN = 0x60400000, LENGTH = 0x00100000  /* Page 2 Upper bank (1024KB) H'60400000 to H'604FFFFF */
+	RAM2U_MIRROR (rwx)   : ORIGIN = 0x60500000, LENGTH = 0x00100000  /* Page 2 Upper bank (1024KB) H'60500000 to H'6050FFFF */
+	RAM3U_MIRROR (rwx)   : ORIGIN = 0x60600000, LENGTH = 0x00100000  /* Page 3 Upper bank (1024KB) H'60600000 to H'606FFFFF */
+	RAM3L_MIRROR (rwx)   : ORIGIN = 0x60700000, LENGTH = 0x00100000  /* Page 3 Upper bank (1024KB) H'60700000 to H'6070FFFF */
+	RAM4L_MIRROR (rwx)   : ORIGIN = 0x60800000, LENGTH = 0x00100000  /* Page 4 Upper bank (1024KB) H'60800000 to H'6080FFFF */
+	RAM4U_MIRROR (rwx)   : ORIGIN = 0x60900000, LENGTH = 0x00100000  /* Page 4 Upper bank (1024KB) H'60900000 to H'609FFFFF */
+	
+	SDRAM (rwx)   		: ORIGIN = 0x08000000, LENGTH = 0x02000000  /* SDRAM 32MB attached to CS2 H'08000000 to H'09FFFFFF */
+	SDRAM_MIRROR (rwx)  : ORIGIN = 0x48000000, LENGTH = 0x02000000  /* SDRAM 32MB attached to CS2 H'48000000 to H'49FFFFFF */
 
+	RAM (rwx)		: ORIGIN = 0x20020000, LENGTH = 0x009E0000	/* Complete range of always-on RAM */
+	RAM_MIRROR (rwx): ORIGIN = 0x60020000, LENGTH = 0x009E0000	/* Complete range of always-on RAM mirror area */
+	
 	/* QSPI ROM attached to H'18000000, 2 chips of 0x4000000 size each (64 Mb) */ 
 	/* Total addressable space from the QSPI internal address map is 0x18000000 to H'1BFFFFFF (64Mb page) */
 	/* Size of block is 0x40000, first block is reserved to the BL */
 	/* Defined length accounts for the split between the BL and the application located @ 18040000 */
 	/* Check the bootloader project for consistency */	
-	QSPI_FLASH (rw) : ORIGIN = 0x18040000, LENGTH = 0x03FC0000  
-																
+	/* GP changed to 0x18000000 for testing without bootloader */
+	
+	QSPI_FLASH (rw) 		: ORIGIN = 0x18000000, LENGTH = 0x03FC0000  
+	QSPI_FLASH_MIRROR (rw) 	: ORIGIN = 0x58000000, LENGTH = 0x03FC0000  			
 }
 
 PROGRAM_STACK_SIZE    = 0x8000;      /* Application stack                  */
@@ -81,7 +97,8 @@ SVC_STACK_SIZE	      = 0x2000;      /* SVC mode stack                     */
 ABT_STACK_SIZE	      = 0x2000;      /* Abort mode stack                   */
 TTB_SIZE              = 0x8000;      /* Level-1 Translation Table for MMU  */
 
-APP_VECTOR_TABLE	= 0x18040000; 	/* Vector table in QSPI is located here */
+/* GP changed to 0x18000000 for testing without bootloader */
+APP_VECTOR_TABLE	= 0x18000000; 	/* Vector table in QSPI is located here */
 
 SECTIONS
 {
@@ -118,9 +135,10 @@ SECTIONS
 		*resetprg.o (.text)  
 		*resetprg.o (.rodata)
 
-
+/*
 		*rza_io_regrw.o(.text)
 		*rza_io_regrw.o(.rodata)		
+*/
 				      
 		*copy_section_to_ram.o (.text)
 		*copy_section_to_ram.o (.rodata) 
@@ -385,19 +403,28 @@ SECTIONS
 				
 	} >RAM0U   
 	    
-	    
+	.DMA_BUFFER_IRAM (NOLOAD): ALIGN(0x40)
+	{
+		__dma_iram_buf_start__ = LOADADDR(.DMA_BUFFER_IRAM);
+		PROVIDE(__dma_iram_buf_start__ = LOADADDR(.DMA_BUFFER_IRAM));
+				
+	} > RAM1L_MIRROR   
+	
+	__dma_iram_buf_size__ = SIZEOF(.DMA_BUFFER_IRAM);
+	PROVIDE(__dma_iram_buf_size__ = SIZEOF(.DMA_BUFFER_IRAM));
+
 	/* align section to 32 bytes because of cache line size */
 	/* buffers must be multiple of 32 bytes (eventually padded) and 32-bytes aligned */
 	/* to avoid cache coherency issues */
-	.DMA_BUFFER_IRAM (NOLOAD): ALIGN(0x40)
+	.DMA_BUFFER_CACHED_IRAM (NOLOAD): ALIGN(0x40)
 	{
-		__dma_buffer_section_start__ = .;
-		PROVIDE(__dma_buffer_section_start__ = .);
-		
-		__dma_buffer_section_end__ = .;
-		PROVIDE(__dma_buffer_section_end__ = .);
+		__dma_iram_cache_buf_start__ = LOADADDR(.DMA_BUFFER_CACHED_IRAM);
+		PROVIDE(__dma_iram_cache_buf_start__ = LOADADDR(.DMA_BUFFER_CACHED_IRAM));		
 				
-	} > RAM1L   
+	} > RAM1U  
+	
+	__dma_iram_cache_buf_size__ = SIZEOF(.DMA_BUFFER_CACHED_IRAM);
+	PROVIDE(__dma_iram_cache_buf_size__ = SIZEOF(.DMA_BUFFER_CACHED_IRAM));
 	    
 	.stab 0 (NOLOAD) : { 
             *(.stab) 

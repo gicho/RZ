@@ -38,6 +38,7 @@
 #ifndef INTC_HANDLER_H
 #define INTC_HANDLER_H
 
+#include "compiler_settings.h"
 /*******************************************************************************
 Macro definitions
 *******************************************************************************/
@@ -47,7 +48,7 @@ Macro definitions
 /*******************************************************************************
 Functions Prototypes
 *******************************************************************************/
-void R_INTC_Init(void);
+void INITIALIZATION_CODE R_INTC_Init(void);
 
 /* INTC_HANDLER_H */
 #endif

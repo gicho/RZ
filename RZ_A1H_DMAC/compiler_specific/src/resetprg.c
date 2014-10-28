@@ -191,10 +191,10 @@ void PowerON_Reset (void)
     __enable_irq();
     __enable_fiq();
 
-    /* ==== Initialise Terminal ==== */
-    /* SCIF 2ch */
-    /* P1=66.67MHz CKS=0 SCBRR=17 Bit rate error=0.46% => Baud rate=115200bps */
-    IoInitScif2();
+//    /* ==== Initialise Terminal ==== */
+//    /* SCIF 2ch */
+//    /* P1=66.67MHz CKS=0 SCBRR=17 Bit rate error=0.46% => Baud rate=115200bps */
+//    IoInitScif2();
 
     main();
 
