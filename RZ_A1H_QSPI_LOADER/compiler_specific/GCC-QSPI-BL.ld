@@ -61,15 +61,30 @@ MEMORY
 	RAM2U (rwx)   : ORIGIN = 0x20700000, LENGTH = 0x00100000  /* Page 2 Upper bank (1024KB) H'20700000 to H'207FFFFF */
 	RAM3U (rwx)   : ORIGIN = 0x20800000, LENGTH = 0x00100000  /* Page 3 Upper bank (1024KB) H'20800000 to H'208FFFFF */
 	RAM4U (rwx)   : ORIGIN = 0x20900000, LENGTH = 0x00100000  /* Page 4 Upper bank (1024KB) H'20900000 to H'209FFFFF */
-	SDRAM (rwx)   : ORIGIN = 0x48000000, LENGTH = 0x02000000  /* SDRAM 32MB attached to CS2 H'08000000 to H'09FFFFFF */
 
-	RAM (rwx)	: ORIGIN = 0x20020000, LENGTH = 0x009E0000	/* Complete range of always-on RAM */
+	RAM0L_MIRROR (rwx)   : ORIGIN = 0x60020000, LENGTH = 0x000E0000  /* Page 0 Lower bank ( 896KB) H'60020000 to H'600FFFFF */
+	RAM0U_MIRROR (rwx)   : ORIGIN = 0x60100000, LENGTH = 0x00100000  /* Page 0 Upper bank (1024KB) H'60100000 to H'601FFFFF */
+	RAM1U_MIRROR (rwx)   : ORIGIN = 0x60200000, LENGTH = 0x00100000  /* Page 1 Upper bank (1024KB) H'60200000 to H'602FFFFF */
+	RAM1L_MIRROR (rwx)   : ORIGIN = 0x60300000, LENGTH = 0x00100000  /* Page 1 Upper bank (1024KB) H'60300000 to H'603FFFFF */
+	RAM2L_MIRROR (rwx)   : ORIGIN = 0x60400000, LENGTH = 0x00100000  /* Page 2 Upper bank (1024KB) H'60400000 to H'604FFFFF */
+	RAM2U_MIRROR (rwx)   : ORIGIN = 0x60500000, LENGTH = 0x00100000  /* Page 2 Upper bank (1024KB) H'60500000 to H'6050FFFF */
+	RAM3U_MIRROR (rwx)   : ORIGIN = 0x60600000, LENGTH = 0x00100000  /* Page 3 Upper bank (1024KB) H'60600000 to H'606FFFFF */
+	RAM3L_MIRROR (rwx)   : ORIGIN = 0x60700000, LENGTH = 0x00100000  /* Page 3 Upper bank (1024KB) H'60700000 to H'6070FFFF */
+	RAM4L_MIRROR (rwx)   : ORIGIN = 0x60800000, LENGTH = 0x00100000  /* Page 4 Upper bank (1024KB) H'60800000 to H'6080FFFF */
+	RAM4U_MIRROR (rwx)   : ORIGIN = 0x60900000, LENGTH = 0x00100000  /* Page 4 Upper bank (1024KB) H'60900000 to H'609FFFFF */
+	
+	SDRAM (rwx)   		: ORIGIN = 0x08000000, LENGTH = 0x02000000  /* SDRAM 32MB attached to CS2 H'08000000 to H'09FFFFFF */
+	SDRAM_MIRROR (rwx)  : ORIGIN = 0x48000000, LENGTH = 0x02000000  /* SDRAM 32MB attached to CS2 H'48000000 to H'49FFFFFF */
 
-	/* QSPI ROM attached to H'18000000, 2 chips of 0x4000000 size (64 Mb) */ 
+	RAM (rwx)		: ORIGIN = 0x20020000, LENGTH = 0x009E0000	/* Complete range of always-on RAM */
+	RAM_MIRROR (rwx): ORIGIN = 0x60020000, LENGTH = 0x009E0000	/* Complete range of always-on RAM mirror area */
+	
+	/* QSPI ROM attached to H'18000000, 2 chips of 0x4000000 size each (64 Mb) */ 
 	/* Total addressable space from the QSPI internal address map is 0x18000000 to H'1BFFFFFF (64Mb page) */
 	/* Size of block is 0x40000, first block is reserved to the BL */
 	/* Defined length accounts for the split between the BL and the application located @ 18040000 */
-	QSPI_FLASH (rw) : ORIGIN = 0x18000000, LENGTH = 0x00040000  
+	QSPI_FLASH (rw) 		: ORIGIN = 0x18000000, LENGTH = 0x40000  
+	QSPI_FLASH_MIRROR (rw) 	: ORIGIN = 0x58000000, LENGTH = 0x40000 
 	/* Needs to match #define DEF_USER_PROGRAM_SRC in qspi_setup.h, set at (ORIGIN + LENGTH) */
 	/* Example: #define DEF_USER_PROGRAM_SRC 0x18040000 */																
 }
@@ -82,12 +97,17 @@ ABT_STACK_SIZE	      = 0x2000;      /* Abort mode stack                   */
 TTB_SIZE              = 0x8000;      /* Level-1 Translation Table for MMU  */
 
 QSPI_BOOT_ADDRESS     = 0x18000000;  /* QSPI Boot Location */
+QSPI_VECTOR_TABLE	  = 0x18000000;  /* Vector table in QSPI is located here */
 RAM_BASE              = 0x20020000;  /* The location for executable code (copied to RAM) */
+
 
 SECTIONS
 {
     /* Initial code section executing from QSPI @ 0x18000000 */
-    .reset_section :
+    /* Vector table located in QSPI @ location QSPI_VECTOR_TABLE, first item */
+    /* the vector table must be aligned to 32-bytes, see Vector Base Address Register (VBAR) */
+    /* within the arm v7 architecture manual */
+    .reset_section : ALIGN(0x20)
     {
         /* The start object file begins with the vector table, and so must be located here. */
         __reset_code_rom_start__ = .;
@@ -223,6 +243,12 @@ SECTIONS
 		
         __bss_end__ = .;
         PROVIDE(__bss_end__ = .);
+
+        /* required by sbrk (syscalls.c) for heap management */
+        /* eventually must be modified when malloc / heap is used */
+        end = .;
+        PROVIDE(end = .); 
+                
         
     } > RAM0L
  
@@ -239,7 +265,7 @@ SECTIONS
 		PROVIDE(__irq_stack_end__ = .);   
 		__irq_stack_end__ = .;
 		
-	} > RAM0L
+	} > RAM0U
 		
 	/* stacks need to be aligned to 8 bytes */
 	.fiq_stack_section (NOLOAD) : ALIGN(0x8)
@@ -254,7 +280,7 @@ SECTIONS
 		__fiq_stack_end = .;
 		PROVIDE(__fiq_stack_end = .);
 		
-	} > RAM0L
+	} > RAM0U
 		
 	/* stacks need to be aligned to 8 bytes */
 	.svc_stack_section (NOLOAD) : ALIGN(0x8)
@@ -269,7 +295,7 @@ SECTIONS
 		__svc_stack_end__ = .;
 		PROVIDE(__svc_stack_end__ = .);
 		
-	} > RAM0L
+	} > RAM0U
 		
 	/* stacks need to be aligned to 8 bytes */
 	.abt_stack_section (NOLOAD) : ALIGN(0x8)
@@ -284,7 +310,7 @@ SECTIONS
 		__abt_stack_end = .;
 		PROVIDE(__abt_stack_end = .);
 		
-	} > RAM0L
+	} > RAM0U
       
 	/* stacks need to be aligned to 8 bytes */
 	.program_stack_section (NOLOAD) : ALIGN(0x8)
@@ -298,7 +324,7 @@ SECTIONS
 		
 		PROVIDE(__program_stack_end__ = .); 
 		
-	} > RAM0L	
+	} > RAM0U	
     
 	.stab 0 (NOLOAD) : { 
             *(.stab) 

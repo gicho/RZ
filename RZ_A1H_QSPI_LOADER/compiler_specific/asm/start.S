@@ -38,7 +38,6 @@
     .text
     .code 32							/* generate ARM code, is the same as .arm */
     .global QSPI_BL_vector_table		/* start label, the entry point of the bootloader */
-    .func   QSPI_BL_vector_table		/* generate debug information for function */
 
 QSPI_BL_vector_table:
     LDR pc, =QSPI_BL_reset_handler       /* BL Reset Vector */
