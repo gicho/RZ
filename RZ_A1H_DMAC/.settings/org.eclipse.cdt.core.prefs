@@ -16,9 +16,12 @@ environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/TC_PREFIX/
 environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/TC_PREFIX/value=arm-rz-eabi
 environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/append=true
 environment/project/com.renesas.cdt.rz.debug.configuration.1399765358/appendContributed=true
+environment/project/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972/GCC_VERSION/delimiter=;
+environment/project/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972/GCC_VERSION/operation=replace
+environment/project/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972/GCC_VERSION/value=4.9-GNUARM-NONE_v14.02
 environment/project/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972/PATH/delimiter=;
 environment/project/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972/PATH/operation=replace
-environment/project/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972/PATH/value=${TC_PATH}\\\\${TC_PREFIX}/bin;${TC_PATH}/bin;${TC_PATH}/libexec/gcc/arm-none-eabi\\\\${GCC_VERSION};C\:/work/dev/e2_studio/Utilities;C\:/work/dev/e2_studio/eclipse/jre/bin/client;C\:/work/dev/e2_studio/eclipse/jre/bin;C\:/work/dev/e2_studio/eclipse/jre/lib/i386;C\:\\work\\dev\\Python27\\libs;C\:\\work\\dev\\Python27\\lib;C\:\\work\\dev\\Python27\\;C\:\\Windows\\system32;C\:\\Windows;C\:\\Windows\\System32\\Wbem;C\:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C\:\\work\\dev\\e2_studio\\Tools\\Renesas\\RX\\1_2_1\\bin;C\:\\Program Files\\Common Files\\Siemens\\System;C\:\\work\\dev\\TortoiseGit\\bin;C\:\\Windows\\System32\\Empirum;C\:\\Windows\\system32
+environment/project/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972/PATH/value=${TC_PATH}\\\\${TC_PREFIX}\\\\bin;${TC_PATH}\\\\bin;${TC_PATH}\\libexec\\gcc\\arm-none-eabi\\\\${GCC_VERSION};C\:/work/dev/e2_studio/Utilities;C\:/work/dev/e2_studio/eclipse/jre/bin/client;C\:/work/dev/e2_studio/eclipse/jre/bin;C\:/work/dev/e2_studio/eclipse/jre/lib/i386;C\:\\work\\dev\\Python27\\libs;C\:\\work\\dev\\Python27\\lib;C\:\\work\\dev\\Python27\\;C\:\\Windows\\system32;C\:\\Windows;C\:\\Windows\\System32\\Wbem;C\:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C\:\\work\\dev\\e2_studio\\Tools\\Renesas\\RX\\1_2_1\\bin;C\:\\Program Files\\Common Files\\Siemens\\System;C\:\\work\\dev\\TortoiseGit\\bin;C\:\\Windows\\System32\\Empirum;C\:\\Windows\\system32
 environment/project/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972/TCINSTALL/delimiter=;
 environment/project/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972/TCINSTALL/operation=replace
 environment/project/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972/TCINSTALL/value=C\:\\work\\dev\\toolchains\\KPIT\\GNUARM-NONEv14.02-EABI

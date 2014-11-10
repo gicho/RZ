@@ -100,6 +100,7 @@ goToSleep:
 */
     LDR  r0, =0x3FFFFF80
     LDR  r1, =0x00000001
+    LDR  r2, [r0]                    /* test read */
     STR  r1, [r0]
     LDR  r0, [r0]                    /* dummy read */
 

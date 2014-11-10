@@ -22,12 +22,13 @@
 * Copyright (C) 2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /******************************************************************************
-* File Name     : GCC-QSPI-BL.ld
+* File Name     : GCC-QSPI-APP.ld
 * Device(s)     : RZ/A1H RSK2+RZA1H
 * H/W Platform  : RSK2+RZA1H CPU Board
-* Description   : Linker file for simple QSPI bootloader which reconfigures the
-*				  QSPi flash interface for higher performance and 4-Bit mode 
-*				  using the code relocated in ram (qspi_reconfigure_code_section)
+* Description   : Linker file for QSPI applications
+*				  Defines cached and un-cached buffer ranges for internal RAM
+*				  Defines direct and mirror address areas
+*				  
 ******************************************************************************/
 /******************************************************************************
 * History       : DD.MM.YYYY Version Description
@@ -83,11 +84,9 @@ MEMORY
 	/* Total addressable space from the QSPI internal address map is 0x18000000 to H'1BFFFFFF (64Mb page) */
 	/* Size of block is 0x40000, first block is reserved to the BL */
 	/* Defined length accounts for the split between the BL and the application located @ 18040000 */
-	/* Check the bootloader project for consistency */	
-	/* GP changed to 0x18000000 for testing without bootloader */
-	
-	QSPI_FLASH (rw) 		: ORIGIN = 0x18000000, LENGTH = 0x03FC0000  
-	QSPI_FLASH_MIRROR (rw) 	: ORIGIN = 0x58000000, LENGTH = 0x03FC0000  			
+	/* Check the bootloader project for consistency */		
+	QSPI_FLASH (rw) 		: ORIGIN = 0x18040000, LENGTH = 0x03FC0000  
+	QSPI_FLASH_MIRROR (rw) 	: ORIGIN = 0x58040000, LENGTH = 0x03FC0000  			
 }
 
 PROGRAM_STACK_SIZE    = 0x8000;      /* Application stack                  */
@@ -98,7 +97,7 @@ ABT_STACK_SIZE	      = 0x2000;      /* Abort mode stack                   */
 TTB_SIZE              = 0x8000;      /* Level-1 Translation Table for MMU  */
 
 /* GP changed to 0x18000000 for testing without bootloader */
-APP_VECTOR_TABLE	= 0x18000000; 	/* Vector table in QSPI is located here */
+APP_VECTOR_TABLE	= 0x18040000; 	/* Vector table in QSPI is located here */
 
 SECTIONS
 {
@@ -135,10 +134,8 @@ SECTIONS
 		*resetprg.o (.text)  
 		*resetprg.o (.rodata)
 
-/*
 		*rza_io_regrw.o(.text)
 		*rza_io_regrw.o(.rodata)		
-*/
 				      
 		*copy_section_to_ram.o (.text)
 		*copy_section_to_ram.o (.rodata) 
@@ -307,6 +304,7 @@ SECTIONS
         PROVIDE(__bss_end__ = .);
         
         /* required by sbrk (syscalls.c) for heap management */
+		/* eventually must be modified when malloc / heap is used */
         end = .;
         PROVIDE(end = .); 
         

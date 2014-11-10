@@ -9,7 +9,7 @@
 <stringAttribute key="com.renesas.cdt.core.optionInitCommands" value=""/>
 <intAttribute key="com.renesas.cdt.core.portNumber" value="61234"/>
 <stringAttribute key="com.renesas.cdt.core.runCommands" value=""/>
-<stringAttribute key="com.renesas.cdt.core.serverParam" value="-g SEGGERJLINKARM -t R7S72100  -v -p 61234 -d 61236 -uSelect= USB -uInteface= JTAG -uIfSpeed= auto -noreset -n 0 -uFlashBp= 0 -uSimulation= 0"/>
+<stringAttribute key="com.renesas.cdt.core.serverParam" value="-g SEGGERJLINKARM -t R7S72100  -v -p 61234 -d 61236 -uSelect= USB -uInteface= JTAG -uIfSpeed= auto -uNoReset= 1 -n 0 -uFlashBp= 0 -uSimulation= 0"/>
 <booleanAttribute key="com.renesas.cdt.core.setResume" value="true"/>
 <booleanAttribute key="com.renesas.cdt.core.setStopAt" value="true"/>
 <booleanAttribute key="com.renesas.cdt.core.startServer" value="true"/>
@@ -17,7 +17,7 @@
 <stringAttribute key="com.renesas.cdt.core.targetDevice" value="R7S72100"/>
 <booleanAttribute key="com.renesas.cdt.core.useRemoteTarget" value="true"/>
 <booleanAttribute key="com.renesas.cdt.core.verboseMode" value="true"/>
-<stringAttribute key="com.renesas.cdt.debug.ioview.dsf.registerSelection" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;selectedRegisterList ioFilePath=&quot;C:\work\dev\e2_studio\eclipse\&quot;/&gt;&#13;&#10;"/>
+<stringAttribute key="com.renesas.cdt.debug.ioview.dsf.registerSelection" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;selectedRegisterList ioFilePath=&quot;C:\work\dev\e2_studio\internal\IoFiles\RZ\RZA1.sfrx&quot;/&gt;&#13;&#10;"/>
 <stringAttribute key="com.renesas.cdt.launch.dsf.IO_MAP" value="${eclipse_home}"/>
 <booleanAttribute key="com.renesas.cdt.launch.dsf.USE_DEFAULT_IO_MAP" value="true"/>
 <listAttribute key="com.renesas.cdt.launch.dsf.downloadImages">
@@ -37,15 +37,17 @@
 <booleanAttribute key="com.renesas.hardwaredebug.arm.jlink.connection.registerInit" value="false"/>
 <booleanAttribute key="com.renesas.hardwaredebug.arm.jlink.connection.reset" value="false"/>
 <intAttribute key="com.renesas.hardwaredebug.arm.jlink.interface.speed" value="-1"/>
-<booleanAttribute key="com.renesas.hardwaredebug.arm.jlink.interface.type" value="false"/>
+<stringAttribute key="com.renesas.hardwaredebug.arm.jlink.interface.type" value="JTAG"/>
 <stringAttribute key="com.renesas.hardwaredebug.arm.jlink.jlink.type" value="USB"/>
 <stringAttribute key="com.renesas.hardwaredebug.arm.jlink.jlink.usbSerial" value=""/>
 <booleanAttribute key="com.renesas.hardwaredebug.arm.jlink.memory.isLittleEndian" value="true"/>
+<intAttribute key="com.renesas.hardwaredebug.arm.jlink.scanChain.drPre" value="0"/>
+<intAttribute key="com.renesas.hardwaredebug.arm.jlink.scanChain.irPre" value="0"/>
 <booleanAttribute key="com.renesas.hardwaredebug.arm.jlink.scanChain.multiDevices" value="false"/>
 <intAttribute key="org.eclipse.cdt.debug.gdbjtag.core.delay" value="0"/>
 <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.doHalt" value="true"/>
 <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.doReset" value="false"/>
-<stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.imageFileName" value="C:\work\projects\e2studio\RZ\RZ_A1H_DMAC\Debug\RZ_A1H_DMAC.x"/>
+<stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.imageFileName" value="C:\work\projects\mysoftware\RZ\RZ_A1H_DMAC\Debug\RZ_A1H_DMAC.x"/>
 <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.imageOffset" value=""/>
 <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.initCommands" value=""/>
 <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.loadImage" value="false"/>
@@ -56,7 +58,7 @@
 <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.setResume" value="false"/>
 <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.setStopAt" value="true"/>
 <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.stopAt" value="main"/>
-<stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.symbolsFileName" value="C:\work\projects\e2studio\RZ\RZ_A1H_DMAC\Debug\RZ_A1H_DMAC.x"/>
+<stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.symbolsFileName" value="C:\work\projects\mysoftware\RZ\RZ_A1H_DMAC\Debug\RZ_A1H_DMAC.x"/>
 <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.symbolsOffset" value=""/>
 <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.useFileForImage" value="false"/>
 <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.useFileForSymbols" value="false"/>

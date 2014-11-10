@@ -202,7 +202,7 @@
 									<listOptionValue builtIn="false" value="&quot;${TC_PATH}/lib/gcc/arm-none-eabi//${GCC_VERSION}&quot;"/>
 								</option>
 								<option id="com.renesas.cdt.rz.Debug.Linker.option.dataEndian.370114016" name="Endian" superClass="com.renesas.cdt.rz.Debug.Linker.option.dataEndian" value="Little-endian" valueType="enumerated"/>
-								<option command=" -T&quot;C:/work/projects/e2studio/RZ/RZ_A1H_DMAC\Debug\LinkerSubCommand.tmp&quot; -T" id="com.renesas.cdt.core.Linker.option.file.521632182" name="File" superClass="com.renesas.cdt.core.Linker.option.file" value="&quot;C:/work/projects/e2studio/RZ/RZ_A1H_DMAC/compiler_specific/GCC-QSPI-APP.ld&quot;" valueType="string"/>
+								<option command=" -T&quot;C:/work/projects/mysoftware/RZ/RZ_A1H_DMAC\Debug\LinkerSubCommand.tmp&quot; -T" id="com.renesas.cdt.core.Linker.option.file.521632182" name="File" superClass="com.renesas.cdt.core.Linker.option.file" value="&quot;${workspace_loc}\\${ProjName}\compiler_specific\GCC-QSPI-APP.ld&quot;" valueType="string"/>
 								<option id="com.renesas.cdt.core.Linker.option.linkOrderList.1536343219" name="" superClass="com.renesas.cdt.core.Linker.option.linkOrderList" valueType="stringList">
 									<listOptionValue builtIn="false" value="&quot;.\src\ascii.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\bsc.o&quot;"/>

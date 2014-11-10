@@ -7,6 +7,6 @@ exec SetSkipProgOnCRCMatch=0
 //
 // Download application into QSPI flash
 //
-loadbin .\RZ_A1H_DMAC.bin, 0x18000000
-verifybin .\RZ_A1H_DMAC.bin, 0x18000000
+loadbin .\RZ_A1H_DMAC.bin, 0x18040000
+verifybin .\RZ_A1H_DMAC.bin, 0x18040000
 exit
