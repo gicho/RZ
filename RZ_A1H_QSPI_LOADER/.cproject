@@ -146,7 +146,6 @@
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/inc/iodefines&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/inc/iobitmasks&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/compiler_specific/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/qspi_controller_driver/inc&quot;"/>
 								</option>
 								<option id="com.renesas.cdt.rz.Debug.Compiler.option.userDefinedOptions.1301680548" name="User defined options" superClass="com.renesas.cdt.rz.Debug.Compiler.option.userDefinedOptions" valueType="stringList">

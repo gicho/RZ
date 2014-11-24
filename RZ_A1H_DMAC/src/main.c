@@ -72,7 +72,7 @@ Includes   <System Includes> , "Project Includes"
 /* Main sample module header */
 #include "main.h"
 
-#include "assembler_macros.h"
+#include "cache-v7.h"
 
 /******************************************************************************
 Macro definitions
@@ -329,7 +329,7 @@ void dmac_cached_uncached(void)
     }
 
     /* write back the cached data before transfer */
-    v7_dma_map_area(dmac_src_data_cachedram, DMAC_BUFF_SIZE, DMA_TO_DEVICE);
+    v7_dma_map_area((uint32_t) dmac_src_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_TO_DEVICE);
 
     initialise_dma8bit(dmac_src_data_cachedram, dmac_dst_data_ram, DMAC_BUFF_SIZE);
 
@@ -338,7 +338,7 @@ void dmac_cached_uncached(void)
         __asm("nop");
     }
 
-    v7_dma_unmap_area(dmac_src_data_cachedram, DMAC_BUFF_SIZE, DMA_TO_DEVICE);
+    v7_dma_unmap_area((uint32_t) dmac_src_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_TO_DEVICE);
 
     if(verify_data_set(dmac_dst_data_ram, BUFF_INIT_BYTE) == true)
     {
@@ -376,7 +376,7 @@ void dmac_uncached_cached(void)
         __asm("nop");
     }
 
-    v7_dma_map_area(dmac_dst_data_cachedram, DMAC_BUFF_SIZE, DMA_FROM_DEVICE);
+    v7_dma_map_area((uint32_t) dmac_dst_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
 
     initialise_dma8bit(dmac_src_data_ram, dmac_dst_data_cachedram, DMAC_BUFF_SIZE);
 
@@ -386,7 +386,7 @@ void dmac_uncached_cached(void)
     }
 
     /* invalidate the cached data before reading */
-    v7_dma_unmap_area(dmac_dst_data_cachedram, DMAC_BUFF_SIZE, DMA_FROM_DEVICE);
+    v7_dma_unmap_area((uint32_t) dmac_dst_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
 
     if(verify_data_set(dmac_dst_data_cachedram, BUFF_INIT_BYTE) == true)
     {
@@ -425,8 +425,8 @@ void dmac_cached_cached(void)
     }
 
     /* write back the cached data before reading */
-    v7_dma_map_area(dmac_src_data_cachedram, DMAC_BUFF_SIZE, DMA_TO_DEVICE);
-    v7_dma_map_area(dmac_dst_data_cachedram, DMAC_BUFF_SIZE, DMA_FROM_DEVICE);
+    v7_dma_map_area((uint32_t) dmac_src_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_TO_DEVICE);
+    v7_dma_map_area((uint32_t) dmac_dst_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
 
     initialise_dma8bit(dmac_src_data_ram, dmac_dst_data_cachedram, DMAC_BUFF_SIZE);
 
@@ -436,8 +436,8 @@ void dmac_cached_cached(void)
     }
 
     /* invalidate the cached data before reading */
-    v7_dma_unmap_area(dmac_src_data_cachedram, DMAC_BUFF_SIZE, DMA_TO_DEVICE);
-    v7_dma_unmap_area(dmac_dst_data_cachedram, DMAC_BUFF_SIZE, DMA_FROM_DEVICE);
+    v7_dma_unmap_area((uint32_t) dmac_src_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_TO_DEVICE);
+    v7_dma_unmap_area((uint32_t) dmac_dst_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
 
     if(verify_data_set(dmac_dst_data_cachedram, BUFF_INIT_BYTE) == true)
     {
