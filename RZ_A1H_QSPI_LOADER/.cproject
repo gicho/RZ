@@ -32,7 +32,6 @@
 							<tool id="com.renesas.cdt.rz.debug.win32.tool.compiler.Id.856760718" name="Compiler" superClass="com.renesas.cdt.rz.debug.win32.tool.compiler.Id">
 								<option defaultValue="true" id="com.renesas.cdt.core.Compiler.option.misc2.216095970" name="Don't search standard system directories for header files(-nostdinc)" superClass="com.renesas.cdt.core.Compiler.option.misc2" value="false" valueType="boolean"/>
 								<option id="com.renesas.cdt.core.Compiler.option.includeFileDir.1874995299" name="Include file directories" superClass="com.renesas.cdt.core.Compiler.option.includeFileDir" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${TC_PATH}/arm-none-eabi/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TC_PATH}/bin/newlib/libc/sys/arm&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/inc/iodefines&quot;"/>
