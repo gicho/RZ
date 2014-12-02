@@ -46,6 +46,9 @@ Macro definitions
 #define DMA_RAM_BUFFER __attribute__ ((section (".DMA_BUFFER_IRAM")))
 #define DMA_RAM_CACHED_BUFFER __attribute__ ((section (".DMA_BUFFER_CACHED_IRAM")))
 
+#define DMA_SDRAM_BUFFER __attribute__ ((section (".DMA_BUFFER_SDRAM")))
+#define DMA_SDRAM_CACHED_BUFFER __attribute__ ((section (".DMA_BUFFER_CACHED_SDRAM")))
+
 // #define BSS_SDRAM_SECTION   __attribute__ ((section (".BSS_DMAC_SAMPLE_SDRAM")))
 #define VRAM_SECTION  __attribute__ ((section (".display_buffer_section")))
 

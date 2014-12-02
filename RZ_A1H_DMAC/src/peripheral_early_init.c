@@ -109,61 +109,13 @@ void CPG_Init(void)
     dummy = CPG.SYSCR3.BYTE;
 }
 
-/*******************************************************************************
-* Function Name: CS0_PORTInit
-* Description  : Sets the PORT multiplexed pin to use the CS0 and the CS1 
-*              : spaces. In this sample code, the PORT setting is executed to 
-*              : use the NOR flash memory in the CS0 and the CS1 spaces.
-* Arguments    : none
-* Return Value : none
-*******************************************************************************/
-void CS0_PORTInit(void)
-{
-    /* ==== BSC settings ==== */
+void ExternalBus_AddressDataLines_Init(void) {
 
-	/* ---- P3_7 : CS1 ---- */
-    /* Port mode : Multiplex mode                     */
-    /* Port function setting : 7th multiplex function */
-    /* I/O control mode : Peripheral function         */
-    RZA_IO_RegWrite_16(&GPIO.PFCAE3, 1, GPIO_PFCAE3_PFCAE37_SHIFT, GPIO_PFCAE3_PFCAE37);
-    RZA_IO_RegWrite_16(&GPIO.PFCE3,  1, GPIO_PFCE3_PFCE37_SHIFT,   GPIO_PFCE3_PFCE37);
-    RZA_IO_RegWrite_16(&GPIO.PFC3,   0, GPIO_PFC3_PFC37_SHIFT,     GPIO_PFC3_PFC37);
-    RZA_IO_RegWrite_16(&GPIO.PMC3,   1, GPIO_PMC3_PMC37_SHIFT,     GPIO_PMC3_PMC37);
-    RZA_IO_RegWrite_16(&GPIO.PIPC3,  1, GPIO_PIPC3_PIPC37_SHIFT,   GPIO_PIPC3_PIPC37);
 
-    /* ---- P7_0 : CS0 ---- */
-    /* Port mode : Multiplex mode                     */
-    /* Port function setting : 1st multiplex function */
-    /* I/O control mode : Peripheral function         */
-    RZA_IO_RegWrite_16(&GPIO.PFCAE7, 0, GPIO_PFCAE7_PFCAE70_SHIFT, GPIO_PFCAE7_PFCAE70);
-    RZA_IO_RegWrite_16(&GPIO.PFCE7,  0, GPIO_PFCE7_PFCE70_SHIFT,   GPIO_PFCE7_PFCE70);
-    RZA_IO_RegWrite_16(&GPIO.PFC7,   0, GPIO_PFC7_PFC70_SHIFT,     GPIO_PFC7_PFC70);
-    RZA_IO_RegWrite_16(&GPIO.PMC7,   1, GPIO_PMC7_PMC70_SHIFT,     GPIO_PMC7_PMC70);
-    RZA_IO_RegWrite_16(&GPIO.PIPC7,  1, GPIO_PIPC7_PIPC70_SHIFT,   GPIO_PIPC7_PIPC70);
+	// configure the common data lines used from both memories
+	#if (USE_SDRAM | USE_NOR_FLASH)
 
-    /* ---- P7_6 : WE0# / DQMLL# ---- */
-    /* Port mode : Multiplex mode                     */
-    /* Port function setting : 1st multiplex function */
-    /* I/O control mode : Peripheral function         */
-    RZA_IO_RegWrite_16(&GPIO.PFCAE7, 0, GPIO_PFCAE7_PFCAE76_SHIFT, GPIO_PFCAE7_PFCAE76);
-    RZA_IO_RegWrite_16(&GPIO.PFCE7,  0, GPIO_PFCE7_PFCE76_SHIFT,   GPIO_PFCE7_PFCE76);
-    RZA_IO_RegWrite_16(&GPIO.PFC7,   0, GPIO_PFC7_PFC76_SHIFT,     GPIO_PFC7_PFC76);
-    RZA_IO_RegWrite_16(&GPIO.PMC7,   1, GPIO_PMC7_PMC76_SHIFT,     GPIO_PMC7_PMC76);
-    RZA_IO_RegWrite_16(&GPIO.PIPC7,  1, GPIO_PIPC7_PIPC76_SHIFT,   GPIO_PIPC7_PIPC76);
-
-    /* ---- P7_8 : RD ---- */
-    /* Port mode : Multiplex mode                     */
-    /* Port function setting : 1st multiplex function */
-    /* I/O control mode : Peripheral function         */
-    RZA_IO_RegWrite_16(&GPIO.PFCAE7, 0, GPIO_PFCAE7_PFCAE78_SHIFT, GPIO_PFCAE7_PFCAE78);
-    RZA_IO_RegWrite_16(&GPIO.PFCE7,  0, GPIO_PFCE7_PFCE78_SHIFT,   GPIO_PFCE7_PFCE78);
-    RZA_IO_RegWrite_16(&GPIO.PFC7,   0, GPIO_PFC7_PFC78_SHIFT,     GPIO_PFC7_PFC78);
-    RZA_IO_RegWrite_16(&GPIO.PMC7,   1, GPIO_PMC7_PMC78_SHIFT,     GPIO_PMC7_PMC78);
-    RZA_IO_RegWrite_16(&GPIO.PIPC7,  1, GPIO_PIPC7_PIPC78_SHIFT,   GPIO_PIPC7_PIPC78);
-
-#ifdef USE_SDRAM_MODE
-
-    /* ---- P6_0 : D0 ---- */
+	/* ---- P6_0 : D0 ---- */
     /* Port mode : Multiplex mode                     */
     /* Port function setting : 1st multiplex function */
     /* I/O control mode : Peripheral function         */
@@ -323,6 +275,11 @@ void CS0_PORTInit(void)
     RZA_IO_RegWrite_16(&GPIO.PMC6,   1, GPIO_PMC6_PMC615_SHIFT,     GPIO_PMC6_PMC615);
     RZA_IO_RegWrite_16(&GPIO.PIPC6,  1, GPIO_PIPC6_PIPC615_SHIFT,   GPIO_PIPC6_PIPC615);
 
+    #endif
+
+    // configure the common lines used for both memories
+    #if (USE_SDRAM | USE_NOR_FLASH)
+
     /* ---- P7_9 : A1 ---- */
     /* Port mode : Multiplex mode                     */
     /* Port function setting : 1st multiplex function */
@@ -476,6 +433,11 @@ void CS0_PORTInit(void)
     RZA_IO_RegWrite_16(&GPIO.PMC8,   1, GPIO_PMC8_PMC86_SHIFT,     GPIO_PMC8_PMC86);
     RZA_IO_RegWrite_16(&GPIO.PIPC8,  1, GPIO_PIPC8_PIPC86_SHIFT,   GPIO_PIPC8_PIPC86);
 
+#endif
+
+    // configure the additional address lines for the NOR flash
+	#if (USE_NOR_FLASH)
+
     /* ---- P8_7 : A15 ---- */
     /* Port mode : Multiplex mode                     */
     /* Port function setting : 1st multiplex function */
@@ -596,8 +558,152 @@ void CS0_PORTInit(void)
     RZA_IO_RegWrite_16(&GPIO.PM9,    0, GPIO_PM9_PM91_SHIFT,       GPIO_PM9_PM91);
     RZA_IO_RegWrite_16(&GPIO.PMC9,   1, GPIO_PMC9_PMC91_SHIFT,     GPIO_PMC9_PMC91);
     RZA_IO_RegWrite_16(&GPIO.PIPC9,  1, GPIO_PIPC9_PIPC91_SHIFT,   GPIO_PIPC9_PIPC91);
-#endif
 
+	#endif
+
+}
+
+/*******************************************************************************
+* Function Name: CS0_PORTInit
+* Description  : Sets the PORT multiplexed pin to use the CS0 and the CS1
+*              : spaces. In this sample code, the PORT setting is executed to
+*              : use the NOR flash memory in the CS0 and the CS1 spaces.
+* Arguments    : none
+* Return Value : none
+*******************************************************************************/
+void CS0_PORTInit(void)
+{
+    /* ==== BSC settings ==== */
+
+	/* ---- P3_7 : CS1 ---- */
+    /* Port mode : Multiplex mode                     */
+    /* Port function setting : 7th multiplex function */
+    /* I/O control mode : Peripheral function         */
+	// GP this is not needed since P3_7 is used for Pmod1 display and on CS1 there is nothing connected
+	// on the RSK
+//    RZA_IO_RegWrite_16(&GPIO.PFCAE3, 1, GPIO_PFCAE3_PFCAE37_SHIFT, GPIO_PFCAE3_PFCAE37);
+//    RZA_IO_RegWrite_16(&GPIO.PFCE3,  1, GPIO_PFCE3_PFCE37_SHIFT,   GPIO_PFCE3_PFCE37);
+//    RZA_IO_RegWrite_16(&GPIO.PFC3,   0, GPIO_PFC3_PFC37_SHIFT,     GPIO_PFC3_PFC37);
+//    RZA_IO_RegWrite_16(&GPIO.PMC3,   1, GPIO_PMC3_PMC37_SHIFT,     GPIO_PMC3_PMC37);
+//    RZA_IO_RegWrite_16(&GPIO.PIPC3,  1, GPIO_PIPC3_PIPC37_SHIFT,   GPIO_PIPC3_PIPC37);
+
+    /* ---- P7_0 : CS0 ---- */
+    /* Port mode : Multiplex mode                     */
+    /* Port function setting : 1st multiplex function */
+    /* I/O control mode : Peripheral function         */
+    RZA_IO_RegWrite_16(&GPIO.PFCAE7, 0, GPIO_PFCAE7_PFCAE70_SHIFT, GPIO_PFCAE7_PFCAE70);
+    RZA_IO_RegWrite_16(&GPIO.PFCE7,  0, GPIO_PFCE7_PFCE70_SHIFT,   GPIO_PFCE7_PFCE70);
+    RZA_IO_RegWrite_16(&GPIO.PFC7,   0, GPIO_PFC7_PFC70_SHIFT,     GPIO_PFC7_PFC70);
+    RZA_IO_RegWrite_16(&GPIO.PMC7,   1, GPIO_PMC7_PMC70_SHIFT,     GPIO_PMC7_PMC70);
+    RZA_IO_RegWrite_16(&GPIO.PIPC7,  1, GPIO_PIPC7_PIPC70_SHIFT,   GPIO_PIPC7_PIPC70);
+
+    /* ---- P7_6 : WE0# / DQMLL# ---- */
+    /* Port mode : Multiplex mode                     */
+    /* Port function setting : 1st multiplex function */
+    /* I/O control mode : Peripheral function         */
+    RZA_IO_RegWrite_16(&GPIO.PFCAE7, 0, GPIO_PFCAE7_PFCAE76_SHIFT, GPIO_PFCAE7_PFCAE76);
+    RZA_IO_RegWrite_16(&GPIO.PFCE7,  0, GPIO_PFCE7_PFCE76_SHIFT,   GPIO_PFCE7_PFCE76);
+    RZA_IO_RegWrite_16(&GPIO.PFC7,   0, GPIO_PFC7_PFC76_SHIFT,     GPIO_PFC7_PFC76);
+    RZA_IO_RegWrite_16(&GPIO.PMC7,   1, GPIO_PMC7_PMC76_SHIFT,     GPIO_PMC7_PMC76);
+    RZA_IO_RegWrite_16(&GPIO.PIPC7,  1, GPIO_PIPC7_PIPC76_SHIFT,   GPIO_PIPC7_PIPC76);
+
+    /* ---- P7_8 : RD ---- */
+    /* Port mode : Multiplex mode                     */
+    /* Port function setting : 1st multiplex function */
+    /* I/O control mode : Peripheral function         */
+    RZA_IO_RegWrite_16(&GPIO.PFCAE7, 0, GPIO_PFCAE7_PFCAE78_SHIFT, GPIO_PFCAE7_PFCAE78);
+    RZA_IO_RegWrite_16(&GPIO.PFCE7,  0, GPIO_PFCE7_PFCE78_SHIFT,   GPIO_PFCE7_PFCE78);
+    RZA_IO_RegWrite_16(&GPIO.PFC7,   0, GPIO_PFC7_PFC78_SHIFT,     GPIO_PFC7_PFC78);
+    RZA_IO_RegWrite_16(&GPIO.PMC7,   1, GPIO_PMC7_PMC78_SHIFT,     GPIO_PMC7_PMC78);
+    RZA_IO_RegWrite_16(&GPIO.PIPC7,  1, GPIO_PIPC7_PIPC78_SHIFT,   GPIO_PIPC7_PIPC78);
+
+
+
+}
+
+void CS2_PORTInit(void)
+{
+    /* ==== BSC settings ==== */
+
+    /* ---- P5_8 : CS2 ---- */
+    /* Port mode : Multiplex mode                     */
+    /* Port function setting : 6th multiplex function */
+    /* I/O control mode : Peripheral function         */
+    RZA_IO_RegWrite_16(&GPIO.PFCAE5, 1, GPIO_PFCAE5_PFCAE58_SHIFT, GPIO_PFCAE5_PFCAE58);
+    RZA_IO_RegWrite_16(&GPIO.PFCE5,  0, GPIO_PFCE5_PFCE58_SHIFT,   GPIO_PFCE5_PFCE58);
+    RZA_IO_RegWrite_16(&GPIO.PFC5,   1, GPIO_PFC5_PFC58_SHIFT,     GPIO_PFC5_PFC58);
+    RZA_IO_RegWrite_16(&GPIO.PMC5,   1, GPIO_PMC5_PMC58_SHIFT,     GPIO_PMC5_PMC58);
+    RZA_IO_RegWrite_16(&GPIO.PIPC5,  1, GPIO_PIPC5_PIPC58_SHIFT,   GPIO_PIPC5_PIPC58);
+
+    /* ---- P7_1 : CS3 ---- */
+    /* Port mode : Multiplex mode                     */
+    /* Port function setting : 1st multiplex function */
+    /* I/O control mode : Peripheral function         */
+    RZA_IO_RegWrite_16(&GPIO.PFCAE7, 0, GPIO_PFCAE7_PFCAE71_SHIFT, GPIO_PFCAE7_PFCAE71);
+    RZA_IO_RegWrite_16(&GPIO.PFCE7,  0, GPIO_PFCE7_PFCE71_SHIFT,   GPIO_PFCE7_PFCE71);
+    RZA_IO_RegWrite_16(&GPIO.PFC7,   0, GPIO_PFC7_PFC71_SHIFT,     GPIO_PFC7_PFC71);
+    RZA_IO_RegWrite_16(&GPIO.PMC7,   1, GPIO_PMC7_PMC71_SHIFT,     GPIO_PMC7_PMC71);
+    RZA_IO_RegWrite_16(&GPIO.PIPC7,  1, GPIO_PIPC7_PIPC71_SHIFT,   GPIO_PIPC7_PIPC71);
+
+    /* ---- P7_2 : RAS# ---- */
+    /* Port mode : Multiplex mode                     */
+    /* Port function setting : 1st multiplex function */
+    /* I/O control mode : Peripheral function         */
+    RZA_IO_RegWrite_16(&GPIO.PFCAE7, 0, GPIO_PFCAE7_PFCAE72_SHIFT, GPIO_PFCAE7_PFCAE72);
+    RZA_IO_RegWrite_16(&GPIO.PFCE7,  0, GPIO_PFCE7_PFCE72_SHIFT,   GPIO_PFCE7_PFCE72);
+    RZA_IO_RegWrite_16(&GPIO.PFC7,   0, GPIO_PFC7_PFC72_SHIFT,     GPIO_PFC7_PFC72);
+    RZA_IO_RegWrite_16(&GPIO.PMC7,   1, GPIO_PMC7_PMC72_SHIFT,     GPIO_PMC7_PMC72);
+    RZA_IO_RegWrite_16(&GPIO.PIPC7,  1, GPIO_PIPC7_PIPC72_SHIFT,   GPIO_PIPC7_PIPC72);
+
+    /* ---- P7_3 : CAS# ---- */
+    /* Port mode : Multiplex mode                     */
+    /* Port function setting : 1st multiplex function */
+    /* I/O control mode : Peripheral function         */
+    RZA_IO_RegWrite_16(&GPIO.PFCAE7, 0, GPIO_PFCAE7_PFCAE73_SHIFT, GPIO_PFCAE7_PFCAE73);
+    RZA_IO_RegWrite_16(&GPIO.PFCE7,  0, GPIO_PFCE7_PFCE73_SHIFT,   GPIO_PFCE7_PFCE73);
+    RZA_IO_RegWrite_16(&GPIO.PFC7,   0, GPIO_PFC7_PFC73_SHIFT,     GPIO_PFC7_PFC73);
+    RZA_IO_RegWrite_16(&GPIO.PMC7,   1, GPIO_PMC7_PMC73_SHIFT,     GPIO_PMC7_PMC73);
+    RZA_IO_RegWrite_16(&GPIO.PIPC7,  1, GPIO_PIPC7_PIPC73_SHIFT,   GPIO_PIPC7_PIPC73);
+
+    /* ---- P7_4 : CKE ---- */
+    /* Port mode : Multiplex mode                     */
+    /* Port function setting : 1st multiplex function */
+    /* I/O control mode : Peripheral function         */
+    RZA_IO_RegWrite_16(&GPIO.PFCAE7, 0, GPIO_PFCAE7_PFCAE74_SHIFT, GPIO_PFCAE7_PFCAE74);
+    RZA_IO_RegWrite_16(&GPIO.PFCE7,  0, GPIO_PFCE7_PFCE74_SHIFT,   GPIO_PFCE7_PFCE74);
+    RZA_IO_RegWrite_16(&GPIO.PFC7,   0, GPIO_PFC7_PFC74_SHIFT,     GPIO_PFC7_PFC74);
+    RZA_IO_RegWrite_16(&GPIO.PMC7,   1, GPIO_PMC7_PMC74_SHIFT,     GPIO_PMC7_PMC74);
+    RZA_IO_RegWrite_16(&GPIO.PIPC7,  1, GPIO_PIPC7_PIPC74_SHIFT,   GPIO_PIPC7_PIPC74);
+
+    /* ---- P7_5 : RD/WR# ---- */
+    /* Port mode : Multiplex mode                     */
+    /* Port function setting : 1st multiplex function */
+    /* I/O control mode : Peripheral function         */
+    RZA_IO_RegWrite_16(&GPIO.PFCAE7, 0, GPIO_PFCAE7_PFCAE75_SHIFT, GPIO_PFCAE7_PFCAE75);
+    RZA_IO_RegWrite_16(&GPIO.PFCE7,  0, GPIO_PFCE7_PFCE75_SHIFT,   GPIO_PFCE7_PFCE75);
+    RZA_IO_RegWrite_16(&GPIO.PFC7,   0, GPIO_PFC7_PFC75_SHIFT,     GPIO_PFC7_PFC75);
+    RZA_IO_RegWrite_16(&GPIO.PMC7,   1, GPIO_PMC7_PMC75_SHIFT,     GPIO_PMC7_PMC75);
+    RZA_IO_RegWrite_16(&GPIO.PIPC7,  1, GPIO_PIPC7_PIPC75_SHIFT,   GPIO_PIPC7_PIPC75);
+
+    /* ---- P7_6 : DQMLL# ---- */
+    /* Port mode : Multiplex mode                     */
+    /* Port function setting : 1st multiplex function */
+    /* I/O control mode : Peripheral function         */
+    RZA_IO_RegWrite_16(&GPIO.PFCAE7, 0, GPIO_PFCAE7_PFCAE76_SHIFT, GPIO_PFCAE7_PFCAE76);
+    RZA_IO_RegWrite_16(&GPIO.PFCE7,  0, GPIO_PFCE7_PFCE76_SHIFT,   GPIO_PFCE7_PFCE76);
+    RZA_IO_RegWrite_16(&GPIO.PFC7,   0, GPIO_PFC7_PFC76_SHIFT,     GPIO_PFC7_PFC76);
+    RZA_IO_RegWrite_16(&GPIO.PMC7,   1, GPIO_PMC7_PMC76_SHIFT,     GPIO_PMC7_PMC76);
+    RZA_IO_RegWrite_16(&GPIO.PIPC7,  1, GPIO_PIPC7_PIPC76_SHIFT,   GPIO_PIPC7_PIPC76);
+
+    /* ---- P7_7 : DQMLU# ---- */
+    /* Port mode : Multiplex mode                     */
+    /* Port function setting : 1st multiplex function */
+    /* I/O control mode : Peripheral function         */
+    RZA_IO_RegWrite_16(&GPIO.PFCAE7, 0, GPIO_PFCAE7_PFCAE77_SHIFT, GPIO_PFCAE7_PFCAE77);
+    RZA_IO_RegWrite_16(&GPIO.PFCE7,  0, GPIO_PFCE7_PFCE77_SHIFT,   GPIO_PFCE7_PFCE77);
+    RZA_IO_RegWrite_16(&GPIO.PFC7,   0, GPIO_PFC7_PFC77_SHIFT,     GPIO_PFC7_PFC77);
+    RZA_IO_RegWrite_16(&GPIO.PMC7,   1, GPIO_PMC7_PMC77_SHIFT,     GPIO_PMC7_PMC77);
+    RZA_IO_RegWrite_16(&GPIO.PIPC7,  1, GPIO_PIPC7_PIPC77_SHIFT,   GPIO_PIPC7_PIPC77);
 }
 
 /* End of File */

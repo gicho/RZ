@@ -99,6 +99,19 @@ static uint8_t DMA_RAM_CACHED_BUFFER dmac_src_data_cachedram[DMAC_BUFF_SIZE];
 /* Destination Buffer : Place in On-Chip CACHED RAM */
 static uint8_t DMA_RAM_CACHED_BUFFER dmac_dst_data_cachedram[DMAC_BUFF_SIZE];
 
+/* Source Buffer : Place in SDRAM (cache invalid area) */
+static uint8_t DMA_SDRAM_BUFFER dmac_src_data_sdram[DMAC_BUFF_SIZE];
+
+/* Destination Buffer : Place in SDRAM (cache invalid area)*/
+static uint8_t DMA_SDRAM_BUFFER dmac_dst_data_sdram[DMAC_BUFF_SIZE];
+
+/* Source Buffer : Place in CACHED SDRAM */
+static uint8_t DMA_SDRAM_CACHED_BUFFER dmac_src_data_cachedsdram[DMAC_BUFF_SIZE];
+
+/* Destination Buffer : Place in CACHED SDRAM */
+static uint8_t DMA_SDRAM_CACHED_BUFFER dmac_dst_data_cachedsdram[DMAC_BUFF_SIZE];
+
+
 bool_t dmac_ch3_trans_flg = false;
 
 bool_t verify_data_set(uint8_t* buffer, uint8_t reference)
@@ -294,11 +307,11 @@ void dmac_uncached_uncached(void)
 
     if(verify_data_set(dmac_dst_data_ram, BUFF_INIT_BYTE) == true)
     {
-        Display_LCD(10, (uint8_t *)" Complete - OK ");
+        Display_LCD(10, (uint8_t *)" Complete - OK");
     }
     else
     {
-        Display_LCD(10, (uint8_t *)" Complete - Failed ");
+        Display_LCD(10, (uint8_t *)" Complete - Failed");
         while(1);
     }
 }
@@ -342,11 +355,11 @@ void dmac_cached_uncached(void)
 
     if(verify_data_set(dmac_dst_data_ram, BUFF_INIT_BYTE) == true)
     {
-        Display_LCD(10, (uint8_t *)"Complete - OK  ");
+        Display_LCD(10, (uint8_t *)" Complete - OK");
     }
     else
     {
-        Display_LCD(10, (uint8_t *)" Complete - Failed ");
+        Display_LCD(10, (uint8_t *)" Complete - Failed");
         while(1);
     }
 }
@@ -390,11 +403,11 @@ void dmac_uncached_cached(void)
 
     if(verify_data_set(dmac_dst_data_cachedram, BUFF_INIT_BYTE) == true)
     {
-        Display_LCD(10, (uint8_t *)"Complete - OK  ");
+        Display_LCD(10, (uint8_t *)" Complete - OK");
     }
     else
     {
-        Display_LCD(10, (uint8_t *)" Complete - Failed ");
+        Display_LCD(10, (uint8_t *)" Complete - Failed");
         while(1);
     }
 }
@@ -441,14 +454,200 @@ void dmac_cached_cached(void)
 
     if(verify_data_set(dmac_dst_data_cachedram, BUFF_INIT_BYTE) == true)
     {
-        Display_LCD(10, (uint8_t *)"Complete - OK  ");
+        Display_LCD(10, (uint8_t *)" Complete - OK");
     }
     else
     {
-        Display_LCD(10, (uint8_t *)" Complete - Failed ");
+        Display_LCD(10, (uint8_t *)" Complete - Failed");
         while(1);
     }
 }
+
+/* transfers using sdram */
+void dmac_ram_uncached_sdram_uncached(void)
+{
+    char str[16];
+
+    Display_LCD(3, (uint8_t *)" From uncached RAM");
+    sprintf(str, " ADDR 0x%08x",(uint)dmac_src_data_ram);
+    Display_LCD(4, (uint8_t *)str);
+
+    Display_LCD(6, (uint8_t *)" To uncached SDRAM");
+    sprintf(str, " ADDR 0x%08x",(uint)dmac_dst_data_sdram);
+    Display_LCD(7, (uint8_t *)str);
+
+    initialise_data(dmac_src_data_ram, BUFF_INIT_BYTE, DMAC_BUFF_SIZE);
+    initialise_data(dmac_dst_data_sdram, 0x00, DMAC_BUFF_SIZE);
+
+    Display_LCD(9, (uint8_t *)" Press SW1,SW2,or SW3");
+
+    g_switch_press_flg = 0u;
+
+    /* wait for switch (1, 2, 3)press */
+    while(0u == (g_switch_press_flg & SW_ALL_ON))
+    {
+        __asm("nop");
+    }
+
+    initialise_dma8bit(dmac_src_data_ram, dmac_dst_data_sdram, DMAC_BUFF_SIZE);
+
+    while(dmac_ch3_trans_flg == false)
+    {
+        __asm("nop");
+    }
+
+    if(verify_data_set(dmac_dst_data_sdram, BUFF_INIT_BYTE) == true)
+    {
+        Display_LCD(10, (uint8_t *)" Complete - OK");
+    }
+    else
+    {
+        Display_LCD(10, (uint8_t *)" Complete - Failed");
+        while(1);
+    }
+}
+
+void dmac_sdram_uncached_ram_uncached(void)
+{
+    char str[16];
+
+    Display_LCD(3, (uint8_t *)" From uncached SDRAM");
+    sprintf(str, " ADDR 0x%08x",(uint)dmac_src_data_sdram);
+    Display_LCD(4, (uint8_t *)str);
+
+    Display_LCD(6, (uint8_t *)" To uncached RAM");
+    sprintf(str, " ADDR 0x%08x",(uint)dmac_dst_data_ram);
+    Display_LCD(7, (uint8_t *)str);
+
+    initialise_data(dmac_src_data_sdram, BUFF_INIT_BYTE, DMAC_BUFF_SIZE);
+    initialise_data(dmac_dst_data_ram, 0x00, DMAC_BUFF_SIZE);
+
+    Display_LCD(9, (uint8_t *)" Press SW1,SW2,or SW3");
+
+    g_switch_press_flg = 0u;
+
+    /* wait for switch (1, 2, 3)press */
+    while(0u == (g_switch_press_flg & SW_ALL_ON))
+    {
+        __asm("nop");
+    }
+
+    initialise_dma8bit(dmac_src_data_sdram, dmac_dst_data_ram, DMAC_BUFF_SIZE);
+
+    while(dmac_ch3_trans_flg == false)
+    {
+        __asm("nop");
+    }
+
+    if(verify_data_set(dmac_dst_data_ram, BUFF_INIT_BYTE) == true)
+    {
+        Display_LCD(10, (uint8_t *)" Complete - OK");
+    }
+    else
+    {
+        Display_LCD(10, (uint8_t *)" Complete - Failed");
+        while(1);
+    }
+}
+
+
+void dmac_ram_cached_sdram_uncached(void)
+{
+	   char str[16];
+
+	    Display_LCD(3, (uint8_t *)" From cached RAM");
+	    sprintf(str, " ADDR 0x%08x",(uint)dmac_src_data_cachedram);
+	    Display_LCD(4, (uint8_t *)str);
+
+	    Display_LCD(6, (uint8_t *)" To uncached SDRAM");
+	    sprintf(str, " ADDR 0x%08x",(uint)dmac_dst_data_sdram);
+	    Display_LCD(7, (uint8_t *)str);
+
+	    initialise_data(dmac_src_data_cachedram, BUFF_INIT_BYTE, DMAC_BUFF_SIZE);
+	    initialise_data(dmac_dst_data_sdram, 0x00, DMAC_BUFF_SIZE);
+
+	    Display_LCD(9, (uint8_t *)" Press SW1,SW2,or SW3");
+
+	    g_switch_press_flg = 0u;
+
+	    /* wait for switch (1, 2, 3)press */
+	    while(0u == (g_switch_press_flg & SW_ALL_ON))
+	    {
+	        __asm("nop");
+	    }
+
+	    /* write back the cached data before transfer */
+	    v7_dma_map_area((uint32_t) dmac_src_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_TO_DEVICE);
+
+	    initialise_dma8bit(dmac_src_data_cachedram, dmac_dst_data_sdram, DMAC_BUFF_SIZE);
+
+	    while(dmac_ch3_trans_flg == false)
+	    {
+	        __asm("nop");
+	    }
+
+	    v7_dma_unmap_area((uint32_t) dmac_src_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_TO_DEVICE);
+
+	    if(verify_data_set(dmac_dst_data_sdram, BUFF_INIT_BYTE) == true)
+	    {
+	        Display_LCD(10, (uint8_t *)" Complete - OK");
+	    }
+	    else
+	    {
+	        Display_LCD(10, (uint8_t *)" Complete - Failed");
+	        while(1);
+	    }
+}
+
+
+void dmac_sdram_uncached_ram_cached(void)
+{
+    char str[16];
+
+    Display_LCD(3, (uint8_t *)" From uncached SDRAM");
+    sprintf(str, " ADDR 0x%08x",(uint)dmac_src_data_sdram);
+    Display_LCD(4, (uint8_t *)str);
+
+    Display_LCD(6, (uint8_t *)" To cached RAM");
+    sprintf(str, " ADDR 0x%08x",(uint)dmac_dst_data_cachedram);
+    Display_LCD(7, (uint8_t *)str);
+
+    initialise_data(dmac_src_data_sdram, BUFF_INIT_BYTE, DMAC_BUFF_SIZE);
+    initialise_data(dmac_dst_data_cachedram, 0x00, DMAC_BUFF_SIZE);
+
+    Display_LCD(9, (uint8_t *)" Press SW1,SW2,or SW3");
+
+    g_switch_press_flg = 0u;
+
+    /* wait for switch (1, 2, 3)press */
+    while(0u == (g_switch_press_flg & SW_ALL_ON))
+    {
+        __asm("nop");
+    }
+
+    v7_dma_map_area((uint32_t) dmac_dst_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
+
+    initialise_dma8bit(dmac_src_data_sdram, dmac_dst_data_cachedram, DMAC_BUFF_SIZE);
+
+    while(dmac_ch3_trans_flg == false)
+    {
+        __asm("nop");
+    }
+
+    /* invalidate the cached data before reading */
+    v7_dma_unmap_area((uint32_t) dmac_dst_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
+
+    if(verify_data_set(dmac_dst_data_cachedram, BUFF_INIT_BYTE) == true)
+    {
+        Display_LCD(10, (uint8_t *)" Complete - OK");
+    }
+    else
+    {
+        Display_LCD(10, (uint8_t *)" Complete - Failed");
+        while(1);
+    }
+}
+
 
 
 /******************************************************************************
@@ -549,6 +748,89 @@ int_t main(void)
     Display_Image (&RGB888_LOGO[0], 128, 24, 0, 104);
     Display_LCD(0, (uint8_t *)" RSK+RZA1H");
     Display_LCD(1, (uint8_t *)" DMAC L1 cache test");
+    Display_LCD(3, (uint8_t *)" ALL PASSED");
+
+	Display_LCD(12, (uint8_t *)" Press SW1,SW2,or SW3");
+	g_switch_press_flg = 0u;
+	/* wait for switch (1, 2, 3)press */
+	while(0u == (g_switch_press_flg & SW_ALL_ON))
+	{
+		__asm("nop");
+	}
+
+
+	/* Now switch to the sdram buffer tests */
+
+    /* source iram uncached -> dest sdram uncached */
+	Clear_Display(COL_WHITE);
+	Display_Image (&RGB888_LOGO[0], 128, 24, 0, 104);
+	Display_LCD(0, (uint8_t *)" RSK+RZA1H");
+	Display_LCD(1, (uint8_t *)" DMAC L1 - SDRAM test");
+
+	dmac_ram_uncached_sdram_uncached();
+
+	Display_LCD(12, (uint8_t *)" Press SW1,SW2,or SW3");
+	g_switch_press_flg = 0u;
+	/* wait for switch (1, 2, 3)press */
+	while(0u == (g_switch_press_flg & SW_ALL_ON))
+	{
+		__asm("nop");
+	}
+
+    /* source iram cached -> dest sdram uncached */
+	Clear_Display(COL_WHITE);
+	Display_Image (&RGB888_LOGO[0], 128, 24, 0, 104);
+	Display_LCD(0, (uint8_t *)" RSK+RZA1H");
+	Display_LCD(1, (uint8_t *)" DMAC L1 - SDRAM test");
+
+	dmac_ram_cached_sdram_uncached();
+
+	Display_LCD(12, (uint8_t *)" Press SW1,SW2,or SW3");
+	g_switch_press_flg = 0u;
+	/* wait for switch (1, 2, 3)press */
+	while(0u == (g_switch_press_flg & SW_ALL_ON))
+	{
+		__asm("nop");
+	}
+
+    /* source sdam uncached -> dest iram uncached */
+	Clear_Display(COL_WHITE);
+	Display_Image (&RGB888_LOGO[0], 128, 24, 0, 104);
+	Display_LCD(0, (uint8_t *)" RSK+RZA1H");
+	Display_LCD(1, (uint8_t *)" DMAC L1 - SDRAM test");
+
+	dmac_sdram_uncached_ram_uncached();
+
+	Display_LCD(12, (uint8_t *)" Press SW1,SW2,or SW3");
+	g_switch_press_flg = 0u;
+	/* wait for switch (1, 2, 3)press */
+	while(0u == (g_switch_press_flg & SW_ALL_ON))
+	{
+		__asm("nop");
+	}
+
+    /* source sdram uncached -> dest iram cached */
+	Clear_Display(COL_WHITE);
+	Display_Image (&RGB888_LOGO[0], 128, 24, 0, 104);
+	Display_LCD(0, (uint8_t *)" RSK+RZA1H");
+	Display_LCD(1, (uint8_t *)" DMAC L1 - SDRAM test");
+
+	dmac_sdram_uncached_ram_cached();
+
+	Display_LCD(12, (uint8_t *)" Press SW1,SW2,or SW3");
+	g_switch_press_flg = 0u;
+	/* wait for switch (1, 2, 3)press */
+	while(0u == (g_switch_press_flg & SW_ALL_ON))
+	{
+		__asm("nop");
+	}
+
+
+
+    Clear_Display(COL_WHITE);
+    Display_Image (&RGB888_LOGO[0], 128, 24, 0, 104);
+    Display_LCD(0, (uint8_t *)" RSK+RZA1H");
+    Display_LCD(1, (uint8_t *)" DMAC L1 - SDRAM test");
     Display_LCD(3, (uint8_t *)" ALL PASSED");
 
     while(1)

@@ -107,7 +107,7 @@ goToSleep:
  reg15_power_ctrl @ offset 0xF80
  Base register is @ H'3FFFF000
 */
-/*
+
     .equ    STBY_MODE_EN      , (0x1)
     .equ    DYNCLK_GATING_DIS , (0x0)
     .equ    PWR_CTRL_BITS     , (STBY_MODE_EN | DYNCLK_GATING_DIS)
@@ -117,7 +117,7 @@ goToSleep:
     STR  r1, [r0]
     ISB
     LDR  r0, [r0]
-*/
+
 
 /* program the frequency control register
  Bit[14] = 0 - clock output enable control (unstable = 0, fixed low = 1)
@@ -126,7 +126,7 @@ goToSleep:
  Bit [5,4,2,0] - fixed to 1
  XTAL = 13,33 MHz, PLL = x30, CPU CLOCK = 400 MHz
 */
-/*
+
     .equ    CKOEN2_BIT , (0x1 << 14)
     .equ    CKOEN_BITS , (0x1 << 12)
     .equ    IFC_BITS   , (0x0 << 8)
@@ -138,7 +138,7 @@ goToSleep:
     STRH r1, [r0]
     ISB
     LDRH r0, [r0]
-*/
+
 /* BCLK is 1/3 = 133,33 MHz fixed ratio */
 /* P0CLK is 1/6 = 66,67 MHz fixed ratio */
 /* P1CLK is 1/12 = 33,33 MHz fixed ratio */
@@ -147,7 +147,7 @@ goToSleep:
  Bit [1,0] = 01b - Graphics clock ratio of 2/3
  GCLK = 266,67 MHz
 */
-/*
+
     .equ    GFC_BITS , (0x1)
 
     LDR  r0, =0xFCFE0014
@@ -155,7 +155,7 @@ goToSleep:
     STRH r1, [r0]
     ISB
     LDRH r0, [r0]
-    */
+
 
 /* ========================================================================= */
 /* Vector Table Setting															 */

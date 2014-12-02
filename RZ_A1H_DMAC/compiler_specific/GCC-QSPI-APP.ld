@@ -43,7 +43,7 @@ ENTRY(APP_reset_handler)
 MEMORY 
 {
 	/* Internal RAM address range H'2000_0000 to H'2001_FFFF is configured as data retention RAM */
-	/* Write access to this address range has to be enabled first by writing to registers SYSCR1 and SYSCR2 */
+	/* Write access to this address range has to be enabled first by writing to register SYSCR3 */
 	RETRAM0 (rwx)   : ORIGIN = 0x20000000, LENGTH = 0x00004000  /* Retention ram page 0 ( 16KB) H'20000000 to H'20003FFF */
 	RETRAM1 (rwx)   : ORIGIN = 0x20004000, LENGTH = 0x00004000  /* Retention ram page 1 ( 16KB) H'20004000 to H'20007FFF */
 	RETRAM2 (rwx)   : ORIGIN = 0x20008000, LENGTH = 0x00008000  /* Retention ram page 2 ( 32KB) H'20008000 to H'2000FFFF */
@@ -96,9 +96,11 @@ SVC_STACK_SIZE	      = 0x2000;      /* SVC mode stack                     */
 ABT_STACK_SIZE	      = 0x2000;      /* Abort mode stack                   */
 TTB_SIZE              = 0x8000;      /* Level-1 Translation Table for MMU  */
 
-/* GP changed to 0x18000000 for testing without bootloader */
 APP_VECTOR_TABLE	= 0x18040000; 	/* Vector table in QSPI is located here */
 
+/************************************************************************************************/
+/* NOTE: MIRRORED ADDRESSES ARE CONFIGURED AS NON-CACHEABLE AREAS */
+/************************************************************************************************/
 SECTIONS
 {
     /* Vector table located in QSPI @ location APP_VECTOR_TABLE, first item */
@@ -401,6 +403,8 @@ SECTIONS
 				
 	} >RAM0U   
 	    
+	    
+	/* These buffers for the dma are located in internal ram */
 	.DMA_BUFFER_IRAM (NOLOAD): ALIGN(0x40)
 	{
 		__dma_iram_buf_start__ = LOADADDR(.DMA_BUFFER_IRAM);
@@ -411,6 +415,7 @@ SECTIONS
 	__dma_iram_buf_size__ = SIZEOF(.DMA_BUFFER_IRAM);
 	PROVIDE(__dma_iram_buf_size__ = SIZEOF(.DMA_BUFFER_IRAM));
 
+	/* These buffers for the dma are located in internal CACHED ram */
 	/* align section to 32 bytes because of cache line size */
 	/* buffers must be multiple of 32 bytes (eventually padded) and 32-bytes aligned */
 	/* to avoid cache coherency issues */
@@ -423,6 +428,33 @@ SECTIONS
 	
 	__dma_iram_cache_buf_size__ = SIZEOF(.DMA_BUFFER_CACHED_IRAM);
 	PROVIDE(__dma_iram_cache_buf_size__ = SIZEOF(.DMA_BUFFER_CACHED_IRAM));
+
+
+	/* These buffers for the dma are located in external sdram */
+	.DMA_BUFFER_SDRAM (NOLOAD): ALIGN(0x40)
+	{
+		__dma_sdram_buf_start__ = LOADADDR(.DMA_BUFFER_SDRAM);
+		PROVIDE(__dma_sdram_buf_start__ = LOADADDR(.DMA_BUFFER_SDRAM));
+				
+	} > SDRAM_MIRROR   
+	
+	__dma_sdram_buf_size__ = SIZEOF(.DMA_BUFFER_SDRAM);
+	PROVIDE(__dma_sdram_buf_size__ = SIZEOF(.DMA_BUFFER_SDRAM));
+
+	/* These buffers for the dma are located in external CACHED sdram */
+	/* align section to 32 bytes because of cache line size */
+	/* buffers must be multiple of 32 bytes (eventually padded) and 32-bytes aligned */
+	/* to avoid cache coherency issues */
+	.DMA_BUFFER_CACHED_SDRAM (NOLOAD): ALIGN(0x40)
+	{
+		__dma_sdram_cache_buf_start__ = LOADADDR(.DMA_BUFFER_CACHED_SDRAM);
+		PROVIDE(__dma_sdram_cache_buf_start__ = LOADADDR(.DMA_BUFFER_CACHED_SDRAM));		
+				
+	} > SDRAM  
+	
+	__dma_sdram_cache_buf_size__ = SIZEOF(.DMA_BUFFER_CACHED_SDRAM);
+	PROVIDE(__dma_sdram_cache_buf_size__ = SIZEOF(.DMA_BUFFER_CACHED_SDRAM));
+
 	    
 	.stab 0 (NOLOAD) : { 
             *(.stab) 

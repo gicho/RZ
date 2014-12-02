@@ -41,7 +41,6 @@
 #include "devdrv_intc.h"
 #include "resetprg.h"
 #include "stb_init.h"
-#include "port_init.h"
 #include "bsc_userdef.h"
 #include "sio_char.h"
 #include "compiler_settings.h"
@@ -66,8 +65,6 @@ extern uint32_t __fast_code_start__;
 extern uint32_t __fast_code_end__;
 
 extern uint32_t __vector_table_ram_start__;
-// extern uint32_t __vector_table_ram_end__;
-// extern uint32_t __vector_table_rom_start__;
 
 /* These are related to the rest of the code */
 extern uint32_t __data_rom_start__;
@@ -163,24 +160,53 @@ void PowerON_Reset (void)
 	// set VBAR to the vector table in RAM
 	VbarSet((uint32_t) &__vector_table_ram_start__);
 
-
 	/* Now start initializing the hardware */
 
     /* ==== CPG setting ====*/
-    CPG_Init();
+    // configured in the reset handler
+	// CPG_Init();
+
+	// enable all module clocks
+	STB_Init();
+
+	// initialize the hardware ports
+#if (USE_NOR_FLASH)
 
     /* ==== Port setting ==== */
     CS0_PORTInit();
 
+#endif
+
+#if (USE_SDRAM)
+
+    /* ==== Port setting ==== */
+    CS2_PORTInit();
+
+#endif
+
+    // initialize the bus state controllers
+#if (USE_NOR_FLASH)
+
     /* ==== BSC setting ==== */
-    R_BSC_Init((uint8_t)(BSC_AREA_CS0 | BSC_AREA_CS1));
+    R_BSC_Init((uint8_t)(BSC_AREA_CS0));
 
-	STB_Init();
+#endif
 
-    PORT_Init();
+#if (USE_SDRAM)
 
-    /* BSC setting */
-    R_BSC_Init((uint8_t)(BSC_AREA_CS2 | BSC_AREA_CS3));
+    /* ==== BSC setting ==== */
+    // warning: in this case also CS3 is configured due to hw behavior
+    // see Userdef_BSC_CS2Init in bsc_userdef.c
+    R_BSC_Init((uint8_t)(BSC_AREA_CS2));
+
+#endif
+
+#if (USE_NOR_FLASH | USE_SDRAM)
+
+    ExternalBus_AddressDataLines_Init();
+
+#endif
+
 
     /* INTC setting */
     R_INTC_Init();

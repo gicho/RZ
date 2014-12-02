@@ -42,7 +42,7 @@
 Macro definitions
 *******************************************************************************/
 
-#define USE_SDRAM_MODE      (1)
+#define USE_SDRAM		    (1)
 
 #define USE_NOR_FLASH		(0) /* code not implemented yet */
 
@@ -51,6 +51,8 @@ Functions Prototypes
 *******************************************************************************/
 void CPG_Init(void);
 void CS0_PORTInit(void);
+void ExternalBus_AddressDataLines_Init(void);
+void CS2_PORTInit(void);
 
 
 /* PERIPHERAL_INIT_BASIC_H */

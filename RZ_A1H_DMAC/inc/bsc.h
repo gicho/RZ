@@ -47,7 +47,7 @@ Includes   <System Includes> , "Project Includes"
 Macro definitions
 *******************************************************************************/
 
-#define USE_RESET_SECTION (1)
+
 
 /*******************************************************************************
 Variable External declarations
