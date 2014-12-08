@@ -79,5 +79,10 @@ void set_pl310_l2cc_AddrFilteringEnd(unsigned data);
 // Register r15
 unsigned get_pl310_l2cc_DebugCtrl(void);
 void set_pl310_l2cc_DebugCtrl(unsigned data);
+unsigned get_pl310_l2cc_PrefetchCtrl(void);
+void set_pl310_l2cc_PrefetchCtrl(unsigned data);
+unsigned get_pl310_l2cc_PowerCtrl(void);
+void set_pl310_l2cc_PowerCtrl(unsigned data);
+
 
 #endif

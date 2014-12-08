@@ -68,6 +68,9 @@ void copy_arm_code_section_to_ram(uint32_t* rom_start, uint32_t* ram_start, uint
     uint32_t i;
     uint32_t region_size;
 
+    // check if executing already from ram (when debugging)
+    if(rom_start == ram_start) return;
+
     /* Calculate the length of the copied section */
     region_size     = (uint32_t)ram_end - (uint32_t)ram_start;
 

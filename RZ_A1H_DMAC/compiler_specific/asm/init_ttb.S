@@ -32,6 +32,29 @@
 *               : 18.06.2013 1.00
 *               : 21.03.2014 2.00
 *******************************************************************************/
+/* settings of the table entry format
+*  31           20|19 18|17|16| 15|14 12|11 10|9|8    5|4 |3 2|1 0|
+* |base address   | 0  0|nG| S|AP2|TEX  |AP   |P|Domain|XN|CB |1 0|
+*/
+	.equ ONE_MB	, 0x2
+	.equ INOUT_WB_RWALLOC 		, ((0x1 << 12)|(0x3 << 2))
+	.equ INOUT_NON_CACHABLE 	, ((0x1 << 12)|(0x0 << 2))
+	.equ SHARABLE_DEVICE		, ((0x0 << 12)|(0x1 << 2))
+	.equ NON_SHARABLE_DEVICE	, ((0x2 << 12)|(0x0 << 2))
+	.equ STRONG_ORDER 			, ((0x0 << 12)|(0x0 << 2))
+
+	.equ NON_SHARABLE 	, (0x0 << 16)
+	.equ SHARABLE 		, (0x1 << 16)
+
+	.equ DOMAIN , (0xF << 5)
+
+	.equ EXEC_NEVER , (1 << 4)
+
+	.equ FULL_ACCESS , ((0x0 << 15)|(0x3 << 10))
+
+	.equ NORMAL_NON_SHARABLE_IONOUT_WB_RWALLOC , (INOUT_WB_RWALLOC | NON_SHARABLE | DOMAIN | FULL_ACCESS | ONE_MB)
+	.equ NORMAL_NON_SHARABLE_IONOUT_NON_CACHABLE , (INOUT_NON_CACHABLE | NON_SHARABLE | DOMAIN | FULL_ACCESS | ONE_MB)
+	.equ STRONGLY_ORDERED , (STRONG_ORDER | DOMAIN | FULL_ACCESS | ONE_MB)
 
 /* ---- Parameter setting to level1 descriptor (bits 19:0) ---- */
 /* setting for Strongly-ordered memory     
@@ -71,8 +94,9 @@
 
 init_TTB:
 /*******************************************************************************
-* Cortex-A9 MMU Configuration *
-* Set translation table base *
+* Cortex-A9 MMU Configuration
+* Set translation table base
+* see B3.12.24 CP15 c2, Translation table support registers
 *******************************************************************************/
     /* Cortex-A9 supports two translation tables */
     /* Configure translation table base (TTB) control register cp15,c2 */
@@ -161,51 +185,51 @@ set_mem_accsess:
     BEQ  setting_area0
 setting_area11:                        
     LDR  r3, =M_SIZE_IO_2
-    LDR  r4, =TTB_PARA_STRGLY       
+    LDR  r4, =STRONGLY_ORDERED
     BAL  init_counter
 setting_area10:                     
     LDR  r3, =M_SIZE_RAM_M
-    LDR  r4, =TTB_PARA_NORMAL_NOT_CACHE  
+    LDR  r4, =NORMAL_NON_SHARABLE_IONOUT_NON_CACHABLE
     BAL  init_counter
 setting_area9:                       
     LDR  r3, =M_SIZE_SPI_M
-    LDR  r4, =TTB_PARA_NORMAL_NOT_CACHE 
+    LDR  r4, =NORMAL_NON_SHARABLE_IONOUT_NON_CACHABLE
     BAL  init_counter
 setting_area8:                       
     LDR  r3, =M_SIZE_CS45_M
-    LDR  r4, =TTB_PARA_STRGLY        
+    LDR  r4, =STRONGLY_ORDERED
     BAL  init_counter    
 setting_area7:                       
     LDR  r3, =M_SIZE_SDRAM_M
-    LDR  r4, =TTB_PARA_NORMAL_NOT_CACHE 
+    LDR  r4, =NORMAL_NON_SHARABLE_IONOUT_NON_CACHABLE
     BAL  init_counter
 setting_area6:      
     LDR  r3, =M_SIZE_NOR_M
-    LDR  r4, =TTB_PARA_NORMAL_NOT_CACHE 
+    LDR  r4, =NORMAL_NON_SHARABLE_IONOUT_NON_CACHABLE
     BAL  init_counter
 setting_area5:     
     LDR  r3, =M_SIZE_IO_1
-    LDR  r4, =TTB_PARA_STRGLY  
+    LDR  r4, =STRONGLY_ORDERED
     BAL  init_counter
 setting_area4:                 
     LDR  r3, =M_SIZE_RAM
-    LDR  r4, =TTB_PARA_NORMAL_CACHE 
+    LDR  r4, =NORMAL_NON_SHARABLE_IONOUT_WB_RWALLOC
     BAL  init_counter
 setting_area3:                      
     LDR  r3, =M_SIZE_SPI
-    LDR  r4, =TTB_PARA_NORMAL_CACHE 
+    LDR  r4, =NORMAL_NON_SHARABLE_IONOUT_WB_RWALLOC
     BAL  init_counter
 setting_area2:                      
     LDR  r3, =M_SIZE_CS45
-    LDR  r4, =TTB_PARA_STRGLY       
+    LDR  r4, =STRONGLY_ORDERED
     BAL  init_counter
 setting_area1:                      
     LDR  r3, =M_SIZE_SDRAM
-    LDR  r4, =TTB_PARA_NORMAL_CACHE 
+    LDR  r4, =NORMAL_NON_SHARABLE_IONOUT_WB_RWALLOC
     BAL  init_counter    
 setting_area0:                      
     LDR  r3, =M_SIZE_NOR
-    LDR  r4, =TTB_PARA_NORMAL_CACHE 
+    LDR  r4, =NORMAL_NON_SHARABLE_IONOUT_WB_RWALLOC
     BAL  init_counter
 init_counter:
     SUBS r3, r3, #1                 

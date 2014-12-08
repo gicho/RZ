@@ -120,10 +120,13 @@ void PowerON_Reset (void)
 	dst = (uint8_t*) &__data_start__;
 	end = (uint8_t*) &__data_end__;
 
-	/* ROM has data at end of text; copy it. */
-	while (dst < end) {
-	  *dst++ = *src++;
-	}
+	/* if not debugging directly from RAM */
+	if(src != dst) {
+		/* ROM has data at end of text; copy it. */
+		while (dst < end) {
+			*dst++ = *src++;
+		}
+	};
 
 	dst = (uint8_t*) &__bss_start__;
 	end = (uint8_t*) &__bss_end__;

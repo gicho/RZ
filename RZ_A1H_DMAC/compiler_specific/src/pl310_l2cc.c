@@ -3,6 +3,7 @@
 */
 
 #include "pl310_l2cc.h"
+#include "cache-l2x0.h"
 
 struct pl310_l2cc
 {
@@ -77,31 +78,105 @@ struct pl310_l2cc
 
   // Register r15
   volatile unsigned DebugCtrl;                   // 0xF40
+  volatile unsigned PrefetchCtrl;                // 0xF60
+  volatile unsigned PowerCtrl;                   // 0xF80
 };
 
 
 struct pl310_l2cc PL310_L2CC_1;
 
+/*
+At boot time you must perform a Secure write to the Invalidate by Way, offset 0x77C, to
+invalidate all entries in the cache.
+
+As an example, a typical cache controller start-up programming sequence consists of the
+following register operations:
+1. Write to the Auxiliary, Tag RAM Latency, Data RAM Latency, Prefetch, and Power
+Control registers using a read-modify-write to set up global configurations:
+• associativity, Way Size
+• latencies for RAM accesses
+• allocation policy
+• prefetch and power capabilities.
+2. Secure write to the Invalidate by Way, offset 0x77C, to invalidate all entries in cache:
+• Write 0xFFFF to 0x77C
+• Poll cache maintenance register until invalidate operation is complete.
+3. Write to the Lockdown D and Lockdown I Register 9 if required.
+4. Write to interrupt clear register to clear any residual raw interrupts set.
+5. Write to the Interrupt Mask Register if you want to enable interrupts.
+6. Write to Control Register 1 with the LSB set to 1 to enable the cache.
+
+You must disable the L2 cache by writing to
+the Control Register 1 before writing to the Auxiliary, Tag RAM Latency, or Data RAM Latency
+Control Register.
+
+*/
+
+#define WAY_SIZE_16K_CFG 			(0x1)
+#define ASSOCIATIVITY_8_CFG 		(0x0)
+#define SHARED_OVERRIDE_ENABLE_CFG 	(0x1)
+#define EXCLUSIVE_CACHE_CFG			(0x1)
+#define NONEXCLUSIVE_CACHE_CFG		(0x0)
+
+#define WAY_SIZE 			(WAY_SIZE_16K_CFG << L2X0_AUX_CTRL_WAY_SIZE_SHIFT)
+#define ASSOCIATIVITY 		(ASSOCIATIVITY_8_CFG << L2X0_AUX_CTRL_ASSOCIATIVITY_SHIFT)
+#define SHARED_OVERRIDE 	(SHARED_OVERRIDE_ENABLE_CFG << L2X0_AUX_CTRL_SHARE_OVERRIDE_SHIFT)
+#define NONEXCLUSIVE_CACHE	(NONEXCLUSIVE_CACHE_CFG<< L2X0_AUX_CTRL_EXCLUSIVE_CACHE_SHIFT)
 
 void init_l2cc(void)
 {
-  pl310_l2cc_enable(0x00000000);
+/*
+	You must disable the L2 cache by writing to
+	the Control Register 1 before writing to the Auxiliary, Tag RAM Latency, or Data RAM Latency
+	Control Register.
+	*/
+	// disable L2 controller
+	pl310_l2cc_enable(0x00000000);
+/*
+	1. Write to the Auxiliary, Tag RAM Latency, Data RAM Latency, Prefetch, and Power
+	Control registers using a read-modify-write to set up global configurations:
+	• associativity, Way Size
+	• latencies for RAM accesses
+	• allocation policy
+	• prefetch and power capabilities.
+	*/
 
-  // PBX-A9 settings: 8-way, 16kb way-size, event monitor bus enable,
-  // shared override, tag/data RAM latency = 0
-  set_pl310_l2cc_AuxCtrl(0x00520000);
-  set_pl310_l2cc_TagRAMLatencyCtrl(0x000);
-  set_pl310_l2cc_DataRAMLatencyCtrl(0x000);
+  // PBX-A9 settings: 8-way, 16kb way-size, tag/data RAM latency = 0
+  set_pl310_l2cc_AuxCtrl(WAY_SIZE | ASSOCIATIVITY | SHARED_OVERRIDE | NONEXCLUSIVE_CACHE);			// auxiliary
+  set_pl310_l2cc_TagRAMLatencyCtrl(0x000);		// tag ram
+  set_pl310_l2cc_DataRAMLatencyCtrl(0x000);		// data ram
 
-  set_pl310_l2cc_IntrClr(0x000001ff);
+  // prefetch control register left at default (no double linefill, no data or instruction prefetch)
 
-  set_pl310_l2cc_IntrMask(0x000001ff);
+  // power control register already set in reset_handler.s
+
+
+/*
+  2. Secure write to the Invalidate by Way, offset 0x77C, to invalidate all entries in cache:
+  • Write 0xFFFF to 0x77C
+  • Poll cache maintenance register until invalidate operation is complete.
+  */
 
   set_pl310_l2cc_InvalByWay(0x000000ff);
-  while(get_pl310_l2cc_InvalByWay())
-  {};
 
+  // wait for all bits to clear to signal all ways invalidated
+  // during operations ways are locked
+  while(get_pl310_l2cc_InvalByWay() & 0xFF);
+
+
+  /*
+  3. Write to the Lockdown D and Lockdown I Register 9 if required.
+  4. Write to interrupt clear register to clear any residual raw interrupts set.
+  5. Write to the Interrupt Mask Register if you want to enable interrupts.
+  */
+  // clear residual interrupts
+  set_pl310_l2cc_IntrClr(0x000001ff);
+  // enable them
+  set_pl310_l2cc_IntrMask(0x000001ff);
+/*
+  6. Write to Control Register 1 with the LSB set to 1 to enable the cache.
+*/
   pl310_l2cc_enable(0x00000001);
+
 }
 
 // Accessor functions
@@ -350,20 +425,28 @@ void set_pl310_l2cc_DataLockdownByWay(unsigned master_id, unsigned data)
   switch(master_id) {
     case 0:
       PL310_L2CC_1.DataLockdown0ByWay = data;
+      break;
     case 1:
       PL310_L2CC_1.DataLockdown1ByWay = data;
+      break;
     case 2:
       PL310_L2CC_1.DataLockdown2ByWay = data;
+      break;
     case 3:
       PL310_L2CC_1.DataLockdown3ByWay = data;
+      break;
     case 4:
       PL310_L2CC_1.DataLockdown4ByWay = data;
+      break;
     case 5:
       PL310_L2CC_1.DataLockdown5ByWay = data;
+      break;
     case 6:
       PL310_L2CC_1.DataLockdown6ByWay = data;
+      break;
     case 7:
       PL310_L2CC_1.DataLockdown7ByWay = data;
+      break;
   }
 }
 
@@ -396,20 +479,28 @@ void set_pl310_l2cc_InstrLockdownByWay(unsigned master_id, unsigned data)
   switch(master_id) {
     case 0:
       PL310_L2CC_1.InstrLockdown0ByWay = data;
+      break;
     case 1:
       PL310_L2CC_1.InstrLockdown1ByWay = data;
+      break;
     case 2:
       PL310_L2CC_1.InstrLockdown2ByWay = data;
+      break;
     case 3:
       PL310_L2CC_1.InstrLockdown3ByWay = data;
+      break;
     case 4:
       PL310_L2CC_1.InstrLockdown4ByWay = data;
+      break;
     case 5:
       PL310_L2CC_1.InstrLockdown5ByWay = data;
+      break;
     case 6:
       PL310_L2CC_1.InstrLockdown6ByWay = data;
+      break;
     case 7:
       PL310_L2CC_1.InstrLockdown7ByWay = data;
+      break;
   }
 }
 
@@ -464,3 +555,26 @@ void set_pl310_l2cc_DebugCtrl(unsigned data)
 {
   PL310_L2CC_1.DebugCtrl = data;
 }
+
+unsigned get_pl310_l2cc_PrefetchCtrl(void)
+{
+  return PL310_L2CC_1.PrefetchCtrl;
+}
+
+void set_pl310_l2cc_PrefetchCtrl(unsigned data)
+{
+  PL310_L2CC_1.PrefetchCtrl = data;
+}
+
+unsigned get_pl310_l2cc_PowerCtrl(void)
+{
+  return PL310_L2CC_1.PowerCtrl;
+}
+
+void set_pl310_l2cc_PowerCtrl(unsigned data)
+{
+  PL310_L2CC_1.PowerCtrl = data;
+}
+
+
+
