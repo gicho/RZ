@@ -25,7 +25,7 @@
 * File Name     : GCC-QSPI-APP.ld
 * Device(s)     : RZ/A1H RSK2+RZA1H
 * H/W Platform  : RSK2+RZA1H CPU Board
-* Description   : Linker file for QSPI applications
+* Description   : Linker file for RAM applications (debug only)
 *				  Defines cached and un-cached buffer ranges for internal RAM
 *				  Defines direct and mirror address areas
 *				  
