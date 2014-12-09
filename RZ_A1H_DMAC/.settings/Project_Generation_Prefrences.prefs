@@ -1,0 +1,2 @@
+com.renesas.cdt.rz.Debug.Linker.option.archiveSearchDirectories.1008259335="${CWD}";"${TC_PATH}/arm-none-eabi/lib";"${TC_PATH}/lib/gcc/arm-none-eabi//${GCC_VERSION}";"${CONFIGDIR}";"${TCINSTALL}/lib/gcc/arm-none-eabi/${GCC_VERSION}";
+eclipse.preferences.version=1
