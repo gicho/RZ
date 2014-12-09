@@ -279,6 +279,7 @@ void initialise_dma8bit(uint8_t *src, uint8_t *dst, uint32_t size)
 
 }
 
+// this setup configures also the auxiliary register with the CACHE attributes for the AXI bus
 void initialise_dma8bit_L2Cached(uint8_t *src, uint8_t *dst, uint32_t size, const uint8_t direction)
 {
     volatile uint32_t dummy = 0u;
@@ -380,14 +381,41 @@ void initialise_dma8bit_L2Cached(uint8_t *src, uint8_t *dst, uint32_t size, cons
 
 }
 
+#define L1_WAY_OFFSET_INDEX  0x2000
+void touchLoop_L1(uint32_t vaddress) {
 
-/******************************************************************************
-* Function Name: dmac
-* Description  : Perform DMA transfer on channel 3 of controller.
-*                This transfer does not use interrupts.
-* Arguments    : None
-* Return Value : None
-******************************************************************************/
+	volatile uint8_t dummyByte;
+	volatile uint8_t * dummyAddress;
+	uint8_t i;
+
+	// L1 is a 4 way cache
+	for (i=0;i<5;i++) {
+
+		dummyAddress = (uint8_t*) (vaddress + L1_WAY_OFFSET_INDEX);
+		dummyByte = *dummyAddress; // at this point the cache line is fetched
+	}
+
+	// at this point the cache line @ vaddress must be already evicted
+
+}
+
+#define L2_WAY_OFFSET_INDEX  0x4000
+void touchLoop_L2(uint32_t paddress) {
+
+	volatile uint8_t dummyByte;
+	volatile uint8_t * dummyAddress;
+	uint8_t i;
+
+	// L2 is a 8 way cache
+	for (i=0;i<9;i++) {
+
+		dummyAddress = (uint8_t*) (paddress + L2_WAY_OFFSET_INDEX);
+		dummyByte = *dummyAddress; // at this point the cache line is fetched
+	}
+
+	// at this point the cache line @ vaddress must be already evicted
+}
+
 void dmac_uncached_uncached(void)
 {
     char str[16];
@@ -416,11 +444,14 @@ void dmac_uncached_uncached(void)
 
     addressSrc = (uint8_t*) getPaFromVa((uint32_t)dmac_src_data_ram);
     addressDst = (uint8_t*) getPaFromVa((uint32_t)dmac_dst_data_ram);
+
     initialise_dma8bit(addressSrc, addressDst, DMAC_BUFF_SIZE);
 
     while(dmac_ch3_trans_flg == false)
     {
-        __asm("nop");
+	    touchLoop_L1((uint32_t) dmac_src_data_ram);
+	    touchLoop_L1((uint32_t) dmac_dst_data_ram);
+	    __asm("nop");
     }
 
     if(verify_data_set(dmac_dst_data_ram, BUFF_INIT_BYTE) == true)
@@ -465,11 +496,14 @@ void dmac_cached_uncached(void)
 
     addressSrc = (uint8_t*) getPaFromVa((uint32_t)dmac_src_data_cachedram);
     addressDst = (uint8_t*) getPaFromVa((uint32_t)dmac_dst_data_ram);
+
     initialise_dma8bit(addressSrc, addressDst, DMAC_BUFF_SIZE);
 
     while(dmac_ch3_trans_flg == false)
     {
-        __asm("nop");
+	    touchLoop_L1((uint32_t) dmac_src_data_cachedram);
+	    touchLoop_L1((uint32_t) dmac_dst_data_ram);
+	    __asm("nop");
     }
 
     /* nothing to do for the source side, but make the procedure symmetric (map/unmap) */
@@ -520,7 +554,9 @@ void dmac_uncached_cached(void)
 
     while(dmac_ch3_trans_flg == false)
     {
-        __asm("nop");
+	    touchLoop_L1((uint32_t) dmac_dst_data_cachedram);
+	    touchLoop_L1((uint32_t) dmac_src_data_ram);
+	    __asm("nop");
     }
 
     /* invalidate the cached data before reading */
@@ -569,11 +605,14 @@ void dmac_cached_cached(void)
 
     addressSrc = (uint8_t*) getPaFromVa((uint32_t) dmac_src_data_cachedram);
     addressDst = (uint8_t*) getPaFromVa((uint32_t) dmac_dst_data_cachedram);
+
     initialise_dma8bit(addressSrc, addressDst, DMAC_BUFF_SIZE);
 
     while(dmac_ch3_trans_flg == false)
     {
-        __asm("nop");
+	    touchLoop_L1((uint32_t) dmac_src_data_cachedram);
+	    touchLoop_L1((uint32_t) dmac_dst_data_cachedram);
+	    __asm("nop");
     }
 
     /* invalidate the cached data before reading */
@@ -591,13 +630,18 @@ void dmac_cached_cached(void)
     }
 }
 
+
+
 /* transfers using sdram */
+
+/* map the VA (virtual) to PA (physical) address since L2 cache controller and DMA require PAs */
 uint32_t getVaFromPa(uint32_t address) {
 
 	/* 1-to-1 mapping via MMU between VA and PA */
 	/* would be different in case of different MMU setup */
 	return(address);
 }
+
 
 void dmac_ram_uncached_sdram_uncached(void)
 {
@@ -627,11 +671,14 @@ void dmac_ram_uncached_sdram_uncached(void)
 
     addressSrc = (uint8_t*) getPaFromVa((uint32_t) dmac_src_data_ram);
     addressDst = (uint8_t*) getPaFromVa((uint32_t) dmac_dst_data_sdram);
+
     initialise_dma8bit(addressSrc, addressDst, DMAC_BUFF_SIZE);
 
     while(dmac_ch3_trans_flg == false)
     {
-        __asm("nop");
+	    touchLoop_L1((uint32_t) dmac_src_data_ram);
+	    touchLoop_L2((uint32_t) addressDst);
+	    __asm("nop");
     }
 
     if(verify_data_set(dmac_dst_data_sdram, BUFF_INIT_BYTE) == true)
@@ -678,11 +725,14 @@ void dmac_ram_cached_sdram_uncached(void)
 
 	    addressSrc = (uint8_t*) getPaFromVa((uint32_t)dmac_src_data_cachedram);
 	    addressDst = (uint8_t*) getPaFromVa((uint32_t)dmac_dst_data_sdram);
+
 	    initialise_dma8bit(addressSrc, addressDst, DMAC_BUFF_SIZE);
 
 	    while(dmac_ch3_trans_flg == false)
 	    {
-	        __asm("nop");
+		    touchLoop_L1((uint32_t) dmac_src_data_cachedram);
+		    touchLoop_L2((uint32_t) addressDst);
+		    __asm("nop");
 	    }
 
 
@@ -733,7 +783,9 @@ void dmac_ram_uncached_sdram_cached(void)
 
     while(dmac_ch3_trans_flg == false)
     {
-        __asm("nop");
+	    touchLoop_L1((uint32_t) dmac_src_data_ram);
+	    touchLoop_L2((uint32_t) addressDst);
+	    __asm("nop");
     }
 
     /* invalidate the cached data before reading */
@@ -790,7 +842,9 @@ void dmac_ram_cached_sdram_cached(void)
 
     while(dmac_ch3_trans_flg == false)
     {
-        __asm("nop");
+	    touchLoop_L1((uint32_t) dmac_src_data_cachedram);
+	    touchLoop_L2((uint32_t) addressDst);
+	    __asm("nop");
     }
 
     /* invalidate the cached data before reading */
@@ -843,7 +897,9 @@ void dmac_sdram_uncached_ram_uncached(void)
 
     while(dmac_ch3_trans_flg == false)
     {
-        __asm("nop");
+	    touchLoop_L1((uint32_t) dmac_dst_data_ram);
+	    touchLoop_L2((uint32_t) addressSrc);
+	    __asm("nop");
     }
 
     if(verify_data_set(dmac_dst_data_ram, BUFF_INIT_BYTE) == true)
@@ -888,9 +944,8 @@ void dmac_sdram_cached_ram_uncached(void)
     addressSrc = (uint8_t*) getPaFromVa((uint32_t) dmac_src_data_cachedsdram);
     addressDst = (uint8_t*) getPaFromVa((uint32_t) dmac_dst_data_ram);
 
-    // now map area to dma for L1, clean (inner first)
+    // now map area to dma for L1, writes back (cleans), inner first!
     v7_dma_map_area((uint32_t) dmac_src_data_cachedsdram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
-
     // clean L2 cache
     l2x0_clean_range((uint32_t) addressSrc, (uint32_t) (addressSrc + DMAC_BUFF_SIZE));
 
@@ -898,7 +953,9 @@ void dmac_sdram_cached_ram_uncached(void)
 
     while(dmac_ch3_trans_flg == false)
     {
-        __asm("nop");
+	    touchLoop_L1((uint32_t) dmac_dst_data_ram);
+	    touchLoop_L2((uint32_t) addressSrc);
+	    __asm("nop");
     }
 
 
@@ -937,16 +994,20 @@ void dmac_sdram_uncached_ram_cached(void)
     /* wait for switch (1, 2, 3)press */
     while(0u == (g_switch_press_flg & SW_ALL_ON))
     {
-        __asm("nop");
+	    touchLoop_L1((uint32_t) dmac_dst_data_ram);
+	    touchLoop_L2((uint32_t) addressSrc);__asm("nop");
     }
 
     addressSrc = (uint8_t*) getPaFromVa((uint32_t) dmac_src_data_sdram);
     addressDst = (uint8_t*) getPaFromVa((uint32_t) dmac_dst_data_cachedram);
+
     initialise_dma8bit(addressSrc, addressDst, DMAC_BUFF_SIZE);
 
     while(dmac_ch3_trans_flg == false)
     {
-        __asm("nop");
+	    touchLoop_L1((uint32_t) dmac_dst_data_cachedram);
+	    touchLoop_L2((uint32_t) addressSrc);
+	    __asm("nop");
     }
 
     /* invalidate the cached data before reading */
@@ -989,7 +1050,6 @@ void dmac_sdram_cached_ram_cached(void)
         __asm("nop");
     }
 
-    // do this here since PA are required for L2
     addressSrc = (uint8_t*) getPaFromVa((uint32_t) dmac_src_data_cachedsdram);
     addressDst = (uint8_t*) getPaFromVa((uint32_t) dmac_dst_data_cachedram);
 
@@ -1003,7 +1063,9 @@ void dmac_sdram_cached_ram_cached(void)
 
     while(dmac_ch3_trans_flg == false)
     {
-        __asm("nop");
+	    touchLoop_L1((uint32_t) dmac_dst_data_cachedram);
+	    touchLoop_L2((uint32_t) addressSrc);
+	    __asm("nop");
     }
 
     /* invalidate the cached data before reading */
@@ -1023,7 +1085,7 @@ void dmac_sdram_cached_ram_cached(void)
 void dmac_sdram_cached_sdram_cached(void)
 {
     char str[16];
-    uint8_t *addressSrc, *addressDst; // TODO
+    uint8_t *addressSrc, *addressDst;
 
     Display_LCD(3, (uint8_t *)" From cached SDRAM");
     sprintf(str, " ADDR 0x%08x",(uint)dmac_src_data_cachedsdram);
@@ -1046,12 +1108,10 @@ void dmac_sdram_cached_sdram_cached(void)
         __asm("nop");
     }
 
-    // do this here since PA are required for L2
     addressSrc = (uint8_t*) getPaFromVa((uint32_t) dmac_src_data_cachedsdram);
     addressDst = (uint8_t*) getPaFromVa((uint32_t) dmac_dst_data_cachedsdram);
 
-    // now map area to dma for L1 src
-    // clean, inner first
+    // now map area to dma for L1 src - clean, inner first!
     v7_dma_map_area((uint32_t) dmac_src_data_cachedsdram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_TO_DEVICE);
     // clean L2 cache for src
     l2x0_clean_range((uint32_t) addressSrc, (uint32_t) (addressSrc + DMAC_BUFF_SIZE));
@@ -1060,7 +1120,9 @@ void dmac_sdram_cached_sdram_cached(void)
 
     while(dmac_ch3_trans_flg == false)
     {
-        __asm("nop");
+	    touchLoop_L2((uint32_t) addressSrc);
+	    touchLoop_L2((uint32_t) addressDst);
+	    __asm("nop");
     }
 
     /* invalidate the cached data before reading */
@@ -1079,6 +1141,9 @@ void dmac_sdram_cached_sdram_cached(void)
         while(1);
     }
 }
+
+
+
 
 
 /******************************************************************************
@@ -1106,7 +1171,8 @@ int_t main(void)
     /* Initialise the PMod Colour LCD display */
     R_LCD_Init();
 
-#if 0
+    // tests for internal ram only
+#if 1
 
     Clear_Display(COL_WHITE);
     Display_Image (&RGB888_LOGO[0], 128, 24, 0, 104);
@@ -1193,7 +1259,9 @@ int_t main(void)
 
 #endif
 
-	/* Now switch to the sdram buffer tests */
+
+	// tests for internal ram and sdram
+#if 1
 
     /* source iram uncached -> dest sdram uncached */
 	Clear_Display(COL_WHITE);
@@ -1340,6 +1408,8 @@ int_t main(void)
 	{
 		__asm("nop");
 	}
+
+#endif
 
     Clear_Display(COL_WHITE);
     Display_Image (&RGB888_LOGO[0], 128, 24, 0, 104);
