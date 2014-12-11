@@ -217,6 +217,8 @@ void PowerON_Reset (void)
     /* Initial setting of the level 1 cache */
     L1CacheInit();
 
+    init_l2cc();
+
     __enable_irq();
     __enable_fiq();
 

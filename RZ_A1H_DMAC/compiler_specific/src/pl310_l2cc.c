@@ -83,7 +83,10 @@ struct pl310_l2cc
 };
 
 
-struct pl310_l2cc PL310_L2CC_1;
+// struct pl310_l2cc PL310_L2CC_1;
+
+/* L2 cache controller */
+#define PL310_L2CC_1  (*(volatile struct pl310_l2cc *)0x3FFFF000)
 
 /*
 At boot time you must perform a Secure write to the Invalidate by Way, offset 0x77C, to
