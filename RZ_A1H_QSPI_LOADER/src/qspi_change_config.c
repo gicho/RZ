@@ -155,8 +155,8 @@ void qspi_change_config_and_start_application(void)
 	RZA_IO_RegWrite_16(&GPIO.PIPC2,  1, GPIO_PIPC2_PIPC215_SHIFT,   GPIO_PIPC2_PIPC215);
 
 
-    // configure the SPI controller for dual mode SPI
-    spiConfiguration.dataBusSize = DUAL_MEMORY;
+    // configure the SPI controller for single mode SPI
+    spiConfiguration.dataBusSize = SINGLE_MEMORY;
     spiConfiguration.operatingMode = SPI;
     spiConfiguration.slaveSelectPolarity = ACTIVE_LOW;
     spiConfiguration.clockPolarity = IDLE_LOW;
@@ -254,10 +254,14 @@ void qspi_change_config_and_start_application(void)
     // change the controller configuration before reading the signature
 	// has to be done here since the application is programmed in single or dual mode
     // and the signature is also stored in the same mode
+    // QSPI HARDWARE defines if single or dual chip
     spiConfiguration.operatingMode = EXTERNAL_ADDRESS_SPACE;
     spiConfiguration.dataBusSize = QSPI_HARDWARE;
 
     // switch to external address mode
+    // if the application space is configured in dual mode, the single mode
+    // loader flash space cannot be accessed anymore after this point
+    // (without reconfiguring again)
     qspiControllerConfigure(&spiConfiguration);
 
     // now flush the read cache
