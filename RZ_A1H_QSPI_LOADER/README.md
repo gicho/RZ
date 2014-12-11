@@ -23,13 +23,9 @@ or
 	
 If two chips are being used, the application needs to be flashed in dual spi mode accordingly
 	
-- checks if a valid aüplication image is available, at address 
-	
-	#define DEF_USER_PROGRAM_SRC        (0x18040000)
+- checks if a valid application image is available, at address DEF_USER_PROGRAM_SRC (0x18040000) with 0x40 offset
 
-+ 0x40 offset.	Verifies the string '.BootLoad_ValidProgramTest' is present
-
-if yes, jumps to the application, if no, blinks LED0 forever
+Verifies the string '.BootLoad_ValidProgramTest' is present, if yes, jumps to the application, if no, blinks LED0 forever
 
 no other changes are made to the system.
 
