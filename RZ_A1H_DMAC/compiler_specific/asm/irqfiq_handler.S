@@ -37,6 +37,7 @@
 /* Standard definitions of mode bits and interrupt (I & F) flags in PSRs */
     .equ    SYS_MODE          , 0x1F
     .equ    INTC_ICCIAR_ADDR  , 0xE820200C
+    .equ    INTC_ICCHPIR_ADDR , 0xE8202018
     .equ    INTC_ICCEOIR_ADDR , 0xE8202010
 
 
@@ -47,34 +48,77 @@
     .global  APP_fiq_handler
 
 APP_fiq_handler:
-    SUB        lr, lr, #4
-    SRSDB    sp!, #SYS_MODE
-    CPS        #SYS_MODE
-    PUSH    {r0-r3, r12}
-    LDR     r2, =INTC_ICCIAR_ADDR
-    LDR        r0, [r2]
-    PUSH    {r0}
-    MOV        r1, sp
-    AND        r1, r1, #4
-    SUB        sp, sp, r1
-    PUSH    {r1, lr}
-    BL    FiqHandler_Interrupt
-    POP        {r1, lr}
-    ADD        sp, sp, r1
-    POP        {r0}
-    LDR     r2, =INTC_ICCEOIR_ADDR
-    STR        r0, [r2]
-    POP        {r0-r3, r12}
+
+    SUB     lr, lr, #4 				// adjust the return address for exception return
+    SRSDB   sp!, #SYS_MODE 			// save LR_fiq and PSR_fiq on the SYSTEM mode stack
+
+    CPS    	#SYS_MODE				// change to system mode
+    PUSH    {r0-r3, r12}			// save AACPS stack on system mode stack
+    								// since the handler is a C function
+
+    AND     r0, sp, #4				// align stack pointer to 8 bytes (could be skipped since FIQ is not nested?)
+    SUB     sp, sp, r0				// adjust as necessary
+    PUSH    {r0, lr}				// store adjustment and lr to SYSTEM stack
+
+    BL    FiqHandler_Interrupt 		// execute handler
+
+    POP     {r0, lr}				// restore LR_sys and r0
+    ADD     sp, sp, r0				// un-adjust stack
+
+    POP     {r0-r3, r12}			// restore AACPS registers
 
 APP_fiq_handler_end:
-    RFEIA    sp!
+
+    LDR     r8, =INTC_ICCHPIR_ADDR	// load highest priority pending interrupt register address
+    LDR     r9, [r8]				// read into r10 - errata 801120 for GIC
+    								// can discard the result
+    								// do this here in case FIQ preempts IRQ just before ICCHPIR read
+
+    RFEFD   sp!
 
 /* ================================================================== */
 /* Entry point for the IRQ handler */
 /* ================================================================== */
     .func APP_irq_handler
 APP_irq_handler:
-    SUB        lr, lr, #4
+
+    SUB 	lr, lr, #4				// adjust the return address for exception return
+    SRSDB   sp!, #SYS_MODE			// save LR_irq and PSR_irq on the SYSTEM mode stack
+
+    CPS     #SYS_MODE				// change to system mode
+    PUSH    {r0-r3, r12}			// save AACPS stack on system mode stack
+
+    LDR     r2, =INTC_ICCHPIR_ADDR	// load highest priority pending interrupt register address
+    LDR     r0, [r2]				// read into r0 - errata 801120 for GIC
+    								// can discard the result
+
+    LDR     r2, =INTC_ICCIAR_ADDR	// load interrupt acknowledge register address
+    LDR     r0, [r2]				// read into r0
+    PUSH    {r0}					// store r0 on the system mode stack (interrupt id, parameter for the handler)
+
+    AND     r1, sp, #4				// align stack pointer to 8 bytes
+    SUB     sp, sp, r1				// adjust as necessary
+    PUSH    {r1, lr}				//; store adjustment and lr to SYSTEM stack
+
+    BL      INTC_Handler_Interrupt	// branch to IRQ handler
+
+    POP     {r1, lr}				// restore LR_sys
+    ADD     sp, sp, r1				// un-adjust stack
+
+    POP     {r0}					// get interrupt id back from stack
+
+    LDR     r2, =INTC_ICCEOIR_ADDR  // load end of interrupt register address
+    STR     r0, [r2]				// quit interrupt by writing id
+
+    POP     {r0-r3, r12}			// restore AACPS registers
+
+APP_irq_handler_end:
+
+    RFEFD   sp!						// return from the SYSTEM mode stack
+
+/*
+
+    SUB        lr, lr, #4			; adjust the stack pointer for exception return
     SRSDB    sp!, #SYS_MODE
     CPS        #SYS_MODE
     PUSH    {r0-r3, r12}
@@ -93,6 +137,8 @@ APP_irq_handler:
     STR        r0, [r2]
     POP        {r0-r3, r12}
     RFEIA    sp!
+
+*/
 
 Literals3:
 
