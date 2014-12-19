@@ -116,29 +116,6 @@ APP_irq_handler_end:
 
     RFEFD   sp!						// return from the SYSTEM mode stack
 
-/*
-
-    SUB        lr, lr, #4			; adjust the stack pointer for exception return
-    SRSDB    sp!, #SYS_MODE
-    CPS        #SYS_MODE
-    PUSH    {r0-r3, r12}
-    LDR     r2, =INTC_ICCIAR_ADDR
-    LDR        r0, [r2]
-    PUSH    {r0}
-    MOV        r1, sp
-    AND        r1, r1, #4
-    SUB        sp, sp, r1
-    PUSH    {r1, lr}
-    BL        INTC_Handler_Interrupt
-    POP        {r1, lr}
-    ADD        sp, sp, r1
-    POP        {r0}
-    LDR     r2, =INTC_ICCEOIR_ADDR
-    STR        r0, [r2]
-    POP        {r0-r3, r12}
-    RFEIA    sp!
-
-*/
 
 Literals3:
 
