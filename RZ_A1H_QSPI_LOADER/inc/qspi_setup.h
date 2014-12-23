@@ -45,19 +45,43 @@ Typedef definitions
 /******************************************************************************
 Macro definitions
 ******************************************************************************/
+
+/* single or dual SPI is configured within the build rule */
+
+/* this defines where the SPI flash is connected in the address space */
+#define SPI_BASE_ADDRESS	0x18000000
+
+
+#ifdef SINGLE_QSPI_BOARD
+
+#define QSPI_HARDWARE	SINGLE_MEMORY
+
+/* this defines where in flash the application is located */
+/* needs to be a multiple of the flash sector size */
+#define APPLICATION_FLASH_OFFSET	0x40000
+
+#endif
+
+#ifdef DUAL_QSPI_BOARD
+
+#define QSPI_HARDWARE	DUAL_MEMORY
+
+/* this defines where in flash the application is located */
+/* needs to be a multiple of the flash sector size */
+/* for a dual chip device, the sector size is twice the size of each flash */
+/* example below is for sector 1, this needs to match the linker script */
+#define APPLICATION_FLASH_OFFSET	0x80000
+
+#endif
+
 // define where the user program image is located
 // needs to match the application linker script
-#define DEF_USER_PROGRAM_SRC        (0x18040000)
+#define DEF_USER_PROGRAM_SRC (SPI_BASE_ADDRESS + APPLICATION_FLASH_OFFSET)
 
 /* warning: the signature is located just below the ISR table + literals */
 /* if the location is changed, the linker scripts needs to be adapted too */
 #define DEF_USER_SIGNATURE          (DEF_USER_PROGRAM_SRC + 0x40)
 
-/* used to configure the system for single or dual chip mode before jumping to the application */
-#define QSPI_SINGLE_CHIP	SINGLE_MEMORY
-#define QSPI_DUAL_CHIP		DUAL_MEMORY
-
-#define QSPI_HARDWARE	QSPI_DUAL_CHIP
 
 #endif /* __QSPI_SETUP_H__ */
 

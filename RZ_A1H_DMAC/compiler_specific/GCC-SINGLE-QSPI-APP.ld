@@ -38,6 +38,16 @@ OUTPUT_FORMAT("elf32-littlearm", "elf32-bigarm", "elf32-littlearm")
 OUTPUT_ARCH(arm)
 ENTRY(APP_reset_handler)
 
+
+/* QSPI ROM attached to H'18000000, 1 chips of 0x4000000 size (64 Mb) */ 
+/* Total addressable space from the QSPI internal address map is 0x18000000 to H'1BFFFFFF (64Mb page) */
+/* attached QSPI flash type is Spansion S25FL512S on the RSK */
+SPI_BASE_ADDRESS = 0x18000000;
+
+/* !!!! set this equal to the offset defined in the qspi_setup.h file for the QSPI loader !!!! */
+APPLICATION_FLASH_OFFSET = 	0x40000;
+
+
 /* Base Address RAM Memory Table 10-Mbyte on-chip RAM */  
 /* Total RAM available 10112K */
 MEMORY 
@@ -80,13 +90,11 @@ MEMORY
 	RAM (rwx)		: ORIGIN = 0x20020000, LENGTH = 0x009E0000	/* Complete range of always-on RAM */
 	RAM_MIRROR (rwx): ORIGIN = 0x60020000, LENGTH = 0x009E0000	/* Complete range of always-on RAM mirror area */
 	
-	/* QSPI ROM attached to H'18000000, 2 chips of 0x4000000 size each (64 Mb) */ 
-	/* Total addressable space from the QSPI internal address map is 0x18000000 to H'1BFFFFFF (64Mb page) */
-	/* Size of block is 0x40000, first block is reserved to the BL */
-	/* Defined length accounts for the split between the BL and the application located @ 18040000 */
-	/* Check the bootloader project for consistency */		
-	QSPI_FLASH (rw) 		: ORIGIN = 0x18040000, LENGTH = 0x03FC0000  
-	QSPI_FLASH_MIRROR (rw) 	: ORIGIN = 0x58040000, LENGTH = 0x03FC0000  			
+	/* Size of each sector is 0x40000, first sector in single QSPI mode is reserved to the BL */
+	/* Length is 64Mb - 256Kb (1 sector), application located @ 18040000 */
+	/* !!!! Check the bootloader project (qspi_setup.h file) for consistency !!!! */		
+	QSPI_FLASH (rw) 		: ORIGIN = 0x18040000, LENGTH = 0x3FC0000  
+	QSPI_FLASH_MIRROR (rw) 	: ORIGIN = 0x58040000, LENGTH = 0x3FC0000  			
 }
 
 PROGRAM_STACK_SIZE    = 0x8000;      /* Application stack                  */
@@ -96,7 +104,8 @@ SVC_STACK_SIZE	      = 0x2000;      /* SVC mode stack                     */
 ABT_STACK_SIZE	      = 0x2000;      /* Abort mode stack                   */
 TTB_SIZE              = 0x8000;      /* Level-1 Translation Table for MMU  */
 
-APP_VECTOR_TABLE	= 0x18040000; 	/* Vector table in QSPI is located here */
+/* Vector table for QSPI application is located here */
+APP_VECTOR_TABLE	= (SPI_BASE_ADDRESS + APPLICATION_FLASH_OFFSET);
 
 /************************************************************************************************/
 /* NOTE: MIRRORED ADDRESSES ARE CONFIGURED AS NON-CACHEABLE AREAS */

@@ -37,7 +37,7 @@
     .global application_signature
 	.section .rodata
 application_signature:
-    .string ".BootLoad_ValidProgramTest."
+    .string "0123456789ABCDEF"
 
    .align
    .end

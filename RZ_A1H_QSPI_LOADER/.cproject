@@ -2,7 +2,7 @@
 <?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		<cconfiguration id="com.renesas.cdt.rz.debug.win32.configuration.Id.1302943722">
-			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.renesas.cdt.rz.debug.win32.configuration.Id.1302943722" moduleId="org.eclipse.cdt.core.settings" name="Debug">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.renesas.cdt.rz.debug.win32.configuration.Id.1302943722" moduleId="org.eclipse.cdt.core.settings" name="Debug_SINGLE_QSPI">
 				<externalSettings/>
 				<extensions>
 					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
@@ -14,7 +14,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="mot" artifactName="RZ_A1H_QSPI_LOADER" buildArtefactType="com.renesas.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=com.renesas.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf *.lst *.lis *.lpp *.map" description="" id="com.renesas.cdt.rz.debug.win32.configuration.Id.1302943722" name="Debug" parent="com.renesas.cdt.rz.debug.win32.configuration.Id" postbuildStep="arm-none-eabi-objcopy -O binary ${ProjName}.x  ${ProjDirPath}/${ProjName}.bin&amp; ">
+				<configuration artifactExtension="mot" artifactName="RZ_A1H_QSPI_LOADER-SINGLE" buildArtefactType="com.renesas.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=com.renesas.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf *.lst *.lis *.lpp *.map" description="Used for single QSPI boards" id="com.renesas.cdt.rz.debug.win32.configuration.Id.1302943722" name="Debug_SINGLE_QSPI" parent="com.renesas.cdt.rz.debug.win32.configuration.Id" postbuildStep=" arm-none-eabi-objcopy -O binary ${ProjName}-SINGLE.x  ${ProjDirPath}/${ProjName}.SINGLE.bin&amp; ">
 					<folderInfo id="com.renesas.cdt.rz.debug.win32.configuration.Id.1302943722." name="/" resourcePath="">
 						<toolChain id="com.renesas.cdt.rz.debug.win32.toolchain.Id.1502977391" name="KPIT GNUARM-NONE-EABI Toolchain" superClass="com.renesas.cdt.rz.debug.win32.toolchain.Id">
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF;org.eclipse.cdt.core.PE" id="com.renesas.cdt.rz.debug.win32.targetplatform.Id.1325424959" name="Target Platform" osList="all" superClass="com.renesas.cdt.rz.debug.win32.targetplatform.Id"/>
@@ -31,20 +31,21 @@
 							</tool>
 							<tool id="com.renesas.cdt.rz.debug.win32.tool.compiler.Id.856760718" name="Compiler" superClass="com.renesas.cdt.rz.debug.win32.tool.compiler.Id">
 								<option defaultValue="true" id="com.renesas.cdt.core.Compiler.option.misc2.216095970" name="Don't search standard system directories for header files(-nostdinc)" superClass="com.renesas.cdt.core.Compiler.option.misc2" value="false" valueType="boolean"/>
-								<option id="com.renesas.cdt.core.Compiler.option.includeFileDir.1874995299" name="Include file directories" superClass="com.renesas.cdt.core.Compiler.option.includeFileDir" valueType="includePath">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.core.Compiler.option.includeFileDir.1874995299" name="Include file directories" superClass="com.renesas.cdt.core.Compiler.option.includeFileDir" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${TC_PATH}/bin/newlib/libc/sys/arm&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/inc/iodefines&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/inc/iobitmasks&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/qspi_controller_driver/inc&quot;"/>
 								</option>
-								<option id="com.renesas.cdt.rz.Debug.Compiler.option.userDefinedOptions.1301680548" name="User defined options" superClass="com.renesas.cdt.rz.Debug.Compiler.option.userDefinedOptions" valueType="stringList">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.rz.Debug.Compiler.option.userDefinedOptions.1301680548" name="User defined options" superClass="com.renesas.cdt.rz.Debug.Compiler.option.userDefinedOptions" valueType="stringList">
 									<listOptionValue builtIn="false" value="-std=c99"/>
 								</option>
 								<option id="com.renesas.cdt.core.Compiler.option.warning19.779893403" name="Issue Warning for certain prototype conversions(-Wconversion)" superClass="com.renesas.cdt.core.Compiler.option.warning19" value="true" valueType="boolean"/>
 								<option id="com.renesas.cdt.rz.Debug.Compiler.option.debugFormat.1892659451" name="Debug Format" superClass="com.renesas.cdt.rz.Debug.Compiler.option.debugFormat" value="com.renesas.cdt.rz.Debug.Compiler.option.debugFormat.dwarf" valueType="enumerated"/>
-								<option id="com.renesas.cdt.rz.Debug.Compiler.option.macroDefines.2095338963" name="Macro Defines" superClass="com.renesas.cdt.rz.Debug.Compiler.option.macroDefines" valueType="definedSymbols">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.rz.Debug.Compiler.option.macroDefines.2095338963" name="Macro Defines" superClass="com.renesas.cdt.rz.Debug.Compiler.option.macroDefines" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="DEBUG"/>
+									<listOptionValue builtIn="false" value="SINGLE_QSPI_BOARD"/>
 								</option>
 								<option id="com.renesas.cdt.core.Compiler.option.stdWarnings.815731895" name="Standard Warnings" superClass="com.renesas.cdt.core.Compiler.option.stdWarnings" value="true" valueType="enumerated"/>
 								<option id="com.renesas.cdt.rz.Debug.Compiler.option.enableUnalignedWord.1776383681" name="Enable unaligned word and halfword accesses to packed data" superClass="com.renesas.cdt.rz.Debug.Compiler.option.enableUnalignedWord" value="true" valueType="boolean"/>
@@ -62,13 +63,13 @@
 								<option id="com.renesas.cdt.rz.Debug.Assembler.option.targetfpu.1771143284" name="Target FPU (-mfpu)" superClass="com.renesas.cdt.rz.Debug.Assembler.option.targetfpu" value="com.renesas.cdt.rz.Debug.Assembler.option.targetfpu.vfp" valueType="enumerated"/>
 								<option id="com.renesas.cdt.rz.Debug.Assembler.option.instructionset.1170469647" name="Instruction Set" superClass="com.renesas.cdt.rz.Debug.Assembler.option.instructionset" value="com.renesas.cdt.rz.Debug.Assembler.option.instructionset.arm" valueType="enumerated"/>
 								<option id="com.renesas.cdt.rz.Debug.Assembler.option.floatingpointabi.1044150258" name="Floating-point ABI (-mfloat-abi=name)" superClass="com.renesas.cdt.rz.Debug.Assembler.option.floatingpointabi" value="Hard" valueType="enumerated"/>
-								<option id="com.renesas.cdt.core.Assembler.option.userDefinedOptions.770959830" name="User defined options" superClass="com.renesas.cdt.core.Assembler.option.userDefinedOptions" valueType="stringList">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.core.Assembler.option.userDefinedOptions.770959830" name="User defined options" superClass="com.renesas.cdt.core.Assembler.option.userDefinedOptions" valueType="stringList">
 									<listOptionValue builtIn="false" value="-g"/>
 								</option>
 								<inputType id="%Base.Assembler.inputType.Id.715925892" name="Assembler InputType" superClass="%Base.Assembler.inputType.Id"/>
 							</tool>
 							<tool id="com.renesas.cdt.rz.debug.win32.tool.linker.Id.177854930" name="Linker" superClass="com.renesas.cdt.rz.debug.win32.tool.linker.Id">
-								<option id="com.renesas.cdt.rz.Debug.Linker.option.archiveSearchDirectories.432703261" name="Archive search directories" superClass="com.renesas.cdt.rz.Debug.Linker.option.archiveSearchDirectories" valueType="stringList">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.rz.Debug.Linker.option.archiveSearchDirectories.432703261" name="Archive search directories" superClass="com.renesas.cdt.rz.Debug.Linker.option.archiveSearchDirectories" valueType="stringList">
 									<listOptionValue builtIn="false" value="&quot;${CWD}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TC_PATH}/arm-none-eabi/lib&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${TC_PATH}/lib/gcc/arm-none-eabi/${GCC_VERSION}&quot;"/>
@@ -76,8 +77,8 @@
 									<listOptionValue builtIn="false" value="&quot;${TCINSTALL}/lib/gcc/arm-none-eabi/${GCC_VERSION}/fpu&quot;"/>
 								</option>
 								<option id="com.renesas.cdt.rz.Debug.Linker.option.dataEndian.354423553" name="Endian" superClass="com.renesas.cdt.rz.Debug.Linker.option.dataEndian" value="Little-endian" valueType="enumerated"/>
-								<option command=" -T&quot;C:/work/projects/mysoftware/RZ/RZ_A1H_QSPI_LOADER\Debug\LinkerSubCommand.tmp&quot; -T" id="com.renesas.cdt.core.Linker.option.file.593569750" name="File" superClass="com.renesas.cdt.core.Linker.option.file" value="&quot;${ProjDirPath}/compiler_specific/GCC-QSPI-BL.ld&quot;" valueType="string"/>
-								<option id="com.renesas.cdt.core.Linker.option.linkOrderList.1149131378" name="" superClass="com.renesas.cdt.core.Linker.option.linkOrderList" valueType="stringList">
+								<option command=" -T&quot;C:/work/projects/mysoftware/RZ/RZ_A1H_QSPI_LOADER\Debug_SINGLE_QSPI\LinkerSubCommand.tmp&quot; -T" id="com.renesas.cdt.core.Linker.option.file.593569750" name="File" superClass="com.renesas.cdt.core.Linker.option.file" value="&quot;${ProjDirPath}/compiler_specific/GCC-QSPI-BL.ld&quot;" valueType="string"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.core.Linker.option.linkOrderList.1149131378" name="" superClass="com.renesas.cdt.core.Linker.option.linkOrderList" valueType="stringList">
 									<listOptionValue builtIn="false" value="&quot;.\src\check_image.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\copy_section_to_ram.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\qspi_change_config.o&quot;"/>
@@ -89,14 +90,14 @@
 									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\reset_handler.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\start.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\user_prog_jmp.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\libRZ_A1H_QSPI_LOADER.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\libRZ_A1H_QSPI_LOADER-SINGLE.a&quot;"/>
 								</option>
-								<option id="com.renesas.cdt.rz.Debug.Linker.option.archiveLibraryFiles.1191382256" name="Archive (library) files" superClass="com.renesas.cdt.rz.Debug.Linker.option.archiveLibraryFiles" valueType="stringList">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.rz.Debug.Linker.option.archiveLibraryFiles.1191382256" name="Archive (library) files" superClass="com.renesas.cdt.rz.Debug.Linker.option.archiveLibraryFiles" valueType="stringList">
 									<listOptionValue builtIn="false" value=""/>
 								</option>
 								<option id="com.renesas.cdt.core.Linker.option.commandFileOverride.847492945" name="Command file overide" superClass="com.renesas.cdt.core.Linker.option.commandFileOverride" value="com.renesas.cdt.core.Linker.option.commandFileOverride.externalLinkerScript" valueType="enumerated"/>
 								<option command="-warn-common" id="com.renesas.cdt.core.Linker.option.misc9.730810256" name="Warn when two symbols are combined(-warn-common)" superClass="com.renesas.cdt.core.Linker.option.misc9" value="true" valueType="boolean"/>
-								<option id="com.renesas.cdt.core.Linker.option.userDefinedOptions.922167310" name="User defined options" superClass="com.renesas.cdt.core.Linker.option.userDefinedOptions" valueType="stringList">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.core.Linker.option.userDefinedOptions.922167310" name="User defined options" superClass="com.renesas.cdt.core.Linker.option.userDefinedOptions" valueType="stringList">
 									<listOptionValue builtIn="false" value="-EL"/>
 									<listOptionValue builtIn="false" value="-q"/>
 									<listOptionValue builtIn="false" value="--verbose"/>
@@ -116,6 +117,122 @@
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
 		</cconfiguration>
+		<cconfiguration id="com.renesas.cdt.rz.debug.win32.configuration.Id.1302943722.1628408855">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.renesas.cdt.rz.debug.win32.configuration.Id.1302943722.1628408855" moduleId="org.eclipse.cdt.core.settings" name="Debug_DUAL_QSPI">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.PE" point="org.eclipse.cdt.core.BinaryParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactExtension="mot" artifactName="RZ_A1H_QSPI_LOADER-DUAL" buildArtefactType="com.renesas.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=com.renesas.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf *.lst *.lis *.lpp *.map" description="Used for dual QSPI boards - BL is always in single mode, Application in dual mode" id="com.renesas.cdt.rz.debug.win32.configuration.Id.1302943722.1628408855" name="Debug_DUAL_QSPI" parent="com.renesas.cdt.rz.debug.win32.configuration.Id" postbuildStep=" arm-none-eabi-objcopy -O binary ${ProjName}-DUAL.x  ${ProjDirPath}/${ProjName}.DUAL.bin&amp; ">
+					<folderInfo id="com.renesas.cdt.rz.debug.win32.configuration.Id.1302943722.1628408855." name="/" resourcePath="">
+						<toolChain id="com.renesas.cdt.rz.debug.win32.toolchain.Id.671607333" name="KPIT GNUARM-NONE-EABI Toolchain" superClass="com.renesas.cdt.rz.debug.win32.toolchain.Id">
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF;org.eclipse.cdt.core.PE" id="com.renesas.cdt.rz.debug.win32.targetplatform.Id.210387375" name="Target Platform" osList="all" superClass="com.renesas.cdt.rz.debug.win32.targetplatform.Id"/>
+							<builder buildPath="${workspace_loc:/RZ_A1H_QSPI_LOADER}/Debug" id="com.renesas.cdt.rz.debug.win32.builder.Id.404897763" keepEnvironmentInBuildfile="false" name="Builder" parallelBuildOn="true" parallelizationNumber="optimal" superClass="com.renesas.cdt.rz.debug.win32.builder.Id"/>
+							<tool id="com.renesas.cdt.rz.debug.win32.tool.libgen.Id.1313139094" name="Library Generator" superClass="com.renesas.cdt.rz.debug.win32.tool.libgen.Id">
+								<option id="com.renesas.cdt.core.LibraryGenerator.option.stdlib.570944437" name="stdlib.h : Performs C program standard processing such as storage area management" superClass="com.renesas.cdt.core.LibraryGenerator.option.stdlib" value="true" valueType="boolean"/>
+								<option id="com.renesas.cdt.core.LibraryGenerator.option.string.1695739502" name="string.h : Performs string comparison, copying " superClass="com.renesas.cdt.core.LibraryGenerator.option.string" value="true" valueType="boolean"/>
+								<option id="com.renesas.cdt.core.LibraryGenerator.option.enableAll.215430683" name="Enable all" superClass="com.renesas.cdt.core.LibraryGenerator.option.enableAll" value="true" valueType="boolean"/>
+								<option id="com.renesas.cdt.core.LibraryGenerator.option.misc17.1402519480" name="Don't keep unneeded function frame pointers(-fomit-frame-pointer)" superClass="com.renesas.cdt.core.LibraryGenerator.option.misc17" value="true" valueType="boolean"/>
+								<option id="com.renesas.cdt.core.LibraryGenerator.option.selectLibrary.1618493939" name="Select library" superClass="com.renesas.cdt.core.LibraryGenerator.option.selectLibrary" value="com.renesas.core.LibraryGenerator.option.selectLibrary.newLib" valueType="enumerated"/>
+								<option id="com.renesas.cdt.core.LibraryGenerator.option.ctype.1711267322" name="ctype.h : Handles and checks characters" superClass="com.renesas.cdt.core.LibraryGenerator.option.ctype" value="true" valueType="boolean"/>
+								<option id="com.renesas.cdt.core.LibraryGenerator.option.math.1232765110" name="math.h : Performs numeric calculations such as trigonometric functions" superClass="com.renesas.cdt.core.LibraryGenerator.option.math" value="true" valueType="boolean"/>
+								<option id="com.renesas.cdt.core.LibraryGenerator.option.stdio.471465049" name="stdio.h : Performs input/output handling" superClass="com.renesas.cdt.core.LibraryGenerator.option.stdio" value="true" valueType="boolean"/>
+							</tool>
+							<tool id="com.renesas.cdt.rz.debug.win32.tool.compiler.Id.1914512751" name="Compiler" superClass="com.renesas.cdt.rz.debug.win32.tool.compiler.Id">
+								<option defaultValue="true" id="com.renesas.cdt.core.Compiler.option.misc2.327551723" name="Don't search standard system directories for header files(-nostdinc)" superClass="com.renesas.cdt.core.Compiler.option.misc2" value="false" valueType="boolean"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.core.Compiler.option.includeFileDir.466715042" name="Include file directories" superClass="com.renesas.cdt.core.Compiler.option.includeFileDir" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${TC_PATH}/bin/newlib/libc/sys/arm&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/inc/iodefines&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/inc/iobitmasks&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/qspi_controller_driver/inc&quot;"/>
+								</option>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.rz.Debug.Compiler.option.userDefinedOptions.598333884" name="User defined options" superClass="com.renesas.cdt.rz.Debug.Compiler.option.userDefinedOptions" valueType="stringList">
+									<listOptionValue builtIn="false" value="-std=c99"/>
+								</option>
+								<option id="com.renesas.cdt.core.Compiler.option.warning19.2064015200" name="Issue Warning for certain prototype conversions(-Wconversion)" superClass="com.renesas.cdt.core.Compiler.option.warning19" value="true" valueType="boolean"/>
+								<option id="com.renesas.cdt.rz.Debug.Compiler.option.debugFormat.1540764594" name="Debug Format" superClass="com.renesas.cdt.rz.Debug.Compiler.option.debugFormat" value="com.renesas.cdt.rz.Debug.Compiler.option.debugFormat.dwarf" valueType="enumerated"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.rz.Debug.Compiler.option.macroDefines.1186780100" name="Macro Defines" superClass="com.renesas.cdt.rz.Debug.Compiler.option.macroDefines" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="DEBUG"/>
+									<listOptionValue builtIn="false" value="DUAL_QSPI_BOARD"/>
+								</option>
+								<option id="com.renesas.cdt.core.Compiler.option.stdWarnings.925864221" name="Standard Warnings" superClass="com.renesas.cdt.core.Compiler.option.stdWarnings" value="true" valueType="enumerated"/>
+								<option id="com.renesas.cdt.rz.Debug.Compiler.option.enableUnalignedWord.1839560805" name="Enable unaligned word and halfword accesses to packed data" superClass="com.renesas.cdt.rz.Debug.Compiler.option.enableUnalignedWord" value="true" valueType="boolean"/>
+								<option id="com.renesas.cdt.core.Compiler.option.device.1633174651" name="Device" superClass="com.renesas.cdt.core.Compiler.option.device" value="R7S72100" valueType="string"/>
+								<option id="com.renesas.cdt.core.Compiler.option.deviceShortName.961069304" name="DeviceShortName" superClass="com.renesas.cdt.core.Compiler.option.deviceShortName" value="R7S72100" valueType="string"/>
+								<option id="com.renesas.cdt.core.Compiler.option.CPUSeries.300099215" name="Cpu Series" superClass="com.renesas.cdt.core.Compiler.option.CPUSeries"/>
+								<option id="com.renesas.cdt.rz.Debug.Compiler.option.debugLevel.878089848" name="Debug Level" superClass="com.renesas.cdt.rz.Debug.Compiler.option.debugLevel" value="com.renesas.cdt.rz.Debug.Compiler.option.debugLevel.level3" valueType="enumerated"/>
+								<option id="com.renesas.cdt.rz.Debug.Compiler.option.floatingpointabi.1473664062" name="Floating-point ABI (-mfloat-abi=name)" superClass="com.renesas.cdt.rz.Debug.Compiler.option.floatingpointabi" value="com.renesas.cdt.rz.Debug.Compiler.option.floatingpointabi.hard" valueType="enumerated"/>
+								<option id="com.renesas.cdt.rz.Debug.Compiler.option.stackFramForAPCS.1546970387" name="Generate a stack frame for ARM Procedure Call Standard" superClass="com.renesas.cdt.rz.Debug.Compiler.option.stackFramForAPCS" value="true" valueType="boolean"/>
+								<inputType id="%Base.Compiler.C.InputType.Id.1525206034" name="C Input" superClass="%Base.Compiler.C.InputType.Id"/>
+								<inputType id="Base.Compiler.CPP.InputType.Id.87589837" name="C++ Input" superClass="Base.Compiler.CPP.InputType.Id"/>
+							</tool>
+							<tool id="com.renesas.cdt.rz.debug.win32.tool.assembler.Id.183023146" name="Assembler" superClass="com.renesas.cdt.rz.debug.win32.tool.assembler.Id">
+								<option id="com.renesas.cdt.rz.Debug.Assembler.option.dataEndian.868798870" name="Endian" superClass="com.renesas.cdt.rz.Debug.Assembler.option.dataEndian" value="com.renesas.cdt.rz.Debug.Assembler.option.dataEndian.little" valueType="enumerated"/>
+								<option id="com.renesas.cdt.rz.Debug.Assembler.option.targetfpu.1276121694" name="Target FPU (-mfpu)" superClass="com.renesas.cdt.rz.Debug.Assembler.option.targetfpu" value="com.renesas.cdt.rz.Debug.Assembler.option.targetfpu.vfp" valueType="enumerated"/>
+								<option id="com.renesas.cdt.rz.Debug.Assembler.option.instructionset.54018924" name="Instruction Set" superClass="com.renesas.cdt.rz.Debug.Assembler.option.instructionset" value="com.renesas.cdt.rz.Debug.Assembler.option.instructionset.arm" valueType="enumerated"/>
+								<option id="com.renesas.cdt.rz.Debug.Assembler.option.floatingpointabi.98917419" name="Floating-point ABI (-mfloat-abi=name)" superClass="com.renesas.cdt.rz.Debug.Assembler.option.floatingpointabi" value="Hard" valueType="enumerated"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.core.Assembler.option.userDefinedOptions.1419129558" name="User defined options" superClass="com.renesas.cdt.core.Assembler.option.userDefinedOptions" valueType="stringList">
+									<listOptionValue builtIn="false" value="-g"/>
+								</option>
+								<inputType id="%Base.Assembler.inputType.Id.913084702" name="Assembler InputType" superClass="%Base.Assembler.inputType.Id"/>
+							</tool>
+							<tool id="com.renesas.cdt.rz.debug.win32.tool.linker.Id.1782118569" name="Linker" superClass="com.renesas.cdt.rz.debug.win32.tool.linker.Id">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.rz.Debug.Linker.option.archiveSearchDirectories.45116466" name="Archive search directories" superClass="com.renesas.cdt.rz.Debug.Linker.option.archiveSearchDirectories" valueType="stringList">
+									<listOptionValue builtIn="false" value="&quot;${CWD}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${TC_PATH}/arm-none-eabi/lib&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${TC_PATH}/lib/gcc/arm-none-eabi/${GCC_VERSION}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${CONFIGDIR}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${TCINSTALL}/lib/gcc/arm-none-eabi/${GCC_VERSION}/fpu&quot;"/>
+								</option>
+								<option id="com.renesas.cdt.rz.Debug.Linker.option.dataEndian.93608252" name="Endian" superClass="com.renesas.cdt.rz.Debug.Linker.option.dataEndian" value="Little-endian" valueType="enumerated"/>
+								<option command=" -T&quot;C:/work/projects/mysoftware/RZ/RZ_A1H_QSPI_LOADER\Debug_DUAL_QSPI\LinkerSubCommand.tmp&quot; -T" id="com.renesas.cdt.core.Linker.option.file.1802266184" name="File" superClass="com.renesas.cdt.core.Linker.option.file" value="&quot;${ProjDirPath}/compiler_specific/GCC-QSPI-BL.ld&quot;" valueType="string"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.core.Linker.option.linkOrderList.173956880" name="" superClass="com.renesas.cdt.core.Linker.option.linkOrderList" valueType="stringList">
+									<listOptionValue builtIn="false" value="&quot;.\src\check_image.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\src\copy_section_to_ram.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\src\qspi_change_config.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\src\resetprg.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\src\rza_io_regrw.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\qspi_controller_driver/src\external_address_mode.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\qspi_controller_driver/src\qspi_controller.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\qspi_controller_driver/src\spi_mode.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\reset_handler.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\start.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\user_prog_jmp.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\libRZ_A1H_QSPI_LOADER.a&quot;"/>
+								</option>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.rz.Debug.Linker.option.archiveLibraryFiles.232779748" name="Archive (library) files" superClass="com.renesas.cdt.rz.Debug.Linker.option.archiveLibraryFiles" valueType="stringList">
+									<listOptionValue builtIn="false" value=""/>
+								</option>
+								<option id="com.renesas.cdt.core.Linker.option.commandFileOverride.632495480" name="Command file overide" superClass="com.renesas.cdt.core.Linker.option.commandFileOverride" value="com.renesas.cdt.core.Linker.option.commandFileOverride.externalLinkerScript" valueType="enumerated"/>
+								<option command="-warn-common" id="com.renesas.cdt.core.Linker.option.misc9.1969716478" name="Warn when two symbols are combined(-warn-common)" superClass="com.renesas.cdt.core.Linker.option.misc9" value="true" valueType="boolean"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.core.Linker.option.userDefinedOptions.642848012" name="User defined options" superClass="com.renesas.cdt.core.Linker.option.userDefinedOptions" valueType="stringList">
+									<listOptionValue builtIn="false" value="-EL"/>
+									<listOptionValue builtIn="false" value="-q"/>
+									<listOptionValue builtIn="false" value="--verbose"/>
+									<listOptionValue builtIn="false" value="--warn-unresolved-symbols"/>
+									<listOptionValue builtIn="false" value="--error-unresolved-symbols"/>
+									<listOptionValue builtIn="false" value="--start-group -lm -lc -lgcc --end-group"/>
+								</option>
+							</tool>
+							<tool id="com.renesas.cdt.rz.debug.win32.tool.objcopy.Id.2136547979" name="Objcopy" superClass="com.renesas.cdt.rz.debug.win32.tool.objcopy.Id"/>
+						</toolChain>
+					</folderInfo>
+					<fileInfo id="com.renesas.cdt.rz.debug.win32.configuration.Id.1302943722.1628408855.RSK_Programmer_QSPI_Boot_Reset" name="RSK_Programmer_QSPI_Boot_Reset" rcbsApplicability="disable" resourcePath="RSK_Programmer_QSPI_Boot_Reset" toolsToInvoke=""/>
+					<sourceEntries>
+						<entry excluding="src/spibsc_ioset_userdef.c|src/spibsc_ioset_drv.c|src/spibsc_ioset_api.c|src/spibsc_flash_userdef.c|src/spibsc_flash_api.c|src/qspi_change_speed.c|src/spibsc_init2.c|src/init_spibsc_init2_section.c|src/spibsc_init1.c|src/init_spibsc_init1_section.c|compiler_specific/asm/vbar_init.S|compiler_specific/asm/stack.S|compiler_specific/asm/initsct.S|RSK_Programmer_QSPI_Boot_Reset" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="RZ_A1H_QSPI_LOADER.com.renesas.cdt.rz.projectType.win32.Id.317814430" name="Executable (Renesas)" projectType="com.renesas.cdt.rz.projectType.win32.Id"/>
@@ -125,6 +242,12 @@
 	</storageModule>
 	<storageModule moduleId="refreshScope" versionNumber="2">
 		<configuration configurationName="Release">
+			<resource resourceType="PROJECT" workspacePath="/RZ_A1H_QSPI_LOADER"/>
+		</configuration>
+		<configuration configurationName="Debug_DUAL_QSPI">
+			<resource resourceType="PROJECT" workspacePath="/RZ_A1H_QSPI_LOADER"/>
+		</configuration>
+		<configuration configurationName="Debug_SINGLE_QSPI">
 			<resource resourceType="PROJECT" workspacePath="/RZ_A1H_QSPI_LOADER"/>
 		</configuration>
 		<configuration configurationName="Debug">

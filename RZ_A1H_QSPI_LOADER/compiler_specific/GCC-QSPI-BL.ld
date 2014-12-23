@@ -86,7 +86,7 @@ MEMORY
 	QSPI_FLASH (rw) 		: ORIGIN = 0x18000000, LENGTH = 0x40000  
 	QSPI_FLASH_MIRROR (rw) 	: ORIGIN = 0x58000000, LENGTH = 0x40000 
 	/* Needs to match #define DEF_USER_PROGRAM_SRC in qspi_setup.h, set at (ORIGIN + LENGTH) */
-	/* Example: #define DEF_USER_PROGRAM_SRC 0x18040000 */																
+	/* Example: #define DEF_USER_PROGRAM_SRC 0x18080000 */																
 }
 
 PROGRAM_STACK_SIZE    = 0x8000;      /* Application stack                  */

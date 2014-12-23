@@ -45,7 +45,7 @@ Macro definitions
 ******************************************************************************/
 void error_image(void);
 
-char signature[] = ".BootLoad_ValidProgramTest.";
+char signature[] = "0123456789ABCDEF";
 
 /******************************************************************************
 * Function Name: check_image
@@ -54,7 +54,7 @@ char signature[] = ".BootLoad_ValidProgramTest.";
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void check_image(uint32_t location)
+int check_image_singleSpi(uint32_t location)
 {
     uint8_t p    = 0;
     uint16_t len = sizeof(signature);
@@ -62,7 +62,7 @@ void check_image(uint32_t location)
     uint8_t* sourceDataPtr;
 
     sourceDataPtr = (uint8_t*) location;
-    while(--len)
+    while(len > 0)
     {
     	sourceData = *sourceDataPtr;
 
@@ -72,19 +72,56 @@ void check_image(uint32_t location)
         }
 
     	sourceDataPtr++;
+    	len--;
     	p++;
 
     }
 
-    /* If the length remaining is not zero then the signature validation failed. */
-    if(!(0 == len))
-    {
-        /* This function will never return. */
-    	error_image();
-    }
+    return(len);
+
 }
 
+int check_image_dualSpi(uint32_t location)
+{
+    uint8_t p    = 0;
+    uint16_t len = sizeof(signature);
+    uint16_t sourceData;
+    uint16_t* sourceDataPtr;
+    uint8_t value;
 
+    sourceDataPtr = (uint16_t*) location;
+
+    // read 16-bit wise and compare byte-wise
+    while(len>0)
+    {
+    	sourceData = *sourceDataPtr;
+
+    	value = (uint8_t) (sourceData & 0x00FF);
+    	if(value != signature[p++])
+        {
+            break;
+        }
+
+    	len--;
+
+    	if(len == 0) break;
+
+    	value = (uint8_t) ((sourceData & 0xFF00) >> 8);
+
+    	if(value != signature[p++])
+        {
+            break;
+        }
+
+    	len--;
+
+    	sourceDataPtr++;
+
+    }
+
+    return(len);
+
+}
 
 /******************************************************************************
 * Function Name: error_image

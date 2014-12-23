@@ -52,7 +52,9 @@ Macro definitions
 Imported global variables and functions (from other files)
 ******************************************************************************/
 extern void UserProgJmp(uint32_t addr);
-extern void check_image(uint32_t location);
+extern uint32_t check_image_singleSpi(uint32_t location);
+extern uint32_t check_image_dualSpi(uint32_t location);
+extern void error_image(void);
 
 /******************************************************************************
 Exported global variables and functions (to be accessed by other files)
@@ -71,7 +73,8 @@ static void test_readBytes(dataBusSize_t busSize);
 #define CFREG_QUAD_BIT      0x02          /* Quad mode bit(Configuration Register) */
 #define PROGRAM_ERASE_ERROR 0x60
 
-
+static externalAddressTransfer_t 	externalAddressTransfer;
+static spiConfig_t					spiConfiguration;
 
 void qspi_change_config_and_start_application(void)
 {
@@ -80,9 +83,7 @@ void qspi_change_config_and_start_application(void)
     uint8_t cf_device0, cf_device1;
     uint8_t bf_device0, bf_device1;
     uint16_t signature0, signature1;
-
-    externalAddressTransfer_t 	externalAddressTransfer;
-    spiConfig_t					spiConfiguration;
+    uint32_t len;
 
     /* Release pin function for memory control without changing pin state. */
     while(CPG.DSFR.BIT.IOKEEP == 1) {
@@ -91,28 +92,10 @@ void qspi_change_config_and_start_application(void)
 
     qspiExternalAddressForceIdleAndWait();
 
-	// configure two additional I/O lanes for the two chip configuration
-	/* ==== P2_12 : SPBIO01_0 ==== */
-	/* port function : SPBIO01_0    */
-	RZA_IO_RegWrite_16(&GPIO.PFCAE2, 0, GPIO_PFCAE2_PFCAE212_SHIFT, GPIO_PFCAE2_PFCAE212);
-	RZA_IO_RegWrite_16(&GPIO.PFCE2,  1, GPIO_PFCE2_PFCE212_SHIFT,   GPIO_PFCE2_PFCE212);
-	RZA_IO_RegWrite_16(&GPIO.PFC2,   1, GPIO_PFC2_PFC212_SHIFT,     GPIO_PFC2_PFC212);
-	/* port mode : Both use mode(The 4th both use) */
-	RZA_IO_RegWrite_16(&GPIO.PMC2,   1, GPIO_PMC2_PMC212_SHIFT,     GPIO_PMC2_PMC212);
-	/* Input/output control mode : peripheral function */
-	RZA_IO_RegWrite_16(&GPIO.PIPC2,  1, GPIO_PIPC2_PIPC212_SHIFT,   GPIO_PIPC2_PIPC212);
+    // QSPI HARDWARE defines if single or dual chip
+    spiConfiguration.dataBusSize = QSPI_HARDWARE;
 
-	/* ==== P2_13 : SPBIO11_0 ==== */
-	/* port function : SPBIO11_0    */
-	RZA_IO_RegWrite_16(&GPIO.PFCAE2, 0, GPIO_PFCAE2_PFCAE213_SHIFT, GPIO_PFCAE2_PFCAE213);
-	RZA_IO_RegWrite_16(&GPIO.PFCE2,  1, GPIO_PFCE2_PFCE213_SHIFT,   GPIO_PFCE2_PFCE213);
-	RZA_IO_RegWrite_16(&GPIO.PFC2,   1, GPIO_PFC2_PFC213_SHIFT,     GPIO_PFC2_PFC213);
-	/* port mode : Both use mode(The 4th both use) */
-	RZA_IO_RegWrite_16(&GPIO.PMC2,   1, GPIO_PMC2_PMC213_SHIFT,     GPIO_PMC2_PMC213);
-	/* Input/output control mode : peripheral function */
-	RZA_IO_RegWrite_16(&GPIO.PIPC2,  1, GPIO_PIPC2_PIPC213_SHIFT,   GPIO_PIPC2_PIPC213);
-
-	/* for quad mode */
+    /* configure additional pins for quad mode - port 0 needed in all configurations */
 	/* ==== P9_6 : SPBIO20_0 ==== */
 	/* port function : SPBIO20_0    */
 	RZA_IO_RegWrite_16(&GPIO.PFCAE9, 0, GPIO_PFCAE9_PFCAE96_SHIFT, GPIO_PFCAE9_PFCAE96);
@@ -133,30 +116,54 @@ void qspi_change_config_and_start_application(void)
 	/* Input/output control mode : peripheral function */
 	RZA_IO_RegWrite_16(&GPIO.PIPC9,  1, GPIO_PIPC9_PIPC97_SHIFT,   GPIO_PIPC9_PIPC97);
 
-	/* ==== P2_14 : SPBIO21_0 ==== */
-	/* port function : SPBIO21_0    */
-	RZA_IO_RegWrite_16(&GPIO.PFCAE2, 0, GPIO_PFCAE2_PFCAE214_SHIFT, GPIO_PFCAE2_PFCAE214);
-	RZA_IO_RegWrite_16(&GPIO.PFCE2,  1, GPIO_PFCE2_PFCE214_SHIFT,   GPIO_PFCE2_PFCE214);
-	RZA_IO_RegWrite_16(&GPIO.PFC2,   1, GPIO_PFC2_PFC214_SHIFT,     GPIO_PFC2_PFC214);
-	/* port mode : Both use mode(The 4th both use) */
-	RZA_IO_RegWrite_16(&GPIO.PMC2,   1, GPIO_PMC2_PMC214_SHIFT,     GPIO_PMC2_PMC214);
-	/* Input/output control mode : peripheral function */
-	RZA_IO_RegWrite_16(&GPIO.PIPC2,  1, GPIO_PIPC2_PIPC214_SHIFT,   GPIO_PIPC2_PIPC214);
+    if (QSPI_HARDWARE == DUAL_MEMORY) {
 
-	/* ==== P2_15 : SPBIO31_0 ==== */
-	/* port function : SPBIO31_0    */
-	RZA_IO_RegWrite_16(&GPIO.PFCAE2, 0, GPIO_PFCAE2_PFCAE215_SHIFT, GPIO_PFCAE2_PFCAE215);
-	RZA_IO_RegWrite_16(&GPIO.PFCE2,  1, GPIO_PFCE2_PFCE215_SHIFT,   GPIO_PFCE2_PFCE215);
-	RZA_IO_RegWrite_16(&GPIO.PFCE2,  1, GPIO_PFCE2_PFCE215_SHIFT,   GPIO_PFCE2_PFCE215);
-	RZA_IO_RegWrite_16(&GPIO.PFC2,   1, GPIO_PFC2_PFC215_SHIFT,     GPIO_PFC2_PFC215);
-	/* port mode : Both use mode(The 4th both use) */
-	RZA_IO_RegWrite_16(&GPIO.PMC2,   1, GPIO_PMC2_PMC215_SHIFT,     GPIO_PMC2_PMC215);
-	/* Input/output control mode : peripheral function */
-	RZA_IO_RegWrite_16(&GPIO.PIPC2,  1, GPIO_PIPC2_PIPC215_SHIFT,   GPIO_PIPC2_PIPC215);
+    	// configure two additional I/O lanes for the two chip configuration
+    	/* ==== P2_12 : SPBIO01_0 ==== */
+    	/* port function : SPBIO01_0    */
+    	RZA_IO_RegWrite_16(&GPIO.PFCAE2, 0, GPIO_PFCAE2_PFCAE212_SHIFT, GPIO_PFCAE2_PFCAE212);
+    	RZA_IO_RegWrite_16(&GPIO.PFCE2,  1, GPIO_PFCE2_PFCE212_SHIFT,   GPIO_PFCE2_PFCE212);
+    	RZA_IO_RegWrite_16(&GPIO.PFC2,   1, GPIO_PFC2_PFC212_SHIFT,     GPIO_PFC2_PFC212);
+    	/* port mode : Both use mode(The 4th both use) */
+    	RZA_IO_RegWrite_16(&GPIO.PMC2,   1, GPIO_PMC2_PMC212_SHIFT,     GPIO_PMC2_PMC212);
+    	/* Input/output control mode : peripheral function */
+    	RZA_IO_RegWrite_16(&GPIO.PIPC2,  1, GPIO_PIPC2_PIPC212_SHIFT,   GPIO_PIPC2_PIPC212);
 
+    	/* ==== P2_13 : SPBIO11_0 ==== */
+    	/* port function : SPBIO11_0    */
+    	RZA_IO_RegWrite_16(&GPIO.PFCAE2, 0, GPIO_PFCAE2_PFCAE213_SHIFT, GPIO_PFCAE2_PFCAE213);
+    	RZA_IO_RegWrite_16(&GPIO.PFCE2,  1, GPIO_PFCE2_PFCE213_SHIFT,   GPIO_PFCE2_PFCE213);
+    	RZA_IO_RegWrite_16(&GPIO.PFC2,   1, GPIO_PFC2_PFC213_SHIFT,     GPIO_PFC2_PFC213);
+    	/* port mode : Both use mode(The 4th both use) */
+    	RZA_IO_RegWrite_16(&GPIO.PMC2,   1, GPIO_PMC2_PMC213_SHIFT,     GPIO_PMC2_PMC213);
+    	/* Input/output control mode : peripheral function */
+    	RZA_IO_RegWrite_16(&GPIO.PIPC2,  1, GPIO_PIPC2_PIPC213_SHIFT,   GPIO_PIPC2_PIPC213);
 
-    // configure the SPI controller for single mode SPI
-    spiConfiguration.dataBusSize = SINGLE_MEMORY;
+    	/* configure additional pins for quad mode */
+    	/* ==== P2_14 : SPBIO21_0 ==== */
+    	/* port function : SPBIO21_0    */
+    	RZA_IO_RegWrite_16(&GPIO.PFCAE2, 0, GPIO_PFCAE2_PFCAE214_SHIFT, GPIO_PFCAE2_PFCAE214);
+    	RZA_IO_RegWrite_16(&GPIO.PFCE2,  1, GPIO_PFCE2_PFCE214_SHIFT,   GPIO_PFCE2_PFCE214);
+    	RZA_IO_RegWrite_16(&GPIO.PFC2,   1, GPIO_PFC2_PFC214_SHIFT,     GPIO_PFC2_PFC214);
+    	/* port mode : Both use mode(The 4th both use) */
+    	RZA_IO_RegWrite_16(&GPIO.PMC2,   1, GPIO_PMC2_PMC214_SHIFT,     GPIO_PMC2_PMC214);
+    	/* Input/output control mode : peripheral function */
+    	RZA_IO_RegWrite_16(&GPIO.PIPC2,  1, GPIO_PIPC2_PIPC214_SHIFT,   GPIO_PIPC2_PIPC214);
+
+    	/* ==== P2_15 : SPBIO31_0 ==== */
+    	/* port function : SPBIO31_0    */
+    	RZA_IO_RegWrite_16(&GPIO.PFCAE2, 0, GPIO_PFCAE2_PFCAE215_SHIFT, GPIO_PFCAE2_PFCAE215);
+    	RZA_IO_RegWrite_16(&GPIO.PFCE2,  1, GPIO_PFCE2_PFCE215_SHIFT,   GPIO_PFCE2_PFCE215);
+    	RZA_IO_RegWrite_16(&GPIO.PFCE2,  1, GPIO_PFCE2_PFCE215_SHIFT,   GPIO_PFCE2_PFCE215);
+    	RZA_IO_RegWrite_16(&GPIO.PFC2,   1, GPIO_PFC2_PFC215_SHIFT,     GPIO_PFC2_PFC215);
+    	/* port mode : Both use mode(The 4th both use) */
+    	RZA_IO_RegWrite_16(&GPIO.PMC2,   1, GPIO_PMC2_PMC215_SHIFT,     GPIO_PMC2_PMC215);
+    	/* Input/output control mode : peripheral function */
+    	RZA_IO_RegWrite_16(&GPIO.PIPC2,  1, GPIO_PIPC2_PIPC215_SHIFT,   GPIO_PIPC2_PIPC215);
+
+    }
+
+    // configure the rest of the SPI controller registers
     spiConfiguration.operatingMode = SPI;
     spiConfiguration.slaveSelectPolarity = ACTIVE_LOW;
     spiConfiguration.clockPolarity = IDLE_LOW;
@@ -175,6 +182,7 @@ void qspi_change_config_and_start_application(void)
     spiConfiguration.idleValue_20_21 = IDLE_HI_Z;
     spiConfiguration.idleValue_30_31 = IDLE_HI_Z;
 
+    // now put the controller in SPI mode, single or dual chip
     qspiControllerConfigure(&spiConfiguration);
 
     signature0 = signature1 = 0;
@@ -188,18 +196,21 @@ void qspi_change_config_and_start_application(void)
     qspiReadBankRegister(&bf_device0, &bf_device1, spiConfiguration.dataBusSize);
 
     /* ---- set quad mode ---- */
-    if(	((cf_device0 & CFREG_QUAD_BIT) >> 1u) != QUAD_MODE)
-		cf_device0 = (cf_device0 | (uint8_t) CFREG_QUAD_BIT);
+	if(	((cf_device0 & CFREG_QUAD_BIT) >> 1u) != QUAD_MODE)
+	cf_device0 = (cf_device0 | (uint8_t) CFREG_QUAD_BIT);
 
-    /* always clear latency code to b'00 */
+	/* always clear latency code to b'00 */
 	if((cf_device0 & 0xC0) != 0x0)
 		cf_device0 = (cf_device0 & ((uint8_t)~0xC0));
 
-	if (((cf_device1 & CFREG_QUAD_BIT) >> 1u) != QUAD_MODE)
-		cf_device1 = (cf_device1 | (uint8_t) CFREG_QUAD_BIT);
+	if (QSPI_HARDWARE == DUAL_MEMORY) {
 
-	if((cf_device1 & 0xC0) != 0x0)
-		cf_device1 = (cf_device1 & ((uint8_t)~0xC0));
+		if (((cf_device1 & CFREG_QUAD_BIT) >> 1u) != QUAD_MODE)
+			cf_device1 = (cf_device1 | (uint8_t) CFREG_QUAD_BIT);
+
+		if((cf_device1 & 0xC0) != 0x0)
+			cf_device1 = (cf_device1 & ((uint8_t)~0xC0));
+	}
 
 	// enable writes to the status register
 	qspiWriteEnable(spiConfiguration.dataBusSize);
@@ -207,8 +218,13 @@ void qspi_change_config_and_start_application(void)
 	// check read enable latch is set
 	qspiReadStatusRegister1(&st_reg1_device0, &st_reg1_device1, spiConfiguration.dataBusSize);
 
+	// configure the memory for quad mode
 	qspiWriteStatusConfigRegister(st_reg1_device0, cf_device0, st_reg1_device1, cf_device1, spiConfiguration.dataBusSize);
 
+	// disable writes to the status register
+	qspiWriteDisable(spiConfiguration.dataBusSize);
+
+	// read back config and status register
 	qspiReadConfigRegister(&cf_device0, &cf_device1, spiConfiguration.dataBusSize);
 	qspiReadStatusRegister1(&st_reg1_device0, &st_reg1_device1, spiConfiguration.dataBusSize);
 
@@ -216,6 +232,7 @@ void qspi_change_config_and_start_application(void)
     test_readBytes(spiConfiguration.dataBusSize);
 #endif
 
+    // now prepare scenario for external address mode
     externalAddressTransfer.addressBitSize = ADDRESS_4BIT;
     externalAddressTransfer.addressEnable = ADDRESS_32_BITS;
 
@@ -249,6 +266,7 @@ void qspi_change_config_and_start_application(void)
     externalAddressTransfer.optionalDataRateMode = OPTIONAL_DATA_SDR_TYPE;
 
     // configure the specific registers for external address mode
+    // does not yet switch the mode
     qspiConfigureExternalAddressTransfer(&externalAddressTransfer);
 
     // change the controller configuration before reading the signature
@@ -256,10 +274,9 @@ void qspi_change_config_and_start_application(void)
     // and the signature is also stored in the same mode
     // QSPI HARDWARE defines if single or dual chip
     spiConfiguration.operatingMode = EXTERNAL_ADDRESS_SPACE;
-    spiConfiguration.dataBusSize = QSPI_HARDWARE;
 
     // switch to external address mode
-    // if the application space is configured in dual mode, the single mode
+    // if the application space is configured in dual mode, the "single spi" mode
     // loader flash space cannot be accessed anymore after this point
     // (without reconfiguring again)
     qspiControllerConfigure(&spiConfiguration);
@@ -268,8 +285,19 @@ void qspi_change_config_and_start_application(void)
     qspiExternalAddressFlushReadCache();
 
     // check if there is a valid image
-    // does not return in case of failure, and keeps blinking LED0
-	check_image(DEF_USER_SIGNATURE);
+    // note: in dual mode need to read 2 bytes minimum
+    if (QSPI_HARDWARE == SINGLE_MEMORY)
+    	len = check_image_singleSpi(DEF_USER_SIGNATURE);
+    else if (QSPI_HARDWARE == DUAL_MEMORY)
+    	len = check_image_dualSpi(DEF_USER_SIGNATURE);
+
+    /* If the length remaining is not zero then the signature validation failed. */
+    if(0 != len)
+    {
+        /* This function will never return. */
+    	error_image();
+    }
+
 
 	// jump to the program application entry point
 	// does not return
