@@ -23,6 +23,7 @@
 *******************************************************************************/
 
 #include "l2_cache.h"
+#include "l2_cache_pl310.h"
 
 /*
  * min() macros
@@ -95,6 +96,7 @@ void l2x0_flush_all(void)
 {
 	/* clean all ways */
 	writel_relaxed(l2x0_way_mask, l2x0_base + L2X0_CLEAN_INV_WAY);
+	while(getL2CacheInvalByWay() & 0xFF);
 	cache_sync();
 }
 
@@ -103,6 +105,7 @@ void l2x0_clean_all(void)
 {
 	/* clean all ways */
 	writel_relaxed(l2x0_way_mask, l2x0_base + L2X0_CLEAN_WAY);
+	while(getL2CacheInvalByWay() & 0xFF);
 	cache_sync();
 }
 
@@ -112,6 +115,7 @@ void l2x0_inv_all(void)
 	/* Invalidating when L2 is enabled is a nono */
 	//BUG_ON(readl(l2x0_base + L2X0_CTRL) & L2X0_CTRL_EN);
 	writel_relaxed(l2x0_way_mask, l2x0_base + L2X0_INV_WAY);
+	while(getL2CacheInvalByWay() & 0xFF);
 	cache_sync();
 }
 

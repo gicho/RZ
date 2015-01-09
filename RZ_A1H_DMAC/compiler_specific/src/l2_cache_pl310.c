@@ -22,10 +22,10 @@
 * Copyright (C) 2015 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 
-#include "l2cache_pl310.h"
+#include "l2_cache_pl310.h"
 #include "l2_cache.h"
 
-struct l2cache_pl310
+struct l2_cache_pl310
 {
   // Register r0
   const volatile unsigned CacheID;              // 0x000
@@ -103,7 +103,7 @@ struct l2cache_pl310
 };
 
 /* L2 cache controller */
-#define PL310_L2CC_1  (*(volatile struct l2cache_pl310 *)0x3FFFF000)
+#define L2_CACHE_CONTROLLER  (*(volatile struct l2_cache_pl310 *)0x3FFFF000)
 
 /*
 At boot time you must perform a Secure write to the Invalidate by Way, offset 0x77C, to
@@ -150,7 +150,7 @@ void L2CacheInit(void)
 	Control Register.
 	*/
 	// disable L2 controller
-	pl310_l2cc_enable(0x00000000);
+	L2CacheEnable(0x00000000);
 /*
 	1. Write to the Auxiliary, Tag RAM Latency, Data RAM Latency, Prefetch, and Power
 	Control registers using a read-modify-write to set up global configurations:
@@ -158,15 +158,14 @@ void L2CacheInit(void)
 	• latencies for RAM accesses
 	• allocation policy
 	• prefetch and power capabilities.
-	*/
+*/
 
   // PBX-A9 settings: 8-way, 16kb way-size, tag/data RAM latency = 0
-  set_pl310_l2cc_AuxCtrl(WAY_SIZE | ASSOCIATIVITY | SHARED_OVERRIDE | NONEXCLUSIVE_CACHE);			// auxiliary
-  set_pl310_l2cc_TagRAMLatencyCtrl(0x000);		// tag ram
-  set_pl310_l2cc_DataRAMLatencyCtrl(0x000);		// data ram
+  setL2CacheAuxCtrl(WAY_SIZE | ASSOCIATIVITY | SHARED_OVERRIDE | NONEXCLUSIVE_CACHE);			// auxiliary
+  setL2CacheTagRAMLatencyCtrl(0x000);		// tag ram
+  setL2CacheDataRAMLatencyCtrl(0x000);		// data ram
 
   // prefetch control register left at default (no double linefill, no data or instruction prefetch)
-
   // power control register already set in reset_handler.s
 
 
@@ -174,426 +173,424 @@ void L2CacheInit(void)
   2. Secure write to the Invalidate by Way, offset 0x77C, to invalidate all entries in cache:
   • Write 0xFFFF to 0x77C
   • Poll cache maintenance register until invalidate operation is complete.
-  */
+*/
 
-  set_pl310_l2cc_InvalByWay(0x000000ff);
+  setL2CacheInvalByWay(0x000000ff);
 
   // wait for all bits to clear to signal all ways invalidated
   // during operations ways are locked
-  while(get_pl310_l2cc_InvalByWay() & 0xFF);
+  while(getL2CacheInvalByWay() & 0xFF);
 
 
-  /*
+/*
   3. Write to the Lockdown D and Lockdown I Register 9 if required.
   4. Write to interrupt clear register to clear any residual raw interrupts set.
   5. Write to the Interrupt Mask Register if you want to enable interrupts.
-  */
-  // clear residual interrupts
-  set_pl310_l2cc_IntrClr(0x000001ff);
-  // enable them
-  set_pl310_l2cc_IntrMask(0x000001ff);
+*/
+
+  // clear interrupts
+  setL2CacheIntrClr(0x000001ff);
+
+  // enable interrupts
+  setL2CacheIntrMask(0x000001ff);
+
 /*
   6. Write to Control Register 1 with the LSB set to 1 to enable the cache.
 */
-  pl310_l2cc_enable(0x00000001);
+
+  L2CacheEnable(0x00000001);
 
 }
 
-// Accessor functions
-
-// Register r0
-unsigned get_pl310_l2cc_CacheID(void)
+void L2CacheEnable(unsigned set)
 {
-  return PL310_L2CC_1.CacheID;
+    L2_CACHE_CONTROLLER.Ctrl = set;
 }
 
-unsigned get_pl310_l2cc_CacheType(void)
+
+
+unsigned getL2CacheCacheID(void)
 {
-  return PL310_L2CC_1.CacheType;
+  return L2_CACHE_CONTROLLER.CacheID;
 }
 
-// Register r1
-void pl310_l2cc_enable(unsigned set)
+unsigned getL2CacheCacheType(void)
 {
-    PL310_L2CC_1.Ctrl = set;
+  return L2_CACHE_CONTROLLER.CacheType;
 }
 
-unsigned get_pl310_l2cc_AuxCtrl(void)
+unsigned getL2CacheAuxCtrl(void)
 {
-  return PL310_L2CC_1.AuxCtrl;
+  return L2_CACHE_CONTROLLER.AuxCtrl;
 }
 
-void set_pl310_l2cc_AuxCtrl(unsigned data)
+void setL2CacheAuxCtrl(unsigned data)
 {
-  PL310_L2CC_1.AuxCtrl = data;
+  L2_CACHE_CONTROLLER.AuxCtrl = data;
 }
 
-unsigned get_pl310_l2cc_TagRAMLatencyCtrl(void)
+unsigned getL2CacheTagRAMLatencyCtrl(void)
 {
-  return PL310_L2CC_1.TagRAMLatencyCtrl;
+  return L2_CACHE_CONTROLLER.TagRAMLatencyCtrl;
 }
 
-void set_pl310_l2cc_TagRAMLatencyCtrl(unsigned data)
+void setL2CacheTagRAMLatencyCtrl(unsigned data)
 {
-  PL310_L2CC_1.TagRAMLatencyCtrl = data;
+  L2_CACHE_CONTROLLER.TagRAMLatencyCtrl = data;
 }
 
-unsigned get_pl310_l2cc_DataRAMLatencyCtrl(void)
+unsigned getL2CacheDataRAMLatencyCtrl(void)
 {
-  return PL310_L2CC_1.DataRAMLatencyCtrl;
+  return L2_CACHE_CONTROLLER.DataRAMLatencyCtrl;
 }
 
-void set_pl310_l2cc_DataRAMLatencyCtrl(unsigned data)
+void setL2CacheDataRAMLatencyCtrl(unsigned data)
 {
-  PL310_L2CC_1.DataRAMLatencyCtrl = data;
+  L2_CACHE_CONTROLLER.DataRAMLatencyCtrl = data;
 }
 
-// Register r2
-unsigned get_pl310_l2cc_EvtCtrCtrl(void)
+unsigned getL2CacheEvtCtrCtrl(void)
 {
-  return PL310_L2CC_1.EvtCtrCtrl;
+  return L2_CACHE_CONTROLLER.EvtCtrCtrl;
 }
 
-void set_pl310_l2cc_EvtCtrCtrl(unsigned data)
+void setL2CacheEvtCtrCtrl(unsigned data)
 {
-  PL310_L2CC_1.EvtCtrCtrl = data;
+  L2_CACHE_CONTROLLER.EvtCtrCtrl = data;
 }
 
-unsigned get_pl310_l2cc_EvtCtr1Cnfg(void)
+unsigned getL2CacheEvtCtr1Cnfg(void)
 {
-  return PL310_L2CC_1.EvtCtr1Cnfg;
+  return L2_CACHE_CONTROLLER.EvtCtr1Cnfg;
 }
 
-void set_pl310_l2cc_EvtCtr1Cnfg(unsigned data)
+void setL2CacheEvtCtr1Cnfg(unsigned data)
 {
-  PL310_L2CC_1.EvtCtr1Cnfg = data;
+  L2_CACHE_CONTROLLER.EvtCtr1Cnfg = data;
 }
 
-unsigned get_pl310_l2cc_EvtCtr0Cnfg(void)
+unsigned getL2CacheEvtCtr0Cnfg(void)
 {
-  return PL310_L2CC_1.EvtCtr0Cnfg;
+  return L2_CACHE_CONTROLLER.EvtCtr0Cnfg;
 }
 
-void set_pl310_l2cc_EvtCtr0Cnfg(unsigned data)
+void setL2CacheEvtCtr0Cnfg(unsigned data)
 {
-  PL310_L2CC_1.EvtCtr0Cnfg = data;
+  L2_CACHE_CONTROLLER.EvtCtr0Cnfg = data;
 }
 
-unsigned get_pl310_l2cc_EvtCtr1Val(void)
+unsigned getL2CacheEvtCtr1Val(void)
 {
-  return PL310_L2CC_1.EvtCtr1Val;
+  return L2_CACHE_CONTROLLER.EvtCtr1Val;
 }
 
-void set_pl310_l2cc_EvtCtr1Val(unsigned data)
+void setL2CacheEvtCtr1Val(unsigned data)
 {
-  PL310_L2CC_1.EvtCtr1Val = data;
+  L2_CACHE_CONTROLLER.EvtCtr1Val = data;
 }
 
-unsigned get_pl310_l2cc_EvtCtr0Val(void)
+unsigned getL2CacheEvtCtr0Val(void)
 {
-  return PL310_L2CC_1.EvtCtr0Val;
+  return L2_CACHE_CONTROLLER.EvtCtr0Val;
 }
 
-void set_pl310_l2cc_EvtCtr0Val(unsigned data)
+void setL2CacheEvtCtr0Val(unsigned data)
 {
-  PL310_L2CC_1.EvtCtr0Val = data;
+  L2_CACHE_CONTROLLER.EvtCtr0Val = data;
 }
 
-unsigned get_pl310_l2cc_IntrMask(void)
+unsigned getL2CacheIntrMask(void)
 {
-  return PL310_L2CC_1.IntrMask;
+  return L2_CACHE_CONTROLLER.IntrMask;
 }
 
-void set_pl310_l2cc_IntrMask(unsigned data)
+void setL2CacheIntrMask(unsigned data)
 {
-  PL310_L2CC_1.IntrMask = data;
+  L2_CACHE_CONTROLLER.IntrMask = data;
 }
 
-unsigned get_pl310_l2cc_MaskIntrStatus(void)
+unsigned getL2CacheMaskIntrStatus(void)
 {
-  return PL310_L2CC_1.MaskIntrStatus;
+  return L2_CACHE_CONTROLLER.MaskIntrStatus;
 }
 
-unsigned get_pl310_l2cc_RawIntrStatus(void)
+unsigned getL2CacheRawIntrStatus(void)
 {
-  return PL310_L2CC_1.RawIntrStatus;
+  return L2_CACHE_CONTROLLER.RawIntrStatus;
 }
 
-void set_pl310_l2cc_IntrClr(unsigned data)
+void setL2CacheIntrClr(unsigned data)
 {
-  PL310_L2CC_1.IntrClr = data;
+  L2_CACHE_CONTROLLER.IntrClr = data;
 }
 
 // Register r7
-unsigned get_pl310_l2cc_CacheSync(void)
+unsigned getL2CacheCacheSync(void)
 {
-  return PL310_L2CC_1.CacheSync;
+  return L2_CACHE_CONTROLLER.CacheSync;
 }
 
-void set_pl310_l2cc_CacheSync(unsigned data)
+void setL2CacheCacheSync(unsigned data)
 {
-  PL310_L2CC_1.CacheSync = data;
+  L2_CACHE_CONTROLLER.CacheSync = data;
 }
 
-unsigned get_pl310_l2cc_InvalLineByPA(void)
+unsigned getL2CacheInvalLineByPA(void)
 {
-  return PL310_L2CC_1.InvalLineByPA;
+  return L2_CACHE_CONTROLLER.InvalLineByPA;
 }
 
-void set_pl310_l2cc_InvalLineByPA(unsigned data)
+void setL2CacheInvalLineByPA(unsigned data)
 {
-  PL310_L2CC_1.InvalLineByPA = data;
+  L2_CACHE_CONTROLLER.InvalLineByPA = data;
 }
 
-unsigned get_pl310_l2cc_InvalByWay(void)
+unsigned getL2CacheInvalByWay(void)
 {
-  return PL310_L2CC_1.InvalByWay;
+  return L2_CACHE_CONTROLLER.InvalByWay;
 }
 
-void set_pl310_l2cc_InvalByWay(unsigned data)
+void setL2CacheInvalByWay(unsigned data)
 {
-  PL310_L2CC_1.InvalByWay = data;
+  L2_CACHE_CONTROLLER.InvalByWay = data;
 }
 
-unsigned get_pl310_l2cc_CleanLineByPA(void)
+unsigned getL2CacheCleanLineByPA(void)
 {
-  return PL310_L2CC_1.CleanLineByPA;
+  return L2_CACHE_CONTROLLER.CleanLineByPA;
 }
 
-void set_pl310_l2cc_CleanLineByPA(unsigned data)
+void setL2CacheCleanLineByPA(unsigned data)
 {
-  PL310_L2CC_1.CleanLineByPA = data;
+  L2_CACHE_CONTROLLER.CleanLineByPA = data;
 }
 
-unsigned get_pl310_l2cc_CleanLineByIndexWay(void)
+unsigned getL2CacheCleanLineByIndexWay(void)
 {
-  return PL310_L2CC_1.CleanLineByIndexWay;
+  return L2_CACHE_CONTROLLER.CleanLineByIndexWay;
 }
 
-void set_pl310_l2cc_CleanLineByIndexWay(unsigned data)
+void setL2CacheCleanLineByIndexWay(unsigned data)
 {
-  PL310_L2CC_1.CleanLineByIndexWay = data;
+  L2_CACHE_CONTROLLER.CleanLineByIndexWay = data;
 }
 
-unsigned get_pl310_l2cc_CleanByWay(void)
+unsigned getL2CacheCleanByWay(void)
 {
-  return PL310_L2CC_1.CleanByWay;
+  return L2_CACHE_CONTROLLER.CleanByWay;
 }
 
-void set_pl310_l2cc_CleanByWay(unsigned data)
+void setL2CacheCleanByWay(unsigned data)
 {
-  PL310_L2CC_1.CleanByWay = data;
+  L2_CACHE_CONTROLLER.CleanByWay = data;
 }
 
-unsigned get_pl310_l2cc_CleanInvalByPA(void)
+unsigned getL2CacheCleanInvalByPA(void)
 {
-  return PL310_L2CC_1.CleanInvalByPA;
+  return L2_CACHE_CONTROLLER.CleanInvalByPA;
 }
 
-void set_pl310_l2cc_CleanInvalByPA(unsigned data)
+void setL2CacheCleanInvalByPA(unsigned data)
 {
-  PL310_L2CC_1.CleanInvalByPA = data;
+  L2_CACHE_CONTROLLER.CleanInvalByPA = data;
 }
 
-unsigned get_pl310_l2cc_CleanInvalByIndexWay(void)
+unsigned getL2CacheCleanInvalByIndexWay(void)
 {
-  return PL310_L2CC_1.CleanInvalByIndexWay;
+  return L2_CACHE_CONTROLLER.CleanInvalByIndexWay;
 }
 
-void set_pl310_l2cc_CleanInvalByIndexWay(unsigned data)
+void setL2CacheCleanInvalByIndexWay(unsigned data)
 {
-  PL310_L2CC_1.CleanInvalByIndexWay = data;
+  L2_CACHE_CONTROLLER.CleanInvalByIndexWay = data;
 }
 
-unsigned get_pl310_l2cc_CleanInvalByWay(void)
+unsigned getL2CacheCleanInvalByWay(void)
 {
-  return PL310_L2CC_1.CleanInvalByWay;
+  return L2_CACHE_CONTROLLER.CleanInvalByWay;
 }
 
-void set_pl310_l2cc_CleanInvalByWay(unsigned data)
+void setL2CacheCleanInvalByWay(unsigned data)
 {
-  PL310_L2CC_1.CleanInvalByWay = data;
+  L2_CACHE_CONTROLLER.CleanInvalByWay = data;
 }
 
-// Register r9
-unsigned get_pl310_l2cc_DataLockdownByWay(unsigned master_id)
+unsigned getL2CacheDataLockdownByWay(unsigned master_id)
 {
   switch(master_id) {
     case 0:
-      return PL310_L2CC_1.DataLockdown0ByWay;
+      return L2_CACHE_CONTROLLER.DataLockdown0ByWay;
     case 1:
-      return PL310_L2CC_1.DataLockdown1ByWay;
+      return L2_CACHE_CONTROLLER.DataLockdown1ByWay;
     case 2:
-      return PL310_L2CC_1.DataLockdown2ByWay;
+      return L2_CACHE_CONTROLLER.DataLockdown2ByWay;
     case 3:
-      return PL310_L2CC_1.DataLockdown3ByWay;
+      return L2_CACHE_CONTROLLER.DataLockdown3ByWay;
     case 4:
-      return PL310_L2CC_1.DataLockdown4ByWay;
+      return L2_CACHE_CONTROLLER.DataLockdown4ByWay;
     case 5:
-      return PL310_L2CC_1.DataLockdown5ByWay;
+      return L2_CACHE_CONTROLLER.DataLockdown5ByWay;
     case 6:
-      return PL310_L2CC_1.DataLockdown6ByWay;
+      return L2_CACHE_CONTROLLER.DataLockdown6ByWay;
     case 7:
-      return PL310_L2CC_1.DataLockdown7ByWay;
+      return L2_CACHE_CONTROLLER.DataLockdown7ByWay;
     default:
       return 0;
   }
 }
 
-void set_pl310_l2cc_DataLockdownByWay(unsigned master_id, unsigned data)
+void setL2CacheDataLockdownByWay(unsigned master_id, unsigned data)
 {
   switch(master_id) {
     case 0:
-      PL310_L2CC_1.DataLockdown0ByWay = data;
+      L2_CACHE_CONTROLLER.DataLockdown0ByWay = data;
       break;
     case 1:
-      PL310_L2CC_1.DataLockdown1ByWay = data;
+      L2_CACHE_CONTROLLER.DataLockdown1ByWay = data;
       break;
     case 2:
-      PL310_L2CC_1.DataLockdown2ByWay = data;
+      L2_CACHE_CONTROLLER.DataLockdown2ByWay = data;
       break;
     case 3:
-      PL310_L2CC_1.DataLockdown3ByWay = data;
+      L2_CACHE_CONTROLLER.DataLockdown3ByWay = data;
       break;
     case 4:
-      PL310_L2CC_1.DataLockdown4ByWay = data;
+      L2_CACHE_CONTROLLER.DataLockdown4ByWay = data;
       break;
     case 5:
-      PL310_L2CC_1.DataLockdown5ByWay = data;
+      L2_CACHE_CONTROLLER.DataLockdown5ByWay = data;
       break;
     case 6:
-      PL310_L2CC_1.DataLockdown6ByWay = data;
+      L2_CACHE_CONTROLLER.DataLockdown6ByWay = data;
       break;
     case 7:
-      PL310_L2CC_1.DataLockdown7ByWay = data;
+      L2_CACHE_CONTROLLER.DataLockdown7ByWay = data;
       break;
   }
 }
 
-unsigned get_pl310_l2cc_InstrLockdownByWay(unsigned master_id)
+unsigned getL2CacheInstrLockdownByWay(unsigned master_id)
 {
   switch(master_id) {
     case 0:
-      return PL310_L2CC_1.InstrLockdown0ByWay;
+      return L2_CACHE_CONTROLLER.InstrLockdown0ByWay;
     case 1:
-      return PL310_L2CC_1.InstrLockdown1ByWay;
+      return L2_CACHE_CONTROLLER.InstrLockdown1ByWay;
     case 2:
-      return PL310_L2CC_1.InstrLockdown2ByWay;
+      return L2_CACHE_CONTROLLER.InstrLockdown2ByWay;
     case 3:
-      return PL310_L2CC_1.InstrLockdown3ByWay;
+      return L2_CACHE_CONTROLLER.InstrLockdown3ByWay;
     case 4:
-      return PL310_L2CC_1.InstrLockdown4ByWay;
+      return L2_CACHE_CONTROLLER.InstrLockdown4ByWay;
     case 5:
-      return PL310_L2CC_1.InstrLockdown5ByWay;
+      return L2_CACHE_CONTROLLER.InstrLockdown5ByWay;
     case 6:
-      return PL310_L2CC_1.InstrLockdown6ByWay;
+      return L2_CACHE_CONTROLLER.InstrLockdown6ByWay;
     case 7:
-      return PL310_L2CC_1.InstrLockdown7ByWay;
+      return L2_CACHE_CONTROLLER.InstrLockdown7ByWay;
     default:
       return 0;
   }
 }
 
-void set_pl310_l2cc_InstrLockdownByWay(unsigned master_id, unsigned data)
+void setL2CacheInstrLockdownByWay(unsigned master_id, unsigned data)
 {
   switch(master_id) {
     case 0:
-      PL310_L2CC_1.InstrLockdown0ByWay = data;
+      L2_CACHE_CONTROLLER.InstrLockdown0ByWay = data;
       break;
     case 1:
-      PL310_L2CC_1.InstrLockdown1ByWay = data;
+      L2_CACHE_CONTROLLER.InstrLockdown1ByWay = data;
       break;
     case 2:
-      PL310_L2CC_1.InstrLockdown2ByWay = data;
+      L2_CACHE_CONTROLLER.InstrLockdown2ByWay = data;
       break;
     case 3:
-      PL310_L2CC_1.InstrLockdown3ByWay = data;
+      L2_CACHE_CONTROLLER.InstrLockdown3ByWay = data;
       break;
     case 4:
-      PL310_L2CC_1.InstrLockdown4ByWay = data;
+      L2_CACHE_CONTROLLER.InstrLockdown4ByWay = data;
       break;
     case 5:
-      PL310_L2CC_1.InstrLockdown5ByWay = data;
+      L2_CACHE_CONTROLLER.InstrLockdown5ByWay = data;
       break;
     case 6:
-      PL310_L2CC_1.InstrLockdown6ByWay = data;
+      L2_CACHE_CONTROLLER.InstrLockdown6ByWay = data;
       break;
     case 7:
-      PL310_L2CC_1.InstrLockdown7ByWay = data;
+      L2_CACHE_CONTROLLER.InstrLockdown7ByWay = data;
       break;
   }
 }
 
-unsigned get_pl310_l2cc_LockdownByLineEnable(void)
+unsigned getL2CacheLockdownByLineEnable(void)
 {
-  return PL310_L2CC_1.LockdownByLineEnable;
+  return L2_CACHE_CONTROLLER.LockdownByLineEnable;
 }
 
-void set_pl310_l2cc_LockdownByLineEnable(unsigned data)
+void setL2CacheLockdownByLineEnable(unsigned data)
 {
-  PL310_L2CC_1.LockdownByLineEnable = data;
+  L2_CACHE_CONTROLLER.LockdownByLineEnable = data;
 }
 
-unsigned get_pl310_l2cc_UnlockAllLinesByWay(void)
+unsigned getL2CacheUnlockAllLinesByWay(void)
 {
-  return PL310_L2CC_1.UnlockAllLinesByWay;
+  return L2_CACHE_CONTROLLER.UnlockAllLinesByWay;
 }
 
-void set_pl310_l2cc_UnlockAllLinesByWay(unsigned data)
+void setL2CacheUnlockAllLinesByWay(unsigned data)
 {
-  PL310_L2CC_1.UnlockAllLinesByWay = data;
+  L2_CACHE_CONTROLLER.UnlockAllLinesByWay = data;
 }
 
-// Register r12
-unsigned get_pl310_l2cc_AddrFilteringStart(void)
+unsigned getL2CacheAddrFilteringStart(void)
 {
-  return PL310_L2CC_1.AddressFilteringStart;
+  return L2_CACHE_CONTROLLER.AddressFilteringStart;
 }
 
-void set_pl310_l2cc_AddrFilteringStart(unsigned data)
+void setL2CacheAddrFilteringStart(unsigned data)
 {
-  PL310_L2CC_1.AddressFilteringStart = data;
+  L2_CACHE_CONTROLLER.AddressFilteringStart = data;
 }
 
-unsigned get_pl310_l2cc_AddrFilteringEnd(void)
+unsigned getL2CacheAddrFilteringEnd(void)
 {
-  return PL310_L2CC_1.AddressFilteringEnd;
+  return L2_CACHE_CONTROLLER.AddressFilteringEnd;
 }
 
-void set_pl310_l2cc_AddrFilteringEnd(unsigned data)
+void setL2CacheAddrFilteringEnd(unsigned data)
 {
-  PL310_L2CC_1.AddressFilteringEnd = data;
+  L2_CACHE_CONTROLLER.AddressFilteringEnd = data;
 }
 
-// Register r15
-unsigned get_pl310_l2cc_DebugCtrl(void)
+unsigned getL2CacheDebugCtrl(void)
 {
-  return PL310_L2CC_1.DebugCtrl;
+  return L2_CACHE_CONTROLLER.DebugCtrl;
 }
 
-void set_pl310_l2cc_DebugCtrl(unsigned data)
+void setL2CacheDebugCtrl(unsigned data)
 {
-  PL310_L2CC_1.DebugCtrl = data;
+  L2_CACHE_CONTROLLER.DebugCtrl = data;
 }
 
-unsigned get_pl310_l2cc_PrefetchCtrl(void)
+unsigned getL2CachePrefetchCtrl(void)
 {
-  return PL310_L2CC_1.PrefetchCtrl;
+  return L2_CACHE_CONTROLLER.PrefetchCtrl;
 }
 
-void set_pl310_l2cc_PrefetchCtrl(unsigned data)
+void setL2CachePrefetchCtrl(unsigned data)
 {
-  PL310_L2CC_1.PrefetchCtrl = data;
+  L2_CACHE_CONTROLLER.PrefetchCtrl = data;
 }
 
-unsigned get_pl310_l2cc_PowerCtrl(void)
+unsigned getL2CachePowerCtrl(void)
 {
-  return PL310_L2CC_1.PowerCtrl;
+  return L2_CACHE_CONTROLLER.PowerCtrl;
 }
 
-void set_pl310_l2cc_PowerCtrl(unsigned data)
+void setL2CachePowerCtrl(unsigned data)
 {
-  PL310_L2CC_1.PowerCtrl = data;
+  L2_CACHE_CONTROLLER.PowerCtrl = data;
 }
 
 
