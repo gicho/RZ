@@ -39,6 +39,7 @@
     .equ    INTC_ICCIAR_ADDR  , 0xE820200C
     .equ    INTC_ICCHPIR_ADDR , 0xE8202018
     .equ    INTC_ICCEOIR_ADDR , 0xE8202010
+    .equ    INTC_ICDIPR0_ADDR , 0xE8201400
 
 
 /* ================================================================== */
@@ -48,6 +49,11 @@
     .global  APP_fiq_handler
 
 APP_fiq_handler:
+
+    LDR     r8, =INTC_ICDIPR0_ADDR	// force recalculation of highest priority interrupt
+    LDR     r9, [r8]				// read interrupt priority register 0 into r9 - errata 733075 for GIC
+    STR		r9, [r8]				// write back the same value
+    DSB								// ensure write completes before other ICCHIPR or ICCIAR register reads
 
     SUB     lr, lr, #4 				// adjust the return address for exception return
     SRSDB   sp!, #SYS_MODE 			// save LR_fiq and PSR_fiq on the SYSTEM mode stack
@@ -70,7 +76,7 @@ APP_fiq_handler:
 APP_fiq_handler_end:
 
     LDR     r8, =INTC_ICCHPIR_ADDR	// load highest priority pending interrupt register address
-    LDR     r9, [r8]				// read into r10 - errata 801120 for GIC
+    LDR     r9, [r8]				// read into r9 - errata 801120 for GIC
     								// can discard the result
     								// do this here in case FIQ preempts IRQ just before ICCHPIR read
 
@@ -87,6 +93,11 @@ APP_irq_handler:
 
     CPS     #SYS_MODE				// change to system mode
     PUSH    {r0-r3, r12}			// save AACPS stack on system mode stack
+
+    LDR     r2, =INTC_ICDIPR0_ADDR	// force recalculation of highest priority interrupt
+    LDR     r0, [r2]				// read interrupt priority register 0 into r0 - errata 733075 for GIC
+    STR		r0, [r2]				// write back the same value
+    DSB								// ensure write completes before other ICCHIPR or ICCIAR register reads
 
     LDR     r2, =INTC_ICCHPIR_ADDR	// load highest priority pending interrupt register address
     LDR     r0, [r2]				// read into r0 - errata 801120 for GIC

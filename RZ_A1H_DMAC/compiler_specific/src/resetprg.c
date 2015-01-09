@@ -56,7 +56,8 @@
 # define HAVE_CALL_INDIRECT
 
 
-extern int L1CacheInit(void);
+#include "l1_cache.h"
+#include "l2_cache.h"
 
 /* These are related to the code which runs at startup */
 /* Global variables are specified in the linker script (GCC-QSPI-BL.ld) */
@@ -217,7 +218,7 @@ void PowerON_Reset (void)
     /* Initial setting of the level 1 cache */
     L1CacheInit();
 
-    init_l2cc();
+    L2CacheInit();
 
     __enable_irq();
     __enable_fiq();

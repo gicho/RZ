@@ -72,8 +72,8 @@ Includes   <System Includes> , "Project Includes"
 /* Main sample module header */
 #include "main.h"
 
-#include "cache-v7.h"
-#include "cache-l2x0.h"
+#include "l1_cache.h"
+#include "l2_cache.h"
 
 /******************************************************************************
 Macro definitions
@@ -492,7 +492,7 @@ void dmac_cached_uncached(void)
     }
 
     /* write back the cached data source before transfer */
-    v7_dma_map_area((uint32_t) dmac_src_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_TO_DEVICE);
+    dma_buffer_issue((uint32_t) dmac_src_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_TO_DEVICE);
 
     addressSrc = (uint8_t*) getPaFromVa((uint32_t)dmac_src_data_cachedram);
     addressDst = (uint8_t*) getPaFromVa((uint32_t)dmac_dst_data_ram);
@@ -507,7 +507,7 @@ void dmac_cached_uncached(void)
     }
 
     /* nothing to do for the source side, but make the procedure symmetric (map/unmap) */
-    v7_dma_unmap_area((uint32_t) dmac_src_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_TO_DEVICE);
+    dma_buffer_reclaim((uint32_t) dmac_src_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_TO_DEVICE);
 
     if(verify_data_set(dmac_dst_data_ram, BUFF_INIT_BYTE) == true)
     {
@@ -546,7 +546,7 @@ void dmac_uncached_cached(void)
         __asm("nop");
     }
 
-    v7_dma_map_area((uint32_t) dmac_dst_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
+    dma_buffer_issue((uint32_t) dmac_dst_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
 
     addressSrc = (uint8_t*) getPaFromVa((uint32_t)dmac_src_data_ram);
     addressDst = (uint8_t*) getPaFromVa((uint32_t)dmac_dst_data_cachedram);
@@ -560,7 +560,7 @@ void dmac_uncached_cached(void)
     }
 
     /* invalidate the cached data before reading */
-    v7_dma_unmap_area((uint32_t) dmac_dst_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
+    dma_buffer_reclaim((uint32_t) dmac_dst_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
 
     if(verify_data_set(dmac_dst_data_cachedram, BUFF_INIT_BYTE) == true)
     {
@@ -600,8 +600,8 @@ void dmac_cached_cached(void)
     }
 
     /* write back the cached data before reading */
-    v7_dma_map_area((uint32_t) dmac_src_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_TO_DEVICE);
-    v7_dma_map_area((uint32_t) dmac_dst_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE); /* invalidate data for destination buffer */
+    dma_buffer_issue((uint32_t) dmac_src_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_TO_DEVICE);
+    dma_buffer_issue((uint32_t) dmac_dst_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE); /* invalidate data for destination buffer */
 
     addressSrc = (uint8_t*) getPaFromVa((uint32_t) dmac_src_data_cachedram);
     addressDst = (uint8_t*) getPaFromVa((uint32_t) dmac_dst_data_cachedram);
@@ -616,8 +616,8 @@ void dmac_cached_cached(void)
     }
 
     /* invalidate the cached data before reading */
-    v7_dma_unmap_area((uint32_t) dmac_src_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_TO_DEVICE);
-    v7_dma_unmap_area((uint32_t) dmac_dst_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
+    dma_buffer_reclaim((uint32_t) dmac_src_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_TO_DEVICE);
+    dma_buffer_reclaim((uint32_t) dmac_dst_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
 
     if(verify_data_set(dmac_dst_data_cachedram, BUFF_INIT_BYTE) == true)
     {
@@ -721,7 +721,7 @@ void dmac_ram_cached_sdram_uncached(void)
 	    }
 
 	    /* write back the cached data before transfer */
-	    v7_dma_map_area((uint32_t) dmac_src_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_TO_DEVICE);
+	    dma_buffer_issue((uint32_t) dmac_src_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_TO_DEVICE);
 
 	    addressSrc = (uint8_t*) getPaFromVa((uint32_t)dmac_src_data_cachedram);
 	    addressDst = (uint8_t*) getPaFromVa((uint32_t)dmac_dst_data_sdram);
@@ -791,7 +791,7 @@ void dmac_ram_uncached_sdram_cached(void)
     /* invalidate the cached data before reading */
     // outer first
     l2x0_inv_range((uint32_t) addressDst, (uint32_t) (addressDst + DMAC_BUFF_SIZE));
-    v7_dma_unmap_area((uint32_t) dmac_dst_data_cachedsdram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
+    dma_buffer_reclaim((uint32_t) dmac_dst_data_cachedsdram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
 
     if(verify_data_set(dmac_dst_data_cachedsdram, BUFF_INIT_BYTE) == true)
     {
@@ -836,7 +836,7 @@ void dmac_ram_cached_sdram_cached(void)
     addressDst = (uint8_t*) getPaFromVa((uint32_t) dmac_dst_data_cachedsdram);
 
     // now map area to dma for L1, writes back source
-    v7_dma_map_area((uint32_t) dmac_src_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_TO_DEVICE);
+    dma_buffer_issue((uint32_t) dmac_src_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_TO_DEVICE);
 
     initialise_dma8bit_L2Cached(addressSrc, addressDst, DMAC_BUFF_SIZE, L2_CACHED_DST);
 
@@ -850,7 +850,7 @@ void dmac_ram_cached_sdram_cached(void)
     /* invalidate the cached data before reading */
     // outer first
     l2x0_inv_range((uint32_t) addressDst, (uint32_t) (addressDst + DMAC_BUFF_SIZE));
-    v7_dma_unmap_area((uint32_t) dmac_dst_data_cachedsdram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
+    dma_buffer_reclaim((uint32_t) dmac_dst_data_cachedsdram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
 
     if(verify_data_set(dmac_dst_data_cachedsdram, BUFF_INIT_BYTE) == true)
     {
@@ -945,7 +945,7 @@ void dmac_sdram_cached_ram_uncached(void)
     addressDst = (uint8_t*) getPaFromVa((uint32_t) dmac_dst_data_ram);
 
     // now map area to dma for L1, writes back (cleans), inner first!
-    v7_dma_map_area((uint32_t) dmac_src_data_cachedsdram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
+    dma_buffer_issue((uint32_t) dmac_src_data_cachedsdram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
     // clean L2 cache
     l2x0_clean_range((uint32_t) addressSrc, (uint32_t) (addressSrc + DMAC_BUFF_SIZE));
 
@@ -1011,7 +1011,7 @@ void dmac_sdram_uncached_ram_cached(void)
     }
 
     /* invalidate the cached data before reading */
-    v7_dma_unmap_area((uint32_t) dmac_dst_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
+    dma_buffer_reclaim((uint32_t) dmac_dst_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
 
     if(verify_data_set(dmac_dst_data_cachedram, BUFF_INIT_BYTE) == true)
     {
@@ -1055,7 +1055,7 @@ void dmac_sdram_cached_ram_cached(void)
 
     // now map area to dma for L1 src
     // clean, inner first
-    v7_dma_map_area((uint32_t) dmac_src_data_cachedsdram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_TO_DEVICE);
+    dma_buffer_issue((uint32_t) dmac_src_data_cachedsdram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_TO_DEVICE);
     // clean L2 cache for src
     l2x0_clean_range((uint32_t) addressSrc, (uint32_t) (addressSrc + DMAC_BUFF_SIZE));
 
@@ -1069,7 +1069,7 @@ void dmac_sdram_cached_ram_cached(void)
     }
 
     /* invalidate the cached data before reading */
-    v7_dma_unmap_area((uint32_t) dmac_dst_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
+    dma_buffer_reclaim((uint32_t) dmac_dst_data_cachedram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
 
     if(verify_data_set(dmac_dst_data_cachedsdram, BUFF_INIT_BYTE) == true)
     {
@@ -1112,7 +1112,7 @@ void dmac_sdram_cached_sdram_cached(void)
     addressDst = (uint8_t*) getPaFromVa((uint32_t) dmac_dst_data_cachedsdram);
 
     // now map area to dma for L1 src - clean, inner first!
-    v7_dma_map_area((uint32_t) dmac_src_data_cachedsdram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_TO_DEVICE);
+    dma_buffer_issue((uint32_t) dmac_src_data_cachedsdram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_TO_DEVICE);
     // clean L2 cache for src
     l2x0_clean_range((uint32_t) addressSrc, (uint32_t) (addressSrc + DMAC_BUFF_SIZE));
 
@@ -1128,7 +1128,7 @@ void dmac_sdram_cached_sdram_cached(void)
     /* invalidate the cached data before reading */
     // outer first
     l2x0_inv_range((uint32_t) addressDst, (uint32_t) (addressDst + DMAC_BUFF_SIZE));
-    v7_dma_unmap_area((uint32_t) dmac_dst_data_cachedsdram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
+    dma_buffer_reclaim((uint32_t) dmac_dst_data_cachedsdram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
 
 
     if(verify_data_set(dmac_dst_data_cachedsdram, BUFF_INIT_BYTE) == true)
