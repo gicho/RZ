@@ -1,11 +1,31 @@
-/*
-** Copyright (c) 2009 ARM Ltd. All rights reserved.
-*/
+/*******************************************************************************
+* DISCLAIMER
+* This software is supplied by Renesas Electronics Corporation and is only
+* intended for use with Renesas products. No other uses are authorized. This
+* software is owned by Renesas Electronics Corporation and is protected under
+* all applicable laws, including copyright laws.
+* THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIES REGARDING
+* THIS SOFTWARE, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING BUT NOT
+* LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+* AND NON-INFRINGEMENT. ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED.
+* TO THE MAXIMUM EXTENT PERMITTED NOT PROHIBITED BY LAW, NEITHER RENESAS
+* ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES SHALL BE LIABLE
+* FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR
+* ANY REASON RELATED TO THIS SOFTWARE, EVEN IF RENESAS OR ITS AFFILIATES HAVE
+* BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+* Renesas reserves the right, without notice, to make changes to this software
+* and to discontinue the availability of this software. By using this software,
+* you agree to the additional terms and conditions found by accessing the
+* following link:
+* http://www.renesas.com/disclaimer
+*
+* Copyright (C) 2015 Renesas Electronics Corporation. All rights reserved.
+*******************************************************************************/
 
-#include "pl310_l2cc.h"
-#include "cache-l2x0.h"
+#include "l2cache_pl310.h"
+#include "l2_cache.h"
 
-struct pl310_l2cc
+struct l2cache_pl310
 {
   // Register r0
   const volatile unsigned CacheID;              // 0x000
@@ -82,11 +102,8 @@ struct pl310_l2cc
   volatile unsigned PowerCtrl;                   // 0xF80
 };
 
-
-// struct pl310_l2cc PL310_L2CC_1;
-
 /* L2 cache controller */
-#define PL310_L2CC_1  (*(volatile struct pl310_l2cc *)0x3FFFF000)
+#define PL310_L2CC_1  (*(volatile struct l2cache_pl310 *)0x3FFFF000)
 
 /*
 At boot time you must perform a Secure write to the Invalidate by Way, offset 0x77C, to
@@ -125,7 +142,7 @@ Control Register.
 #define SHARED_OVERRIDE 	(SHARED_OVERRIDE_ENABLE_CFG << L2X0_AUX_CTRL_SHARE_OVERRIDE_SHIFT)
 #define NONEXCLUSIVE_CACHE	(NONEXCLUSIVE_CACHE_CFG<< L2X0_AUX_CTRL_EXCLUSIVE_CACHE_SHIFT)
 
-void init_l2cc(void)
+void L2CacheInit(void)
 {
 /*
 	You must disable the L2 cache by writing to
