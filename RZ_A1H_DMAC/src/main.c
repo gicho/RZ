@@ -75,6 +75,8 @@ Includes   <System Includes> , "Project Includes"
 #include "l1_cache.h"
 #include "l2_cache.h"
 
+#include "assembler_macros.h"
+
 /******************************************************************************
 Macro definitions
 ******************************************************************************/
@@ -790,7 +792,7 @@ void dmac_ram_uncached_sdram_cached(void)
 
     /* invalidate the cached data before reading */
     // outer first
-    l2x0_inv_range((uint32_t) addressDst, (uint32_t) (addressDst + DMAC_BUFF_SIZE));
+    L2CacheInvalidateRange((uint32_t) addressDst, (uint32_t) (addressDst + DMAC_BUFF_SIZE));
     dma_buffer_reclaim((uint32_t) dmac_dst_data_cachedsdram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
 
     if(verify_data_set(dmac_dst_data_cachedsdram, BUFF_INIT_BYTE) == true)
@@ -849,7 +851,7 @@ void dmac_ram_cached_sdram_cached(void)
 
     /* invalidate the cached data before reading */
     // outer first
-    l2x0_inv_range((uint32_t) addressDst, (uint32_t) (addressDst + DMAC_BUFF_SIZE));
+    L2CacheInvalidateRange((uint32_t) addressDst, (uint32_t) (addressDst + DMAC_BUFF_SIZE));
     dma_buffer_reclaim((uint32_t) dmac_dst_data_cachedsdram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
 
     if(verify_data_set(dmac_dst_data_cachedsdram, BUFF_INIT_BYTE) == true)
@@ -947,7 +949,7 @@ void dmac_sdram_cached_ram_uncached(void)
     // now map area to dma for L1, writes back (cleans), inner first!
     dma_buffer_issue((uint32_t) dmac_src_data_cachedsdram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
     // clean L2 cache
-    l2x0_clean_range((uint32_t) addressSrc, (uint32_t) (addressSrc + DMAC_BUFF_SIZE));
+    L2CacheCleanRange((uint32_t) addressSrc, (uint32_t) (addressSrc + DMAC_BUFF_SIZE));
 
     initialise_dma8bit_L2Cached(addressSrc, addressDst, DMAC_BUFF_SIZE, L2_CACHED_SRC);
 
@@ -1057,7 +1059,7 @@ void dmac_sdram_cached_ram_cached(void)
     // clean, inner first
     dma_buffer_issue((uint32_t) dmac_src_data_cachedsdram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_TO_DEVICE);
     // clean L2 cache for src
-    l2x0_clean_range((uint32_t) addressSrc, (uint32_t) (addressSrc + DMAC_BUFF_SIZE));
+    L2CacheCleanRange((uint32_t) addressSrc, (uint32_t) (addressSrc + DMAC_BUFF_SIZE));
 
     initialise_dma8bit_L2Cached(addressSrc, addressDst, DMAC_BUFF_SIZE, L2_CACHED_SRC);
 
@@ -1114,7 +1116,7 @@ void dmac_sdram_cached_sdram_cached(void)
     // now map area to dma for L1 src - clean, inner first!
     dma_buffer_issue((uint32_t) dmac_src_data_cachedsdram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_TO_DEVICE);
     // clean L2 cache for src
-    l2x0_clean_range((uint32_t) addressSrc, (uint32_t) (addressSrc + DMAC_BUFF_SIZE));
+    L2CacheCleanRange((uint32_t) addressSrc, (uint32_t) (addressSrc + DMAC_BUFF_SIZE));
 
     initialise_dma8bit_L2Cached(addressSrc, addressDst, DMAC_BUFF_SIZE, L2_CACHED_SRC | L2_CACHED_DST);
 
@@ -1127,7 +1129,7 @@ void dmac_sdram_cached_sdram_cached(void)
 
     /* invalidate the cached data before reading */
     // outer first
-    l2x0_inv_range((uint32_t) addressDst, (uint32_t) (addressDst + DMAC_BUFF_SIZE));
+    L2CacheInvalidateRange((uint32_t) addressDst, (uint32_t) (addressDst + DMAC_BUFF_SIZE));
     dma_buffer_reclaim((uint32_t) dmac_dst_data_cachedsdram, (uint32_t) DMAC_BUFF_SIZE, (uint32_t) DMA_FROM_DEVICE);
 
 

@@ -20,5 +20,8 @@
 
 #endif
 
+#define isb() __asm__ __volatile__ ("isb" : : : "memory")
+#define dsb() __asm__ __volatile__ ("dsb" : : : "memory")
+#define dmb() __asm__ __volatile__ ("dmb" : : : "memory")
 
 #endif /* ASSEMBLER_MACROS_H_ */

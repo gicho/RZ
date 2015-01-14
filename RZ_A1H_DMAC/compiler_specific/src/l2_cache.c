@@ -25,15 +25,10 @@
 #include "l2_cache.h"
 #include "l2_cache_pl310.h"
 
-/*
- * min() macros
- */
-#define min(x, y) ({				\
-	x < y ? x : y; })
 
+#define min(x, y) ({ x < y ? x : y; })
 
-
-static inline void __raw_writel(unsigned long val, volatile void *addr)
+static inline void _writeReg(unsigned long val, volatile void *addr)
 {
 	__asm__ volatile ("str %1, %0"
 		     : "+Qo" (*(volatile unsigned long *)addr)
@@ -41,112 +36,92 @@ static inline void __raw_writel(unsigned long val, volatile void *addr)
 		     );
 }
 
-#define writel_relaxed(v,c)	__raw_writel(v,c)
-
+static void *L2CacheController = (void*)0x3FFFF000;
 
 #define CACHE_LINE_SIZE		32
-
-static void *l2x0_base = (void*)0x3FFFF000;
-
-static unsigned long l2x0_way_mask = (1 << 8) - 1;/* Bitmask of active ways */
-static unsigned long l2x0_size = 0x20000l; /* 128 KBytes L2C-310 */
-static unsigned long sync_reg_offset = L2X0_CACHE_SYNC;
+static unsigned long L2CacheWayMask = (1 << 8) - 1; /* Bitmask of active ways (8) */
+static unsigned long L2CacheSize = 0x20000l; 		/* 128 KBytes L2 Cache Controller PL-310 */
 
 
-
-static inline void cache_sync(void)
+static inline void L2CacheSync(void)
 {
-	void *base = l2x0_base;
-	writel_relaxed(0, base + sync_reg_offset);
+	void *base = L2CacheController;
+	_writeReg(0, base + L2CACHE_CACHE_SYNC_REG);
 }
 
-static inline void l2x0_clean_line(unsigned long addr)
+static inline void L2CacheCleanLine(unsigned long addr)
 {
-	void *base = l2x0_base;
-	writel_relaxed(addr, base + L2X0_CLEAN_LINE_PA);
+	void *base = L2CacheController;
+	_writeReg(addr, base + L2CACHE_CLEAN_LINE_PA_REG);
 }
 
-static inline void l2x0_inv_line(unsigned long addr)
+static inline void L2CacheInvalidateLine(unsigned long addr)
 {
-	void  *base = l2x0_base;
-	writel_relaxed(addr, base + L2X0_INV_LINE_PA);
+	void  *base = L2CacheController;
+	_writeReg(addr, base + L2CACHE_INV_LINE_PA_REG);
 }
 
 
 
-#ifdef CONFIG_PL310_ERRATA_588369
-static inline void l2x0_flush_line(unsigned long addr)
+static inline void L2CacheFlushLine(unsigned long addr)
 {
-	void  *base = l2x0_base;
-
-	/* Clean by PA followed by Invalidate by PA */
-	writel_relaxed(addr, base + L2X0_CLEAN_LINE_PA);
-	writel_relaxed(addr, base + L2X0_INV_LINE_PA);
+	void  *base = L2CacheController;
+	_writeReg(addr, base + L2CACHE_CLEAN_INV_LINE_PA_REG);
 }
-#else
-static inline void l2x0_flush_line(unsigned long addr)
-{
-	void  *base = l2x0_base;
-	writel_relaxed(addr, base + L2X0_CLEAN_INV_LINE_PA);
-}
-#endif
 
 
-void l2x0_flush_all(void)
+void L2CacheFlush(void)
 {
 	/* clean all ways */
-	writel_relaxed(l2x0_way_mask, l2x0_base + L2X0_CLEAN_INV_WAY);
-	while(getL2CacheInvalByWay() & 0xFF);
-	cache_sync();
+	_writeReg(L2CacheWayMask, L2CacheController + L2CACHE_CLEAN_INV_WAY_REG);
+	while(getL2CacheCleanInvalByWay() & 0xFF); // wait since it is a background operation
+	L2CacheSync();
 }
 
 
-void l2x0_clean_all(void)
+void L2CacheClean(void)
 {
 	/* clean all ways */
-	writel_relaxed(l2x0_way_mask, l2x0_base + L2X0_CLEAN_WAY);
-	while(getL2CacheInvalByWay() & 0xFF);
-	cache_sync();
+	_writeReg(L2CacheWayMask, L2CacheController + L2CACHE_CLEAN_WAY_REG);
+	while(getL2CacheCleanByWay() & 0xFF); // wait since it is a background operation
+	L2CacheSync();
 }
 
-void l2x0_inv_all(void)
+void L2CacheInvalidate(void)
 {
-	/* invalidate all ways */
-	/* Invalidating when L2 is enabled is a nono */
-	//BUG_ON(readl(l2x0_base + L2X0_CTRL) & L2X0_CTRL_EN);
-	writel_relaxed(l2x0_way_mask, l2x0_base + L2X0_INV_WAY);
-	while(getL2CacheInvalByWay() & 0xFF);
-	cache_sync();
+	_writeReg(L2CacheWayMask, L2CacheController + L2CACHE_INV_WAY_REG);
+	while(getL2CacheInvalByWay() & 0xFF); // wait since it is a background operation
+	L2CacheSync();
 }
 
-void l2x0_inv_range(unsigned long start, unsigned long end)
+void L2CacheInvalidateRange(unsigned long start, unsigned long end)
 {
 	if (start & (CACHE_LINE_SIZE - 1)) {
 		start &= (unsigned long)~(CACHE_LINE_SIZE - 1);
-		l2x0_flush_line(start);
+		L2CacheFlushLine(start);
 		start += CACHE_LINE_SIZE;
 	}
 
 	if (end & (CACHE_LINE_SIZE - 1)) {
 		end &= (unsigned long)~(CACHE_LINE_SIZE - 1);
-		l2x0_flush_line(end);
+		L2CacheFlushLine(end);
 	}
 
 	while (start < end) {
 		unsigned long blk_end = start + min(end - start, 4096UL);
 
 		while (start < blk_end) {
-			l2x0_inv_line(start);
+			L2CacheInvalidateLine(start);
 			start += CACHE_LINE_SIZE;
 		}
 	}
-	cache_sync();
+	L2CacheSync();
 }
 
-void l2x0_clean_range(unsigned long start, unsigned long end)
+void L2CacheCleanRange(unsigned long start, unsigned long end)
 {
-	if ((end - start) >= l2x0_size) {
-		l2x0_clean_all();
+	if ((end - start) >= L2CacheSize) {
+		L2CacheClean();
 		return;
 	}
 
@@ -155,17 +130,17 @@ void l2x0_clean_range(unsigned long start, unsigned long end)
 		unsigned long blk_end = start + min(end - start, 4096UL);
 
 		while (start < blk_end) {
-			l2x0_clean_line(start);
+			L2CacheCleanLine(start);
 			start += CACHE_LINE_SIZE;
 		}
 	}
-	cache_sync();
+	L2CacheSync();
 }
 
-void l2x0_flush_range(unsigned long start, unsigned long end)
+void L2CacheFlushRange(unsigned long start, unsigned long end)
 {
-	if ((end - start) >= l2x0_size) {
-		l2x0_flush_all();
+	if ((end - start) >= L2CacheSize) {
+		L2CacheFlush();
 		return;
 	}
 
@@ -174,16 +149,16 @@ void l2x0_flush_range(unsigned long start, unsigned long end)
 		unsigned long blk_end = start + min(end - start, 4096UL);
 
 		while (start < blk_end) {
-			l2x0_flush_line(start);
+			L2CacheFlushLine(start);
 			start += CACHE_LINE_SIZE;
 		}
 
 	}
-	cache_sync();
+	L2CacheSync();
 }
 
-void l2x0_disable(void)
+void L2CacheDisable(void)
 {
-	l2x0_flush_all();
-	writel_relaxed(0, l2x0_base + L2X0_CTRL);
+	L2CacheFlush();
+	_writeReg(0, L2CacheController + L2CACHE_CTRL_REG);
 }

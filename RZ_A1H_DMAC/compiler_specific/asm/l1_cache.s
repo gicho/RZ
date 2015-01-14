@@ -428,38 +428,7 @@ make_memory_coherent:
   	.type make_memory_coherent , %function
   	.align 4
 
-/*******************************************************************************
- *	v7_flush_kern_dcache_area(void *addr, size_t size)
- *
- *	Ensure that the data held in the page kaddr is written back
- *	to the page in question.
- *
- *	- addr	- kernel address
- *	- size	- region size
- *
-********************************************************************************/
-   .globl v7_flush_kern_dcache_area
-   .align 4
 
-	dcache_line_size r2, r3
-	add	r1, r0, r1
-	sub	r3, r2, #1
-	bic	r0, r0, r3
-	dsb
-	nop
-1:
-	mcr	p15, 0, r0, c7, c14, 1		@ clean & invalidate D line / unified line
-	add	r0, r0, r2
-	cmp	r0, r1
-	blo	1b
-	dsb
-	mov	pc, lr
-
- 	.type v7_flush_kern_dcache_area , %function
-  	.align 4
-
-
-	.end
 
 /* end of file */
 
