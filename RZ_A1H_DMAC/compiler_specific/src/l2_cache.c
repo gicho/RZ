@@ -22,6 +22,7 @@
 * Copyright (C) 2015 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 
+#include "compiler_settings.h"
 #include "l2_cache.h"
 #include "l2_cache_pl310.h"
 
@@ -61,8 +62,6 @@ static inline void L2CacheInvalidateLine(unsigned long addr)
 	_writeReg(addr, base + L2CACHE_INV_LINE_PA_REG);
 }
 
-
-
 static inline void L2CacheFlushLine(unsigned long addr)
 {
 	void  *base = L2CacheController;
@@ -73,8 +72,14 @@ static inline void L2CacheFlushLine(unsigned long addr)
 void L2CacheFlush(void)
 {
 	/* clean all ways */
+	__disable_irq();  	// added this to make sure there are no other tasks writing to the control registers
+						// before completion
+
 	_writeReg(L2CacheWayMask, L2CacheController + L2CACHE_CLEAN_INV_WAY_REG);
 	while(getL2CacheCleanInvalByWay() & 0xFF); // wait since it is a background operation
+
+	__enable_irq();
+
 	L2CacheSync();
 }
 
@@ -82,15 +87,26 @@ void L2CacheFlush(void)
 void L2CacheClean(void)
 {
 	/* clean all ways */
+	__disable_irq();  	// added this to make sure there are no other tasks writing to the control registers
+						// before completion
+
 	_writeReg(L2CacheWayMask, L2CacheController + L2CACHE_CLEAN_WAY_REG);
 	while(getL2CacheCleanByWay() & 0xFF); // wait since it is a background operation
+
+	__enable_irq();
+
 	L2CacheSync();
 }
 
 void L2CacheInvalidate(void)
 {
+	__disable_irq();  	// added this to make sure there are no other tasks writing to the control registers
+						// before completion
+
 	_writeReg(L2CacheWayMask, L2CacheController + L2CACHE_INV_WAY_REG);
 	while(getL2CacheInvalByWay() & 0xFF); // wait since it is a background operation
+
+	__enable_irq();
 	L2CacheSync();
 }
 
