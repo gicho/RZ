@@ -89,7 +89,6 @@
 									<listOptionValue builtIn="false" value="&quot;.\src\logo.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\main.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\peripheral_early_init.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\src\port_init.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\riic.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\riic_userdef.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\rspi.o&quot;"/>
@@ -109,7 +108,6 @@
 									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/src\syscalls.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\access.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\application_signature.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\cache-v7.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\init_ttb.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\initsct.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\irqfiq_handler.o&quot;"/>
@@ -119,7 +117,10 @@
 									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\proc-macros.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\reset_handler.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\start.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\libRZ_A1H_DMAC.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/src\l2_cache.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/src\l2_cache_pl310.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\l1_cache.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\libRZ_A1H_DMAC-SINGLE.a&quot;"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.rz.Debug.Linker.option.archiveLibraryFiles.505264772" name="Archive (library) files" superClass="com.renesas.cdt.rz.Debug.Linker.option.archiveLibraryFiles" valueType="stringList">
 									<listOptionValue builtIn="false" value=""/>
@@ -373,7 +374,6 @@
 									<listOptionValue builtIn="false" value="&quot;.\src\logo.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\main.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\peripheral_early_init.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\src\port_init.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\riic.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\riic_userdef.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\rspi.o&quot;"/>
@@ -393,7 +393,6 @@
 									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/src\syscalls.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\access.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\application_signature.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\cache-v7.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\init_ttb.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\initsct.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\irqfiq_handler.o&quot;"/>
@@ -403,7 +402,10 @@
 									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\proc-macros.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\reset_handler.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\start.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\libRZ_A1H_DMAC.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/src\l2_cache.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/src\l2_cache_pl310.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\l1_cache.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\libRZ_A1H_DMAC-DUAL.a&quot;"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.rz.Debug.Linker.option.archiveLibraryFiles.1440505078" name="Archive (library) files" superClass="com.renesas.cdt.rz.Debug.Linker.option.archiveLibraryFiles" valueType="stringList">
 									<listOptionValue builtIn="false" value=""/>
@@ -440,9 +442,12 @@
 		<configuration configurationName="Release">
 			<resource resourceType="PROJECT" workspacePath="/RZ_A1H_DMAC_RSK"/>
 		</configuration>
+		<configuration configurationName="Debug_DUAL_QSPI"/>
+		<configuration configurationName="Debug_SINGLE_QSPI"/>
 		<configuration configurationName="Debug">
 			<resource resourceType="PROJECT" workspacePath="/RZ_A1H_DMAC_RSK"/>
 		</configuration>
+		<configuration configurationName="Debug from RAM"/>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>

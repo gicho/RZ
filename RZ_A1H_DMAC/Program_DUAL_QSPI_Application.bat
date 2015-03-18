@@ -19,7 +19,7 @@ if not exist .\RZ_A1H_DMAC.DUAL.bin goto ERROR
 echo ------------------------------------------------------------------------
 
 
-"C:\work\dev\SEGGER\JLink_V496\JLink.exe" -speed 15000 -if JTAG -device R7S721001_DUALSPI -CommanderScript Program_DUAL_QSPI_Application.Command
+"C:\work\dev\SEGGER\JLink_V496h\JLink.exe" -speed 15000 -if JTAG -device R7S721001_DUALSPI -CommanderScript Program_DUAL_QSPI_Application.Command
 
 
 echo ------------------------------------------------------------------------
