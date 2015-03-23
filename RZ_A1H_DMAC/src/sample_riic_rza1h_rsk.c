@@ -383,7 +383,7 @@ void R_RIIC_Init_CH3(void)
     /* Configure the port mode of each I/O of the port expander */
     iic_dev_io  = (uint8_t)(0xFF);	//Indicates which I/O is to be modified
     iic_w_value = (uint8_t)(0x11);  	//IO[0] = PX1_EN0 Enable        = 1 (Selects IC37/IC38 MUXes BL[x] signals. Also enables PMOD connectors as they use the SPI from IC38)
-										//IO[1] = PX1_EN1 Enable        = 0 (OFF)
+										//IO[1] = PX1_EN1 Enable        = 0 (OFF) brings P3_3 on connector CN4/2
 										//IO[2] = TFT_CS                = 0 (Optional chip select for connecting to TFTs which use SPI. The RSK TFT is not configured by SPI.)
 										//IO[3] = PX1_EN3 Enable        = 0 (Selects Audio signals. If set to 1, selects optional PWM signals.)
 										//IO[4] = USB_OVR_CURRENT       = 1 (Input signal from IC7. By default it is pulled high. It signals overcurrent or thermal shutdown conditions.)

@@ -116,6 +116,7 @@ static uint8_t DMA_SDRAM_CACHED_BUFFER dmac_dst_data_cachedsdram[DMAC_BUFF_SIZE]
 
 
 bool_t dmac_ch3_trans_flg = false;
+bool_t dmac_ch0_trans_flg = false;
 
 #define L2_CACHED_SRC (0x1)
 #define L2_CACHED_DST (0x2)
@@ -159,6 +160,19 @@ void Sample_DMAC3_Interrupt(uint32_t int_sense)
     dmac_ch3_trans_flg = true;
 }
 
+/******************************************************************************
+* Function Name: Sample_DMAC0_Interrupt
+* Description  : DMAC0 Interrupt handler
+* Arguments    : uint32_t int_sense : Interrupt detection setting
+*              :                    :   INTC_LEVEL_SENSITIVE : Level Sense
+*              :                    :   INTC_EDGE_TRIGGER    : Edge Trigger
+* Return Value : None
+******************************************************************************/
+void Sample_DMAC0_Interrupt(uint32_t int_sense)
+{
+    dmac_ch0_trans_flg = true;
+}
+
 
 /******************************************************************************
 * Function Name: initialise_data
@@ -176,6 +190,114 @@ void initialise_data(uint8_t *src, uint8_t data, uint32_t size)
     {
         *src++ = data;
     }
+}
+
+/******************************************************************************
+* Function Name: initialise_dma8bit_extrequest
+* Description  : Initialise data transfer on channel 0 of the dma controller
+*              : memory block must be allocated prior to calling this function
+*              : size should not specify more bytes than allocated
+*              : transfer is done via external request signal DREQ based on level
+*              : acknowledge is generated via DACK0
+*              : transfer end signaled via TEND0
+* Arguments    : uint8_t  *src : pointer to start of data to transfer
+*              : uint8_t  *dst : pointer to start of data transfer destination
+*              : uint32_t size : number of bytes to transfer
+* Return Value : None
+******************************************************************************/
+void initialise_dma8bit_extrequest(uint8_t *src, uint8_t *dst, uint32_t size)
+{
+    volatile uint32_t dummy = 0u;
+
+    UNUSED_VARIABLE(dummy);
+
+    /* Clear interrupt flag */
+    dmac_ch0_trans_flg = false;
+
+    /* Set Source Start Address */
+    DMAC0.N0SA.LONG = (uint32_t)src;
+
+    /* Set Destination Start Address */
+    DMAC0.N0DA.LONG = (uint32_t)dst;
+
+    /* Set Transfer Size */
+    DMAC0.N0TB.LONG = size;
+
+    /* Set Count direction of the source address Auto increment */
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0x0, DMAC0_CHCFG_n_DAD_SHIFT, DMAC0_CHCFG_n_DAD);
+
+    /* Set Count direction of the destination address Auto increment */
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0x0, DMAC0_CHCFG_n_SAD_SHIFT, DMAC0_CHCFG_n_SAD);
+
+    /* Set Source Transfer Size 8 bits */
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0x0, DMAC0_CHCFG_n_DDS_SHIFT, DMAC0_CHCFG_n_DDS);
+
+    /* Set Destination Transfer Size 8 bits */
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0x0, DMAC0_CHCFG_n_SDS_SHIFT, DMAC0_CHCFG_n_SDS);
+
+    /* Set Channel Status Register DMA Mode to 0 (Register Mode) */
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_DMS_SHIFT,  DMAC0_CHCFG_n_DMS);
+
+    /* Set Channel Status Register Set to 0 (Select Executes the Next0 Register Set) */
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_RSEL_SHIFT, DMAC0_CHCFG_n_RSEL);
+
+    /* Set Channel Status Register Sweep Buffer Enable to 0 (Stops the DMA transfer without sweeping the buffer) */
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_SBE_SHIFT,  DMAC0_CHCFG_n_SBE);
+
+    /* Set Channel Status Register DMA Interrupt Mask to 0 (Does not mask the DMA interrupt) */
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_DEM_SHIFT,  DMAC0_CHCFG_n_DEM);
+
+    /* Set Enabled Register Set Enable to 0 (Does not continue DMA transfers) */
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_REN_SHIFT, DMAC0_CHCFG_n_REN);
+
+    /* Set Register Select Switch to 0 (Does not invert RSEL automatically after a DMA transaction) */
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_RSW_SHIFT, DMAC0_CHCFG_n_RSW);
+
+    /* TM  : Set Enabled single Transfer Mode */
+    /* AM  : Set ACK Mode DMAACK level, output until DREQ becomes inactive 0x1, bus cycle 0x2 */
+    /* SEL : Set SEL setting, channel 0 */
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_TM_SHIFT,  DMAC0_CHCFG_n_TM);
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 2, DMAC0_CHCFG_n_AM_SHIFT,  DMAC0_CHCFG_n_AM);
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_SEL_SHIFT, DMAC0_CHCFG_n_SEL);
+
+    /* LVL, HIEN, LOWN, REQD */
+    /* select based on edge */
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_LVL_SHIFT,  DMAC0_CHCFG_n_LVL);
+    /* ignore high level */
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_HIEN_SHIFT, DMAC0_CHCFG_n_HIEN);
+    /* detect a request when signal has a falling edge */
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 1, DMAC0_CHCFG_n_LOEN_SHIFT, DMAC0_CHCFG_n_LOEN);
+    /* ACk to get active when read */
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_REQD_SHIFT, DMAC0_CHCFG_n_REQD);
+
+    /* MID = 0, RID = 3 for external request */
+    RZA_IO_RegWrite_32(&DMAC01.DMARS.LONG, 0, DMAC01_DMARS_CH0_MID_SHIFT, DMAC01_DMARS_CH0_MID);
+    RZA_IO_RegWrite_32(&DMAC01.DMARS.LONG, 3, DMAC01_DMARS_CH0_RID_SHIFT, DMAC01_DMARS_CH0_RID);
+
+    /* PR : Set Round Robin mode */
+    RZA_IO_RegWrite_32(&DMAC07.DCTRL.LONG, 1, DMAC07_DCTRL_0_7_PR_SHIFT, DMAC07_DCTRL_0_7_PR);
+
+    /* ==== Set DMAC channel 0 function ==== */
+    R_INTC_RegistIntFunc(INTC_ID_DMAINT0, Sample_DMAC0_Interrupt);
+
+    /* ==== Set DMAC channel 3 interrupt priority ==== */
+    R_INTC_SetPriority(INTC_ID_DMAINT0, 1);
+
+    /* ==== Enable DMAC channel 0 interrupt ==== */
+    R_INTC_Enable(INTC_ID_DMAINT0);
+
+    if ((0 == RZA_IO_RegRead_32(&DMAC0.CHSTAT.LONG, DMAC0_CHSTAT_n_EN_SHIFT,   DMAC0_CHSTAT_n_EN)) &&
+        (0 == RZA_IO_RegRead_32(&DMAC0.CHSTAT.LONG, DMAC0_CHSTAT_n_TACT_SHIFT, DMAC0_CHSTAT_n_TACT)))
+    {
+        /* Channel Status Register */
+        RZA_IO_RegWrite_32(&DMAC0.CHCTRL.LONG, 1, DMAC0_CHCTRL_n_SWRST_SHIFT, DMAC0_CHCTRL_n_SWRST);
+        dummy = RZA_IO_RegRead_32(&DMAC0.CHCTRL.LONG, DMAC0_CHCTRL_n_SWRST_SHIFT, DMAC0_CHCTRL_n_SWRST);
+
+
+        RZA_IO_RegWrite_32(&DMAC0.CHCTRL.LONG, 1, DMAC0_CHCTRL_n_SETEN_SHIFT, DMAC0_CHCTRL_n_SETEN);
+
+    }
+
 }
 
 /******************************************************************************
@@ -416,6 +538,32 @@ void touchLoop_L2(uint32_t paddress) {
 	}
 
 	// at this point the cache line @ vaddress must be already evicted
+}
+
+void dmac_uncached_uncached_extrequest(void)
+{
+    char str[16];
+    uint8_t *addressSrc, *addressDst;
+
+    initialise_data(dmac_src_data_ram, BUFF_INIT_BYTE, DMAC_BUFF_SIZE);
+    initialise_data(dmac_dst_data_ram, 0x00, DMAC_BUFF_SIZE);
+
+    addressSrc = (uint8_t*) getPaFromVa((uint32_t)dmac_src_data_ram);
+    addressDst = (uint8_t*) getPaFromVa((uint32_t)dmac_dst_data_ram);
+
+    initialise_dma8bit_extrequest(addressSrc, addressDst, DMAC_BUFF_SIZE);
+
+    while(dmac_ch0_trans_flg == false)
+    {
+	    touchLoop_L1((uint32_t) dmac_src_data_ram);
+	    touchLoop_L1((uint32_t) dmac_dst_data_ram);
+	    __asm("nop");
+    }
+
+    if(verify_data_set(dmac_dst_data_ram, BUFF_INIT_BYTE) == false)
+    {
+    	while(1);
+    }
 }
 
 void dmac_uncached_uncached(void)
@@ -1172,6 +1320,55 @@ int_t main(void)
 
     /* Initialise the PMod Colour LCD display */
     R_LCD_Init();
+
+    // test for dma via external request signal
+    // uses switch2 of the RSK to generate the request signal
+    /* uncached memory, ext request signal */
+	/* Set SW2 (IRQ2) as DREQ0 pin (P1_8) */
+    /* ---- P1_8 : DREQ0 ---- */
+    /* Port mode : Multiplex mode                     */
+    /* Port function setting : 4st multiplex function */
+    /* I/O control mode : Peripheral function         */
+    RZA_IO_RegWrite_16(&GPIO.PFCAE1, 0, GPIO_PFCAE1_PFCAE18_SHIFT, GPIO_PFCAE1_PFCAE18);
+    RZA_IO_RegWrite_16(&GPIO.PFCE1,  1, GPIO_PFCE1_PFCE18_SHIFT,   GPIO_PFCE1_PFCE18);
+    RZA_IO_RegWrite_16(&GPIO.PFC1,   1, GPIO_PFC1_PFC18_SHIFT,     GPIO_PFC1_PFC18);
+    RZA_IO_RegWrite_16(&GPIO.PMC1,   1, GPIO_PMC1_PMC18_SHIFT,     GPIO_PMC1_PMC18);
+    RZA_IO_RegWrite_16(&GPIO.PIPC1,  1, GPIO_PIPC1_PIPC18_SHIFT,   GPIO_PIPC1_PIPC18);
+    // PM setting shall have no effect since PIPC is 1
+
+    /* ---- P3_3 : DACK0 ---- */
+    /* Port mode : Multiplex mode                     */
+    /* Port function setting : 6st multiplex function */
+    /* I/O control mode : Peripheral function         */
+    RZA_IO_RegWrite_16(&GPIO.PFCAE3, 1, GPIO_PFCAE3_PFCAE33_SHIFT, GPIO_PFCAE3_PFCAE33);
+    RZA_IO_RegWrite_16(&GPIO.PFCE3,  0, GPIO_PFCE3_PFCE33_SHIFT,   GPIO_PFCE3_PFCE33);
+    RZA_IO_RegWrite_16(&GPIO.PFC3,   1, GPIO_PFC3_PFC33_SHIFT,     GPIO_PFC3_PFC33);
+    RZA_IO_RegWrite_16(&GPIO.PMC3,   1, GPIO_PMC3_PMC33_SHIFT,     GPIO_PMC3_PMC33);
+    RZA_IO_RegWrite_16(&GPIO.PIPC3,  1, GPIO_PIPC3_PIPC33_SHIFT,   GPIO_PIPC3_PIPC33);
+    // PM setting shall have no effect since PIPC is 1
+
+    /* ---- P3_2 : TEND0 ---- */ // on RSK is hardwired to G1C usb to serial
+    /* Port mode : Multiplex mode                     */
+    /* Port function setting : 6st multiplex function */
+    /* I/O control mode : Peripheral function         */
+//    RZA_IO_RegWrite_16(&GPIO.PFCAE3, 1, GPIO_PFCAE3_PFCAE32_SHIFT, GPIO_PFCAE3_PFCAE32);
+//    RZA_IO_RegWrite_16(&GPIO.PFCE3,  0, GPIO_PFCE3_PFCE32_SHIFT,   GPIO_PFCE3_PFCE32);
+//    RZA_IO_RegWrite_16(&GPIO.PFC3,   1, GPIO_PFC3_PFC32_SHIFT,     GPIO_PFC3_PFC32);
+//    RZA_IO_RegWrite_16(&GPIO.PMC3,   1, GPIO_PMC3_PMC32_SHIFT,     GPIO_PMC3_PMC32);
+//    RZA_IO_RegWrite_16(&GPIO.PIPC3,  1, GPIO_PIPC3_PIPC32_SHIFT,   GPIO_PIPC3_PIPC32);
+    // PM setting shall have no effect since PIPC is 1
+
+    dmac_uncached_uncached_extrequest();
+
+	/* Set SW2 (IRQ2) back as input pin (P1_8) */
+	RZA_IO_RegWrite_16(&GPIO.PBDC1,   1, GPIO_PBDC1_PBDC18_SHIFT,   GPIO_PBDC1_PBDC18);
+	RZA_IO_RegWrite_16(&GPIO.PM1,     1, GPIO_PM1_PM18_SHIFT,       GPIO_PM1_PM18);
+	RZA_IO_RegWrite_16(&GPIO.PMC1,    1, GPIO_PMC1_PMC18_SHIFT,     GPIO_PMC1_PMC18);
+    RZA_IO_RegWrite_16(&GPIO.PFCAE1,  0, GPIO_PFCAE1_PFCAE18_SHIFT, GPIO_PFCAE1_PFCAE18);
+    RZA_IO_RegWrite_16(&GPIO.PFCE1,   1, GPIO_PFCE1_PFCE18_SHIFT,   GPIO_PFCE1_PFCE18);
+    RZA_IO_RegWrite_16(&GPIO.PFC1,    0, GPIO_PFC1_PFC18_SHIFT,     GPIO_PFC1_PFC18);
+    RZA_IO_RegWrite_16(&GPIO.PIPC1,   1, GPIO_PIPC1_PIPC18_SHIFT,   GPIO_PIPC1_PIPC18);
+
 
     // tests for internal ram only
 #if 1
