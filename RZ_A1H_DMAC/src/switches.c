@@ -107,6 +107,7 @@ void (*g_switch_release_callback_func) (void) = 0;
 void Init_Switches (void)
 {
     /* Set SW1 (IRQ3) as input pin (P1_9) */
+	/* 3rd function */
 	RZA_IO_RegWrite_16(&GPIO.PBDC1,   1, GPIO_PBDC1_PBDC19_SHIFT,   GPIO_PBDC1_PBDC19);
 	RZA_IO_RegWrite_16(&GPIO.PM1,     1, GPIO_PM1_PM19_SHIFT,       GPIO_PM1_PM19);
 	RZA_IO_RegWrite_16(&GPIO.PMC1,    1, GPIO_PMC1_PMC19_SHIFT,     GPIO_PMC1_PMC19);
@@ -116,6 +117,7 @@ void Init_Switches (void)
     RZA_IO_RegWrite_16(&GPIO.PIPC1,   1, GPIO_PIPC1_PIPC19_SHIFT,   GPIO_PIPC1_PIPC19);
 
 	/* Set SW2 (IRQ2) as input pin (P1_8) */
+    /* 3rd function */
 	RZA_IO_RegWrite_16(&GPIO.PBDC1,   1, GPIO_PBDC1_PBDC18_SHIFT,   GPIO_PBDC1_PBDC18);
 	RZA_IO_RegWrite_16(&GPIO.PM1,     1, GPIO_PM1_PM18_SHIFT,       GPIO_PM1_PM18);
 	RZA_IO_RegWrite_16(&GPIO.PMC1,    1, GPIO_PMC1_PMC18_SHIFT,     GPIO_PMC1_PMC18);
@@ -125,7 +127,8 @@ void Init_Switches (void)
     RZA_IO_RegWrite_16(&GPIO.PIPC1,   1, GPIO_PIPC1_PIPC18_SHIFT,   GPIO_PIPC1_PIPC18);
 
 	/* Set SW3 (IRQ5) as input pin (P1_11) */
-	RZA_IO_RegWrite_16(&GPIO.PBDC1,   1, GPIO_PBDC1_PBDC111_SHIFT,   GPIO_PBDC1_PBDC111);
+    /* 3rd function */
+    RZA_IO_RegWrite_16(&GPIO.PBDC1,   1, GPIO_PBDC1_PBDC111_SHIFT,   GPIO_PBDC1_PBDC111);
 	RZA_IO_RegWrite_16(&GPIO.PM1,     1, GPIO_PM1_PM111_SHIFT,       GPIO_PM1_PM111);
 	RZA_IO_RegWrite_16(&GPIO.PMC1,    1, GPIO_PMC1_PMC111_SHIFT,     GPIO_PMC1_PMC111);
     RZA_IO_RegWrite_16(&GPIO.PFCAE1,  0, GPIO_PFCAE1_PFCAE111_SHIFT, GPIO_PFCAE1_PFCAE111);

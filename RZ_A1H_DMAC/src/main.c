@@ -253,10 +253,10 @@ void initialise_dma8bit_extrequest(uint8_t *src, uint8_t *dst, uint32_t size)
     /* Set Register Select Switch to 0 (Does not invert RSEL automatically after a DMA transaction) */
     RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_RSW_SHIFT, DMAC0_CHCFG_n_RSW);
 
-    /* TM  : Set Enabled single Transfer Mode */
+    /* TM  : Set Enabled block transfer Mode */
     /* AM  : Set ACK Mode DMAACK level, output until DREQ becomes inactive 0x1, bus cycle 0x2 */
     /* SEL : Set SEL setting, channel 0 */
-    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_TM_SHIFT,  DMAC0_CHCFG_n_TM);
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 1, DMAC0_CHCFG_n_TM_SHIFT,  DMAC0_CHCFG_n_TM);
     RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 2, DMAC0_CHCFG_n_AM_SHIFT,  DMAC0_CHCFG_n_AM);
     RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_SEL_SHIFT, DMAC0_CHCFG_n_SEL);
 
@@ -267,6 +267,7 @@ void initialise_dma8bit_extrequest(uint8_t *src, uint8_t *dst, uint32_t size)
     RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_HIEN_SHIFT, DMAC0_CHCFG_n_HIEN);
     /* detect a request when signal has a falling edge */
     RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 1, DMAC0_CHCFG_n_LOEN_SHIFT, DMAC0_CHCFG_n_LOEN);
+
     /* ACk to get active when read */
     RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_REQD_SHIFT, DMAC0_CHCFG_n_REQD);
 
@@ -545,17 +546,18 @@ void dmac_uncached_uncached_extrequest(void)
     char str[16];
     uint8_t *addressSrc, *addressDst;
 
-    initialise_data(dmac_src_data_ram, BUFF_INIT_BYTE, DMAC_BUFF_SIZE);
+    // dmac_src_data_sdram
+    initialise_data(dmac_src_data_sdram, BUFF_INIT_BYTE, DMAC_BUFF_SIZE);
     initialise_data(dmac_dst_data_ram, 0x00, DMAC_BUFF_SIZE);
 
-    addressSrc = (uint8_t*) getPaFromVa((uint32_t)dmac_src_data_ram);
+    addressSrc = (uint8_t*) getPaFromVa((uint32_t)dmac_src_data_sdram);
     addressDst = (uint8_t*) getPaFromVa((uint32_t)dmac_dst_data_ram);
 
     initialise_dma8bit_extrequest(addressSrc, addressDst, DMAC_BUFF_SIZE);
 
     while(dmac_ch0_trans_flg == false)
     {
-	    touchLoop_L1((uint32_t) dmac_src_data_ram);
+	    touchLoop_L1((uint32_t) dmac_src_data_sdram);
 	    touchLoop_L1((uint32_t) dmac_dst_data_ram);
 	    __asm("nop");
     }
@@ -1321,36 +1323,60 @@ int_t main(void)
     /* Initialise the PMod Colour LCD display */
     R_LCD_Init();
 
-    // test for dma via external request signal
-    // uses switch2 of the RSK to generate the request signal
-    /* uncached memory, ext request signal */
-	/* Set SW2 (IRQ2) as DREQ0 pin (P1_8) */
+#if 1
+
+    /* test for dma via external request signal DREQ0
+    * uses switch2 of the RSK to generate the request signal for one block transfer
+    * uncached memory, ext request signal
+	* Set SW2 (IRQ2) as DREQ0 pin (P1_8)
+	*/
     /* ---- P1_8 : DREQ0 ---- */
+    /* reinitialize to basic IO setting */
+    RZA_IO_RegWrite_16(&GPIO.PIBC1,  0, GPIO_PIBC1_PIBC18_SHIFT, GPIO_PIBC1_PIBC18);
+    RZA_IO_RegWrite_16(&GPIO.PBDC1,  0, GPIO_PBDC1_PBDC18_SHIFT, GPIO_PBDC1_PBDC18);
+    RZA_IO_RegWrite_16(&GPIO.PM1,    1, GPIO_PM1_PM18_SHIFT, GPIO_PM1_PM18);
+    RZA_IO_RegWrite_16(&GPIO.PMC1,   0, GPIO_PMC1_PMC18_SHIFT, GPIO_PMC1_PMC18);
+    RZA_IO_RegWrite_16(&GPIO.PIPC1,  0, GPIO_PIPC1_PIPC18_SHIFT, GPIO_PIPC1_PIPC18);
+
     /* Port mode : Multiplex mode                     */
-    /* Port function setting : 4st multiplex function */
+    /* Port function setting : 4th multiplex function */
     /* I/O control mode : Peripheral function         */
-    RZA_IO_RegWrite_16(&GPIO.PFCAE1, 0, GPIO_PFCAE1_PFCAE18_SHIFT, GPIO_PFCAE1_PFCAE18);
-    RZA_IO_RegWrite_16(&GPIO.PFCE1,  1, GPIO_PFCE1_PFCE18_SHIFT,   GPIO_PFCE1_PFCE18);
     RZA_IO_RegWrite_16(&GPIO.PFC1,   1, GPIO_PFC1_PFC18_SHIFT,     GPIO_PFC1_PFC18);
-    RZA_IO_RegWrite_16(&GPIO.PMC1,   1, GPIO_PMC1_PMC18_SHIFT,     GPIO_PMC1_PMC18);
+    RZA_IO_RegWrite_16(&GPIO.PFCE1,  1, GPIO_PFCE1_PFCE18_SHIFT,   GPIO_PFCE1_PFCE18);
+    RZA_IO_RegWrite_16(&GPIO.PFCAE1, 0, GPIO_PFCAE1_PFCAE18_SHIFT, GPIO_PFCAE1_PFCAE18);
     RZA_IO_RegWrite_16(&GPIO.PIPC1,  1, GPIO_PIPC1_PIPC18_SHIFT,   GPIO_PIPC1_PIPC18);
+    RZA_IO_RegWrite_16(&GPIO.PMC1,   1, GPIO_PMC1_PMC18_SHIFT,     GPIO_PMC1_PMC18);
     // PM setting shall have no effect since PIPC is 1
 
     /* ---- P3_3 : DACK0 ---- */
+    /* reinitialize to basic IO setting */
+    RZA_IO_RegWrite_16(&GPIO.PIBC3,  0, GPIO_PIBC3_PIBC33_SHIFT, GPIO_PIBC3_PIBC33);
+    RZA_IO_RegWrite_16(&GPIO.PBDC3,  0, GPIO_PBDC3_PBDC33_SHIFT, GPIO_PBDC3_PBDC33);
+    RZA_IO_RegWrite_16(&GPIO.PM3,    1, GPIO_PM3_PM33_SHIFT, GPIO_PM3_PM33);
+    RZA_IO_RegWrite_16(&GPIO.PMC3,   0, GPIO_PMC3_PMC33_SHIFT, GPIO_PMC3_PMC33);
+    RZA_IO_RegWrite_16(&GPIO.PIPC3,  0, GPIO_PIPC3_PIPC33_SHIFT, GPIO_PIPC3_PIPC33);
+
     /* Port mode : Multiplex mode                     */
-    /* Port function setting : 6st multiplex function */
+    /* Port function setting : 6th multiplex function */
     /* I/O control mode : Peripheral function         */
-    RZA_IO_RegWrite_16(&GPIO.PFCAE3, 1, GPIO_PFCAE3_PFCAE33_SHIFT, GPIO_PFCAE3_PFCAE33);
-    RZA_IO_RegWrite_16(&GPIO.PFCE3,  0, GPIO_PFCE3_PFCE33_SHIFT,   GPIO_PFCE3_PFCE33);
+    RZA_IO_RegWrite_16(&GPIO.PBDC3,  0, GPIO_PBDC3_PBDC33_SHIFT, GPIO_PBDC3_PBDC33);
     RZA_IO_RegWrite_16(&GPIO.PFC3,   1, GPIO_PFC3_PFC33_SHIFT,     GPIO_PFC3_PFC33);
-    RZA_IO_RegWrite_16(&GPIO.PMC3,   1, GPIO_PMC3_PMC33_SHIFT,     GPIO_PMC3_PMC33);
+    RZA_IO_RegWrite_16(&GPIO.PFCE3,  0, GPIO_PFCE3_PFCE33_SHIFT,   GPIO_PFCE3_PFCE33);
+    RZA_IO_RegWrite_16(&GPIO.PFCAE3, 1, GPIO_PFCAE3_PFCAE33_SHIFT, GPIO_PFCAE3_PFCAE33);
     RZA_IO_RegWrite_16(&GPIO.PIPC3,  1, GPIO_PIPC3_PIPC33_SHIFT,   GPIO_PIPC3_PIPC33);
+    RZA_IO_RegWrite_16(&GPIO.PMC3,   1, GPIO_PMC3_PMC33_SHIFT,     GPIO_PMC3_PMC33);
     // PM setting shall have no effect since PIPC is 1
 
-    /* ---- P3_2 : TEND0 ---- */ // on RSK is hardwired to G1C usb to serial
+    /* ---- P3_2 : TEND0 ---- */
+    /* on RSK is hardwired to G1C usb to serial so cannot be observed easily */
     /* Port mode : Multiplex mode                     */
-    /* Port function setting : 6st multiplex function */
+    /* Port function setting : 6th multiplex function */
     /* I/O control mode : Peripheral function         */
+//    RZA_IO_RegWrite_16(&GPIO.PIBC3,  0, GPIO_PIBC3_PIBC32_SHIFT, GPIO_PIBC3_PIBC32);
+//    RZA_IO_RegWrite_16(&GPIO.PBDC3,  0, GPIO_PBDC3_PBDC32_SHIFT, GPIO_PBDC3_PBDC32);
+//    RZA_IO_RegWrite_16(&GPIO.PM3,    1, GPIO_PM3_PM32_SHIFT, GPIO_PM3_PM32);
+//    RZA_IO_RegWrite_16(&GPIO.PMC3,   0, GPIO_PMC3_PMC32_SHIFT, GPIO_PMC3_PMC32);
+//    RZA_IO_RegWrite_16(&GPIO.PIPC3,  0, GPIO_PIPC3_PIPC32_SHIFT, GPIO_PIPC3_PIPC32);
 //    RZA_IO_RegWrite_16(&GPIO.PFCAE3, 1, GPIO_PFCAE3_PFCAE32_SHIFT, GPIO_PFCAE3_PFCAE32);
 //    RZA_IO_RegWrite_16(&GPIO.PFCE3,  0, GPIO_PFCE3_PFCE32_SHIFT,   GPIO_PFCE3_PFCE32);
 //    RZA_IO_RegWrite_16(&GPIO.PFC3,   1, GPIO_PFC3_PFC32_SHIFT,     GPIO_PFC3_PFC32);
@@ -1360,7 +1386,7 @@ int_t main(void)
 
     dmac_uncached_uncached_extrequest();
 
-	/* Set SW2 (IRQ2) back as input pin (P1_8) */
+	/* Set SW2 (IRQ2) back as normal IO input pin (P1_8) */
 	RZA_IO_RegWrite_16(&GPIO.PBDC1,   1, GPIO_PBDC1_PBDC18_SHIFT,   GPIO_PBDC1_PBDC18);
 	RZA_IO_RegWrite_16(&GPIO.PM1,     1, GPIO_PM1_PM18_SHIFT,       GPIO_PM1_PM18);
 	RZA_IO_RegWrite_16(&GPIO.PMC1,    1, GPIO_PMC1_PMC18_SHIFT,     GPIO_PMC1_PMC18);
@@ -1369,6 +1395,7 @@ int_t main(void)
     RZA_IO_RegWrite_16(&GPIO.PFC1,    0, GPIO_PFC1_PFC18_SHIFT,     GPIO_PFC1_PFC18);
     RZA_IO_RegWrite_16(&GPIO.PIPC1,   1, GPIO_PIPC1_PIPC18_SHIFT,   GPIO_PIPC1_PIPC18);
 
+#endif
 
     // tests for internal ram only
 #if 1
