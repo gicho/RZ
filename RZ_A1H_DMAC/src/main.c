@@ -253,23 +253,23 @@ void initialise_dma8bit_extrequest(uint8_t *src, uint8_t *dst, uint32_t size)
     /* Set Register Select Switch to 0 (Does not invert RSEL automatically after a DMA transaction) */
     RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_RSW_SHIFT, DMAC0_CHCFG_n_RSW);
 
-    /* TM  : Set Enabled block transfer Mode */
-    /* AM  : Set ACK Mode DMAACK level, output until DREQ becomes inactive 0x1, bus cycle 0x2 */
+    /* TM  : Set Enabled single transfer Mode */
+    /* AM  : Set ACK Mode DMAACK output until DREQ becomes inactive 0x1, bus cycle 0x2 */
     /* SEL : Set SEL setting, channel 0 */
-    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 1, DMAC0_CHCFG_n_TM_SHIFT,  DMAC0_CHCFG_n_TM);
-    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 2, DMAC0_CHCFG_n_AM_SHIFT,  DMAC0_CHCFG_n_AM);
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_TM_SHIFT,  DMAC0_CHCFG_n_TM);
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 1, DMAC0_CHCFG_n_AM_SHIFT,  DMAC0_CHCFG_n_AM);
     RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_SEL_SHIFT, DMAC0_CHCFG_n_SEL);
 
     /* LVL, HIEN, LOWN, REQD */
     /* select based on edge */
-    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_LVL_SHIFT,  DMAC0_CHCFG_n_LVL);
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 1, DMAC0_CHCFG_n_LVL_SHIFT,  DMAC0_CHCFG_n_LVL);
     /* ignore high level */
     RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_HIEN_SHIFT, DMAC0_CHCFG_n_HIEN);
     /* detect a request when signal has a falling edge */
     RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 1, DMAC0_CHCFG_n_LOEN_SHIFT, DMAC0_CHCFG_n_LOEN);
 
-    /* ACk to get active when read */
-    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_REQD_SHIFT, DMAC0_CHCFG_n_REQD);
+    /* ACK to get active when read */
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 1, DMAC0_CHCFG_n_REQD_SHIFT, DMAC0_CHCFG_n_REQD);
 
     /* MID = 0, RID = 3 for external request */
     RZA_IO_RegWrite_32(&DMAC01.DMARS.LONG, 0, DMAC01_DMARS_CH0_MID_SHIFT, DMAC01_DMARS_CH0_MID);
@@ -550,8 +550,12 @@ void dmac_uncached_uncached_extrequest(void)
     initialise_data(dmac_src_data_sdram, BUFF_INIT_BYTE, DMAC_BUFF_SIZE);
     initialise_data(dmac_dst_data_ram, 0x00, DMAC_BUFF_SIZE);
 
+    addressSrc = (uint8_t*) getPaFromVa((uint32_t)dmac_dst_data_ram);
+    addressDst = (uint8_t*) getPaFromVa((uint32_t)dmac_src_data_sdram);
+/*
     addressSrc = (uint8_t*) getPaFromVa((uint32_t)dmac_src_data_sdram);
     addressDst = (uint8_t*) getPaFromVa((uint32_t)dmac_dst_data_ram);
+*/
 
     initialise_dma8bit_extrequest(addressSrc, addressDst, DMAC_BUFF_SIZE);
 
@@ -1323,7 +1327,7 @@ int_t main(void)
     /* Initialise the PMod Colour LCD display */
     R_LCD_Init();
 
-#if 1
+#if 0
 
     /* test for dma via external request signal DREQ0
     * uses switch2 of the RSK to generate the request signal for one block transfer
