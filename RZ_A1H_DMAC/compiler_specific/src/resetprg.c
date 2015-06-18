@@ -216,7 +216,7 @@ void PowerON_Reset (void)
     R_INTC_Init();
 
     /* Initial setting of the level 1 cache */
-    L1CacheInit();
+    L1CachesEnable();
 
     L2CacheInit();
 
