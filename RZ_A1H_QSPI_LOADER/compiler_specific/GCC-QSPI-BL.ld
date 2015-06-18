@@ -262,31 +262,31 @@ SECTIONS
 		
 		. = ALIGN(0x4);
 		
-		PROVIDE(__irq_stack_end__ = .);   
 		__irq_stack_end__ = .;
+		PROVIDE(__irq_stack_end__ = .);   		
 		
 	} > RAM0U
 		
 	/* stacks need to be aligned to 8 bytes */
 	.fiq_stack_section (NOLOAD) : ALIGN(0x8)
 	{
-		__fiq_stack_start = .;
-		PROVIDE(__fiq_stack_start = .);		
+		__fiq_stack_start__ = .;
+		PROVIDE(__fiq_stack_start__ = .);		
 		
 		.  += FIQ_STACK_SIZE;
 		
 		. = ALIGN(0x4);
 		
-		__fiq_stack_end = .;
-		PROVIDE(__fiq_stack_end = .);
+		__fiq_stack_end__ = .;
+		PROVIDE(__fiq_stack_end__ = .);
 		
 	} > RAM0U
 		
 	/* stacks need to be aligned to 8 bytes */
 	.svc_stack_section (NOLOAD) : ALIGN(0x8)
 	{
-		__svc_stack_start = .;
-		PROVIDE(__svc_stack_start = .);		
+		__svc_stack_start__ = .;
+		PROVIDE(__svc_stack_start__ = .);		
 		
 		.  += SVC_STACK_SIZE;
 		
@@ -300,15 +300,15 @@ SECTIONS
 	/* stacks need to be aligned to 8 bytes */
 	.abt_stack_section (NOLOAD) : ALIGN(0x8)
 	{
-		__abt_stack_start = .;
-		PROVIDE(__abt_stack_start = .);
+		__abt_stack_start__ = .;
+		PROVIDE(__abt_stack_start__ = .);
 		
 		.  += ABT_STACK_SIZE;
 		
 		. = ALIGN(0x4);
 		
-		__abt_stack_end = .;
-		PROVIDE(__abt_stack_end = .);
+		__abt_stack_end__ = .;
+		PROVIDE(__abt_stack_end__ = .);
 		
 	} > RAM0U
       
@@ -316,12 +316,13 @@ SECTIONS
 	.program_stack_section (NOLOAD) : ALIGN(0x8)
 	{
 		__program_stack_start__ = .;
-		PROVIDE(__program_stack_start = .);
+		PROVIDE(__program_stack_start__ = .);
 		
 		.  += PROGRAM_STACK_SIZE;
 		
 		. = ALIGN(0x4);		
 		
+		__program_stack_end__ = .;
 		PROVIDE(__program_stack_end__ = .); 
 		
 	} > RAM0U	

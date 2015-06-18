@@ -98,6 +98,66 @@ goToSleep:
 .endif
 
 /* ========================================================================= */
+/* Cache and MMU maintenance    											 */
+/* ========================================================================= */
+/* Disable cache and MMU just to be sure */
+
+    /* Read CP15 SCTLR */
+    MRC  p15, 0, r0, c1, c0, 0
+
+    /* 	Clear V bit 13 to set low vectors
+    	Clear I bit 12 to disable I Cache
+    	Clear Z bit 11 to disable flow prediction
+    	Clear C bit  2 to disable D Cache
+    	Clear A bit  1 to disable strict alignment
+    	Clear M bit  0 to disable MMU
+    */
+    /* BIC has 8 bit immediate + 4 bit rotation so cannot address directly above first byte */
+    BIC  r0, r0, #(V_BIT)
+    BIC  r0, r0, #(I_BIT)
+    BIC  r0, r0, #(Z_BIT)
+    BIC  r0, r0, #(C_BIT | A_BIT | M_BIT)
+
+    /* Write value back to CP15 SCR */
+    MCR  p15, 0, r0, c1, c0, 0
+
+	MOV  r0,#0
+/* ========================================================================= */
+/* Invalidate instruction cache												 */
+/* ========================================================================= */
+    MCR  p15, 0, r0, c7, c5, 0
+
+/* ========================================================================= */
+/*  Branch prediction maintenance, Invalidate branch prediction array		 */
+/* ========================================================================= */
+    MCR  p15, 0, r0, c7, c5, 6
+
+/* ========================================================================= */
+/*  TLB maintenance, Invalidate Unified Data and Instruction TLBs            */
+/* ========================================================================= */
+    MCR  p15, 0, r0, c8, c7, 0
+
+	ISB	/* Sync barrier */
+
+/* ========================================================================= */
+/* Vector Table Setting														 */
+/* ========================================================================= */
+/*
+ After QSPI, eSD or eMMC boot mode the system is configured to use High address
+ 0 = Normal (Low address) Vectors 0x00000000
+ 1 = High (High address) Vectors 0xFFFF0000
+ Change this to use the bootloader vector table just in case we want to use
+ interrupts (not the case in this example loader)
+ Could use MMU, or VBAR, or address remapping on the bus (CS0<>RAM0)
+ Here we can use VBAR since we chose low vectors in CP15
+*/
+
+/* Now set Vbar to the BL vector table instead of the ROM vector table  */
+    LDR r0, = QSPI_BL_vector_table
+    MCR p15, 0, r0, c12, c0, 0
+
+
+/* ========================================================================= */
 /* Clock Setting															 */
 /* ========================================================================= */
 
@@ -107,6 +167,7 @@ goToSleep:
  reg15_power_ctrl @ offset 0xF80
  Base register is @ H'3FFFF000
 */
+set_standby_mode_en:
 
     .equ    STBY_MODE_EN      , (0x1)
     .equ    DYNCLK_GATING_DIS , (0x0)
@@ -126,6 +187,10 @@ goToSleep:
  Bit [5,4,2,0] - fixed to 1
  XTAL = 13,33 MHz, PLL = x30, CPU CLOCK = 400 MHz
 */
+set_frqcr_reg:
+
+	.equ   	CPUSTS_REG	, (0xFCFE0018)
+	.equ	ISBUSY_BIT  , (0x10)
 
     .equ    CKOEN2_BIT , (0x1 << 14)
     .equ    CKOEN_BITS , (0x1 << 12)
@@ -139,6 +204,14 @@ goToSleep:
     ISB
     LDRH r0, [r0]
 
+/* check if frequency change is in progress*/
+	LDR  r0, =CPUSTS_REG
+frqcr_wait:
+    LDRB r1, [r0]
+    ANDS r1, r1, #ISBUSY_BIT
+    BNE  frqcr_wait
+
+
 /* BCLK is 1/3 = 133,33 MHz fixed ratio */
 /* P0CLK is 1/6 = 66,67 MHz fixed ratio */
 /* P1CLK is 1/12 = 33,33 MHz fixed ratio */
@@ -147,6 +220,7 @@ goToSleep:
  Bit [1,0] = 01b - Graphics clock ratio of 2/3
  GCLK = 266,67 MHz
 */
+set_frqcr2_reg:
 
     .equ    GFC_BITS , (0x1)
 
@@ -156,50 +230,42 @@ goToSleep:
     ISB
     LDRH r0, [r0]
 
+/* check if frequency change is in progress*/
+	LDR  r0, =CPUSTS_REG
+frqcr2_wait:
+    LDRB r1, [r0]
+    ANDS r1, r1, #ISBUSY_BIT
+    BNE  frqcr2_wait
 
-/* ========================================================================= */
-/* Vector Table Setting															 */
-/* ========================================================================= */
-
-/* Disable cache and MMU just to be sure
- After QSPI, eSD or eMMC boot mode the system is configured to use High address
- 0 = Normal (Low address) Vectors 0x00000000
- 1 = High (High address) Vectors 0xFFFF0000
- Need to change this to use the application vector table located at address 0x0
- Could use MMU, or VBAR, or address remapping on the bus (CS0<>RAM0)
- Here we use VBAR
-*/
-
-    /* Read CP15 SCTLR                            */
-    MRC  p15, 0, r0, c1, c0, 0
-
-    /* 	Clear V bit 13 to set low vectors
-    	Clear I bit 12 to disable I Cache
-    	Clear Z bit 11 to disable flow prediction
-    	Clear C bit  2 to disable D Cache
-    	Clear A bit  1 to disable strict alignment
-    	Clear M bit  0 to disable MMU
-    */
-    /* BIC has 8 bit immediate + 4 bit rotation so cannot address directly above first byte */
-    BIC  r0, r0, #(V_BIT)
-    BIC  r0, r0, #(I_BIT)
-    BIC  r0, r0, #(Z_BIT)
-    BIC  r0, r0, #(C_BIT | A_BIT | M_BIT)
-
-    /* Write value back to CP15 SCR */
-    MCR  p15, 0, r0, c1, c0, 0
-
-/* Now set Vbar to the BL vector table                                       */
-    LDR r0, = QSPI_BL_vector_table
-    MCR p15, 0, r0, c12, c0, 0
+/* enable data retention ram via SYSCR3 register */
+    LDR  r0, =0xFCFE0408
+    LDR  r1, =0x0F
+    STRB r1, [r0]
+    LDRB r0, [r0]           /* dummy read 8 bits wide */
 
 
 /* ========================================================================= */
 /*  Setting up Stack Area									                 */
 /* ========================================================================= */
-/* Configure to supervisor mode just to be sure (default)                                                         */
-    CPS  #SVC_MODE						/* switch to supervisor mode 	*/
-    LDR  sp, =__svc_stack_end__			/* setup the SVC stack pointer  */
+/* Configure the supervisor mode just to be sure (default from QSPI boot)    */
+    CPS  #SVC_MODE
+    LDR  sp, =__svc_stack_end__
+
+/* IRQ Mode                                                                  */
+    CPS  #IRQ_MODE
+    LDR  sp, =__irq_stack_end__
+
+/* FIQ Mode                                                                  */
+    CPS  #FIQ_MODE
+    LDR  sp, =__fiq_stack_end__
+
+/* ABT_MODE                                                                  */
+    CPS  #ABT_MODE
+    LDR  sp, =__abt_stack_end__
+
+/* SYS_MODE, shares stack space and register set with user mode              */
+    CPS  #SYS_MODE
+    LDR  sp, =__program_stack_end__
 
 /* ========================================================================= */
 /* Branch to C library entry point                                           */
