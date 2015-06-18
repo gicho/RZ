@@ -39,29 +39,19 @@
 	.text
 	.code 32
 
-	.global L1CacheInit
+	.global L1CachesEnable
 
-	.func L1CacheInit
-L1CacheInit:
+	.func L1CachesEnable
+L1CachesEnable:
 
 /******************************************************************************/
 /* Enable caches                                                              */
-/* Caches are controlled by the System Control Register:                      */
 /******************************************************************************/
-	MRC  p15, 0, r0, c1, c0, 0			              /* Read CP15 register 1 */
-	ORR  r0, r0, #(0x1 << 12)			                    /* Enable I Cache */
-	ORR  r0, r0, #(0x1 << 2)			                    /* Enable D Cache */
-	MCR  p15, 0, r0, c1, c0, 0			             /* Write CP15 register 1 */
-
-/******************************************************************************/
-/* Enable Program Flow Prediction                                             */
-/*                                                                            */
-/* Branch prediction is controlled by the System Control Register:            */
-/* Set Bit 11 to enable branch prediction and return                          */
-/******************************************************************************/
-	MRC  p15, 0, r0, c1, c0, 0		  	      /* Read System Control Register */
-	ORR  r0, r0, #(0x1 << 11)
-	MCR  p15, 0, r0, c1, c0, 0			     /* Write System Control Register */
+	MRC  p15, 0, r0, c1, c0, 0			    /* Read CP15 register 1 */
+	ORR  r0, r0, #(0x1 << 12)			    /* Enable I Cache */
+	ORR  r0, r0, #(0x1 << 11)				/* Enable program flow prediction */
+	ORR  r0, r0, #(0x1 << 2)			    /* Enable D Cache */
+	MCR  p15, 0, r0, c1, c0, 0			    /* Write CP15 register 1 */
 
 /******************************************************************************/
 /* Enable D-side prefetch                                                     */

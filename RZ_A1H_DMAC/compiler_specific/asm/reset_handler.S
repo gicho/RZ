@@ -88,65 +88,11 @@ goToSleep:
 
 .endif
 
-/* ========================================================================= */
-/* Clock Setting															 */
-/* ========================================================================= */
-
-/* Set standby_mode_en of Power Control Register
- Needed before changing frequency
- Located in PL310 L2 cache controller
- reg15_power_ctrl @ offset 0xF80
- Base register is @ H'3FFFF000
-*/
-    LDR  r0, =0x3FFFFF80
-    LDR  r1, =0x00000001
-    LDR  r2, [r0]                    /* test read */
-    STR  r1, [r0]
-    LDR  r0, [r0]                    /* dummy read */
-
-/* program the frequency control register
- Bit[14] = 0 - clock output enable control (unstable = 0, fixed low = 1)
- Bit[13,12] = 01b - output clock when active, keep low when using power save modes
- Bit[9,8] = 00b - CPU clock ratio = 1/1 with PLL
- Bit [5,4,2,0] - fixed to 1
- XTAL = 13,33 MHz, PLL = x30, CPU CLOCK = 400 MHz
-*/
-    LDR  r0, =0xFCFE0010
-    LDR  r1, =0x1035
-    STRH r1, [r0]
-    LDRH r0, [r0]			/* dummy read 16 bits wide */
-/* BCLK is 1/3 = 133,33 MHz fixed ratio */
-/* P0CLK is 1/6 = 66,67 MHz fixed ratio */
-/* P1CLK is 1/12 = 33,33 MHz fixed ratio */
-
-/* program the frequency control register 2
- Bit [1,0] = 01b - Graphics clock ratio of 2/3
- GCLK = 266,67 MHz
-*/
-    LDR  r0, =0xFCFE0014
-    LDR  r1, =0x0001
-    STRH r1, [r0]
-    LDRH r0, [r0]           /* dummy read 16 bits wide */
-
-
-/* enable data retention ram */
-    LDR  r0, =0xFCFE0408
-    LDR  r1, =0x0F
-    STRB r1, [r0]
-    LDRB r0, [r0]           /* dummy read 8 bits wide */
 
 /* ========================================================================= */
-/* Vector Table Setting															 */
+/* Cache and MMU maintenance    											 */
 /* ========================================================================= */
-
-/* Disable cache and MMU just to be sure
- After QSPI, eSD or eMMC boot mode the system is configured to use High address
- 0 = Normal (Low address) Vectors 0x00000000
- 1 = High (High address) Vectors 0xFFFF0000
- Need to change this to use the application vector table located at address 0x0
- Could use MMU, or VBAR, or address remapping on the bus (CS0<>RAM0)
- Here we use VBAR
-*/
+/* Disable cache and MMU just to be sure */
 
     /* Read CP15 SCTLR */
     MRC  p15, 0, r0, c1, c0, 0
@@ -167,6 +113,121 @@ goToSleep:
     /* Write value back to CP15 SCR */
     MCR  p15, 0, r0, c1, c0, 0
 
+
+	MOV  r0,#0
+/* ========================================================================= */
+/* Invalidate instruction cache												 */
+/* ========================================================================= */
+    MCR  p15, 0, r0, c7, c5, 0
+
+/* ========================================================================= */
+/*  Branch prediction maintenance, Invalidate branch prediction array		 */
+/* ========================================================================= */
+    MCR  p15, 0, r0, c7, c5, 6
+
+/* ========================================================================= */
+/*  TLB maintenance, Invalidate Unified Data and Instruction TLBs            */
+/* ========================================================================= */
+    MCR  p15, 0, r0, c8, c7, 0
+
+	ISB	/* Sync barrier */
+
+/* ========================================================================= */
+/* Clock Setting															 */
+/* ========================================================================= */
+
+/* Set standby_mode_en of Power Control Register
+ Needed before changing frequency
+ Located in PL310 L2 cache controller
+ reg15_power_ctrl @ offset 0xF80
+ Base register is @ H'3FFFF000
+*/
+set_standby_mode_en:
+
+    .equ    STBY_MODE_EN      , (0x1)
+    .equ    DYNCLK_GATING_DIS , (0x0)
+    .equ    PWR_CTRL_BITS     , (STBY_MODE_EN | DYNCLK_GATING_DIS)
+
+    LDR  r0, =0x3FFFFF80
+    LDR  r1, =PWR_CTRL_BITS
+    STR  r1, [r0]
+    ISB
+    LDR  r0, [r0]
+
+/* program the frequency control register
+ Bit[14] = 0 - clock output enable control (unstable = 0, fixed low = 1)
+ Bit[13,12] = 01b - output clock when active, keep low when using power save modes
+ Bit[9,8] = 00b - CPU clock ratio = 1/1 with PLL
+ Bit [5,4,2,0] - fixed to 1
+ XTAL = 13,33 MHz, PLL = x30, CPU CLOCK = 400 MHz
+*/
+set_frqcr_reg:
+
+	.equ   	CPUSTS_REG	, (0xFCFE0018)
+	.equ	ISBUSY_BIT  , (0x10)
+
+    .equ    CKOEN2_BIT , (0x1 << 14)
+    .equ    CKOEN_BITS , (0x1 << 12)
+    .equ    IFC_BITS   , (0x0 << 8)
+    .equ    CONST_BITS , (0x35)
+    .equ    FRQCR      , (CKOEN2_BIT | CKOEN_BITS | IFC_BITS | CONST_BITS)
+
+    LDR  r0, =0xFCFE0010
+    LDR  r1, =FRQCR
+    STRH r1, [r0]
+    ISB
+    LDRH r0, [r0]
+
+/* check if frequency change is in progress*/
+	LDR  r0, =CPUSTS_REG
+frqcr_wait:
+    LDRB r1, [r0]
+    ANDS r1, r1, #ISBUSY_BIT
+    BNE  frqcr_wait
+
+/* BCLK is 1/3 = 133,33 MHz fixed ratio */
+/* P0CLK is 1/6 = 66,67 MHz fixed ratio */
+/* P1CLK is 1/12 = 33,33 MHz fixed ratio */
+
+/* program the frequency control register 2
+ Bit [1,0] = 01b - Graphics clock ratio of 2/3
+ GCLK = 266,67 MHz
+*/
+set_frqcr2_reg:
+
+    .equ    GFC_BITS , (0x1)
+
+    LDR  r0, =0xFCFE0014
+    LDR  r1, =GFC_BITS
+    STRH r1, [r0]
+    ISB
+    LDRH r0, [r0]
+
+/* check if frequency change is in progress*/
+	LDR  r0, =CPUSTS_REG
+frqcr2_wait:
+    LDRB r1, [r0]
+    ANDS r1, r1, #ISBUSY_BIT
+    BNE  frqcr2_wait
+
+/* enable data retention ram via SYSCR3 register */
+    LDR  r0, =0xFCFE0408
+    LDR  r1, =0x0F
+    STRB r1, [r0]
+    LDRB r0, [r0]           /* dummy read 8 bits wide */
+
+/* ========================================================================= */
+/* Vector Table Setting															 */
+/* ========================================================================= */
+/*
+ After QSPI, eSD or eMMC boot mode the system is configured to use High address
+ 0 = Normal (Low address) Vectors 0x00000000
+ 1 = High (High address) Vectors 0xFFFF0000
+ Need to change this to use the application vector table located at address 0x0
+ Could use MMU, or VBAR, or address remapping on the bus (CS0<>RAM0)
+ Here we use VBAR
+*/
+
 	/* Now set Vbar to the Application vector table */
     LDR r0, = APP_vector_table
     MCR p15, 0, r0, c12, c0, 0
@@ -182,7 +243,7 @@ goToSleep:
     CPS  #IRQ_MODE
     LDR  sp, =__irq_stack_end__
 
-/* FRQ Mode                                                                  */
+/* FIQ Mode                                                                  */
     CPS  #FIQ_MODE
     LDR  sp, =__fiq_stack_end__
 
@@ -194,68 +255,7 @@ goToSleep:
     CPS  #SYS_MODE
     LDR  sp, =__program_stack_end__
 
-/* ========================================================================= */
-/*  TLB maintenance, Invalidate Data and Instruction TLBs                    */
-/* ========================================================================= */
-    MOV  r0,#0
-    MCR  p15, 0, r0, c8, c7, 0 /* I-TLB & D-TLB invalidation (TLBIALL)       */
 
-/* ========================================================================= */
-/* Invalidate instruction cache, also flushes branch target cache            */
-/* ========================================================================= */
-    MOV  r0, #0                   /* SBZ                                     */
-    MCR  p15, 0, r0, c7, c5, 0 /* ICIALLU                                    */
-
-/* ========================================================================= */
-/* Cache Invalidation code for Cortex-A9                                     */
-/* ========================================================================= */
-                                          /* Invalidate L1 Instruction Cache */
-    MRC  p15, 1, r0, c0, c0, 1        /* Read Cache Level ID Register (CLIDR)*/
-    TST  r0, #0x3                                         /*  Harvard Cache? */
-    MOV  r0, #0
-    MCRNE   p15, 0, r0, c7, c5, 0            /* Invalidate Instruction Cache */
-
-                                           /* Invalidate Data/Unified Caches */
-    MRC  p15, 1, r0, c0, c0, 1                                 /* Read CLIDR */
-    ANDS r3, r0, #0x07000000                      /* Extract coherency level */
-    MOV  r3, r3, LSR #23                          /* Total cache levels << 1 */
-    BEQ  Finished                                  /* If 0, no need to clean */
-
-    MOV  r10, #0                       /* R10 holds current cache level << 1 */
-Loop1:
-    ADD  r2, r10, r10, LSR #1               /* R2 holds cache "Set" position */
-    MOV  r1, r0, LSR r2   /* Bottom 3 bits are the Cache-type for this level */
-    AND  r1, r1, #7                            /* Isolate those lower 3 bits */
-    CMP  r1, #2
-    BLT  Skip            /* No cache or only instruction cache at this level */
-
-    MCR  p15, 2, r10, c0, c0, 0  /* Write the Cache Size selection  (CSSELR) */
-    ISB                     /* ISB to sync the change to the CacheSizeID reg */
-    MRC  p15, 1, r1, c0, c0, 0       /* Reads current Cache Size ID (CCSIDR) */
-    AND  r2, r1, #7                         /* Extract the line length field */
-    ADD  r2, r2, #4      /* Add 4 for the line length offset (log2 16 bytes) */
-    LDR  r4, =0x3FF
-    ANDS r4, r4, r1, LSR #3          /* R4 is the max number on the way size */
-    CLZ  r5, r4          /* R5 is the bit position of the way size increment */
-    LDR  r7, =0x7FFF
-    ANDS r7, r7, r1, LSR #13       /* R7 is the max number of the index size */
-Loop2:
-    MOV  r9, r4                      /* R9 working copy of the max way size  */
-
-Loop3:
-    ORR  r11, r10, r9, LSL r5 /* Factor in the Way and cache number into R11 */
-    ORR  r11, r11, r7, LSL r2                    /* Factor in the Set number */
-    MCR  p15, 0, r11, c7, c6, 2             /* Invalidate by Set/Way (DCISW) */
-    SUBS r9, r9, #1                              /* Decrement the Way number */
-    BGE  Loop3
-    SUBS r7, r7, #1                              /* Decrement the Set number */
-    BGE  Loop2
-Skip:
-    ADD  r10, r10, #2                          /* increment the cache number */
-    CMP  r3, r10
-    BGT  Loop1
-
-Finished:
 /* ========================================================================= */
 /* TTB initialize                                                            */
 /* ========================================================================= */
