@@ -79,14 +79,7 @@ MEMORY
 
 	RAM (rwx)		: ORIGIN = 0x20020000, LENGTH = 0x009E0000	/* Complete range of always-on RAM */
 	RAM_MIRROR (rwx): ORIGIN = 0x60020000, LENGTH = 0x009E0000	/* Complete range of always-on RAM mirror area */
-	
-	/* QSPI ROM attached to H'18000000, 2 chips of 0x4000000 size each (64 Mb) */ 
-	/* Total addressable space from the QSPI internal address map is 0x18000000 to H'1BFFFFFF (64Mb page) */
-	/* Size of block is 0x40000, first block is reserved to the BL */
-	/* Defined length accounts for the split between the BL and the application located @ 18040000 */
-	/* Check the bootloader project for consistency */		
-	QSPI_FLASH (rw) 		: ORIGIN = 0x18040000, LENGTH = 0x03FC0000  
-	QSPI_FLASH_MIRROR (rw) 	: ORIGIN = 0x58040000, LENGTH = 0x03FC0000  			
+			
 }
 
 PROGRAM_STACK_SIZE    = 0x8000;      /* Application stack                  */

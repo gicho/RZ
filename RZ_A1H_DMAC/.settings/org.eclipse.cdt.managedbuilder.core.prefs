@@ -1,4 +1,10 @@
 eclipse.preferences.version=1
+environment/buildEnvironmentInclude/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972.1016129555/CPATH/delimiter=;
+environment/buildEnvironmentInclude/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972.1016129555/CPATH/operation=remove
+environment/buildEnvironmentInclude/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972.1016129555/C_INCLUDE_PATH/delimiter=;
+environment/buildEnvironmentInclude/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972.1016129555/C_INCLUDE_PATH/operation=remove
+environment/buildEnvironmentInclude/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972.1016129555/append=true
+environment/buildEnvironmentInclude/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972.1016129555/appendContributed=true
 environment/buildEnvironmentInclude/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972.1820227450/CPATH/delimiter=;
 environment/buildEnvironmentInclude/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972.1820227450/CPATH/operation=remove
 environment/buildEnvironmentInclude/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972.1820227450/C_INCLUDE_PATH/delimiter=;
@@ -11,6 +17,10 @@ environment/buildEnvironmentInclude/com.renesas.cdt.rz.debug.win32.configuration
 environment/buildEnvironmentInclude/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972/C_INCLUDE_PATH/operation=remove
 environment/buildEnvironmentInclude/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972/append=true
 environment/buildEnvironmentInclude/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972/appendContributed=true
+environment/buildEnvironmentLibrary/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972.1016129555/LIBRARY_PATH/delimiter=;
+environment/buildEnvironmentLibrary/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972.1016129555/LIBRARY_PATH/operation=remove
+environment/buildEnvironmentLibrary/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972.1016129555/append=true
+environment/buildEnvironmentLibrary/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972.1016129555/appendContributed=true
 environment/buildEnvironmentLibrary/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972.1820227450/LIBRARY_PATH/delimiter=;
 environment/buildEnvironmentLibrary/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972.1820227450/LIBRARY_PATH/operation=remove
 environment/buildEnvironmentLibrary/com.renesas.cdt.rz.debug.win32.configuration.Id.823825972.1820227450/append=true

@@ -47,14 +47,7 @@ void error_image(void);
 
 char signature[] = "0123456789ABCDEF";
 
-/******************************************************************************
-* Function Name: check_image
-* Description  : This function checks that the signature text expected is
-*                correct before attempting to jump to the application code.
-* Arguments    : none
-* Return Value : none
-******************************************************************************/
-int check_image_singleSpi(uint32_t location)
+int check_image(uint32_t location)
 {
     uint8_t p    = 0;
     uint16_t len = sizeof(signature);
@@ -81,47 +74,6 @@ int check_image_singleSpi(uint32_t location)
 
 }
 
-int check_image_dualSpi(uint32_t location)
-{
-    uint8_t p    = 0;
-    uint16_t len = sizeof(signature);
-    uint16_t sourceData;
-    uint16_t* sourceDataPtr;
-    uint8_t value;
-
-    sourceDataPtr = (uint16_t*) location;
-
-    // read 16-bit wise and compare byte-wise
-    while(len>0)
-    {
-    	sourceData = *sourceDataPtr;
-
-    	value = (uint8_t) (sourceData & 0x00FF);
-    	if(value != signature[p++])
-        {
-            break;
-        }
-
-    	len--;
-
-    	if(len == 0) break;
-
-    	value = (uint8_t) ((sourceData & 0xFF00) >> 8);
-
-    	if(value != signature[p++])
-        {
-            break;
-        }
-
-    	len--;
-
-    	sourceDataPtr++;
-
-    }
-
-    return(len);
-
-}
 
 /******************************************************************************
 * Function Name: error_image

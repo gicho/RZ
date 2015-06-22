@@ -1,7 +1,7 @@
 @echo off
 rem  This batch file will load the code into single mode QSPI devices.
 rem  Please change the JLINK.EXE path below if it is different in your system. 
-echo LOAD CODE INTO QSPI FLASH DUAL MODE APPLICATIONS(IC26)
+echo LOAD CODE INTO QSPI FLASH SINGLE MODE APPLICATIONS (IC26)
 echo .
 
 rem <> Manually set path to JLink install directory here if you do not
@@ -34,10 +34,10 @@ exit
 :PATH_SET
 
 :PROGRAM
-if not exist .\RZ_A1H_QSPI_LOADER.DUAL.bin goto ERROR 
+if not exist .\RZ_A1H_QSPI_LOADER.bin goto ERROR 
 
 echo ===================================================================
-"%BASE%\JLink.exe" -speed 15000 -if JTAG -device R7S721001 -CommanderScript Program_DUAL_QSPI_Loader.Command
+"%BASE%\JLink.exe" -speed 15000 -if JTAG -device R7S721001 -CommanderScript Program_QSPI_Loader.Command
 echo ===================================================================
 
 goto END
@@ -47,7 +47,7 @@ goto END
 chgclr 0C
 echo ===================================================================
 echo Error:
-echo File "RZ_A1H_QSPI_LOADER.DUAL.bin" not found
+echo File "RZ_A1H_QSPI_LOADER.bin" not found
 echo ===================================================================
 pause
 chgclr 07

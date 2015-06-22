@@ -39,13 +39,13 @@ OUTPUT_ARCH(arm)
 ENTRY(APP_reset_handler)
 
 
-/* QSPI ROM attached to H'18000000, 1 chips of 0x4000000 size (64 Mb) */ 
+/* QSPI ROM attached to H'18000000, 2 chips of 0x4000000 size (64 Mb) */ 
 /* Total addressable space from the QSPI internal address map is 0x18000000 to H'1BFFFFFF (64Mb page) */
 /* attached QSPI flash type is Spansion S25FL512S on the RSK */
 SPI_BASE_ADDRESS = 0x18000000;
 
 /* !!!! set this equal to the offset defined in the qspi_setup.h file for the QSPI loader !!!! */
-APPLICATION_FLASH_OFFSET = 	0x40000;
+APPLICATION_FLASH_OFFSET = 	0x80000;
 
 
 /* Base Address RAM Memory Table 10-Mbyte on-chip RAM */  
@@ -90,11 +90,12 @@ MEMORY
 	RAM (rwx)		: ORIGIN = 0x20020000, LENGTH = 0x009E0000	/* Complete range of always-on RAM */
 	RAM_MIRROR (rwx): ORIGIN = 0x60020000, LENGTH = 0x009E0000	/* Complete range of always-on RAM mirror area */
 	
-	/* Size of each sector is 0x40000, first sector in single QSPI mode is reserved to the BL */
-	/* Length is 64Mb - 256Kb (1 sector), application located @ 18040000 */
+	/* Size of each sector is 0x40000, first two sectors in single QSPI mode are reserved to the BL */
+	/* Because of dual chip config the application is located @ 0x80000 */
+	/* Length is 64Mb - 512Kb (1 sector * 2), application located @ 18080000 */
 	/* !!!! Check the bootloader project (qspi_setup.h file) for consistency !!!! */		
-	QSPI_FLASH (rw) 		: ORIGIN = 0x18040000, LENGTH = 0x3FC0000  
-	QSPI_FLASH_MIRROR (rw) 	: ORIGIN = 0x58040000, LENGTH = 0x3FC0000  			
+	QSPI_FLASH (rw) 		: ORIGIN = 0x18080000, LENGTH = 0x3F80000  
+	QSPI_FLASH_MIRROR (rw) 	: ORIGIN = 0x58080000, LENGTH = 0x3F80000  			
 }
 
 PROGRAM_STACK_SIZE    = 0x8000;      /* Application stack                  */

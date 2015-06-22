@@ -51,9 +51,7 @@ Macro definitions
 /******************************************************************************
 Imported global variables and functions (from other files)
 ******************************************************************************/
-extern void UserProgJmp(uint32_t addr);
-extern uint32_t check_image_singleSpi(uint32_t location);
-extern uint32_t check_image_dualSpi(uint32_t location);
+extern uint32_t check_image(uint32_t location);
 extern void error_image(void);
 
 /******************************************************************************
@@ -75,6 +73,7 @@ static void test_readBytes(dataBusSize_t busSize);
 
 static externalAddressTransfer_t 	externalAddressTransfer;
 static spiConfig_t					spiConfiguration;
+typedef void (*fPtr)(void);
 
 void qspi_change_config_and_start_application(void)
 {
@@ -84,6 +83,9 @@ void qspi_change_config_and_start_application(void)
     uint8_t bf_device0, bf_device1;
     uint16_t signature0, signature1;
     uint32_t len;
+
+    fPtr applicationEntry = (fPtr) DEF_USER_PROGRAM_SRC;
+
 
     /* Release pin function for memory control without changing pin state. */
     while(CPG.DSFR.BIT.IOKEEP == 1) {
@@ -284,12 +286,14 @@ void qspi_change_config_and_start_application(void)
     // now flush the read cache
     qspiExternalAddressFlushReadCache();
 
-    // check if there is a valid image
+    // check if there is a valid image, can read bytes in external address mode
+    len = check_image(DEF_USER_SIGNATURE);
+
     // note: in dual mode need to read 2 bytes minimum
-    if (QSPI_HARDWARE == SINGLE_MEMORY)
-    	len = check_image_singleSpi(DEF_USER_SIGNATURE);
-    else if (QSPI_HARDWARE == DUAL_MEMORY)
-    	len = check_image_dualSpi(DEF_USER_SIGNATURE);
+//    if (QSPI_HARDWARE == SINGLE_MEMORY)
+//    	len = check_image_singleSpi(DEF_USER_SIGNATURE);
+//    else if (QSPI_HARDWARE == DUAL_MEMORY)
+//    	len = check_image_dualSpi(DEF_USER_SIGNATURE);
 
     /* If the length remaining is not zero then the signature validation failed. */
     if(0 != len)
@@ -301,7 +305,9 @@ void qspi_change_config_and_start_application(void)
 
 	// jump to the program application entry point
 	// does not return
-	UserProgJmp(DEF_USER_PROGRAM_SRC);
+    (*applicationEntry)();
+
+    // UserProgJmp(DEF_USER_PROGRAM_SRC);
 
 	while(1); // just in case
 }

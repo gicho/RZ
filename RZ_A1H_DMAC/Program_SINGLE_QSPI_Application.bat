@@ -34,10 +34,10 @@ exit
 :PATH_SET
 
 :PROGRAM
-if not exist .\RZ_A1H_DMAC.SINGLE.bin goto ERROR 
+if not exist .\RZ_A1H_DMAC.bin goto ERROR 
 
 echo ===================================================================
-"%BASE%\JLink.exe" -speed 15000 -if JTAG -device R7S721001 -CommanderScript Program_SINGLE_QSPI_Application.Command
+"%BASE%\JLink.exe" -speed 15000 -if JTAG -device R7S721001 -CommanderScript Program_QSPI_Application.Command
 echo ===================================================================
 
 goto END
@@ -47,7 +47,7 @@ goto END
 chgclr 0C
 echo ===================================================================
 echo Error:
-echo File "RZ_A1H_DMAC.SINGLE.bin" not found
+echo File "RZ_A1H_DMAC.bin" not found
 echo ===================================================================
 pause
 chgclr 07

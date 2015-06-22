@@ -56,23 +56,20 @@ Macro definitions
 
 #define QSPI_HARDWARE	SINGLE_MEMORY
 
-/* this defines where in flash the application is located */
-/* needs to be a multiple of the flash sector size */
-#define APPLICATION_FLASH_OFFSET	0x40000
-
 #endif
 
 #ifdef DUAL_QSPI_BOARD
 
 #define QSPI_HARDWARE	DUAL_MEMORY
 
-/* this defines where in flash the application is located */
-/* needs to be a multiple of the flash sector size */
-/* for a dual chip device, the sector size is twice the size of each flash */
-/* example below is for sector 1, this needs to match the linker script */
-#define APPLICATION_FLASH_OFFSET	0x80000
-
 #endif
+
+/* this defines where in flash the application is located, @0x18080000 */
+/* needs to be a multiple of the flash sector size! */
+/* it refers to the second logical sector for a single QSPI */
+/* for a dual spi, it refers to the first logical sector for each chip */
+/* offset is fixed to 0x18080000 and matches the application linker script */
+#define APPLICATION_FLASH_OFFSET	0x80000
 
 // define where the user program image is located
 // needs to match the application linker script

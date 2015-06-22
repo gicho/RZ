@@ -81,12 +81,11 @@ MEMORY
 	
 	/* QSPI ROM attached to H'18000000, 2 chips of 0x4000000 size each (64 Mb) */ 
 	/* Total addressable space from the QSPI internal address map is 0x18000000 to H'1BFFFFFF (64Mb page) */
-	/* Size of block is 0x40000, first block is reserved to the BL */
+	/* Size of block is 0x40000, first two blocks are reserved to the BL */
 	/* Defined length accounts for the split between the BL and the application located @ 18040000 */
-	QSPI_FLASH (rw) 		: ORIGIN = 0x18000000, LENGTH = 0x40000  
-	QSPI_FLASH_MIRROR (rw) 	: ORIGIN = 0x58000000, LENGTH = 0x40000 
-	/* Needs to match #define DEF_USER_PROGRAM_SRC in qspi_setup.h, set at (ORIGIN + LENGTH) */
-	/* Example: #define DEF_USER_PROGRAM_SRC 0x18080000 */																
+	QSPI_FLASH (rw) 		: ORIGIN = 0x18000000, LENGTH = 0x80000  
+	QSPI_FLASH_MIRROR (rw) 	: ORIGIN = 0x58000000, LENGTH = 0x80000 
+	/* Needs to match #define DEF_USER_PROGRAM_SRC 0x18080000 in qspi_setup.h, set at (ORIGIN + LENGTH) */																
 }
 
 PROGRAM_STACK_SIZE    = 0x8000;      /* Application stack                  */

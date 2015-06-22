@@ -106,8 +106,8 @@ void PowerON_Reset (void)
 	end = (uint8_t*) &__bss_end__;
 
 	/* Zero bss */
-	for (; dst< end; dst++)
-		*dst = 0;
+	while(dst< end)
+		*dst++ = 0;
 
     // at this point the qspi reconfigure code is in ram and initialized
     // jump in ram and reconfigure the QSPI
