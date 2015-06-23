@@ -241,13 +241,13 @@
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 	</storageModule>
 	<storageModule moduleId="refreshScope" versionNumber="2">
-		<configuration configurationName="Release">
-			<resource resourceType="PROJECT" workspacePath="/RZ_A1H_QSPI_LOADER"/>
-		</configuration>
 		<configuration configurationName="Debug_DUAL_QSPI">
 			<resource resourceType="PROJECT" workspacePath="/RZ_A1H_QSPI_LOADER"/>
 		</configuration>
 		<configuration configurationName="Debug_SINGLE_QSPI">
+			<resource resourceType="PROJECT" workspacePath="/RZ_A1H_QSPI_LOADER"/>
+		</configuration>
+		<configuration configurationName="Release">
 			<resource resourceType="PROJECT" workspacePath="/RZ_A1H_QSPI_LOADER"/>
 		</configuration>
 		<configuration configurationName="Debug">
