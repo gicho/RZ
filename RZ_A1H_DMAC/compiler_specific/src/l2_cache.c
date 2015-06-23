@@ -22,6 +22,7 @@
 * Copyright (C) 2015 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 
+#include <stdint.h>
 #include "compiler_settings.h"
 #include "l2_cache.h"
 #include "l2_cache_pl310.h"
@@ -29,43 +30,29 @@
 
 #define min(x, y) ({ x < y ? x : y; })
 
-static inline void _writeReg(unsigned long val, volatile void *addr)
-{
-	__asm__ volatile ("str %1, %0"
-		     : "+Qo" (*(volatile unsigned long *)addr)
-		     : "r" (val)
-		     );
-}
-
-static void *L2CacheController = (void*)0x3FFFF000;
-
-#define CACHE_LINE_SIZE		32
-static unsigned long L2CacheWayMask = (1 << 8) - 1; /* Bitmask of active ways (8) */
-static unsigned long L2CacheSize = 0x20000l; 		/* 128 KBytes L2 Cache Controller PL-310 */
-
+#define L2CacheController 0x3FFFF000
+#define CACHE_LINE_SIZE	32
+#define L2CacheWayMask ((1 << 8) - 1)
+#define L2CacheSize 0x20000l
 
 static inline void L2CacheSync(void)
 {
-	void *base = L2CacheController;
-	_writeReg(0, base + L2CACHE_CACHE_SYNC_REG);
+	(*(volatile uint32_t *)(L2CacheController + L2CACHE_CACHE_SYNC_REG)) = 0;
 }
 
 static inline void L2CacheCleanLine(unsigned long addr)
 {
-	void *base = L2CacheController;
-	_writeReg(addr, base + L2CACHE_CLEAN_LINE_PA_REG);
+	(*(volatile uint32_t *)(L2CacheController + L2CACHE_CLEAN_LINE_PA_REG)) = addr;
 }
 
 static inline void L2CacheInvalidateLine(unsigned long addr)
 {
-	void  *base = L2CacheController;
-	_writeReg(addr, base + L2CACHE_INV_LINE_PA_REG);
+	(*(volatile uint32_t *)(L2CacheController + L2CACHE_INV_LINE_PA_REG)) = addr;
 }
 
 static inline void L2CacheFlushLine(unsigned long addr)
 {
-	void  *base = L2CacheController;
-	_writeReg(addr, base + L2CACHE_CLEAN_INV_LINE_PA_REG);
+	(*(volatile uint32_t *)(L2CacheController + L2CACHE_CLEAN_INV_LINE_PA_REG)) = addr;
 }
 
 
@@ -75,7 +62,7 @@ void L2CacheFlush(void)
 	__disable_irq();  	// added this to make sure there are no other tasks writing to the control registers
 						// before completion
 
-	_writeReg(L2CacheWayMask, L2CacheController + L2CACHE_CLEAN_INV_WAY_REG);
+	(*(volatile uint32_t *)(L2CacheController + L2CACHE_CLEAN_INV_WAY_REG)) = L2CacheWayMask;
 	while(getL2CacheCleanInvalByWay() & 0xFF); // wait since it is a background operation
 
 	__enable_irq();
@@ -90,7 +77,7 @@ void L2CacheClean(void)
 	__disable_irq();  	// added this to make sure there are no other tasks writing to the control registers
 						// before completion
 
-	_writeReg(L2CacheWayMask, L2CacheController + L2CACHE_CLEAN_WAY_REG);
+	(*(volatile uint32_t *) (L2CacheController + L2CACHE_CLEAN_WAY_REG)) = L2CacheWayMask;
 	while(getL2CacheCleanByWay() & 0xFF); // wait since it is a background operation
 
 	__enable_irq();
@@ -103,7 +90,7 @@ void L2CacheInvalidate(void)
 	__disable_irq();  	// added this to make sure there are no other tasks writing to the control registers
 						// before completion
 
-	_writeReg(L2CacheWayMask, L2CacheController + L2CACHE_INV_WAY_REG);
+	(*(volatile uint32_t *) (L2CacheController + L2CACHE_INV_WAY_REG)) = L2CacheWayMask;
 	while(getL2CacheInvalByWay() & 0xFF); // wait since it is a background operation
 
 	__enable_irq();
@@ -176,5 +163,5 @@ void L2CacheFlushRange(unsigned long start, unsigned long end)
 void L2CacheDisable(void)
 {
 	L2CacheFlush();
-	_writeReg(0, L2CacheController + L2CACHE_CTRL_REG);
+	(*(volatile uint32_t *) ( L2CacheController + L2CACHE_CTRL_REG)) = 0;
 }

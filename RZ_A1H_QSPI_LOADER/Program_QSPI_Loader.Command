@@ -1,7 +1,6 @@
 //
 // Forces J-Link to program, even if flash contents already match data to be programmed
 //
-log writeData.txt
 r
 //
 exec SetSkipProgOnCRCMatch=0
