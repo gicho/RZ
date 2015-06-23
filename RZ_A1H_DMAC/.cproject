@@ -53,7 +53,7 @@
 								<option id="com.renesas.cdt.core.Compiler.option.deviceShortName.340914454" name="DeviceShortName" superClass="com.renesas.cdt.core.Compiler.option.deviceShortName" value="R7S72100" valueType="string"/>
 								<option id="com.renesas.cdt.core.Compiler.option.CPUSeries.2119563141" name="Cpu Series" superClass="com.renesas.cdt.core.Compiler.option.CPUSeries"/>
 								<option command="-Wa,-adlhn=&quot;$(basename $(notdir $&lt;)).lst&quot;" id="com.renesas.cdt.core.Compiler.option.generateListFile.130181021" name="Generate list file(-Wa,-a)" superClass="com.renesas.cdt.core.Compiler.option.generateListFile" value="false" valueType="boolean"/>
-								<option id="com.renesas.cdt.rz.Debug.Compiler.option.floatingpointabi.1539813491" superClass="com.renesas.cdt.rz.Debug.Compiler.option.floatingpointabi" value="com.renesas.cdt.rz.Debug.Compiler.option.floatingpointabi.hard" valueType="enumerated"/>
+								<option id="com.renesas.cdt.rz.Debug.Compiler.option.floatingpointabi.1539813491" name="Floating-point ABI (-mfloat-abi=name)" superClass="com.renesas.cdt.rz.Debug.Compiler.option.floatingpointabi" value="com.renesas.cdt.rz.Debug.Compiler.option.floatingpointabi.hard" valueType="enumerated"/>
 								<inputType id="%Base.Compiler.C.InputType.Id.566330214" name="C Input" superClass="%Base.Compiler.C.InputType.Id"/>
 								<inputType id="Base.Compiler.CPP.InputType.Id.534717324" name="C++ Input" superClass="Base.Compiler.CPP.InputType.Id"/>
 							</tool>
@@ -304,15 +304,16 @@
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 	</storageModule>
 	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Debug from RAM"/>
+		<configuration configurationName="Debug_QSPI"/>
+		<configuration configurationName="Debug_DUAL_QSPI"/>
 		<configuration configurationName="Release">
 			<resource resourceType="PROJECT" workspacePath="/RZ_A1H_DMAC_RSK"/>
 		</configuration>
-		<configuration configurationName="Debug_DUAL_QSPI"/>
 		<configuration configurationName="Debug_SINGLE_QSPI"/>
 		<configuration configurationName="Debug">
 			<resource resourceType="PROJECT" workspacePath="/RZ_A1H_DMAC_RSK"/>
 		</configuration>
-		<configuration configurationName="Debug from RAM"/>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
