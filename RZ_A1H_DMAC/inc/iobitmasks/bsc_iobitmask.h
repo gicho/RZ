@@ -18,22 +18,14 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer
-*
+* Copyright (C) 2012 - 2015 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
-* Copyright (C) 2014 Renesas Electronics Corporation. All rights reserved.
+* File Name   : bsc_iobitmask.h
+* $Rev: 1320 $
+* $Date:: 2015-01-29 15:54:51 +0900#$
+* Description : BSC register define header
 *******************************************************************************/
-/*******************************************************************************
-* File Name     : bsc_iobitmask.h
-* Device(s)     : RZ/A1H (R7S721001)
-* H/W Platform  : RSK+RZA1H CPU Board
-* Description   : BSC register define header
-*******************************************************************************/
-/*******************************************************************************
-* History       : DD.MM.YYYY Version Description
-*               : 18.06.2013 1.00
-*******************************************************************************/
-
 #ifndef BSC_IOBITMASK_H
 #define BSC_IOBITMASK_H
 
