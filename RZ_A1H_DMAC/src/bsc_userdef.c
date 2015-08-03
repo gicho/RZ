@@ -91,13 +91,13 @@ Private global variables and functions
 void Userdef_BSC_CS0Init(void)
 {
     /* ---- CS0BCR settings ---- */
-    BSC.CS0BCR.LONG = 0x10000C00uL;
+    BSC.CS0BCR = 0x10000C00uL;
                                     /* Idle Cycles between Write-read Cycles    */
                                     /*  and Write-write Cycles : 1 idle cycle   */
                                     /* Data Bus Size: 16-bit                    */
 
     /* ---- CS0WCR settings ----  */
-    BSC.CS0WCR.NORMAL.LONG = 0x00000B40uL;
+    BSC.CS0WCR = 0x00000B40uL;
                                     /* Number of Delay Cycles from Address,     */
                                     /*  CS0# Assertion to RD#,WEn Assertion     */
                                     /*  : 1.5 cycles                            */
@@ -120,13 +120,13 @@ void Userdef_BSC_CS0Init(void)
 void Userdef_BSC_CS1Init(void)
 {
     /* ---- CS1BCR settings ---- */
-    BSC.CS1BCR.LONG = 0x10000C00uL;
+    BSC.CS1BCR = 0x10000C00uL;
                                     /* Idle Cycles between Write-read Cycles    */
                                     /*  and Write-write Cycles : 1 idle cycle   */
                                     /* Data Bus Size: 16-bit                    */
 
     /* ---- CS1WCR settings ----  */
-    BSC.CS1WCR.LONG = 0x00000B40uL;
+    BSC.CS1WCR = 0x00000B40uL;
                                     /* Number of Delay Cycles from Address,     */
                                     /*  CS1# Assertion to RD#,WEn Assertion     */
                                     /*  : 1.5 cycles                            */
@@ -168,7 +168,7 @@ void Userdef_BSC_CS2Init(void)
     /* and Write-write Cycles : 0 idle cycles */
     /* Memory type :SDRAM                     */
     /* Data Bus Size : 16-bit                 */
-    BSC.CS2BCR.LONG = 0x00004C00ul;
+    BSC.CS2BCR = 0x00004C00ul;
 
     /* ==== CS3BCR settings ==== */
     /* SDRAM WORKAROUND - see Note */
@@ -176,7 +176,7 @@ void Userdef_BSC_CS2Init(void)
     /* and Write-write Cycles : 0 idle cycles */
     /* Memory type :SDRAM                     */
     /* Data Bus Size : 16-bit                 */
-    BSC.CS3BCR.LONG = 0x00004C00ul;
+    BSC.CS3BCR = 0x00004C00ul;
 
     /* ==== CS2/3WCR settings ==== */
     /* Precharge completion wait cycles: 1 cycle     */
@@ -186,10 +186,10 @@ void Userdef_BSC_CS2Init(void)
     /* Auto-precharge startup wait cycles : 2 cycles */
     /* Idle cycles from REF command/self-refresh     */
     /* Release to ACTV/REF/MRS command : 5 cycles    */
-    BSC.CS3WCR.SDRAM.LONG = 0x00004492ul;
+    BSC.CS3WCR = 0x00004492ul;
 
     /* SDRAM WORKAROUND - see Note */
-    BSC.CS2WCR.SDRAM.LONG = 0x00000480ul;
+    BSC.CS2WCR = 0x00000480ul;
 
     /* ==== SDCR settings ==== */
     /* SDRAM WORKAROUND - see Note*/
@@ -200,18 +200,18 @@ void Userdef_BSC_CS2Init(void)
     /* BACTV :Auto-precharge mode         */
     /* Row address for Area 3 : 13-bit    */
     /* Column Address for Area 3 : 9-bit  */
-    BSC.SDCR.LONG = 0x00110811ul;
+    BSC.SDCR = 0x00110811ul;
 
     /* ==== RTCOR settings ==== */
     /* 7.64usec / 240nsec              */
     /*   = 128(0x80)cycles per refresh */
-    BSC.RTCOR.LONG = 0xA55A0080ul;
+    BSC.RTCOR = 0xA55A0080ul;
 
     /* ==== RTCSR settings ==== */
     /* initialisation sequence start */
     /* Clock select B-phy/4          */
     /* Refresh count :Once           */
-    BSC.RTCSR.LONG = 0xA55A0008ul;
+    BSC.RTCSR = 0xA55A0008ul;
 
     /* ==== SDRAM Mode Register ==== */
     /* Burst read (burst length 1)./Burst write */

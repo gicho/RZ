@@ -18,53 +18,56 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer*
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
 * File Name : mmc_iodefine.h
-* $Rev: 809 $
-* $Date:: 2014-03-28 19:15:55 +0000#$
-* Description : Definition of I/O Register (V0.50j)
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
 ******************************************************************************/
 #ifndef MMC_IODEFINE_H
 #define MMC_IODEFINE_H
+/* ->SEC M1.10.1 : Not magic number */
 
 struct st_mmc
 {                                                          /* MMC              */
-    uint32_t       CE_CMD_SET;                             /*  CE_CMD_SET      */
-    uint8_t        dummy199[4];                            /*                  */
-    uint32_t       CE_ARG;                                 /*  CE_ARG          */
-    uint32_t       CE_ARG_CMD12;                           /*  CE_ARG_CMD12    */
-    uint32_t       CE_CMD_CTRL;                            /*  CE_CMD_CTRL     */
-    uint32_t       CE_BLOCK_SET;                           /*  CE_BLOCK_SET    */
-    uint32_t       CE_CLK_CTRL;                            /*  CE_CLK_CTRL     */
-    uint32_t       CE_BUF_ACC;                             /*  CE_BUF_ACC      */
+    volatile uint16_t CE_CMD_SETH;                      /*  CE_CMD_SETH */
+    volatile uint16_t CE_CMD_SETL;                      /*  CE_CMD_SETL */
+    volatile uint8_t   dummy182[4];                            /*                  */
+    volatile uint32_t  CE_ARG;                                 /*  CE_ARG          */
+    volatile uint32_t  CE_ARG_CMD12;                           /*  CE_ARG_CMD12    */
+    volatile uint32_t  CE_CMD_CTRL;                            /*  CE_CMD_CTRL     */
+    volatile uint32_t  CE_BLOCK_SET;                           /*  CE_BLOCK_SET    */
+    volatile uint32_t  CE_CLK_CTRL;                            /*  CE_CLK_CTRL     */
+    volatile uint32_t  CE_BUF_ACC;                             /*  CE_BUF_ACC      */
 #define MMC_CE_RESPn_COUNT 4
-    uint32_t       CE_RESP3;                               /*  CE_RESP3        */
-    uint32_t       CE_RESP2;                               /*  CE_RESP2        */
-    uint32_t       CE_RESP1;                               /*  CE_RESP1        */
-    uint32_t       CE_RESP0;                               /*  CE_RESP0        */
-    uint32_t       CE_RESP_CMD12;                          /*  CE_RESP_CMD12   */
-    uint32_t       CE_DATA;                                /*  CE_DATA         */
-    uint8_t        dummy200[8];                            /*                  */
-    uint32_t       CE_INT;                                 /*  CE_INT          */
-    uint32_t       CE_INT_EN;                              /*  CE_INT_EN       */
-    uint32_t       CE_HOST_STS1;                           /*  CE_HOST_STS1    */
-    uint32_t       CE_HOST_STS2;                           /*  CE_HOST_STS2    */
-    uint8_t        dummy201[12];                           /*                  */
-    uint32_t       CE_DMA_MODE;                            /*  CE_DMA_MODE     */
-    uint8_t        dummy202[16];                           /*                  */
-    uint32_t       CE_DETECT;                              /*  CE_DETECT       */
-    uint32_t       CE_ADD_MODE;                            /*  CE_ADD_MODE     */
-    uint8_t        dummy203[4];                            /*                  */
-    uint32_t       CE_VERSION;                             /*  CE_VERSION      */
+    volatile uint32_t  CE_RESP3;                               /*  CE_RESP3        */
+    volatile uint32_t  CE_RESP2;                               /*  CE_RESP2        */
+    volatile uint32_t  CE_RESP1;                               /*  CE_RESP1        */
+    volatile uint32_t  CE_RESP0;                               /*  CE_RESP0        */
+    volatile uint32_t  CE_RESP_CMD12;                          /*  CE_RESP_CMD12   */
+    volatile uint32_t  CE_DATA;                                /*  CE_DATA         */
+    volatile uint8_t   dummy183[8];                            /*                  */
+    volatile uint32_t  CE_INT;                                 /*  CE_INT          */
+    volatile uint32_t  CE_INT_EN;                              /*  CE_INT_EN       */
+    volatile uint32_t  CE_HOST_STS1;                           /*  CE_HOST_STS1    */
+    volatile uint32_t  CE_HOST_STS2;                           /*  CE_HOST_STS2    */
+    volatile uint8_t   dummy184[12];                           /*                  */
+    volatile uint32_t  CE_DMA_MODE;                            /*  CE_DMA_MODE     */
+    volatile uint8_t   dummy185[16];                           /*                  */
+    volatile uint32_t  CE_DETECT;                              /*  CE_DETECT       */
+    volatile uint32_t  CE_ADD_MODE;                            /*  CE_ADD_MODE     */
+    volatile uint8_t   dummy186[4];                            /*                  */
+    volatile uint32_t  CE_VERSION;                             /*  CE_VERSION      */
 };
 
 
-#define MMC     (*(volatile struct st_mmc     *)0xE804C800uL) /* MMC */
+#define MMC     (*(struct st_mmc     *)0xE804C800uL) /* MMC */
 
 
-#define MMCCE_CMD_SET MMC.CE_CMD_SET
+#define MMCCE_CMD_SETH MMC.CE_CMD_SETH
+#define MMCCE_CMD_SETL MMC.CE_CMD_SETL
 #define MMCCE_ARG MMC.CE_ARG
 #define MMCCE_ARG_CMD12 MMC.CE_ARG_CMD12
 #define MMCCE_CMD_CTRL MMC.CE_CMD_CTRL
@@ -85,4 +88,5 @@ struct st_mmc
 #define MMCCE_DETECT MMC.CE_DETECT
 #define MMCCE_ADD_MODE MMC.CE_ADD_MODE
 #define MMCCE_VERSION MMC.CE_VERSION
+/* <-SEC M1.10.1 */
 #endif

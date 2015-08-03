@@ -6,7 +6,7 @@ echo .
 
 rem <> Manually set path to JLink install directory here if you do not
 rem    want to use the auto detect method
-set BASE=C:\work\dev\SEGGER\JLink_V498
+set BASE=C:\work\dev\e2_studio4\DebugComp\JLink_ARM
 if exist "%BASE%\JLink.exe" goto PATH_SET
 
 rem <> Try to automatically detect JLink install directory
@@ -37,7 +37,7 @@ exit
 if not exist .\RZ_A1H_DMAC.bin goto ERROR 
 
 echo ===================================================================
-"%BASE%\JLink.exe" -speed 15000 -if JTAG -device R7S721001_DUALSPI -CommanderScript Program_QSPI_Application.Command
+"%BASE%\JLink.exe" -speed 12000 -if JTAG -device R7S721001_DualSPI -CommanderScript Program_QSPI_Application.Command
 echo ===================================================================
 
 goto END

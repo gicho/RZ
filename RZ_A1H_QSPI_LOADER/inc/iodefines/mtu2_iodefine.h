@@ -18,124 +18,125 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer*
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
 * File Name : mtu2_iodefine.h
-* $Rev: 809 $
-* $Date:: 2014-03-28 19:15:55 +0000#$
-* Description : Definition of I/O Register (V0.50j)
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
 ******************************************************************************/
 #ifndef MTU2_IODEFINE_H
 #define MTU2_IODEFINE_H
+/* ->SEC M1.10.1 : Not magic number */
 
 struct st_mtu2
 {                                                          /* MTU2             */
-    uint8_t        TCR_2;                                  /*  TCR_2           */
-    uint8_t        TMDR_2;                                 /*  TMDR_2          */
-    uint8_t        TIORH_2;                                /*  TIORH_2         */
-    uint8_t        dummy533[1];                            /*                  */
-    uint8_t        TIER_2;                                 /*  TIER_2          */
-    uint8_t        TSR_2;                                  /*  TSR_2           */
-    uint16_t       TCNT_2;                                 /*  TCNT_2          */
-    uint16_t       TGRA_2;                                 /*  TGRA_2          */
-    uint16_t       TGRB_2;                                 /*  TGRB_2          */
-    uint8_t        dummy534[500];                          /*                  */
-    uint8_t        TCR_3;                                  /*  TCR_3           */
-    uint8_t        TCR_4;                                  /*  TCR_4           */
-    uint8_t        TMDR_3;                                 /*  TMDR_3          */
-    uint8_t        TMDR_4;                                 /*  TMDR_4          */
-    uint8_t        TIORH_3;                                /*  TIORH_3         */
-    uint8_t        TIORL_3;                                /*  TIORL_3         */
-    uint8_t        TIORH_4;                                /*  TIORH_4         */
-    uint8_t        TIORL_4;                                /*  TIORL_4         */
-    uint8_t        TIER_3;                                 /*  TIER_3          */
-    uint8_t        TIER_4;                                 /*  TIER_4          */
-    uint8_t        TOER;                                   /*  TOER            */
-    uint8_t        dummy535[2];                            /*                  */
-    uint8_t        TGCR;                                   /*  TGCR            */
-    uint8_t        TOCR1;                                  /*  TOCR1           */
-    uint8_t        TOCR2;                                  /*  TOCR2           */
-    uint16_t       TCNT_3;                                 /*  TCNT_3          */
-    uint16_t       TCNT_4;                                 /*  TCNT_4          */
-    uint16_t       TCDR;                                   /*  TCDR            */
-    uint16_t       TDDR;                                   /*  TDDR            */
-    uint16_t       TGRA_3;                                 /*  TGRA_3          */
-    uint16_t       TGRB_3;                                 /*  TGRB_3          */
-    uint16_t       TGRA_4;                                 /*  TGRA_4          */
-    uint16_t       TGRB_4;                                 /*  TGRB_4          */
-    uint16_t       TCNTS;                                  /*  TCNTS           */
-    uint16_t       TCBR;                                   /*  TCBR            */
-    uint16_t       TGRC_3;                                 /*  TGRC_3          */
-    uint16_t       TGRD_3;                                 /*  TGRD_3          */
-    uint16_t       TGRC_4;                                 /*  TGRC_4          */
-    uint16_t       TGRD_4;                                 /*  TGRD_4          */
-    uint8_t        TSR_3;                                  /*  TSR_3           */
-    uint8_t        TSR_4;                                  /*  TSR_4           */
-    uint8_t        dummy536[2];                            /*                  */
-    uint8_t        TITCR;                                  /*  TITCR           */
-    uint8_t        TITCNT;                                 /*  TITCNT          */
-    uint8_t        TBTER;                                  /*  TBTER           */
-    uint8_t        dummy537[1];                            /*                  */
-    uint8_t        TDER;                                   /*  TDER            */
-    uint8_t        dummy538[1];                            /*                  */
-    uint8_t        TOLBR;                                  /*  TOLBR           */
-    uint8_t        dummy539[1];                            /*                  */
-    uint8_t        TBTM_3;                                 /*  TBTM_3          */
-    uint8_t        TBTM_4;                                 /*  TBTM_4          */
-    uint8_t        dummy540[6];                            /*                  */
-    uint16_t       TADCR;                                  /*  TADCR           */
-    uint8_t        dummy541[2];                            /*                  */
-    uint16_t       TADCORA_4;                              /*  TADCORA_4       */
-    uint16_t       TADCORB_4;                              /*  TADCORB_4       */
-    uint16_t       TADCOBRA_4;                             /*  TADCOBRA_4      */
-    uint16_t       TADCOBRB_4;                             /*  TADCOBRB_4      */
-    uint8_t        dummy542[20];                           /*                  */
-    uint8_t        TWCR;                                   /*  TWCR            */
-    uint8_t        dummy543[31];                           /*                  */
-    uint8_t        TSTR;                                   /*  TSTR            */
-    uint8_t        TSYR;                                   /*  TSYR            */
-    uint8_t        dummy544[2];                            /*                  */
-    uint8_t        TRWER;                                  /*  TRWER           */
-    uint8_t        dummy545[123];                          /*                  */
-    uint8_t        TCR_0;                                  /*  TCR_0           */
-    uint8_t        TMDR_0;                                 /*  TMDR_0          */
-    uint8_t        TIORH_0;                                /*  TIORH_0         */
-    uint8_t        TIORL_0;                                /*  TIORL_0         */
-    uint8_t        TIER_0;                                 /*  TIER_0          */
-    uint8_t        TSR_0;                                  /*  TSR_0           */
-    uint16_t       TCNT_0;                                 /*  TCNT_0          */
-    uint16_t       TGRA_0;                                 /*  TGRA_0          */
-    uint16_t       TGRB_0;                                 /*  TGRB_0          */
-    uint16_t       TGRC_0;                                 /*  TGRC_0          */
-    uint16_t       TGRD_0;                                 /*  TGRD_0          */
-    uint8_t        dummy546[16];                           /*                  */
-    uint16_t       TGRE_0;                                 /*  TGRE_0          */
-    uint16_t       TGRF_0;                                 /*  TGRF_0          */
-    uint8_t        TIER2_0;                                /*  TIER2_0         */
-    uint8_t        TSR2_0;                                 /*  TSR2_0          */
-    uint8_t        TBTM_0;                                 /*  TBTM_0          */
-    uint8_t        dummy547[89];                           /*                  */
-    uint8_t        TCR_1;                                  /*  TCR_1           */
-    uint8_t        TMDR_1;                                 /*  TMDR_1          */
-    uint8_t        TIOR_1;                                 /*  TIOR_1          */
-    uint8_t        dummy548[1];                            /*                  */
-    uint8_t        TIER_1;                                 /*  TIER_1          */
-    uint8_t        TSR_1;                                  /*  TSR_1           */
-    uint16_t       TCNT_1;                                 /*  TCNT_1          */
-    uint16_t       TGRA_1;                                 /*  TGRA_1          */
-    uint16_t       TGRB_1;                                 /*  TGRB_1          */
-    uint8_t        dummy549[4];                            /*                  */
-    uint8_t        TICCR;                                  /*  TICCR           */
+    volatile uint8_t   TCR_2;                                  /*  TCR_2           */
+    volatile uint8_t   TMDR_2;                                 /*  TMDR_2          */
+    volatile uint8_t   TIOR_2;                                 /*  TIOR_2          */
+    volatile uint8_t   dummy520[1];                            /*                  */
+    volatile uint8_t   TIER_2;                                 /*  TIER_2          */
+    volatile uint8_t   TSR_2;                                  /*  TSR_2           */
+    volatile uint16_t TCNT_2;                                 /*  TCNT_2          */
+    volatile uint16_t TGRA_2;                                 /*  TGRA_2          */
+    volatile uint16_t TGRB_2;                                 /*  TGRB_2          */
+    volatile uint8_t   dummy521[500];                          /*                  */
+    volatile uint8_t   TCR_3;                                  /*  TCR_3           */
+    volatile uint8_t   TCR_4;                                  /*  TCR_4           */
+    volatile uint8_t   TMDR_3;                                 /*  TMDR_3          */
+    volatile uint8_t   TMDR_4;                                 /*  TMDR_4          */
+    volatile uint8_t   TIORH_3;                                /*  TIORH_3         */
+    volatile uint8_t   TIORL_3;                                /*  TIORL_3         */
+    volatile uint8_t   TIORH_4;                                /*  TIORH_4         */
+    volatile uint8_t   TIORL_4;                                /*  TIORL_4         */
+    volatile uint8_t   TIER_3;                                 /*  TIER_3          */
+    volatile uint8_t   TIER_4;                                 /*  TIER_4          */
+    volatile uint8_t   TOER;                                   /*  TOER            */
+    volatile uint8_t   dummy522[2];                            /*                  */
+    volatile uint8_t   TGCR;                                   /*  TGCR            */
+    volatile uint8_t   TOCR1;                                  /*  TOCR1           */
+    volatile uint8_t   TOCR2;                                  /*  TOCR2           */
+    volatile uint16_t TCNT_3;                                 /*  TCNT_3          */
+    volatile uint16_t TCNT_4;                                 /*  TCNT_4          */
+    volatile uint16_t TCDR;                                   /*  TCDR            */
+    volatile uint16_t TDDR;                                   /*  TDDR            */
+    volatile uint16_t TGRA_3;                                 /*  TGRA_3          */
+    volatile uint16_t TGRB_3;                                 /*  TGRB_3          */
+    volatile uint16_t TGRA_4;                                 /*  TGRA_4          */
+    volatile uint16_t TGRB_4;                                 /*  TGRB_4          */
+    volatile uint16_t TCNTS;                                  /*  TCNTS           */
+    volatile uint16_t TCBR;                                   /*  TCBR            */
+    volatile uint16_t TGRC_3;                                 /*  TGRC_3          */
+    volatile uint16_t TGRD_3;                                 /*  TGRD_3          */
+    volatile uint16_t TGRC_4;                                 /*  TGRC_4          */
+    volatile uint16_t TGRD_4;                                 /*  TGRD_4          */
+    volatile uint8_t   TSR_3;                                  /*  TSR_3           */
+    volatile uint8_t   TSR_4;                                  /*  TSR_4           */
+    volatile uint8_t   dummy523[2];                            /*                  */
+    volatile uint8_t   TITCR;                                  /*  TITCR           */
+    volatile uint8_t   TITCNT;                                 /*  TITCNT          */
+    volatile uint8_t   TBTER;                                  /*  TBTER           */
+    volatile uint8_t   dummy524[1];                            /*                  */
+    volatile uint8_t   TDER;                                   /*  TDER            */
+    volatile uint8_t   dummy525[1];                            /*                  */
+    volatile uint8_t   TOLBR;                                  /*  TOLBR           */
+    volatile uint8_t   dummy526[1];                            /*                  */
+    volatile uint8_t   TBTM_3;                                 /*  TBTM_3          */
+    volatile uint8_t   TBTM_4;                                 /*  TBTM_4          */
+    volatile uint8_t   dummy527[6];                            /*                  */
+    volatile uint16_t TADCR;                                  /*  TADCR           */
+    volatile uint8_t   dummy528[2];                            /*                  */
+    volatile uint16_t TADCORA_4;                              /*  TADCORA_4       */
+    volatile uint16_t TADCORB_4;                              /*  TADCORB_4       */
+    volatile uint16_t TADCOBRA_4;                             /*  TADCOBRA_4      */
+    volatile uint16_t TADCOBRB_4;                             /*  TADCOBRB_4      */
+    volatile uint8_t   dummy529[20];                           /*                  */
+    volatile uint8_t   TWCR;                                   /*  TWCR            */
+    volatile uint8_t   dummy530[31];                           /*                  */
+    volatile uint8_t   TSTR;                                   /*  TSTR            */
+    volatile uint8_t   TSYR;                                   /*  TSYR            */
+    volatile uint8_t   dummy531[2];                            /*                  */
+    volatile uint8_t   TRWER;                                  /*  TRWER           */
+    volatile uint8_t   dummy532[123];                          /*                  */
+    volatile uint8_t   TCR_0;                                  /*  TCR_0           */
+    volatile uint8_t   TMDR_0;                                 /*  TMDR_0          */
+    volatile uint8_t   TIORH_0;                                /*  TIORH_0         */
+    volatile uint8_t   TIORL_0;                                /*  TIORL_0         */
+    volatile uint8_t   TIER_0;                                 /*  TIER_0          */
+    volatile uint8_t   TSR_0;                                  /*  TSR_0           */
+    volatile uint16_t TCNT_0;                                 /*  TCNT_0          */
+    volatile uint16_t TGRA_0;                                 /*  TGRA_0          */
+    volatile uint16_t TGRB_0;                                 /*  TGRB_0          */
+    volatile uint16_t TGRC_0;                                 /*  TGRC_0          */
+    volatile uint16_t TGRD_0;                                 /*  TGRD_0          */
+    volatile uint8_t   dummy533[16];                           /*                  */
+    volatile uint16_t TGRE_0;                                 /*  TGRE_0          */
+    volatile uint16_t TGRF_0;                                 /*  TGRF_0          */
+    volatile uint8_t   TIER2_0;                                /*  TIER2_0         */
+    volatile uint8_t   TSR2_0;                                 /*  TSR2_0          */
+    volatile uint8_t   TBTM_0;                                 /*  TBTM_0          */
+    volatile uint8_t   dummy534[89];                           /*                  */
+    volatile uint8_t   TCR_1;                                  /*  TCR_1           */
+    volatile uint8_t   TMDR_1;                                 /*  TMDR_1          */
+    volatile uint8_t   TIOR_1;                                 /*  TIOR_1          */
+    volatile uint8_t   dummy535[1];                            /*                  */
+    volatile uint8_t   TIER_1;                                 /*  TIER_1          */
+    volatile uint8_t   TSR_1;                                  /*  TSR_1           */
+    volatile uint16_t TCNT_1;                                 /*  TCNT_1          */
+    volatile uint16_t TGRA_1;                                 /*  TGRA_1          */
+    volatile uint16_t TGRB_1;                                 /*  TGRB_1          */
+    volatile uint8_t   dummy536[4];                            /*                  */
+    volatile uint8_t   TICCR;                                  /*  TICCR           */
 };
 
 
-#define MTU2    (*(volatile struct st_mtu2    *)0xFCFF0000uL) /* MTU2 */
+#define MTU2    (*(struct st_mtu2    *)0xFCFF0000uL) /* MTU2 */
 
 
 #define MTU2TCR_2 MTU2.TCR_2
 #define MTU2TMDR_2 MTU2.TMDR_2
-#define MTU2TIORH_2 MTU2.TIORH_2
+#define MTU2TIOR_2 MTU2.TIOR_2
 #define MTU2TIER_2 MTU2.TIER_2
 #define MTU2TSR_2 MTU2.TSR_2
 #define MTU2TCNT_2 MTU2.TCNT_2
@@ -212,4 +213,5 @@ struct st_mtu2
 #define MTU2TGRA_1 MTU2.TGRA_1
 #define MTU2TGRB_1 MTU2.TGRB_1
 #define MTU2TICCR MTU2.TICCR
+/* <-SEC M1.10.1 */
 #endif

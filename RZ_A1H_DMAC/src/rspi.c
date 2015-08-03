@@ -40,11 +40,16 @@ Pragma directive
 
 /******************************************************************************
 Includes
+
 ******************************************************************************/
+#include "stdint.h"
+
 /* Default  type definition header */
 #include "r_typedefs.h"
 /* I/O Register root header */
 #include "iodefine.h"
+#include "rspi_iobitmask.h"
+
 /* INTC Driver Header */
 #include "devdrv_intc.h"
 /* Device driver for RSPI header */

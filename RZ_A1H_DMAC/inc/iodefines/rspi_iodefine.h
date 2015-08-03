@@ -17,63 +17,65 @@
 * and to discontinue the availability of this software. By using this software,
 * you agree to the additional terms and conditions found by accessing the
 * following link:
-* http://www.renesas.com/disclaimer
-*
-*******************************************************************************/
-/*******************************************************************************
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* http://www.renesas.com/disclaimer*
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
 * File Name : rspi_iodefine.h
-* Description : Definition of I/O Register (V0.50j)
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
 ******************************************************************************/
 #ifndef RSPI_IODEFINE_H
 #define RSPI_IODEFINE_H
+/* ->SEC M1.10.1 : Not magic number */
 
 struct st_rspi
 {                                                          /* RSPI             */
-    uint8_t        SPCR;                                   /*  SPCR            */
-    uint8_t        SSLP;                                   /*  SSLP            */
-    uint8_t        SPPCR;                                  /*  SPPCR           */
-    uint8_t        SPSR;                                   /*  SPSR            */
+    volatile uint8_t   SPCR;                                   /*  SPCR            */
+    volatile uint8_t   SSLP;                                   /*  SSLP            */
+    volatile uint8_t   SPPCR;                                  /*  SPPCR           */
+    volatile uint8_t   SPSR;                                   /*  SPSR            */
     union iodefine_reg32_t  SPDR;                          /*  SPDR            */
     
-    uint8_t        SPSCR;                                  /*  SPSCR           */
-    uint8_t        SPSSR;                                  /*  SPSSR           */
-    uint8_t        SPBR;                                   /*  SPBR            */
-    uint8_t        SPDCR;                                  /*  SPDCR           */
-    uint8_t        SPCKD;                                  /*  SPCKD           */
-    uint8_t        SSLND;                                  /*  SSLND           */
-    uint8_t        SPND;                                   /*  SPND            */
-    uint8_t        dummy1[1];                              /*                  */
+    volatile uint8_t   SPSCR;                                  /*  SPSCR           */
+    volatile uint8_t   SPSSR;                                  /*  SPSSR           */
+    volatile uint8_t   SPBR;                                   /*  SPBR            */
+    volatile uint8_t   SPDCR;                                  /*  SPDCR           */
+    volatile uint8_t   SPCKD;                                  /*  SPCKD           */
+    volatile uint8_t   SSLND;                                  /*  SSLND           */
+    volatile uint8_t   SPND;                                   /*  SPND            */
+    volatile uint8_t   dummy1[1];                              /*                  */
 #define SPCMD_COUNT 4
-    uint16_t       SPCMD0;                                 /*  SPCMD0          */
-    uint16_t       SPCMD1;                                 /*  SPCMD1          */
-    uint16_t       SPCMD2;                                 /*  SPCMD2          */
-    uint16_t       SPCMD3;                                 /*  SPCMD3          */
-    uint8_t        dummy2[8];                              /*                  */
-    uint8_t        SPBFCR;                                 /*  SPBFCR          */
-    uint8_t        dummy3[1];                              /*                  */
-    uint16_t       SPBFDR;                                 /*  SPBFDR          */
+    volatile uint16_t SPCMD0;                                 /*  SPCMD0          */
+    volatile uint16_t SPCMD1;                                 /*  SPCMD1          */
+    volatile uint16_t SPCMD2;                                 /*  SPCMD2          */
+    volatile uint16_t SPCMD3;                                 /*  SPCMD3          */
+    volatile uint8_t   dummy2[8];                              /*                  */
+    volatile uint8_t   SPBFCR;                                 /*  SPBFCR          */
+    volatile uint8_t   dummy3[1];                              /*                  */
+    volatile uint16_t SPBFDR;                                 /*  SPBFDR          */
 };
 
 
-#define RSPI0   (*(volatile struct st_rspi    *)0xE800C800uL) /* RSPI0 */
-#define RSPI1   (*(volatile struct st_rspi    *)0xE800D000uL) /* RSPI1 */
-#define RSPI2   (*(volatile struct st_rspi    *)0xE800D800uL) /* RSPI2 */
-#define RSPI3   (*(volatile struct st_rspi    *)0xE800E000uL) /* RSPI3 */
-#define RSPI4   (*(volatile struct st_rspi    *)0xE800E800uL) /* RSPI4 */
+#define RSPI0   (*(struct st_rspi    *)0xE800C800uL) /* RSPI0 */
+#define RSPI1   (*(struct st_rspi    *)0xE800D000uL) /* RSPI1 */
+#define RSPI2   (*(struct st_rspi    *)0xE800D800uL) /* RSPI2 */
+#define RSPI3   (*(struct st_rspi    *)0xE800E000uL) /* RSPI3 */
+#define RSPI4   (*(struct st_rspi    *)0xE800E800uL) /* RSPI4 */
 
 
-/* Start of channel array defines of RSPI */
+/* Start of channnel array defines of RSPI */
 
 /* Channnel array defines of RSPI */
 /*(Sample) value = RSPI[ channel ]->SPCR; */
 #define RSPI_COUNT  5
 #define RSPI_ADDRESS_LIST \
-    &RSPI0, &RSPI1, &RSPI2, &RSPI3, &RSPI4
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
+    &RSPI0, &RSPI1, &RSPI2, &RSPI3, &RSPI4 \
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
 
-/* End of channel array defines of RSPI */
+/* End of channnel array defines of RSPI */
 
 
 #define SPCR_0 RSPI0.SPCR
@@ -196,4 +198,5 @@ struct st_rspi
 #define SPCMD3_4 RSPI4.SPCMD3
 #define SPBFCR_4 RSPI4.SPBFCR
 #define SPBFDR_4 RSPI4.SPBFDR
+/* <-SEC M1.10.1 */
 #endif

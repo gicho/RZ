@@ -18,37 +18,38 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer*
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
 * File Name : disc_iodefine.h
-* $Rev: 809 $
-* $Date:: 2014-03-28 19:15:55 +0000#$
-* Description : Definition of I/O Register (V0.50j)
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
 ******************************************************************************/
 #ifndef DISC_IODEFINE_H
 #define DISC_IODEFINE_H
+/* ->SEC M1.10.1 : Not magic number */
 
 struct st_disc
 {                                                          /* DISC             */
-    uint32_t       DOCMCR;                                 /*  DOCMCR          */
-    uint32_t       DOCMSTR;                                /*  DOCMSTR         */
-    uint32_t       DOCMCLSTR;                              /*  DOCMCLSTR       */
-    uint32_t       DOCMIENR;                               /*  DOCMIENR        */
-    uint8_t        dummy1[4];                              /*                  */
-    uint32_t       DOCMPMR;                                /*  DOCMPMR         */
-    uint32_t       DOCMECRCR;                              /*  DOCMECRCR       */
-    uint32_t       DOCMCCRCR;                              /*  DOCMCCRCR       */
-    uint32_t       DOCMSPXR;                               /*  DOCMSPXR        */
-    uint32_t       DOCMSPYR;                               /*  DOCMSPYR        */
-    uint32_t       DOCMSZXR;                               /*  DOCMSZXR        */
-    uint32_t       DOCMSZYR;                               /*  DOCMSZYR        */
-    uint32_t       DOCMCRCIR;                              /*  DOCMCRCIR       */
+    volatile uint32_t  DOCMCR;                                 /*  DOCMCR          */
+    volatile uint32_t  DOCMSTR;                                /*  DOCMSTR         */
+    volatile uint32_t  DOCMCLSTR;                              /*  DOCMCLSTR       */
+    volatile uint32_t  DOCMIENR;                               /*  DOCMIENR        */
+    volatile uint8_t   dummy1[4];                              /*                  */
+    volatile uint32_t  DOCMPMR;                                /*  DOCMPMR         */
+    volatile uint32_t  DOCMECRCR;                              /*  DOCMECRCR       */
+    volatile uint32_t  DOCMCCRCR;                              /*  DOCMCCRCR       */
+    volatile uint32_t  DOCMSPXR;                               /*  DOCMSPXR        */
+    volatile uint32_t  DOCMSPYR;                               /*  DOCMSPYR        */
+    volatile uint32_t  DOCMSZXR;                               /*  DOCMSZXR        */
+    volatile uint32_t  DOCMSZYR;                               /*  DOCMSZYR        */
+    volatile uint32_t  DOCMCRCIR;                              /*  DOCMCRCIR       */
 };
 
 
-#define DISC0   (*(volatile struct st_disc    *)0xFCFFA800uL) /* DISC0 */
-#define DISC1   (*(volatile struct st_disc    *)0xFCFFB000uL) /* DISC1 */
+#define DISC0   (*(struct st_disc    *)0xFCFFA800uL) /* DISC0 */
+#define DISC1   (*(struct st_disc    *)0xFCFFB000uL) /* DISC1 */
 
 
 /* Start of channnel array defines of DISC */
@@ -57,7 +58,9 @@ struct st_disc
 /*(Sample) value = DISC[ channel ]->DOCMCR; */
 #define DISC_COUNT  2
 #define DISC_ADDRESS_LIST \
-    &DISC0, &DISC1
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
+    &DISC0, &DISC1 \
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
 
 /* End of channnel array defines of DISC */
 
@@ -86,4 +89,5 @@ struct st_disc
 #define DISC1DOCMSZXR DISC1.DOCMSZXR
 #define DISC1DOCMSZYR DISC1.DOCMSZYR
 #define DISC1DOCMCRCIR DISC1.DOCMCRCIR
+/* <-SEC M1.10.1 */
 #endif

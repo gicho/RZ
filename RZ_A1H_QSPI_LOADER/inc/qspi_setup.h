@@ -33,7 +33,7 @@ Includes   <System Includes> , "Project Includes"
 ******************************************************************************/
 #include "r_typedefs.h"
 #include "iodefine.h"
-#include "spibsc.h"
+// #include "spibsc.h"
 
 #include "rza_io_regrw.h"
 

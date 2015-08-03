@@ -18,26 +18,26 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer*
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
 * File Name : wdt_iodefine.h
-* $Rev: 809 $
-* $Date:: 2014-03-28 19:15:55 +0000#$
-* Description : Definition of I/O Register (V0.50j)
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
 ******************************************************************************/
 #ifndef WDT_IODEFINE_H
 #define WDT_IODEFINE_H
 
 struct st_wdt
 {                                                          /* WDT              */
-    uint16_t       WTCSR;                                  /*  WTCSR           */
-    uint16_t       WTCNT;                                  /*  WTCNT           */
-    uint16_t       WRCSR;                                  /*  WRCSR           */
+    volatile uint16_t WTCSR;                                  /*  WTCSR           */
+    volatile uint16_t WTCNT;                                  /*  WTCNT           */
+    volatile uint16_t WRCSR;                                  /*  WRCSR           */
 };
 
 
-#define WDT     (*(volatile struct st_wdt     *)0xFCFE0000uL) /* WDT */
+#define WDT     (*(struct st_wdt     *)0xFCFE0000uL) /* WDT */
 
 
 #define WDTWTCSR WDT.WTCSR

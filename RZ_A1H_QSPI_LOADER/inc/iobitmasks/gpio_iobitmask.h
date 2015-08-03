@@ -18,22 +18,14 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer
-*
+* Copyright (C) 2012 - 2015 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* File Name   : gpio_iobitmask.h
+* $Rev: 1320 $
+* $Date:: 2015-01-29 15:54:51 +0900#$
+* Description : General purpose I/O ports register define header
 *******************************************************************************/
-/*******************************************************************************
-* File Name     : gpio_iobitmask.h
-* Device(s)     : RZ/A1H RSK2+RZA1H
-* H/W Platform  : RSK2+RZA1H CPU Board
-* Description   : General purpose I/O ports register define header
-*******************************************************************************/
-/*******************************************************************************
-* History       : DD.MM.YYYY Version Description
-*               : 18.06.2013 1.00
-*******************************************************************************/
-
 #ifndef GPIO_IOBITMASK_H
 #define GPIO_IOBITMASK_H
 
@@ -112,15 +104,6 @@
 #define GPIO_PM1_PM15                           (0x0020u)
 #define GPIO_PM1_PM16                           (0x0040u)
 #define GPIO_PM1_PM17                           (0x0080u)
-#define GPIO_PM1_PM18                           (0x0100u)
-#define GPIO_PM1_PM19                           (0x0200u)
-#define GPIO_PM1_PM110                          (0x0400u)
-#define GPIO_PM1_PM111                          (0x0800u)
-#define GPIO_PM1_PM112                          (0x1000u)
-#define GPIO_PM1_PM113                          (0x2000u)
-#define GPIO_PM1_PM114                          (0x4000u)
-#define GPIO_PM1_PM115                          (0x8000u)
-
 
 #define GPIO_PMC1_PMC10                         (0x0001u)
 #define GPIO_PMC1_PMC11                         (0x0002u)
@@ -275,14 +258,6 @@
 #define GPIO_PIPC1_PIPC15                       (0x0020u)
 #define GPIO_PIPC1_PIPC16                       (0x0040u)
 #define GPIO_PIPC1_PIPC17                       (0x0080u)
-#define GPIO_PIPC1_PIPC18                       (0x0100u)
-#define GPIO_PIPC1_PIPC19                       (0x0200u)
-#define GPIO_PIPC1_PIPC110                      (0x0400u)
-#define GPIO_PIPC1_PIPC111                      (0x0800u)
-#define GPIO_PIPC1_PIPC112                      (0x1000u)
-#define GPIO_PIPC1_PIPC113                      (0x2000u)
-#define GPIO_PIPC1_PIPC114                      (0x4000u)
-#define GPIO_PIPC1_PIPC115                      (0x8000u)
 
 /* ---- P2 ---- */
 #define GPIO_P2_P20                             (0x0001u)
@@ -3008,14 +2983,6 @@
 #define GPIO_PM1_PM15_SHIFT                     (5u)
 #define GPIO_PM1_PM16_SHIFT                     (6u)
 #define GPIO_PM1_PM17_SHIFT                     (7u)
-#define GPIO_PM1_PM18_SHIFT                     (8u)
-#define GPIO_PM1_PM19_SHIFT                     (9u)
-#define GPIO_PM1_PM110_SHIFT                    (10u)
-#define GPIO_PM1_PM111_SHIFT                    (11u)
-#define GPIO_PM1_PM112_SHIFT                    (12u)
-#define GPIO_PM1_PM113_SHIFT                    (13u)
-#define GPIO_PM1_PM114_SHIFT                    (14u)
-#define GPIO_PM1_PM115_SHIFT                    (15u)
 
 #define GPIO_PMC1_PMC10_SHIFT                   (0u)
 #define GPIO_PMC1_PMC11_SHIFT                   (1u)
@@ -3170,14 +3137,6 @@
 #define GPIO_PIPC1_PIPC15_SHIFT                 (5u)
 #define GPIO_PIPC1_PIPC16_SHIFT                 (6u)
 #define GPIO_PIPC1_PIPC17_SHIFT                 (7u)
-#define GPIO_PIPC1_PIPC18_SHIFT                 (8u)
-#define GPIO_PIPC1_PIPC19_SHIFT                 (9u)
-#define GPIO_PIPC1_PIPC110_SHIFT                (10u)
-#define GPIO_PIPC1_PIPC111_SHIFT                (11u)
-#define GPIO_PIPC1_PIPC112_SHIFT                (12u)
-#define GPIO_PIPC1_PIPC113_SHIFT                (13u)
-#define GPIO_PIPC1_PIPC114_SHIFT                (14u)
-#define GPIO_PIPC1_PIPC115_SHIFT                (15u)
 
 /* ---- P2 ---- */
 #define GPIO_P2_P20_SHIFT                       (0u)

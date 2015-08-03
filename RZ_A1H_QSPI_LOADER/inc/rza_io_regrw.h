@@ -18,10 +18,12 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* Copyright (C) 2012 - 2015 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
 * File Name   : rza_io_regrw.h
+* $Rev: 1320 $
+* $Date:: 2015-01-29 15:54:51 +0900#$
 * Description : Low level register read/write header
 *******************************************************************************/
 #ifndef RZA_IO_REGRW_H
@@ -34,15 +36,8 @@ Includes   <System Includes> , "Project Includes"
 #include "iobitmasks/cpg_iobitmask.h"
 #include "iobitmasks/intc_iobitmask.h"
 #include "iobitmasks/bsc_iobitmask.h"
-#include "iobitmasks/dmac_iobitmask.h"
-#include "iobitmasks/mtu2_iobitmask.h"
 #include "iobitmasks/ostm_iobitmask.h"
 #include "iobitmasks/scif_iobitmask.h"
-#include "iobitmasks/rspi_iobitmask.h"
-#include "iobitmasks/spibsc_iobitmask.h"
-#include "iobitmasks/riic_iobitmask.h"
-#include "iobitmasks/adc_iobitmask.h"
-#include "iobitmasks/usb_iobitmask.h"
 #include "iobitmasks/gpio_iobitmask.h"
 
 /******************************************************************************

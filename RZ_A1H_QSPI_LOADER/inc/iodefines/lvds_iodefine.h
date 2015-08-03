@@ -18,34 +18,37 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer*
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
 * File Name : lvds_iodefine.h
-* $Rev: 809 $
-* $Date:: 2014-03-28 19:15:55 +0000#$
-* Description : Definition of I/O Register (V0.50j)
+* $Rev: 1275 $
+* $Date:: 2014-11-07 15:16:20 +0900#$
+* Description : Definition of I/O Register (V1.01a)
 ******************************************************************************/
 #ifndef LVDS_IODEFINE_H
 #define LVDS_IODEFINE_H
+/* ->SEC M1.10.1 : Not magic number */
 
 struct st_lvds
 {                                                          /* LVDS             */
-    uint32_t       _UPDATE;                                /*  _UPDATE         */
-    uint32_t       FCL;                                    /*  FCL             */
-    uint8_t        dummy619[24];                           /*                  */
-    uint32_t       LCLKSELR;                               /*  LCLKSELR        */
-    uint32_t       LPLLSETR;                               /*  LPLLSETR        */
-    uint32_t       LPLLMONR;                               /*  LPLLMONR        */
+    volatile uint32_t  LVDS_UPDATE;                            /*  LVDS_UPDATE     */
+    volatile uint32_t  LVDSFCL;                                /*  LVDSFCL         */
+    volatile uint8_t   dummy608[24];                           /*                  */
+    volatile uint32_t  LCLKSELR;                               /*  LCLKSELR        */
+    volatile uint32_t  LPLLSETR;                               /*  LPLLSETR        */
+    volatile uint8_t   dummy609[4];                            /*                  */
+    volatile uint32_t  LPHYACC;                                /*  LPHYACC         */
 };
 
 
-#define LVDS    (*(volatile struct st_lvds    *)0xFCFF7A30uL) /* LVDS */
+#define LVDS    (*(struct st_lvds    *)0xFCFF7A30uL) /* LVDS */
 
 
-#define LVDS_UPDATE LVDS._UPDATE
-#define LVDSFCL LVDS.FCL
+#define LVDSLVDS_UPDATE LVDS.LVDS_UPDATE
+#define LVDSLVDSFCL LVDS.LVDSFCL
 #define LVDSLCLKSELR LVDS.LCLKSELR
 #define LVDSLPLLSETR LVDS.LPLLSETR
-#define LVDSLPLLMONR LVDS.LPLLMONR
+#define LVDSLPHYACC LVDS.LPHYACC
+/* <-SEC M1.10.1 */
 #endif

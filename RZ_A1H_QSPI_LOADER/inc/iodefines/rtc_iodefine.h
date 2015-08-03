@@ -18,62 +18,63 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer*
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
 * File Name : rtc_iodefine.h
-* $Rev: 809 $
-* $Date:: 2014-03-28 19:15:55 +0000#$
-* Description : Definition of I/O Register (V0.50j)
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
 ******************************************************************************/
 #ifndef RTC_IODEFINE_H
 #define RTC_IODEFINE_H
+/* ->SEC M1.10.1 : Not magic number */
 
 struct st_rtc
 {                                                          /* RTC              */
-    uint8_t        R64CNT;                                 /*  R64CNT          */
-    uint8_t        dummy550[1];                            /*                  */
-    uint8_t        RSECCNT;                                /*  RSECCNT         */
-    uint8_t        dummy551[1];                            /*                  */
-    uint8_t        RMINCNT;                                /*  RMINCNT         */
-    uint8_t        dummy552[1];                            /*                  */
-    uint8_t        RHRCNT;                                 /*  RHRCNT          */
-    uint8_t        dummy553[1];                            /*                  */
-    uint8_t        RWKCNT;                                 /*  RWKCNT          */
-    uint8_t        dummy554[1];                            /*                  */
-    uint8_t        RDAYCNT;                                /*  RDAYCNT         */
-    uint8_t        dummy555[1];                            /*                  */
-    uint8_t        RMONCNT;                                /*  RMONCNT         */
-    uint8_t        dummy556[1];                            /*                  */
-    uint16_t       RYRCNT;                                 /*  RYRCNT          */
-    uint8_t        RSECAR;                                 /*  RSECAR          */
-    uint8_t        dummy557[1];                            /*                  */
-    uint8_t        RMINAR;                                 /*  RMINAR          */
-    uint8_t        dummy558[1];                            /*                  */
-    uint8_t        RHRAR;                                  /*  RHRAR           */
-    uint8_t        dummy559[1];                            /*                  */
-    uint8_t        RWKAR;                                  /*  RWKAR           */
-    uint8_t        dummy560[1];                            /*                  */
-    uint8_t        RDAYAR;                                 /*  RDAYAR          */
-    uint8_t        dummy561[1];                            /*                  */
-    uint8_t        RMONAR;                                 /*  RMONAR          */
-    uint8_t        dummy562[1];                            /*                  */
-    uint8_t        RCR1;                                   /*  RCR1            */
-    uint8_t        dummy563[1];                            /*                  */
-    uint8_t        RCR2;                                   /*  RCR2            */
-    uint8_t        dummy564[1];                            /*                  */
-    uint16_t       RYRAR;                                  /*  RYRAR           */
-    uint8_t        dummy565[2];                            /*                  */
-    uint8_t        RCR3;                                   /*  RCR3            */
-    uint8_t        dummy566[1];                            /*                  */
-    uint8_t        RCR5;                                   /*  RCR5            */
-    uint8_t        dummy567[3];                            /*                  */
-    uint16_t       RFRH;                                   /*  RFRH            */
-    uint16_t       RFRL;                                   /*  RFRL            */
+    volatile uint8_t   R64CNT;                                 /*  R64CNT          */
+    volatile uint8_t   dummy537[1];                            /*                  */
+    volatile uint8_t   RSECCNT;                                /*  RSECCNT         */
+    volatile uint8_t   dummy538[1];                            /*                  */
+    volatile uint8_t   RMINCNT;                                /*  RMINCNT         */
+    volatile uint8_t   dummy539[1];                            /*                  */
+    volatile uint8_t   RHRCNT;                                 /*  RHRCNT          */
+    volatile uint8_t   dummy540[1];                            /*                  */
+    volatile uint8_t   RWKCNT;                                 /*  RWKCNT          */
+    volatile uint8_t   dummy541[1];                            /*                  */
+    volatile uint8_t   RDAYCNT;                                /*  RDAYCNT         */
+    volatile uint8_t   dummy542[1];                            /*                  */
+    volatile uint8_t   RMONCNT;                                /*  RMONCNT         */
+    volatile uint8_t   dummy543[1];                            /*                  */
+    volatile uint16_t RYRCNT;                                 /*  RYRCNT          */
+    volatile uint8_t   RSECAR;                                 /*  RSECAR          */
+    volatile uint8_t   dummy544[1];                            /*                  */
+    volatile uint8_t   RMINAR;                                 /*  RMINAR          */
+    volatile uint8_t   dummy545[1];                            /*                  */
+    volatile uint8_t   RHRAR;                                  /*  RHRAR           */
+    volatile uint8_t   dummy546[1];                            /*                  */
+    volatile uint8_t   RWKAR;                                  /*  RWKAR           */
+    volatile uint8_t   dummy547[1];                            /*                  */
+    volatile uint8_t   RDAYAR;                                 /*  RDAYAR          */
+    volatile uint8_t   dummy548[1];                            /*                  */
+    volatile uint8_t   RMONAR;                                 /*  RMONAR          */
+    volatile uint8_t   dummy549[1];                            /*                  */
+    volatile uint8_t   RCR1;                                   /*  RCR1            */
+    volatile uint8_t   dummy550[1];                            /*                  */
+    volatile uint8_t   RCR2;                                   /*  RCR2            */
+    volatile uint8_t   dummy551[1];                            /*                  */
+    volatile uint16_t RYRAR;                                  /*  RYRAR           */
+    volatile uint8_t   dummy552[2];                            /*                  */
+    volatile uint8_t   RCR3;                                   /*  RCR3            */
+    volatile uint8_t   dummy553[1];                            /*                  */
+    volatile uint8_t   RCR5;                                   /*  RCR5            */
+    volatile uint8_t   dummy554[3];                            /*                  */
+    volatile uint16_t RFRH;                                   /*  RFRH            */
+    volatile uint16_t RFRL;                                   /*  RFRL            */
 };
 
 
-#define RTC     (*(volatile struct st_rtc     *)0xFCFF1000uL) /* RTC */
+#define RTC     (*(struct st_rtc     *)0xFCFF1000uL) /* RTC */
 
 
 #define RTCR64CNT RTC.R64CNT
@@ -97,4 +98,5 @@ struct st_rtc
 #define RTCRCR5 RTC.RCR5
 #define RTCRFRH RTC.RFRH
 #define RTCRFRL RTC.RFRL
+/* <-SEC M1.10.1 */
 #endif

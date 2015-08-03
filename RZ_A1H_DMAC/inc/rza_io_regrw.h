@@ -18,23 +18,14 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer
-*
-* Copyright (C) 2014 Renesas Electronics Corporation. All rights reserved.
+* Copyright (C) 2012 - 2015 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
-* File Name     : rza_io_regrw.h
-* Device(s)     : RZ/A1H (R7S721001)
-* Tool-Chain    : GNUARM-RZv13.01-EABI
-* H/W Platform  : RSK+RZA1H CPU Board
-* Description   : Low level register read/write header
+* File Name   : rza_io_regrw.h
+* $Rev: 1320 $
+* $Date:: 2015-01-29 15:54:51 +0900#$
+* Description : Low level register read/write header
 *******************************************************************************/
-/*******************************************************************************
-* History       : DD.MM.YYYY Version Description
-*               : 18.06.2013 1.00
-*               : 21.03.2014 2.00
-*******************************************************************************/
-
-/* Multiple inclusion prevention macro */
 #ifndef RZA_IO_REGRW_H
 #define RZA_IO_REGRW_H
 
@@ -45,33 +36,36 @@ Includes   <System Includes> , "Project Includes"
 #include "iobitmasks/cpg_iobitmask.h"
 #include "iobitmasks/intc_iobitmask.h"
 #include "iobitmasks/bsc_iobitmask.h"
-#include "iobitmasks/dmac_iobitmask.h"
-#include "iobitmasks/mtu2_iobitmask.h"
 #include "iobitmasks/ostm_iobitmask.h"
 #include "iobitmasks/scif_iobitmask.h"
-#include "iobitmasks/rspi_iobitmask.h"
-#include "iobitmasks/riic_iobitmask.h"
-#include "iobitmasks/adc_iobitmask.h"
 #include "iobitmasks/gpio_iobitmask.h"
+
+/******************************************************************************
+Typedef definitions
+******************************************************************************/
+
+
+/******************************************************************************
+Macro definitions
+******************************************************************************/
+
+
+/******************************************************************************
+Variable Externs
+******************************************************************************/
+
 
 /******************************************************************************
 Functions Prototypes
 ******************************************************************************/
-void     RZA_IO_RegWrite_8 (volatile uint8_t  * ioreg, uint8_t  write_value,
-		                                        uint8_t  shift, uint8_t  mask);
-void     RZA_IO_RegWrite_16(volatile uint16_t * ioreg, uint16_t write_value,
-		                                        uint16_t shift, uint16_t mask);
-void     RZA_IO_RegWrite_32(volatile uint32_t * ioreg, uint32_t write_value,
-		                                        uint32_t shift, uint32_t mask);
-uint8_t  RZA_IO_RegRead_8  (volatile uint8_t  * ioreg,
-		                                        uint8_t  shift, uint8_t  mask);
-uint16_t RZA_IO_RegRead_16 (volatile uint16_t * ioreg,
-		                                        uint16_t shift, uint16_t mask);
-uint32_t RZA_IO_RegRead_32 (volatile uint32_t * ioreg,
-		                                        uint32_t shift, uint32_t mask);
+void     RZA_IO_RegWrite_8 (volatile uint8_t  * ioreg, uint8_t  write_value, uint8_t  shift, uint8_t  mask);
+void     RZA_IO_RegWrite_16(volatile uint16_t * ioreg, uint16_t write_value, uint16_t shift, uint16_t mask);
+void     RZA_IO_RegWrite_32(volatile uint32_t * ioreg, uint32_t write_value, uint32_t shift, uint32_t mask);
+uint8_t  RZA_IO_RegRead_8  (volatile uint8_t  * ioreg, uint8_t  shift, uint8_t  mask);
+uint16_t RZA_IO_RegRead_16 (volatile uint16_t * ioreg, uint16_t shift, uint16_t mask);
+uint32_t RZA_IO_RegRead_32 (volatile uint32_t * ioreg, uint32_t shift, uint32_t mask);
 
 
-/* RZA_IO_REGRW_H */
-#endif
+#endif  /* RZA_IO_REGRW_H */
 
 /* End of File */

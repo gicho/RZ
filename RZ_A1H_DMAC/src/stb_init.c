@@ -64,49 +64,49 @@ void STB_Init(void)
 
     /* Port level is keep in standby mode, [1], [1], [0],           */
     /* [1], [0], [1], CoreSight                                     */
-    CPG.STBCR2.BYTE  = 0x6Au;
+    CPG.STBCR2  = 0x6Au;
     /* (Dummy read)                                                 */
-    dummy_buf = CPG.STBCR2.BYTE;
+    dummy_buf = CPG.STBCR2;
     /* IEBus, IrDA, LIN0, LIN1, MTU2, RSCAN2, [0], PWM              */
-    CPG.STBCR3.BYTE  = 0x00u;
+    CPG.STBCR3  = 0x00u;
     /* (Dummy read)                                                 */
-    dummy_buf = CPG.STBCR3.BYTE;
+    dummy_buf = CPG.STBCR3;
     /* SCIF0, SCIF1, SCIF2, SCIF3, SCIF4, SCIF5, SCIF6, SCIF7       */
-    CPG.STBCR4.BYTE  = 0x00u;
+    CPG.STBCR4  = 0x00u;
     /* (Dummy read)                                                 */
-    dummy_buf = CPG.STBCR4.BYTE;
+    dummy_buf = CPG.STBCR4;
     /* SCIM0, SCIM1, SDG0, SDG1, SDG2, SDG3, OSTM0, OSTM1           */
-    CPG.STBCR5.BYTE  = 0x00u;
+    CPG.STBCR5  = 0x00u;
     /* (Dummy read)                                                 */
-    dummy_buf = CPG.STBCR5.BYTE;
+    dummy_buf = CPG.STBCR5;
     /* A/D, CEU, DISCOM0, DISCOM1, DRC0, DRC1, JCU, RTClock         */
-    CPG.STBCR6.BYTE  = 0x00u;
+    CPG.STBCR6  = 0x00u;
     /* (Dummy read)                                                 */
-    dummy_buf = CPG.STBCR6.BYTE;
+    dummy_buf = CPG.STBCR6;
     /* DVDEC0, DVDEC1, [1], ETHER, FLCTL, [1], USB0, USB1           */
-    CPG.STBCR7.BYTE  = 0x24u;
+    CPG.STBCR7  = 0x24u;
     /* (Dummy read)                                                 */
-    dummy_buf = CPG.STBCR7.BYTE;
+    dummy_buf = CPG.STBCR7;
     /* IMR-LS20, IMR-LS21, IMR-LSD, MMCIF, MOST50, [1], SCUX, [1]   */
-    CPG.STBCR8.BYTE  = 0x05u;
+    CPG.STBCR8  = 0x05u;
     /* (Dummy read)                                                 */
-    dummy_buf = CPG.STBCR8.BYTE;
+    dummy_buf = CPG.STBCR8;
     /* I2C0, I2C1, I2C2, I2C3, SPIBSC0, SPIBSC1, VDC50, VDC51       */
-    CPG.STBCR9.BYTE  = 0x00u;
+    CPG.STBCR9  = 0x00u;
     /* (Dummy read)                                                 */
-    dummy_buf = CPG.STBCR9.BYTE;
+    dummy_buf = CPG.STBCR9;
     /* RSPI0, RSPI1, RSPI2, RSPI3, RSPI4, CD-ROMDEC, RSPDIF, RGPVG  */
-    CPG.STBCR10.BYTE = 0x00u;
+    CPG.STBCR10 = 0x00u;
     /* (Dummy read)                                                 */
-    dummy_buf = CPG.STBCR10.BYTE;
+    dummy_buf = CPG.STBCR10;
     /* [1], [1], SSIF0, SSIF1, SSIF2, SSIF3, SSIF4, SSIF5           */
-    CPG.STBCR11.BYTE = 0xC0u;
+    CPG.STBCR11 = 0xC0u;
     /* (Dummy read)                                                 */
-    dummy_buf = CPG.STBCR11.BYTE;
+    dummy_buf = CPG.STBCR11;
     /* [1], [1], [1], [1], SDHI00, SDHI01, SDHI10, SDHI11           */
-    CPG.STBCR12.BYTE = 0xF0u;
+    CPG.STBCR12 = 0xF0u;
     /* (Dummy read)                                                 */
-    dummy_buf = CPG.STBCR12.BYTE;
+    dummy_buf = CPG.STBCR12;
 }
 
 /* End of File */

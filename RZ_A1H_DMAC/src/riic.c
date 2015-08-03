@@ -37,10 +37,15 @@
 /******************************************************************************
 Includes   <System Includes> , "Project Includes"
 ******************************************************************************/
+#include <stdint.h>
+
 /* Default  type definition header */
+
 #include "r_typedefs.h"
 /* I/O Register root header */
 #include "iodefine.h"
+#include "riic_iobitmask.h"
+
 /* Device Driver common header */
 #include "dev_drv.h"
 /* RIIC Driver Header */

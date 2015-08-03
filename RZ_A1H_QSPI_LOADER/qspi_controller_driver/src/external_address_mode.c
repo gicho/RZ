@@ -32,11 +32,9 @@ Includes   <System Includes> , "Project Includes"
 ******************************************************************************/
 #include "r_typedefs.h"
 #include "iodefine.h"
-//#include "spibsc.h"
-// #include "r_spibsc_ioset_api.h"
+#include "spibsc_iobitmask.h"
 #include "rza_io_regrw.h"
 
-//#include "sflash.h"
 #include "qspi_setup.h"
 
 #include "qspi_controller.h"
@@ -75,7 +73,7 @@ void qspiExternalAddressForceIdleAndWait(void) {
     qspiControllerWaitForIdle();
 }
 
-void qspiConfigureExternalAddressTransfer(externalAddressTransfer_t* externalAddressTransferConfig) {
+void qspiConfigureExternalAddressTransfer(const externalAddressTransfer_t* externalAddressTransferConfig) {
 
 
     RZA_IO_RegWrite_32(&SPIBSC0.DRENR, externalAddressTransferConfig->commandBitSize, SPIBSC_DRENR_CDB_SHIFT, SPIBSC_DRENR_CDB);
@@ -89,7 +87,6 @@ void qspiConfigureExternalAddressTransfer(externalAddressTransfer_t* externalAdd
     RZA_IO_RegWrite_32(&SPIBSC0.DRENR, externalAddressTransferConfig->addressEnable, SPIBSC_DRENR_ADE_SHIFT, SPIBSC_DRENR_ADE);
     RZA_IO_RegWrite_32(&SPIBSC0.DRENR, externalAddressTransferConfig->optionalDataEnable, SPIBSC_DRENR_OPDE_SHIFT, SPIBSC_DRENR_OPDE);
 
-
     RZA_IO_RegWrite_32(&SPIBSC0.DRCMR, externalAddressTransferConfig->command, SPIBSC_DRCMR_CMD_SHIFT, SPIBSC_DRCMR_CMD);
     RZA_IO_RegWrite_32(&SPIBSC0.DRCMR, externalAddressTransferConfig->optionalCommand, SPIBSC_DRCMR_OCMD_SHIFT, SPIBSC_DRCMR_OCMD);
 
@@ -97,11 +94,8 @@ void qspiConfigureExternalAddressTransfer(externalAddressTransfer_t* externalAdd
     RZA_IO_RegWrite_32(&SPIBSC0.DRCR, externalAddressTransferConfig->readBurstLenght, SPIBSC_DRCR_RBURST_SHIFT, SPIBSC_DRCR_RBURST);
     RZA_IO_RegWrite_32(&SPIBSC0.DRCR, externalAddressTransferConfig->burstMode, SPIBSC_DRCR_RBE_SHIFT, SPIBSC_DRCR_RBE);
 
-
     RZA_IO_RegWrite_32(&SPIBSC0.DRDMCR, externalAddressTransferConfig->dummyCycleBitSize, SPIBSC_DRDMCR_DMDB_SHIFT, SPIBSC_DRDMCR_DMDB);
     RZA_IO_RegWrite_32(&SPIBSC0.DRDMCR, externalAddressTransferConfig->dummyCycles, SPIBSC_DRDMCR_DMCYC_SHIFT, SPIBSC_DRDMCR_DMCYC);
-
-
 
     RZA_IO_RegWrite_32(&SPIBSC0.DREAR, externalAddressTransferConfig->extendedUpperAddress, SPIBSC_DREAR_EAV_SHIFT, SPIBSC_DREAR_EAV);
     RZA_IO_RegWrite_32(&SPIBSC0.DREAR, externalAddressTransferConfig->extValidRange, SPIBSC_DREAR_EAC_SHIFT, SPIBSC_DREAR_EAC);

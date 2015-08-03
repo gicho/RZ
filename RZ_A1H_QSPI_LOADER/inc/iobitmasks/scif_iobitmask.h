@@ -18,22 +18,14 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer
-*
+* Copyright (C) 2012 - 2015 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* File Name   : scif_iobitmask.h
+* $Rev: 1320 $
+* $Date:: 2015-01-29 15:54:51 +0900#$
+* Description : SCIF register define header
 *******************************************************************************/
-/*******************************************************************************
-* File Name     : scif_iobitmask.h
-* Device(s)     : RZ/A1H RSK2+RZA1H
-* H/W Platform  : RSK2+RZA1H CPU Board
-* Description   : SCIF register define header
-*******************************************************************************/
-/*******************************************************************************
-* History       : DD.MM.YYYY Version Description
-*               : 18.06.2013 1.00
-*******************************************************************************/
-
 #ifndef SCIF_IOBITMASK_H
 #define SCIF_IOBITMASK_H
 
@@ -495,6 +487,63 @@
 #define SCIF7_SCEMR_ABCS                        (0x0001u)
 #define SCIF7_SCEMR_BGDM                        (0x0080u)
 
+/* ---- SCIFn ---- */
+#define SCIFn_SCSMR_CKS                         (0x0003u)
+#define SCIFn_SCSMR_STOP                        (0x0008u)
+#define SCIFn_SCSMR_OE                          (0x0010u)
+#define SCIFn_SCSMR_PE                          (0x0020u)
+#define SCIFn_SCSMR_CHR                         (0x0040u)
+#define SCIFn_SCSMR_CA                          (0x0080u)
+
+#define SCIFn_SCBRR_D                           (0xFFu)
+
+#define SCIFn_SCSCR_CKE                         (0x0003u)
+#define SCIFn_SCSCR_REIE                        (0x0008u)
+#define SCIFn_SCSCR_RE                          (0x0010u)
+#define SCIFn_SCSCR_TE                          (0x0020u)
+#define SCIFn_SCSCR_RIE                         (0x0040u)
+#define SCIFn_SCSCR_TIE                         (0x0080u)
+
+#define SCIFn_SCFTDR_D                          (0xFFu)
+
+#define SCIFn_SCFSR_DR                          (0x0001u)
+#define SCIFn_SCFSR_RDF                         (0x0002u)
+#define SCIFn_SCFSR_PER                         (0x0004u)
+#define SCIFn_SCFSR_FER                         (0x0008u)
+#define SCIFn_SCFSR_BRK                         (0x0010u)
+#define SCIFn_SCFSR_TDFE                        (0x0020u)
+#define SCIFn_SCFSR_TEND                        (0x0040u)
+#define SCIFn_SCFSR_ER                          (0x0080u)
+#define SCIFn_SCFSR_FERN                        (0x0F00u)
+#define SCIFn_SCFSR_PERN                        (0xF000u)
+
+#define SCIFn_SCFRDR_D                          (0xFFu)
+
+#define SCIFn_SCFCR_LOOP                        (0x0001u)
+#define SCIFn_SCFCR_RFRST                       (0x0002u)
+#define SCIFn_SCFCR_TFRST                       (0x0004u)
+#define SCIFn_SCFCR_MCE                         (0x0008u)
+#define SCIFn_SCFCR_TTRG                        (0x0030u)
+#define SCIFn_SCFCR_RTRG                        (0x00C0u)
+#define SCIFn_SCFCR_RSTRG                       (0x0700u)
+
+#define SCIFn_SCFDR_R                           (0x001Fu)
+#define SCIFn_SCFDR_T                           (0x1F00u)
+
+#define SCIFn_SCSPTR_SPB2DT                     (0x0001u)
+#define SCIFn_SCSPTR_SPB2IO                     (0x0002u)
+#define SCIFn_SCSPTR_SCKDT                      (0x0004u)
+#define SCIFn_SCSPTR_SCKIO                      (0x0008u)
+#define SCIFn_SCSPTR_CTSDT                      (0x0010u)
+#define SCIFn_SCSPTR_CTSIO                      (0x0020u)
+#define SCIFn_SCSPTR_RTSDT                      (0x0040u)
+#define SCIFn_SCSPTR_RTSIO                      (0x0080u)
+
+#define SCIFn_SCLSR_ORER                        (0x0001u)
+
+#define SCIFn_SCEMR_ABCS                        (0x0001u)
+#define SCIFn_SCEMR_BGDM                        (0x0080u)
+
 
 /* ==== Shift values for IO registers ==== */
 /* ---- SCIF0 ---- */
@@ -952,6 +1001,63 @@
 
 #define SCIF7_SCEMR_ABCS_SHIFT                  (0u)
 #define SCIF7_SCEMR_BGDM_SHIFT                  (7u)
+
+/* ---- SCIFn ---- */
+#define SCIFn_SCSMR_CKS_SHIFT                   (0u)
+#define SCIFn_SCSMR_STOP_SHIFT                  (3u)
+#define SCIFn_SCSMR_OE_SHIFT                    (4u)
+#define SCIFn_SCSMR_PE_SHIFT                    (5u)
+#define SCIFn_SCSMR_CHR_SHIFT                   (6u)
+#define SCIFn_SCSMR_CA_SHIFT                    (7u)
+
+#define SCIFn_SCBRR_D_SHIFT                     (0u)
+
+#define SCIFn_SCSCR_CKE_SHIFT                   (0u)
+#define SCIFn_SCSCR_REIE_SHIFT                  (3u)
+#define SCIFn_SCSCR_RE_SHIFT                    (4u)
+#define SCIFn_SCSCR_TE_SHIFT                    (5u)
+#define SCIFn_SCSCR_RIE_SHIFT                   (6u)
+#define SCIFn_SCSCR_TIE_SHIFT                   (7u)
+
+#define SCIFn_SCFTDR_D_SHIFT                    (0u)
+
+#define SCIFn_SCFSR_DR_SHIFT                    (0u)
+#define SCIFn_SCFSR_RDF_SHIFT                   (1u)
+#define SCIFn_SCFSR_PER_SHIFT                   (2u)
+#define SCIFn_SCFSR_FER_SHIFT                   (3u)
+#define SCIFn_SCFSR_BRK_SHIFT                   (4u)
+#define SCIFn_SCFSR_TDFE_SHIFT                  (5u)
+#define SCIFn_SCFSR_TEND_SHIFT                  (6u)
+#define SCIFn_SCFSR_ER_SHIFT                    (7u)
+#define SCIFn_SCFSR_FERN_SHIFT                  (8u)
+#define SCIFn_SCFSR_PERN_SHIFT                  (12u)
+
+#define SCIFn_SCFRDR_D_SHIFT                    (0u)
+
+#define SCIFn_SCFCR_LOOP_SHIFT                  (0u)
+#define SCIFn_SCFCR_RFRST_SHIFT                 (1u)
+#define SCIFn_SCFCR_TFRST_SHIFT                 (2u)
+#define SCIFn_SCFCR_MCE_SHIFT                   (3u)
+#define SCIFn_SCFCR_TTRG_SHIFT                  (4u)
+#define SCIFn_SCFCR_RTRG_SHIFT                  (6u)
+#define SCIFn_SCFCR_RSTRG_SHIFT                 (8u)
+
+#define SCIFn_SCFDR_R_SHIFT                     (0u)
+#define SCIFn_SCFDR_T_SHIFT                     (8u)
+
+#define SCIFn_SCSPTR_SPB2DT_SHIFT               (0u)
+#define SCIFn_SCSPTR_SPB2IO_SHIFT               (1u)
+#define SCIFn_SCSPTR_SCKDT_SHIFT                (2u)
+#define SCIFn_SCSPTR_SCKIO_SHIFT                (3u)
+#define SCIFn_SCSPTR_CTSDT_SHIFT                (4u)
+#define SCIFn_SCSPTR_CTSIO_SHIFT                (5u)
+#define SCIFn_SCSPTR_RTSDT_SHIFT                (6u)
+#define SCIFn_SCSPTR_RTSIO_SHIFT                (7u)
+
+#define SCIFn_SCLSR_ORER_SHIFT                  (0u)
+
+#define SCIFn_SCEMR_ABCS_SHIFT                  (0u)
+#define SCIFn_SCEMR_BGDM_SHIFT                  (7u)
 
 
 #endif /* SCIF_IOBITMASK_H */

@@ -37,9 +37,14 @@
 /*******************************************************************************
 Includes   <System Includes> , "Project Includes"
 *******************************************************************************/
+
+#include <stdint.h>
+
 #include "r_typedefs.h"
 /* I/O register definitions */
 #include "iodefine.h"
+#include "gpio_iobitmask.h"
+
 /* Device Driver common header */
 #include "dev_drv.h"
 /* INTC driver header */
@@ -334,29 +339,29 @@ void Set_Switch_Release_Callback(void(*callback)(void))
 static void init_switch_debounce_timer (void)
 {
     /* Initialise the register of MTU2. */
-    MTU2.TSTR.BYTE &= 0x7F;
+    MTU2.TSTR &= 0x7F;
     /* Enable access to write-protected MTU2 registers */
-    MTU2.TRWER.BYTE = 1u;
+    MTU2.TRWER = 1u;
     /* Clear the timer count */
-    MTU2.TCNT_4.WORD = 0u;
+    MTU2.TCNT_4 = 0u;
     /* MTU2 channel4 normal operation */
-    MTU2.TMDR_4.BYTE = 0u;
+    MTU2.TMDR_4 = 0u;
     /* Timer output is not required */
-    MTU2.TIORH_4.BYTE = 0;
+    MTU2.TIORH_4 = 0;
     /* Clear the compare match status flag */
-    MTU2.TSR_4.BYTE &= 0xFE;
+    MTU2.TSR_4 &= 0xFE;
     /* Enable TGRA interrupts */
-    MTU2.TIER_4.BYTE = 0x01;
+    MTU2.TIER_4 = 0x01;
 
     /* Set the period */
-    MTU2.TGRA_4.WORD = 5000;
+    MTU2.TGRA_4 = 5000;
 
     /* TCNT cleared by TGRA compare match, rising edge count,
        clock source prescale P0/1024 = 32.226KHz,  */
-    MTU2.TCR_4.BYTE = 0x20 | 0x05;
+    MTU2.TCR_4 = 0x20 | 0x05;
 
     /* Enable access to MTU2 write-protected registers */
-    MTU2.TRWER.BYTE = 0u;
+    MTU2.TRWER = 0u;
 
     /* The setup process the interrupt IntTgfa function.*/
 	R_INTC_RegistIntFunc(INTC_ID_TGI4A , &MTU_INT_GFA);
@@ -375,16 +380,16 @@ static void init_switch_debounce_timer (void)
 static void switch_debounce_delay (void)
 {
 	/* Start the count of channel 4 of MTU2. */
-	MTU2.TSTR.BYTE |= 0x80;
+	MTU2.TSTR |= 0x80;
 
 	/* Wait for the the 10ms period to expire */
-	while (0x01 != (MTU2.TSR_4.BYTE & 0x01))
+	while (0x01 != (MTU2.TSR_4 & 0x01))
     {
     	__asm__("nop");
     }
 
 	/* Reload the period */
-	MTU2.TGRA_4.WORD = 5000;
+	MTU2.TGRA_4 = 5000;
 }
 
 
@@ -401,18 +406,18 @@ static void MTU_INT_GFA (uint32_t int_sense)
 	uint16_t dummy_read = 0u;
 
 	/* Stop the count of channel 4 of MTU2. */
-	MTU2.TSTR.BYTE &= 0x7F;
+	MTU2.TSTR &= 0x7F;
 
 	/* Disable the MTU2 channel 4 interrupt */
 	R_INTC_Disable(INTC_ID_TGI4A);
 
 	/* Clearing the status flag requires a dummy read */
-	dummy_read = MTU2.TSR_4.BYTE;
+	dummy_read = MTU2.TSR_4;
 
     /* Clear the TGFA flag */
     if (0x01 == (dummy_read & 0x01))
     {
-    	MTU2.TSR_4.BYTE &= 0xFE;
+    	MTU2.TSR_4 &= 0xFE;
     }
 }
 

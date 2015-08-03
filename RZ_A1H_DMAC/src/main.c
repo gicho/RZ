@@ -41,6 +41,8 @@ Includes   <System Includes> , "Project Includes"
 ******************************************************************************/
 /* System header */
 #include <stdio.h>
+#include <stdint.h>
+
 /* Renesas data types header */
 #include "r_typedefs.h"
 /* Low level register read/write header */
@@ -49,6 +51,8 @@ Includes   <System Includes> , "Project Includes"
 #include "compiler_settings.h"   
 /* Hardware interface header */
 #include "iodefine.h"
+#include "dmac_iobitmask.h"
+
 /* Device Driver common header */
 #include "dev_drv.h"
 /* INTC driver header */
@@ -215,68 +219,68 @@ void initialise_dma8bit_extrequest(uint8_t *src, uint8_t *dst, uint32_t size)
     dmac_ch0_trans_flg = false;
 
     /* Set Source Start Address */
-    DMAC0.N0SA.LONG = (uint32_t)src;
+    DMAC0.N0SA_n = (uint32_t)src;
 
     /* Set Destination Start Address */
-    DMAC0.N0DA.LONG = (uint32_t)dst;
+    DMAC0.N0DA_n = (uint32_t)dst;
 
     /* Set Transfer Size */
-    DMAC0.N0TB.LONG = size;
+    DMAC0.N0TB_n = size;
 
     /* Set Count direction of the source address Auto increment */
-    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0x0, DMAC0_CHCFG_n_DAD_SHIFT, DMAC0_CHCFG_n_DAD);
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG_n, 0x0, DMAC0_CHCFG_n_DAD_SHIFT, DMAC0_CHCFG_n_DAD);
 
     /* Set Count direction of the destination address Auto increment */
-    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0x0, DMAC0_CHCFG_n_SAD_SHIFT, DMAC0_CHCFG_n_SAD);
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG_n, 0x0, DMAC0_CHCFG_n_SAD_SHIFT, DMAC0_CHCFG_n_SAD);
 
     /* Set Source Transfer Size 8 bits */
-    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0x0, DMAC0_CHCFG_n_DDS_SHIFT, DMAC0_CHCFG_n_DDS);
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG_n, 0x0, DMAC0_CHCFG_n_DDS_SHIFT, DMAC0_CHCFG_n_DDS);
 
     /* Set Destination Transfer Size 8 bits */
-    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0x0, DMAC0_CHCFG_n_SDS_SHIFT, DMAC0_CHCFG_n_SDS);
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG_n, 0x0, DMAC0_CHCFG_n_SDS_SHIFT, DMAC0_CHCFG_n_SDS);
 
     /* Set Channel Status Register DMA Mode to 0 (Register Mode) */
-    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_DMS_SHIFT,  DMAC0_CHCFG_n_DMS);
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG_n, 0, DMAC0_CHCFG_n_DMS_SHIFT,  DMAC0_CHCFG_n_DMS);
 
     /* Set Channel Status Register Set to 0 (Select Executes the Next0 Register Set) */
-    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_RSEL_SHIFT, DMAC0_CHCFG_n_RSEL);
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG_n, 0, DMAC0_CHCFG_n_RSEL_SHIFT, DMAC0_CHCFG_n_RSEL);
 
     /* Set Channel Status Register Sweep Buffer Enable to 0 (Stops the DMA transfer without sweeping the buffer) */
-    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_SBE_SHIFT,  DMAC0_CHCFG_n_SBE);
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG_n, 0, DMAC0_CHCFG_n_SBE_SHIFT,  DMAC0_CHCFG_n_SBE);
 
     /* Set Channel Status Register DMA Interrupt Mask to 0 (Does not mask the DMA interrupt) */
-    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_DEM_SHIFT,  DMAC0_CHCFG_n_DEM);
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG_n, 0, DMAC0_CHCFG_n_DEM_SHIFT,  DMAC0_CHCFG_n_DEM);
 
     /* Set Enabled Register Set Enable to 0 (Does not continue DMA transfers) */
-    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_REN_SHIFT, DMAC0_CHCFG_n_REN);
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG_n, 0, DMAC0_CHCFG_n_REN_SHIFT, DMAC0_CHCFG_n_REN);
 
     /* Set Register Select Switch to 0 (Does not invert RSEL automatically after a DMA transaction) */
-    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_RSW_SHIFT, DMAC0_CHCFG_n_RSW);
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG_n, 0, DMAC0_CHCFG_n_RSW_SHIFT, DMAC0_CHCFG_n_RSW);
 
     /* TM  : Set Enabled single transfer Mode */
     /* AM  : Set ACK Mode DMAACK output until DREQ becomes inactive 0x1, bus cycle 0x2 */
     /* SEL : Set SEL setting, channel 0 */
-    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_TM_SHIFT,  DMAC0_CHCFG_n_TM);
-    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 1, DMAC0_CHCFG_n_AM_SHIFT,  DMAC0_CHCFG_n_AM);
-    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_SEL_SHIFT, DMAC0_CHCFG_n_SEL);
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG_n, 0, DMAC0_CHCFG_n_TM_SHIFT,  DMAC0_CHCFG_n_TM);
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG_n, 1, DMAC0_CHCFG_n_AM_SHIFT,  DMAC0_CHCFG_n_AM);
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG_n, 0, DMAC0_CHCFG_n_SEL_SHIFT, DMAC0_CHCFG_n_SEL);
 
     /* LVL, HIEN, LOWN, REQD */
     /* select based on edge */
-    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 1, DMAC0_CHCFG_n_LVL_SHIFT,  DMAC0_CHCFG_n_LVL);
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG_n, 1, DMAC0_CHCFG_n_LVL_SHIFT,  DMAC0_CHCFG_n_LVL);
     /* ignore high level */
-    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 0, DMAC0_CHCFG_n_HIEN_SHIFT, DMAC0_CHCFG_n_HIEN);
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG_n, 0, DMAC0_CHCFG_n_HIEN_SHIFT, DMAC0_CHCFG_n_HIEN);
     /* detect a request when signal has a falling edge */
-    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 1, DMAC0_CHCFG_n_LOEN_SHIFT, DMAC0_CHCFG_n_LOEN);
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG_n, 1, DMAC0_CHCFG_n_LOEN_SHIFT, DMAC0_CHCFG_n_LOEN);
 
     /* ACK to get active when read */
-    RZA_IO_RegWrite_32(&DMAC0.CHCFG.LONG, 1, DMAC0_CHCFG_n_REQD_SHIFT, DMAC0_CHCFG_n_REQD);
+    RZA_IO_RegWrite_32(&DMAC0.CHCFG_n, 1, DMAC0_CHCFG_n_REQD_SHIFT, DMAC0_CHCFG_n_REQD);
 
     /* MID = 0, RID = 3 for external request */
-    RZA_IO_RegWrite_32(&DMAC01.DMARS.LONG, 0, DMAC01_DMARS_CH0_MID_SHIFT, DMAC01_DMARS_CH0_MID);
-    RZA_IO_RegWrite_32(&DMAC01.DMARS.LONG, 3, DMAC01_DMARS_CH0_RID_SHIFT, DMAC01_DMARS_CH0_RID);
+    RZA_IO_RegWrite_32(&DMAC01.DMARS, 0, DMAC01_DMARS_CH0_MID_SHIFT, DMAC01_DMARS_CH0_MID);
+    RZA_IO_RegWrite_32(&DMAC01.DMARS, 3, DMAC01_DMARS_CH0_RID_SHIFT, DMAC01_DMARS_CH0_RID);
 
     /* PR : Set Round Robin mode */
-    RZA_IO_RegWrite_32(&DMAC07.DCTRL.LONG, 1, DMAC07_DCTRL_0_7_PR_SHIFT, DMAC07_DCTRL_0_7_PR);
+    RZA_IO_RegWrite_32(&DMAC07.DCTRL_0_7, 1, DMAC07_DCTRL_0_7_PR_SHIFT, DMAC07_DCTRL_0_7_PR);
 
     /* ==== Set DMAC channel 0 function ==== */
     R_INTC_RegistIntFunc(INTC_ID_DMAINT0, Sample_DMAC0_Interrupt);
@@ -287,15 +291,15 @@ void initialise_dma8bit_extrequest(uint8_t *src, uint8_t *dst, uint32_t size)
     /* ==== Enable DMAC channel 0 interrupt ==== */
     R_INTC_Enable(INTC_ID_DMAINT0);
 
-    if ((0 == RZA_IO_RegRead_32(&DMAC0.CHSTAT.LONG, DMAC0_CHSTAT_n_EN_SHIFT,   DMAC0_CHSTAT_n_EN)) &&
-        (0 == RZA_IO_RegRead_32(&DMAC0.CHSTAT.LONG, DMAC0_CHSTAT_n_TACT_SHIFT, DMAC0_CHSTAT_n_TACT)))
+    if ((0 == RZA_IO_RegRead_32(&DMAC0.CHSTAT_n, DMAC0_CHSTAT_n_EN_SHIFT,   DMAC0_CHSTAT_n_EN)) &&
+        (0 == RZA_IO_RegRead_32(&DMAC0.CHSTAT_n, DMAC0_CHSTAT_n_TACT_SHIFT, DMAC0_CHSTAT_n_TACT)))
     {
         /* Channel Status Register */
-        RZA_IO_RegWrite_32(&DMAC0.CHCTRL.LONG, 1, DMAC0_CHCTRL_n_SWRST_SHIFT, DMAC0_CHCTRL_n_SWRST);
-        dummy = RZA_IO_RegRead_32(&DMAC0.CHCTRL.LONG, DMAC0_CHCTRL_n_SWRST_SHIFT, DMAC0_CHCTRL_n_SWRST);
+        RZA_IO_RegWrite_32(&DMAC0.CHCTRL_n, 1, DMAC0_CHCTRL_n_SWRST_SHIFT, DMAC0_CHCTRL_n_SWRST);
+        dummy = RZA_IO_RegRead_32(&DMAC0.CHCTRL_n, DMAC0_CHCTRL_n_SWRST_SHIFT, DMAC0_CHCTRL_n_SWRST);
 
 
-        RZA_IO_RegWrite_32(&DMAC0.CHCTRL.LONG, 1, DMAC0_CHCTRL_n_SETEN_SHIFT, DMAC0_CHCTRL_n_SETEN);
+        RZA_IO_RegWrite_32(&DMAC0.CHCTRL_n, 1, DMAC0_CHCTRL_n_SETEN_SHIFT, DMAC0_CHCTRL_n_SETEN);
 
     }
 
@@ -321,63 +325,63 @@ void initialise_dma8bit(uint8_t *src, uint8_t *dst, uint32_t size)
     dmac_ch3_trans_flg = false;
 
     /* Set Source Start Address */
-    DMAC3.N0SA.LONG = (uint32_t)src;
+    DMAC3.N0SA_n = (uint32_t)src;
 
     /* Set Destination Start Address */
-    DMAC3.N0DA.LONG = (uint32_t)dst;
+    DMAC3.N0DA_n = (uint32_t)dst;
 
     /* Set Transfer Size */
-    DMAC3.N0TB.LONG = size;
+    DMAC3.N0TB_n = size;
 
     /* Set Count direction of the source address Auto increment */
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0x00, DMAC3_CHCFG_n_DAD_SHIFT, DMAC3_CHCFG_n_DAD);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0x00, DMAC3_CHCFG_n_DAD_SHIFT, DMAC3_CHCFG_n_DAD);
 
     /* Set Count direction of the destination address Auto increment */
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0x00, DMAC3_CHCFG_n_SAD_SHIFT, DMAC3_CHCFG_n_SAD);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0x00, DMAC3_CHCFG_n_SAD_SHIFT, DMAC3_CHCFG_n_SAD);
 
     /* Set Source Transfer Size 8 bits */
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0x00, DMAC3_CHCFG_n_DDS_SHIFT, DMAC3_CHCFG_n_DDS);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0x00, DMAC3_CHCFG_n_DDS_SHIFT, DMAC3_CHCFG_n_DDS);
 
     /* Set Destination Transfer Size 8 bits */
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0x00, DMAC3_CHCFG_n_SDS_SHIFT, DMAC3_CHCFG_n_SDS);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0x00, DMAC3_CHCFG_n_SDS_SHIFT, DMAC3_CHCFG_n_SDS);
 
     /* Set Channel Status Register DMA Mode to 0 (Register Mode) */
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0, DMAC3_CHCFG_n_DMS_SHIFT,  DMAC3_CHCFG_n_DMS);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0, DMAC3_CHCFG_n_DMS_SHIFT,  DMAC3_CHCFG_n_DMS);
 
     /* Set Channel Status Register Set to 0 (Select Executes the Next0 Register Set) */
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0, DMAC3_CHCFG_n_RSEL_SHIFT, DMAC3_CHCFG_n_RSEL);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0, DMAC3_CHCFG_n_RSEL_SHIFT, DMAC3_CHCFG_n_RSEL);
 
     /* Set Channel Status Register Sweep Buffer Enable to 0 (Stops the DMA transfer without sweeping the buffer) */
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0, DMAC3_CHCFG_n_SBE_SHIFT,  DMAC3_CHCFG_n_SBE);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0, DMAC3_CHCFG_n_SBE_SHIFT,  DMAC3_CHCFG_n_SBE);
 
     /* Set Channel Status Register DMA Interrupt Mask to 0 (Does not mask the DMA interrupt) */
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0, DMAC3_CHCFG_n_DEM_SHIFT,  DMAC3_CHCFG_n_DEM);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0, DMAC3_CHCFG_n_DEM_SHIFT,  DMAC3_CHCFG_n_DEM);
 
     /* Set Enabled Register Set Enable to 0 (Does not continue DMA transfers) */
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0, DMAC3_CHCFG_n_REN_SHIFT, DMAC3_CHCFG_n_REN);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0, DMAC3_CHCFG_n_REN_SHIFT, DMAC3_CHCFG_n_REN);
 
     /* Set Register Select Switch to 0 (Does not invert RSEL automatically after a DMA transaction) */
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0, DMAC3_CHCFG_n_RSW_SHIFT, DMAC3_CHCFG_n_RSW);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0, DMAC3_CHCFG_n_RSW_SHIFT, DMAC3_CHCFG_n_RSW);
 
     /* TM  : Set Enabled Transfer Mode */
     /* AM  : Set ACK Mode DMAACK not to be output */
     /* SEL : Set SEL setting */
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 1, DMAC3_CHCFG_n_TM_SHIFT,  DMAC3_CHCFG_n_TM);
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 4, DMAC3_CHCFG_n_AM_SHIFT,  DMAC3_CHCFG_n_AM);
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 3, DMAC3_CHCFG_n_SEL_SHIFT, DMAC3_CHCFG_n_SEL);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 1, DMAC3_CHCFG_n_TM_SHIFT,  DMAC3_CHCFG_n_TM);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 4, DMAC3_CHCFG_n_AM_SHIFT,  DMAC3_CHCFG_n_AM);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 3, DMAC3_CHCFG_n_SEL_SHIFT, DMAC3_CHCFG_n_SEL);
 
     /* LVL, HIEN, LOWN, REQD : Initial Value */
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0, DMAC3_CHCFG_n_LVL_SHIFT,  DMAC3_CHCFG_n_LVL);
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0, DMAC3_CHCFG_n_HIEN_SHIFT, DMAC3_CHCFG_n_HIEN);
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0, DMAC3_CHCFG_n_LOEN_SHIFT, DMAC3_CHCFG_n_LOEN);
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0, DMAC3_CHCFG_n_REQD_SHIFT, DMAC3_CHCFG_n_REQD);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0, DMAC3_CHCFG_n_LVL_SHIFT,  DMAC3_CHCFG_n_LVL);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0, DMAC3_CHCFG_n_HIEN_SHIFT, DMAC3_CHCFG_n_HIEN);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0, DMAC3_CHCFG_n_LOEN_SHIFT, DMAC3_CHCFG_n_LOEN);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0, DMAC3_CHCFG_n_REQD_SHIFT, DMAC3_CHCFG_n_REQD);
 
     /* MID, RID : Initial Value */
-    RZA_IO_RegWrite_32(&DMAC23.DMARS.LONG, 0, DMAC23_DMARS_CH3_MID_SHIFT, DMAC23_DMARS_CH3_MID);
-    RZA_IO_RegWrite_32(&DMAC23.DMARS.LONG, 0, DMAC23_DMARS_CH3_RID_SHIFT, DMAC23_DMARS_CH3_RID);
+    RZA_IO_RegWrite_32(&DMAC23.DMARS, 0, DMAC23_DMARS_CH3_MID_SHIFT, DMAC23_DMARS_CH3_MID);
+    RZA_IO_RegWrite_32(&DMAC23.DMARS, 0, DMAC23_DMARS_CH3_RID_SHIFT, DMAC23_DMARS_CH3_RID);
 
     /* PR : Set Round Robin mode */
-    RZA_IO_RegWrite_32(&DMAC07.DCTRL.LONG, 1, DMAC07_DCTRL_0_7_PR_SHIFT, DMAC07_DCTRL_0_7_PR);
+    RZA_IO_RegWrite_32(&DMAC07.DCTRL_0_7, 1, DMAC07_DCTRL_0_7_PR_SHIFT, DMAC07_DCTRL_0_7_PR);
 
     /* ==== Set DMAC channel 3 function ==== */
     R_INTC_RegistIntFunc(INTC_ID_DMAINT3, Sample_DMAC3_Interrupt);
@@ -388,18 +392,18 @@ void initialise_dma8bit(uint8_t *src, uint8_t *dst, uint32_t size)
     /* ==== Enable DMAC channel 3 interrupt ==== */
     R_INTC_Enable(INTC_ID_DMAINT3);
 
-    if ((0 == RZA_IO_RegRead_32(&DMAC3.CHSTAT.LONG, DMAC3_CHSTAT_n_EN_SHIFT,   DMAC3_CHSTAT_n_EN)) &&
-        (0 == RZA_IO_RegRead_32(&DMAC3.CHSTAT.LONG, DMAC3_CHSTAT_n_TACT_SHIFT, DMAC3_CHSTAT_n_TACT)))
+    if ((0 == RZA_IO_RegRead_32(&DMAC3.CHSTAT_n, DMAC3_CHSTAT_n_EN_SHIFT,   DMAC3_CHSTAT_n_EN)) &&
+        (0 == RZA_IO_RegRead_32(&DMAC3.CHSTAT_n, DMAC3_CHSTAT_n_TACT_SHIFT, DMAC3_CHSTAT_n_TACT)))
     {
         /* Channel Status Register */
-        RZA_IO_RegWrite_32(&DMAC3.CHCTRL.LONG, 1, DMAC3_CHCTRL_n_SWRST_SHIFT, DMAC3_CHCTRL_n_SWRST);
-        dummy = RZA_IO_RegRead_32(&DMAC3.CHCTRL.LONG, DMAC3_CHCTRL_n_SWRST_SHIFT, DMAC3_CHCTRL_n_SWRST);
+        RZA_IO_RegWrite_32(&DMAC3.CHCTRL_n, 1, DMAC3_CHCTRL_n_SWRST_SHIFT, DMAC3_CHCTRL_n_SWRST);
+        dummy = RZA_IO_RegRead_32(&DMAC3.CHCTRL_n, DMAC3_CHCTRL_n_SWRST_SHIFT, DMAC3_CHCTRL_n_SWRST);
 
 
-        RZA_IO_RegWrite_32(&DMAC3.CHCTRL.LONG, 1, DMAC3_CHCTRL_n_SETEN_SHIFT, DMAC3_CHCTRL_n_SETEN);
+        RZA_IO_RegWrite_32(&DMAC3.CHCTRL_n, 1, DMAC3_CHCTRL_n_SETEN_SHIFT, DMAC3_CHCTRL_n_SETEN);
 
         /* Software */
-        RZA_IO_RegWrite_32(&DMAC3.CHCTRL.LONG, 1, DMAC3_CHCTRL_n_STG_SHIFT, DMAC3_CHCTRL_n_STG);
+        RZA_IO_RegWrite_32(&DMAC3.CHCTRL_n, 1, DMAC3_CHCTRL_n_STG_SHIFT, DMAC3_CHCTRL_n_STG);
     }
 
 }
@@ -415,63 +419,63 @@ void initialise_dma8bit_L2Cached(uint8_t *src, uint8_t *dst, uint32_t size, cons
     dmac_ch3_trans_flg = false;
 
     /* Set Source Start Address */
-    DMAC3.N0SA.LONG = (uint32_t)src;
+    DMAC3.N0SA_n = (uint32_t)src;
 
     /* Set Destination Start Address */
-    DMAC3.N0DA.LONG = (uint32_t)dst;
+    DMAC3.N0DA_n = (uint32_t)dst;
 
     /* Set Transfer Size */
-    DMAC3.N0TB.LONG = size;
+    DMAC3.N0TB_n = size;
 
     /* Set Count direction of the source address Auto increment */
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0x00, DMAC3_CHCFG_n_DAD_SHIFT, DMAC3_CHCFG_n_DAD);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0x00, DMAC3_CHCFG_n_DAD_SHIFT, DMAC3_CHCFG_n_DAD);
 
     /* Set Count direction of the destination address Auto increment */
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0x00, DMAC3_CHCFG_n_SAD_SHIFT, DMAC3_CHCFG_n_SAD);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0x00, DMAC3_CHCFG_n_SAD_SHIFT, DMAC3_CHCFG_n_SAD);
 
     /* Set Source Transfer Size 8 bits */
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0x00, DMAC3_CHCFG_n_DDS_SHIFT, DMAC3_CHCFG_n_DDS);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0x00, DMAC3_CHCFG_n_DDS_SHIFT, DMAC3_CHCFG_n_DDS);
 
     /* Set Destination Transfer Size 8 bits */
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0x00, DMAC3_CHCFG_n_SDS_SHIFT, DMAC3_CHCFG_n_SDS);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0x00, DMAC3_CHCFG_n_SDS_SHIFT, DMAC3_CHCFG_n_SDS);
 
     /* Set Channel Status Register DMA Mode to 0 (Register Mode) */
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0, DMAC3_CHCFG_n_DMS_SHIFT,  DMAC3_CHCFG_n_DMS);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0, DMAC3_CHCFG_n_DMS_SHIFT,  DMAC3_CHCFG_n_DMS);
 
     /* Set Channel Status Register Set to 0 (Select Executes the Next0 Register Set) */
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0, DMAC3_CHCFG_n_RSEL_SHIFT, DMAC3_CHCFG_n_RSEL);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0, DMAC3_CHCFG_n_RSEL_SHIFT, DMAC3_CHCFG_n_RSEL);
 
     /* Set Channel Status Register Sweep Buffer Enable to 0 (Stops the DMA transfer without sweeping the buffer) */
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0, DMAC3_CHCFG_n_SBE_SHIFT,  DMAC3_CHCFG_n_SBE);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0, DMAC3_CHCFG_n_SBE_SHIFT,  DMAC3_CHCFG_n_SBE);
 
     /* Set Channel Status Register DMA Interrupt Mask to 0 (Does not mask the DMA interrupt) */
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0, DMAC3_CHCFG_n_DEM_SHIFT,  DMAC3_CHCFG_n_DEM);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0, DMAC3_CHCFG_n_DEM_SHIFT,  DMAC3_CHCFG_n_DEM);
 
     /* Set Enabled Register Set Enable to 0 (Does not continue DMA transfers) */
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0, DMAC3_CHCFG_n_REN_SHIFT, DMAC3_CHCFG_n_REN);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0, DMAC3_CHCFG_n_REN_SHIFT, DMAC3_CHCFG_n_REN);
 
     /* Set Register Select Switch to 0 (Does not invert RSEL automatically after a DMA transaction) */
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0, DMAC3_CHCFG_n_RSW_SHIFT, DMAC3_CHCFG_n_RSW);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0, DMAC3_CHCFG_n_RSW_SHIFT, DMAC3_CHCFG_n_RSW);
 
     /* TM  : Set Enabled Transfer Mode */
     /* AM  : Set ACK Mode DMAACK not to be output */
     /* SEL : Set SEL setting */
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 1, DMAC3_CHCFG_n_TM_SHIFT,  DMAC3_CHCFG_n_TM);
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 4, DMAC3_CHCFG_n_AM_SHIFT,  DMAC3_CHCFG_n_AM);
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 3, DMAC3_CHCFG_n_SEL_SHIFT, DMAC3_CHCFG_n_SEL);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 1, DMAC3_CHCFG_n_TM_SHIFT,  DMAC3_CHCFG_n_TM);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 4, DMAC3_CHCFG_n_AM_SHIFT,  DMAC3_CHCFG_n_AM);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 3, DMAC3_CHCFG_n_SEL_SHIFT, DMAC3_CHCFG_n_SEL);
 
     /* LVL, HIEN, LOWN, REQD : Initial Value */
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0, DMAC3_CHCFG_n_LVL_SHIFT,  DMAC3_CHCFG_n_LVL);
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0, DMAC3_CHCFG_n_HIEN_SHIFT, DMAC3_CHCFG_n_HIEN);
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0, DMAC3_CHCFG_n_LOEN_SHIFT, DMAC3_CHCFG_n_LOEN);
-    RZA_IO_RegWrite_32(&DMAC3.CHCFG.LONG, 0, DMAC3_CHCFG_n_REQD_SHIFT, DMAC3_CHCFG_n_REQD);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0, DMAC3_CHCFG_n_LVL_SHIFT,  DMAC3_CHCFG_n_LVL);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0, DMAC3_CHCFG_n_HIEN_SHIFT, DMAC3_CHCFG_n_HIEN);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0, DMAC3_CHCFG_n_LOEN_SHIFT, DMAC3_CHCFG_n_LOEN);
+    RZA_IO_RegWrite_32(&DMAC3.CHCFG_n, 0, DMAC3_CHCFG_n_REQD_SHIFT, DMAC3_CHCFG_n_REQD);
 
     /* MID, RID : Initial Value */
-    RZA_IO_RegWrite_32(&DMAC23.DMARS.LONG, 0, DMAC23_DMARS_CH3_MID_SHIFT, DMAC23_DMARS_CH3_MID);
-    RZA_IO_RegWrite_32(&DMAC23.DMARS.LONG, 0, DMAC23_DMARS_CH3_RID_SHIFT, DMAC23_DMARS_CH3_RID);
+    RZA_IO_RegWrite_32(&DMAC23.DMARS, 0, DMAC23_DMARS_CH3_MID_SHIFT, DMAC23_DMARS_CH3_MID);
+    RZA_IO_RegWrite_32(&DMAC23.DMARS, 0, DMAC23_DMARS_CH3_RID_SHIFT, DMAC23_DMARS_CH3_RID);
 
     /* PR : Set Round Robin mode */
-    RZA_IO_RegWrite_32(&DMAC07.DCTRL.LONG, 1, DMAC07_DCTRL_0_7_PR_SHIFT, DMAC07_DCTRL_0_7_PR);
+    RZA_IO_RegWrite_32(&DMAC07.DCTRL_0_7, 1, DMAC07_DCTRL_0_7_PR_SHIFT, DMAC07_DCTRL_0_7_PR);
 
     /* ==== Set DMAC channel 3 function ==== */
     R_INTC_RegistIntFunc(INTC_ID_DMAINT3, Sample_DMAC3_Interrupt);
@@ -485,23 +489,23 @@ void initialise_dma8bit_L2Cached(uint8_t *src, uint8_t *dst, uint32_t size, cons
     /* Set channel extension register 3 to the CACHE attributes for source and destination */
     /* NOTE: this must be consistent with the TTB settings for the memory domain */
     /* now set at inner and outer write back, write allocate: 1111b, Table2-14 AWCACHE and ARCACHE definitions in L2C-310 trm */
-    if(direction & L2_CACHED_SRC) RZA_IO_RegWrite_32(&DMAC3.CHEXT.LONG, WRITE_ALLOCATE_WRITE_BACK, DMAC3_CHEXT_n_SCA_SHIFT, DMAC7_CHEXT_n_SCA);
-    if(direction & L2_CACHED_DST) RZA_IO_RegWrite_32(&DMAC3.CHEXT.LONG, WRITE_ALLOCATE_WRITE_BACK, DMAC3_CHEXT_n_DCA_SHIFT, DMAC7_CHEXT_n_DCA);
+    if(direction & L2_CACHED_SRC) RZA_IO_RegWrite_32(&DMAC3.CHEXT_n, WRITE_ALLOCATE_WRITE_BACK, DMAC3_CHEXT_n_SCA_SHIFT, DMAC7_CHEXT_n_SCA);
+    if(direction & L2_CACHED_DST) RZA_IO_RegWrite_32(&DMAC3.CHEXT_n, WRITE_ALLOCATE_WRITE_BACK, DMAC3_CHEXT_n_DCA_SHIFT, DMAC7_CHEXT_n_DCA);
 
 
 
-    if ((0 == RZA_IO_RegRead_32(&DMAC3.CHSTAT.LONG, DMAC3_CHSTAT_n_EN_SHIFT,   DMAC3_CHSTAT_n_EN)) &&
-        (0 == RZA_IO_RegRead_32(&DMAC3.CHSTAT.LONG, DMAC3_CHSTAT_n_TACT_SHIFT, DMAC3_CHSTAT_n_TACT)))
+    if ((0 == RZA_IO_RegRead_32(&DMAC3.CHSTAT_n, DMAC3_CHSTAT_n_EN_SHIFT,   DMAC3_CHSTAT_n_EN)) &&
+        (0 == RZA_IO_RegRead_32(&DMAC3.CHSTAT_n, DMAC3_CHSTAT_n_TACT_SHIFT, DMAC3_CHSTAT_n_TACT)))
     {
         /* Channel Status Register */
-        RZA_IO_RegWrite_32(&DMAC3.CHCTRL.LONG, 1, DMAC3_CHCTRL_n_SWRST_SHIFT, DMAC3_CHCTRL_n_SWRST);
-        dummy = RZA_IO_RegRead_32(&DMAC3.CHCTRL.LONG, DMAC3_CHCTRL_n_SWRST_SHIFT, DMAC3_CHCTRL_n_SWRST);
+        RZA_IO_RegWrite_32(&DMAC3.CHCTRL_n, 1, DMAC3_CHCTRL_n_SWRST_SHIFT, DMAC3_CHCTRL_n_SWRST);
+        dummy = RZA_IO_RegRead_32(&DMAC3.CHCTRL_n, DMAC3_CHCTRL_n_SWRST_SHIFT, DMAC3_CHCTRL_n_SWRST);
 
 
-        RZA_IO_RegWrite_32(&DMAC3.CHCTRL.LONG, 1, DMAC3_CHCTRL_n_SETEN_SHIFT, DMAC3_CHCTRL_n_SETEN);
+        RZA_IO_RegWrite_32(&DMAC3.CHCTRL_n, 1, DMAC3_CHCTRL_n_SETEN_SHIFT, DMAC3_CHCTRL_n_SETEN);
 
         /* Software */
-        RZA_IO_RegWrite_32(&DMAC3.CHCTRL.LONG, 1, DMAC3_CHCTRL_n_STG_SHIFT, DMAC3_CHCTRL_n_STG);
+        RZA_IO_RegWrite_32(&DMAC3.CHCTRL_n, 1, DMAC3_CHCTRL_n_STG_SHIFT, DMAC3_CHCTRL_n_STG);
     }
 
 }

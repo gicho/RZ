@@ -32,13 +32,11 @@ Includes   <System Includes> , "Project Includes"
 ******************************************************************************/
 #include "r_typedefs.h"
 #include "iodefine.h"
-#include "spibsc.h"
-// #include "r_spibsc_ioset_api.h"
+#include "spibsc_iobitmask.h"
+// #include "spibsc.h"
 #include "rza_io_regrw.h"
 
-//#include "sflash.h"
 #include "qspi_setup.h"
-
 #include "qspi_controller.h"
 
 /******************************************************************************
@@ -58,12 +56,11 @@ Imported global variables and functions (from other files)
 /******************************************************************************
 Exported global variables and functions (to be accessed by other files)
 ******************************************************************************/
-
+const FLASH_TYPE flashModel =  SPANSION_S25FL512S;
 
 /******************************************************************************
 Private global variables and functions
 ******************************************************************************/
-
 
 
 void qspiControllerConfigure(spiConfig_t* spiConfig) {
@@ -72,7 +69,7 @@ void qspiControllerConfigure(spiConfig_t* spiConfig) {
 	/* set mode SPI or external address space */
 	RZA_IO_RegWrite_32(&SPIBSC0.CMNCR, spiConfig->operatingMode, SPIBSC_CMNCR_MD_SHIFT, SPIBSC_CMNCR_MD);
 
-	/* set mode SPI or external address space */
+	/* set to single or dual memory */
 	RZA_IO_RegWrite_32(&SPIBSC0.CMNCR, spiConfig->dataBusSize, SPIBSC_CMNCR_BSZ_SHIFT, SPIBSC_CMNCR_BSZ);
 
 	/* write edge */
@@ -84,19 +81,8 @@ void qspiControllerConfigure(spiConfig_t* spiConfig) {
 	/* CLK */
 	RZA_IO_RegWrite_32(&SPIBSC0.CMNCR, spiConfig->clockPolarity, SPIBSC_CMNCR_CPOL_SHIFT, SPIBSC_CMNCR_CPOL);
 
-	/* next access delay */
-	RZA_IO_RegWrite_32(&SPIBSC0.SSLDR, spiConfig->nextAccessDelay, SPIBSC_SSLDR_SPNDL_SHIFT, SPIBSC_SSLDR_SPNDL);
-	/* SPBSSL negate delay */
-	RZA_IO_RegWrite_32(&SPIBSC0.SSLDR, spiConfig->ssNegateDelay, SPIBSC_SSLDR_SLNDL_SHIFT, SPIBSC_SSLDR_SLNDL);
-	/* clock delay */
-	RZA_IO_RegWrite_32(&SPIBSC0.SSLDR, spiConfig->clockDelay, SPIBSC_SSLDR_SCKDL_SHIFT, SPIBSC_SSLDR_SCKDL);
-
 	/* swap by 8-bit unit - related to endianess of data) */
 	RZA_IO_RegWrite_32(&SPIBSC0.CMNCR, spiConfig->dataSwap, SPIBSC_CMNCR_SFDE_SHIFT, SPIBSC_CMNCR_SFDE);
-
-	/* ---- Bit rate Setting ---- */
-	RZA_IO_RegWrite_32(&SPIBSC0.SPBCR, ((DIV_RATIO_4 >> 8) & 0xFF), SPIBSC_SPBCR_SPBR_SHIFT, SPIBSC_SPBCR_SPBR);
-	RZA_IO_RegWrite_32(&SPIBSC0.SPBCR, (DIV_RATIO_4 & 0x3), SPIBSC_SPBCR_BRDV_SHIFT, SPIBSC_SPBCR_BRDV);
 
 	/* idle state of lines */
 	RZA_IO_RegWrite_32(&SPIBSC0.CMNCR, spiConfig->idleValue_30_31, SPIBSC_CMNCR_MOIIO3_SHIFT, SPIBSC_CMNCR_MOIIO3);
@@ -107,6 +93,21 @@ void qspiControllerConfigure(spiConfig_t* spiConfig) {
 	RZA_IO_RegWrite_32(&SPIBSC0.CMNCR, spiConfig->idleValue_30_31_2bitMode, SPIBSC_CMNCR_IO3FV_SHIFT, SPIBSC_CMNCR_IO3FV);
 	RZA_IO_RegWrite_32(&SPIBSC0.CMNCR, spiConfig->idleValue_20_21_2bitMode, SPIBSC_CMNCR_IO2FV_SHIFT, SPIBSC_CMNCR_IO2FV);
 	RZA_IO_RegWrite_32(&SPIBSC0.CMNCR, spiConfig->idleValue_00_01_1bitInput, SPIBSC_CMNCR_IO0FV_SHIFT, SPIBSC_CMNCR_IO0FV);
+
+	/* next access delay */
+	RZA_IO_RegWrite_32(&SPIBSC0.SSLDR, spiConfig->nextAccessDelay, SPIBSC_SSLDR_SPNDL_SHIFT, SPIBSC_SSLDR_SPNDL);
+	/* SPBSSL negate delay */
+	RZA_IO_RegWrite_32(&SPIBSC0.SSLDR, spiConfig->ssNegateDelay, SPIBSC_SSLDR_SLNDL_SHIFT, SPIBSC_SSLDR_SLNDL);
+	/* clock delay */
+	RZA_IO_RegWrite_32(&SPIBSC0.SSLDR, spiConfig->clockDelay, SPIBSC_SSLDR_SCKDL_SHIFT, SPIBSC_SSLDR_SCKDL);
+
+
+
+	/* ---- Bit rate Setting ---- */
+	RZA_IO_RegWrite_32(&SPIBSC0.SPBCR, (((spiConfig->divisionRatio) >> 8) & 0xFF), SPIBSC_SPBCR_SPBR_SHIFT, SPIBSC_SPBCR_SPBR);
+	RZA_IO_RegWrite_32(&SPIBSC0.SPBCR, ((spiConfig->divisionRatio) & 0x3), SPIBSC_SPBCR_BRDV_SHIFT, SPIBSC_SPBCR_BRDV);
+
+
 
 }
 

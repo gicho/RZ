@@ -17,692 +17,201 @@
 * and to discontinue the availability of this software. By using this software,
 * you agree to the additional terms and conditions found by accessing the
 * following link:
-* http://www.renesas.com/disclaimer
-*
+* http://www.renesas.com/disclaimer*
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
-*******************************************************************************/
-/*******************************************************************************
-*   File Name   : mtu2_iodefine.h
-*   H/W Platform: 
-*   Description : mtu2 interface file
-*******************************************************************************/
-/*******************************************************************************
-* History       : DD.MM.YYYY Version Description
-*               : 18.06.2013 1.00
-*******************************************************************************/
-#ifndef __MTU2_IODEFINE_H__
-#define __MTU2_IODEFINE_H__
+* File Name : mtu2_iodefine.h
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
+******************************************************************************/
+#ifndef MTU2_IODEFINE_H
+#define MTU2_IODEFINE_H
+/* ->SEC M1.10.1 : Not magic number */
 
-#include "typedefine.h"
-
-struct st_mtu2{                                 /* struct MTU2  */
-       union {                                  /* TCR_2        */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE TPSC:3U;              /*   TPSC       */
-                    _UBYTE CKEG:2U;              /*   CKEG       */
-                    _UBYTE CCLR:2U;              /*   CCLR       */
-                    _UBYTE :1U;
-                    } BIT;                      /*              */
-             } TCR_2;                           /*              */
-       union {                                  /* TMDR_2       */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE MD:4U;                /*   MD         */
-                    _UBYTE :4U;                  /*              */
-                    } BIT;                      /*              */
-             } TMDR_2;                          /*              */
-       union {                                  /* TIOR_2       */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE IOA:4U;               /*   IOA        */
-                    _UBYTE IOB:4U;               /*   IOB        */
-                    } BIT;                      /*              */
-             } TIOR_2;                          /*              */
-       _UBYTE wk0[1];                           /*              */
-       union {                                  /* TIER_2       */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE TGIEA:1U;             /*   TGIEA      */
-                    _UBYTE TGIEB:1U;             /*   TGIEB      */
-                    _UBYTE :2U;                  /*              */
-                    _UBYTE TCIEV:1U;             /*   TCIEV      */
-                    _UBYTE TCIEU:1U;             /*   TCIEU      */
-                    _UBYTE :1U;                  /*              */
-                    _UBYTE TTGE:1U;              /*   TTGE       */
-                    } BIT;                      /*              */
-             } TIER_2;                          /*              */
-       union {                                  /* TSR_2        */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE TGFA:1U;              /*   TGFA       */
-                    _UBYTE TGFB:1U;              /*   TGFB       */
-                    _UBYTE :1U;                  /*              */
-                    _UBYTE :1U;                  /*             */
-                    _UBYTE TCFV:1U;              /*   TCFV       */
-                    _UBYTE TCFU:1U;              /*   TCFU       */
-                    _UBYTE :1U;                  /*              */
-                    _UBYTE TCFD:1U;              /*   TCFD       */
-                    } BIT;                      /*              */
-             } TSR_2;                           /*              */
-       union {                                  /* TCNT_2       */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TCNT_2;                          /*              */
-       union {                                  /* TGRA_2       */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TGRA_2;                          /*              */
-       union {                                  /* TGRB_2       */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TGRB_2;                          /*              */
-       _UBYTE wk1[500];                         /*              */
-       union {                                  /* TCR_3        */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE TPSC:3U;              /*   TPSC       */
-                    _UBYTE CKEG:2U;              /*   CKEG       */
-                    _UBYTE CCLR:3U;              /*   CCLR       */
-                    } BIT;                      /*              */
-             } TCR_3;                           /*              */
-       union {                                  /* TCR_4        */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE TPSC:3U;              /*   TPSC       */
-                    _UBYTE CKEG:2U;              /*   CKEG       */
-                    _UBYTE CCLR:3U;              /*   CCLR       */
-                    } BIT;                      /*              */
-             } TCR_4;                           /*              */
-       union {                                  /* TMDR_3       */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE MD:4U;                /*   MD         */
-                    _UBYTE BFA:1U;               /*   BFA        */
-                    _UBYTE BFB:1U;               /*   BFB        */
-                    _UBYTE :2U;                  /*              */
-                    } BIT;                      /*              */
-             } TMDR_3;                          /*              */
-       union {                                  /* TMDR_4       */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE MD:4U;                /*   MD         */
-                    _UBYTE BFA:1U;               /*   BFA        */
-                    _UBYTE BFB:1U;               /*   BFB        */
-                    _UBYTE :2U;                  /*              */
-                    } BIT;                      /*              */
-             } TMDR_4;                          /*              */
-       union {                                  /* TIORH_3      */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE IOA:4U;               /*   IOA        */
-                    _UBYTE IOB:4U;               /*   IOB        */
-                    } BIT;                      /*              */
-             } TIORH_3;                         /*              */
-       union {                                  /* TIORL_3      */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE IOC:4U;               /*   IOC        */
-                    _UBYTE IOD:4U;               /*   IOD        */
-                    } BIT;                      /*              */
-             } TIORL_3;                         /*              */
-       union {                                  /* TIORH_4      */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE IOA:4U;               /*   IOA        */
-                    _UBYTE IOB:4U;               /*   IOB        */
-                    } BIT;                      /*              */
-             } TIORH_4;                         /*              */
-       union {                                  /* TIORL_4      */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE IOC:4U;               /*   IOC        */
-                    _UBYTE IOD:4U;               /*   IOD        */
-                    } BIT;                      /*              */
-             } TIORL_4;                         /*              */
-       union {                                  /* TIER_3       */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE TGIEA:1U;             /*   TGIEA      */
-                    _UBYTE TGIEB:1U;             /*   TGIEB      */
-                    _UBYTE TGIEC:1U;             /*   TGIEC      */
-                    _UBYTE TGIED:1U;             /*   TGIED      */
-                    _UBYTE TCIEV:1U;             /*   TCIEV      */
-                    _UBYTE :2U;                  /*              */
-                    _UBYTE TTGE:1U;              /*   TTGE       */
-                    } BIT;                      /*              */
-             } TIER_3;                          /*              */
-       union {                                  /* TIER_4       */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE TGIEA:1U;             /*   TGIEA      */
-                    _UBYTE TGIEB:1U;             /*   TGIEB      */
-                    _UBYTE TGIEC:1U;             /*   TGIEC      */
-                    _UBYTE TGIED:1U;             /*   TGIED      */
-                    _UBYTE TCIEV:1U;             /*   TCIEV      */
-                    _UBYTE :1U;                  /*              */
-                    _UBYTE TTGE2:1U;             /*   TTGE2      */
-                    _UBYTE TTGE:1U;              /*   TTGE       */
-                    } BIT;                      /*              */
-             } TIER_4;                          /*              */
-       union {                                  /* TOER         */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE OE3B:1U;              /*   OE3B       */
-                    _UBYTE OE4A:1U;              /*   OE4A       */
-                    _UBYTE OE4B:1U;              /*   OE4B       */
-                    _UBYTE OE3D:1U;              /*   OE3D       */
-                    _UBYTE OE4C:1U;              /*   OE4C       */
-                    _UBYTE OE4D:1U;              /*   OE4D       */
-                    _UBYTE :2U;                  /*              */
-                    } BIT;                      /*              */
-             } TOER;                            /*              */
-       _UBYTE wk2[2];                           /*              */
-       union {                                  /* TGCR         */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE UF:1U;                /*   UF         */
-                    _UBYTE VF:1U;                /*   VF         */
-                    _UBYTE WF:1U;                /*   WF         */
-                    _UBYTE FB:1U;                /*   FB         */
-                    _UBYTE P:1U;                 /*   P          */
-                    _UBYTE N:1U;                 /*   N          */
-                    _UBYTE BDC:1U;               /*   BDC        */
-                    _UBYTE :1U;                  /*              */
-                    } BIT;                      /*              */
-             } TGCR;                            /*              */
-       union {                                  /* TOCR1        */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE OLSP:1U;              /*   OLSP       */
-                    _UBYTE OLSN:1U;              /*   OLSN       */
-                    _UBYTE TOCS:1U;              /*   TOCS       */
-                    _UBYTE TOCL:1U;              /*   TOCL       */
-                    _UBYTE :2U;                  /*              */
-                    _UBYTE PSYE:1U;              /*   PSYE       */
-                    _UBYTE :1U;                  /*              */
-                    } BIT;                      /*              */
-             } TOCR1;                           /*              */
-       union {                                  /* TOCR2        */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE OLS1P:1U;             /*   OLS1P      */
-                    _UBYTE OLS1N:1U;             /*   OLS1N      */
-                    _UBYTE OLS2P:1U;             /*   OLS2P      */
-                    _UBYTE OLS2N:1U;             /*   OLS2N      */
-                    _UBYTE OLS3P:1U;             /*   OLS3P      */
-                    _UBYTE OLS3N:1U;             /*   OLS3N      */
-                    _UBYTE BF:2U;                /*   BF         */
-                    } BIT;                      /*              */
-             } TOCR2;                           /*              */
-       union {                                  /* TCNT_3       */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TCNT_3;                          /*              */
-       union {                                  /* TCNT_4       */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TCNT_4;                          /*              */
-       union {                                  /* TCDR        */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TCDR;                            /*              */
-       union {                                  /* TDDR        */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TDDR;                            /*              */
-       union {                                  /* TGRA_3       */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TGRA_3;                          /*              */
-       union {                                  /* TGRB_3       */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TGRB_3;                          /*              */
-       union {                                  /* TGRA_4       */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16;                /*   D          */
-                    } BIT;                      /*              */
-             } TGRA_4;                          /*              */
-       union {                                  /* TGRB_4       */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TGRB_4;                          /*              */
-       union {                                  /* TCNTS        */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TCNTS;                           /*              */
-       union {                                  /* TCBR         */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TCBR;                            /*              */
-       union {                                  /* TGRC_3       */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TGRC_3;                          /*              */
-       union {                                  /* TGRD_3       */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TGRD_3;                          /*              */
-       union {                                  /* TGRC_4       */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TGRC_4;                          /*              */
-       union {                                  /* TGRD_4       */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TGRD_4;                          /*              */
-       union {                                  /* TSR_3        */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE TGFA:1U;              /*   TGFA       */
-                    _UBYTE TGFB:1U;              /*   TGFB       */
-                    _UBYTE TGFC:1U;              /*   TGFC       */
-                    _UBYTE TGFD:1U;              /*   TGFD       */
-                    _UBYTE TCFV:1U;              /*   TCFV       */
-                    _UBYTE :2U;                  /*              */
-                    _UBYTE TCFD:1U;              /*   TCFD       */
-                    } BIT;                      /*              */
-             } TSR_3;                           /*              */
-       union {                                  /* TSR_4        */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE TGFA:1U;              /*   TGFA       */
-                    _UBYTE TGFB:1U;              /*   TGFB       */
-                    _UBYTE TGFC:1U;              /*   TGFC       */
-                    _UBYTE TGFD:1U;              /*   TGFD       */
-                    _UBYTE TCFV:1U;              /*   TCFV       */
-                    _UBYTE :2U;                  /*              */
-                    _UBYTE TCFD:1U;              /*   TCFD       */
-                    } BIT;                      /*              */
-             } TSR_4;                           /*              */
-       _UBYTE wk3[2];                           /*              */
-       union {                                  /* TITCR        */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE _4VCOR:3U;            /*   _4VCOR     */
-                    _UBYTE T4VEN:1U;             /*   T4VEN      */
-                    _UBYTE _3ACOR:3U;            /*   _3ACOR     */
-                    _UBYTE T3AEN:1U;             /*   T3AEN      */
-                    } BIT;                      /*              */
-             } TITCR;                           /*              */
-       union {                                  /* TITCNT       */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE _4VCNT:3U;            /*   _4VCNT     */
-                    _UBYTE :1U;                  /*              */
-                    _UBYTE _3ACNT:3U;            /*   _3ACNT     */
-                    _UBYTE :1U;                  /*              */
-                    } BIT;                      /*              */
-             } TITCNT;                          /*              */
-       union {                                  /* TBTER        */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE BTE:2U;               /*   BTE        */
-                    _UBYTE :6U;                  /*              */
-                    } BIT;                      /*              */
-             } TBTER;                           /*              */
-       _UBYTE wk4[1];                           /*              */
-       union {                                  /* TDER         */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE TDER:1U;              /*   TDER       */
-                    _UBYTE :7U;                  /*              */
-                    } BIT;                      /*              */
-             } TDER;                            /*              */
-       _UBYTE wk5[1];                           /*              */
-       union {                                  /* TOLBR        */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE OLS1P:1U;             /*   OLS1P      */
-                    _UBYTE OLS1N:1U;             /*   OLS1N      */
-                    _UBYTE OLS2P:1U;             /*   OLS2P      */
-                    _UBYTE OLS2N:1U;             /*   OLS2N      */
-                    _UBYTE OLS3P:1U;             /*   OLS3P      */
-                    _UBYTE OLS3N:1U;             /*   OLS3N      */
-                    _UBYTE :2U;                  /*              */
-                    } BIT;                      /*              */
-             } TOLBR;                           /*              */
-       _UBYTE wk6[1];                           /*              */
-       union {                                  /* TBTM_3       */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE TTSA:1U;              /*   TTSA       */
-                    _UBYTE TTSB:1U;              /*   TTSB       */
-                    _UBYTE :6U;                  /*              */
-                    } BIT;                      /*              */
-             } TBTM_3;                          /*              */
-       union {                                  /* TBTM_4       */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE TTSA:1U;              /*   TTSA       */
-                    _UBYTE TTSB:1U;              /*   TTSB       */
-                    _UBYTE :6U;                  /*              */
-                    } BIT;                      /*              */
-             } TBTM_4;                          /*              */
-       _UBYTE wk7[6];                           /*              */
-       union {                                  /* TADCR        */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD ITB4VE:1U;            /*   ITB4VE     */
-                    _UWORD ITB3AE:1U;            /*   ITB3AE     */
-                    _UWORD ITA4VE:1U;            /*   ITA4VE     */
-                    _UWORD ITA3AE:1U;            /*   ITA3AE     */
-                    _UWORD DT4BE:1U;             /*   DT4BE      */
-                    _UWORD UT4BE:1U;             /*   UT4BE      */
-                    _UWORD DT4AE:1U;             /*   DT4AE      */
-                    _UWORD UT4AE:1U;             /*   UT4AE      */
-                    _UWORD :6U;                  /*              */
-                    _UWORD BF:2U;                /*   BF         */
-                    } BIT;                      /*              */
-             } TADCR;                           /*              */
-       _UBYTE wk8[2];                           /*              */
-       union {                                  /* TADCORA_4    */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TADCORA_4;                       /*              */
-       union {                                  /* TADCORB_4    */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TADCORB_4;                       /*              */
-       union {                                  /* TADCOBRA_4   */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TADCOBRA_4;                      /*              */
-       union {                                  /* TADCOBRB_4   */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TADCOBRB_4;                      /*              */
-       _UBYTE wk9[20];                          /*              */
-       union {                                  /* TWCR         */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE WRE:1U;               /*   WRE        */
-                    _UBYTE :6U;                  /*              */
-                    _UBYTE CCE:1U;               /*   CCE        */
-                    } BIT;                      /*              */
-             } TWCR;                            /*              */
-       _UBYTE wk10[31];                         /*              */
-       union {                                  /* TSTR         */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE CST0:1U;              /*   CST0       */
-                    _UBYTE CST1:1U;              /*   CST1       */
-                    _UBYTE CST2:1U;              /*   CST2       */
-                    _UBYTE :3U;                  /*              */
-                    _UBYTE CST3:1U;              /*   CST3       */
-                    _UBYTE CST4:1U;              /*   CST4       */
-                    } BIT;                      /*              */
-             } TSTR;                            /*              */
-       union {                                  /* TSYR         */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE SYNC0:1U;             /*   SYNC0      */
-                    _UBYTE SYNC1:1U;             /*   SYNC1      */
-                    _UBYTE SYNC2:1U;             /*   SYNC2      */
-                    _UBYTE :3U;                  /*              */
-                    _UBYTE SYNC3:1U;             /*   SYNC3      */
-                    _UBYTE SYNC4:1U;             /*   SYNC4      */
-                    } BIT;                      /*              */
-             } TSYR;                            /*              */
-       _UBYTE wk11[2];                          /*              */
-       union {                                  /* TRWER        */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE RWE:1U;               /*   RWE        */
-                    _UBYTE :7U;                  /*              */
-                    } BIT;                      /*              */
-             } TRWER;                           /*              */
-       _UBYTE wk12[123];                        /*              */
-       union {                                  /* TCR_0        */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE TPSC:3U;              /*   TPSC       */
-                    _UBYTE CKEG:2U;              /*   CKEG       */
-                    _UBYTE CCLR:3U;              /*   CCLR       */
-                    } BIT;                      /*              */
-             } TCR_0;                           /*              */
-       union {                                  /* TMDR_0       */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE MD:4U;                /*   MD         */
-                    _UBYTE BFA:1U;               /*   BFA        */
-                    _UBYTE BFB:1U;               /*   BFB        */
-                    _UBYTE BFE:1U;               /*   BFE        */
-                    _UBYTE :1U;                  /*              */
-                    } BIT;                      /*              */
-             } TMDR_0;                          /*              */
-       union {                                  /* TIORH_0      */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE IOA:4U;               /*   IOA        */
-                    _UBYTE IOB:4U;               /*   IOB        */
-                    } BIT;                      /*              */
-             } TIORH_0;                         /*              */
-       union {                                  /* TIORL_0      */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE IOC:4U;               /*   IOC        */
-                    _UBYTE IOD:4U;               /*   IOD        */
-                    } BIT;                      /*              */
-             } TIORL_0;                         /*              */
-       union {                                  /* TIER_0       */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE TGIEA:1U;             /*   TGIEA      */
-                    _UBYTE TGIEB:1U;             /*   TGIEB      */
-                    _UBYTE TGIEC:1U;             /*   TGIEC      */
-                    _UBYTE TGIED:1U;             /*   TGIED      */
-                    _UBYTE TCIEV:1U;             /*   TCIEV      */
-                    _UBYTE :2U;                  /*              */
-                    _UBYTE TTGE:1U;              /*   TTGE       */
-                    } BIT;                      /*              */
-             } TIER_0;                          /*              */
-       union {                                  /* TSR_0        */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE TGFA:1U;              /*   TGFA       */
-                    _UBYTE TGFB:1U;              /*   TGFB       */
-                    _UBYTE TGFC:1U;              /*   TGFC       */
-                    _UBYTE TGFD:1U;              /*   TGFD       */
-                    _UBYTE TCFV:1U;              /*   TCFV       */
-                    _UBYTE :3U;                  /*              */
-                    } BIT;                      /*              */
-             } TSR_0;                           /*              */
-       union {                                  /* TCNT_0       */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TCNT_0;                          /*              */
-       union {                                  /* TGRA_0       */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TGRA_0;                          /*              */
-       union {                                  /* TGRB_0       */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TGRB_0;                          /*              */
-       union {                                  /* TGRC_0       */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TGRC_0;                          /*              */
-       union {                                  /* TGRD_0       */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TGRD_0;                          /*              */
-       _UBYTE wk13[16];                         /*              */
-       union {                                  /* TGRE_0       */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TGRE_0;                          /*              */
-       union {                                  /* TGRF_0       */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TGRF_0;                          /*              */
-       union {                                  /* TIER2_0      */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE TGIEE:1U;             /*   TGIEE      */
-                    _UBYTE TGIEF:1U;             /*   TGIEF      */
-                    _UBYTE :5U;                  /*              */
-                    _UBYTE TTGE2:1U;             /*   TTGE2      */
-                    } BIT;                      /*              */
-             } TIER2_0;                         /*              */
-       union {                                  /* TSR2_0       */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE TGFE:1U;              /*   TGFE       */
-                    _UBYTE TGFF:1U;              /*   TGFF       */
-                    _UBYTE :6U;                  /*              */
-                    } BIT;                      /*              */
-             } TSR2_0;                          /*              */
-       union {                                  /* TBTM_0       */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE TTSA:1U;              /*   TTSA       */
-                    _UBYTE TTSB:1U;              /*   TTSB       */
-                    _UBYTE TTSE:1U;              /*   TTSE       */
-                    _UBYTE :5U;                  /*              */
-                    } BIT;                      /*              */
-             } TBTM_0;                          /*              */
-       _UBYTE wk14[89];                         /*              */
-       union {                                  /* TCR_1        */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE TPSC:3U;              /*   TPSC       */
-                    _UBYTE CKEG:2U;              /*   CKEG       */
-                    _UBYTE CCLR:2U;              /*   CCLR       */
-                    _UBYTE :1U;
-                    } BIT;                      /*              */
-             } TCR_1;                           /*              */
-       union {                                  /* TMDR_1       */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE MD:4U;                /*   MD         */
-                    _UBYTE :4U;                  /*              */
-                    } BIT;                      /*              */
-             } TMDR_1;                          /*              */
-       union {                                  /* TIOR_1       */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE IOA:4U;               /*   IOA        */
-                    _UBYTE IOB:4U;               /*   IOB        */
-                    } BIT;                      /*              */
-             } TIOR_1;                          /*              */
-       _UBYTE wk15[1];                          /*              */
-       union {                                  /* TIER_1       */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE TGIEA:1U;             /*   TGIEA      */
-                    _UBYTE TGIEB:1U;             /*   TGIEB      */
-                    _UBYTE :2U;                  /*              */
-                    _UBYTE TCIEV:1U;             /*   TCIEV      */
-                    _UBYTE TCIEU:1U;             /*   TCIEU      */
-                    _UBYTE :1U;                  /*              */
-                    _UBYTE TTGE:1U;              /*   TTGE       */
-                    } BIT;                      /*              */
-             } TIER_1;                          /*              */
-       union {                                  /* TSR_1        */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE TGFA:1U;              /*   TGFA       */
-                    _UBYTE TGFB:1U;              /*   TGFB       */
-                    _UBYTE :2U;                  /*              */
-                    _UBYTE TCFV:1U;              /*   TCFV       */
-                    _UBYTE TCFU:1U;              /*   TCFU       */
-                    _UBYTE :1U;                  /*              */
-                    _UBYTE TCFD:1U;              /*   TCFD       */
-                    } BIT;                      /*              */
-             } TSR_1;                           /*              */
-       union {                                  /* TCNT_1       */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TCNT_1;                          /*              */
-       union {                                  /* TGRA_1       */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TGRA_1;                          /*              */
-       union {                                  /* TGRB_1       */
-             _UWORD WORD;                       /*  Word Access */
-             struct {                           /*  Bit Access  */
-                    _UWORD D:16U;                /*   D          */
-                    } BIT;                      /*              */
-             } TGRB_1;                          /*              */
-       _UBYTE wk16[4];                          /*              */
-       union {                                  /* TICCR        */
-             _UBYTE BYTE;                       /*  Byte Access */
-             struct {                           /*  Bit Access  */
-                    _UBYTE I1AE:1U;              /*   I1AE       */
-                    _UBYTE I1BE:1U;              /*   I1BE       */
-                    _UBYTE I2AE:1U;              /*   I2AE       */
-                    _UBYTE I2BE:1U;              /*   I2BE       */
-                    _UBYTE :4U;                  /*              */
-                    } BIT;                      /*              */
-             } TICCR;                           /*              */
-};                                              /*              */
+struct st_mtu2
+{                                                          /* MTU2             */
+    volatile uint8_t   TCR_2;                                  /*  TCR_2           */
+    volatile uint8_t   TMDR_2;                                 /*  TMDR_2          */
+    volatile uint8_t   TIOR_2;                                 /*  TIOR_2          */
+    volatile uint8_t   dummy520[1];                            /*                  */
+    volatile uint8_t   TIER_2;                                 /*  TIER_2          */
+    volatile uint8_t   TSR_2;                                  /*  TSR_2           */
+    volatile uint16_t TCNT_2;                                 /*  TCNT_2          */
+    volatile uint16_t TGRA_2;                                 /*  TGRA_2          */
+    volatile uint16_t TGRB_2;                                 /*  TGRB_2          */
+    volatile uint8_t   dummy521[500];                          /*                  */
+    volatile uint8_t   TCR_3;                                  /*  TCR_3           */
+    volatile uint8_t   TCR_4;                                  /*  TCR_4           */
+    volatile uint8_t   TMDR_3;                                 /*  TMDR_3          */
+    volatile uint8_t   TMDR_4;                                 /*  TMDR_4          */
+    volatile uint8_t   TIORH_3;                                /*  TIORH_3         */
+    volatile uint8_t   TIORL_3;                                /*  TIORL_3         */
+    volatile uint8_t   TIORH_4;                                /*  TIORH_4         */
+    volatile uint8_t   TIORL_4;                                /*  TIORL_4         */
+    volatile uint8_t   TIER_3;                                 /*  TIER_3          */
+    volatile uint8_t   TIER_4;                                 /*  TIER_4          */
+    volatile uint8_t   TOER;                                   /*  TOER            */
+    volatile uint8_t   dummy522[2];                            /*                  */
+    volatile uint8_t   TGCR;                                   /*  TGCR            */
+    volatile uint8_t   TOCR1;                                  /*  TOCR1           */
+    volatile uint8_t   TOCR2;                                  /*  TOCR2           */
+    volatile uint16_t TCNT_3;                                 /*  TCNT_3          */
+    volatile uint16_t TCNT_4;                                 /*  TCNT_4          */
+    volatile uint16_t TCDR;                                   /*  TCDR            */
+    volatile uint16_t TDDR;                                   /*  TDDR            */
+    volatile uint16_t TGRA_3;                                 /*  TGRA_3          */
+    volatile uint16_t TGRB_3;                                 /*  TGRB_3          */
+    volatile uint16_t TGRA_4;                                 /*  TGRA_4          */
+    volatile uint16_t TGRB_4;                                 /*  TGRB_4          */
+    volatile uint16_t TCNTS;                                  /*  TCNTS           */
+    volatile uint16_t TCBR;                                   /*  TCBR            */
+    volatile uint16_t TGRC_3;                                 /*  TGRC_3          */
+    volatile uint16_t TGRD_3;                                 /*  TGRD_3          */
+    volatile uint16_t TGRC_4;                                 /*  TGRC_4          */
+    volatile uint16_t TGRD_4;                                 /*  TGRD_4          */
+    volatile uint8_t   TSR_3;                                  /*  TSR_3           */
+    volatile uint8_t   TSR_4;                                  /*  TSR_4           */
+    volatile uint8_t   dummy523[2];                            /*                  */
+    volatile uint8_t   TITCR;                                  /*  TITCR           */
+    volatile uint8_t   TITCNT;                                 /*  TITCNT          */
+    volatile uint8_t   TBTER;                                  /*  TBTER           */
+    volatile uint8_t   dummy524[1];                            /*                  */
+    volatile uint8_t   TDER;                                   /*  TDER            */
+    volatile uint8_t   dummy525[1];                            /*                  */
+    volatile uint8_t   TOLBR;                                  /*  TOLBR           */
+    volatile uint8_t   dummy526[1];                            /*                  */
+    volatile uint8_t   TBTM_3;                                 /*  TBTM_3          */
+    volatile uint8_t   TBTM_4;                                 /*  TBTM_4          */
+    volatile uint8_t   dummy527[6];                            /*                  */
+    volatile uint16_t TADCR;                                  /*  TADCR           */
+    volatile uint8_t   dummy528[2];                            /*                  */
+    volatile uint16_t TADCORA_4;                              /*  TADCORA_4       */
+    volatile uint16_t TADCORB_4;                              /*  TADCORB_4       */
+    volatile uint16_t TADCOBRA_4;                             /*  TADCOBRA_4      */
+    volatile uint16_t TADCOBRB_4;                             /*  TADCOBRB_4      */
+    volatile uint8_t   dummy529[20];                           /*                  */
+    volatile uint8_t   TWCR;                                   /*  TWCR            */
+    volatile uint8_t   dummy530[31];                           /*                  */
+    volatile uint8_t   TSTR;                                   /*  TSTR            */
+    volatile uint8_t   TSYR;                                   /*  TSYR            */
+    volatile uint8_t   dummy531[2];                            /*                  */
+    volatile uint8_t   TRWER;                                  /*  TRWER           */
+    volatile uint8_t   dummy532[123];                          /*                  */
+    volatile uint8_t   TCR_0;                                  /*  TCR_0           */
+    volatile uint8_t   TMDR_0;                                 /*  TMDR_0          */
+    volatile uint8_t   TIORH_0;                                /*  TIORH_0         */
+    volatile uint8_t   TIORL_0;                                /*  TIORL_0         */
+    volatile uint8_t   TIER_0;                                 /*  TIER_0          */
+    volatile uint8_t   TSR_0;                                  /*  TSR_0           */
+    volatile uint16_t TCNT_0;                                 /*  TCNT_0          */
+    volatile uint16_t TGRA_0;                                 /*  TGRA_0          */
+    volatile uint16_t TGRB_0;                                 /*  TGRB_0          */
+    volatile uint16_t TGRC_0;                                 /*  TGRC_0          */
+    volatile uint16_t TGRD_0;                                 /*  TGRD_0          */
+    volatile uint8_t   dummy533[16];                           /*                  */
+    volatile uint16_t TGRE_0;                                 /*  TGRE_0          */
+    volatile uint16_t TGRF_0;                                 /*  TGRF_0          */
+    volatile uint8_t   TIER2_0;                                /*  TIER2_0         */
+    volatile uint8_t   TSR2_0;                                 /*  TSR2_0          */
+    volatile uint8_t   TBTM_0;                                 /*  TBTM_0          */
+    volatile uint8_t   dummy534[89];                           /*                  */
+    volatile uint8_t   TCR_1;                                  /*  TCR_1           */
+    volatile uint8_t   TMDR_1;                                 /*  TMDR_1          */
+    volatile uint8_t   TIOR_1;                                 /*  TIOR_1          */
+    volatile uint8_t   dummy535[1];                            /*                  */
+    volatile uint8_t   TIER_1;                                 /*  TIER_1          */
+    volatile uint8_t   TSR_1;                                  /*  TSR_1           */
+    volatile uint16_t TCNT_1;                                 /*  TCNT_1          */
+    volatile uint16_t TGRA_1;                                 /*  TGRA_1          */
+    volatile uint16_t TGRB_1;                                 /*  TGRB_1          */
+    volatile uint8_t   dummy536[4];                            /*                  */
+    volatile uint8_t   TICCR;                                  /*  TICCR           */
+};
 
 
-#define MTU2 (*(volatile struct st_mtu2 *)0xFCFF0000UL)  /* MTU2 Address */
+#define MTU2    (*(struct st_mtu2    *)0xFCFF0000uL) /* MTU2 */
 
-#endif /* __MTU2_IODEFINE_H__ */
-/* End of File */
+
+#define MTU2TCR_2 MTU2.TCR_2
+#define MTU2TMDR_2 MTU2.TMDR_2
+#define MTU2TIOR_2 MTU2.TIOR_2
+#define MTU2TIER_2 MTU2.TIER_2
+#define MTU2TSR_2 MTU2.TSR_2
+#define MTU2TCNT_2 MTU2.TCNT_2
+#define MTU2TGRA_2 MTU2.TGRA_2
+#define MTU2TGRB_2 MTU2.TGRB_2
+#define MTU2TCR_3 MTU2.TCR_3
+#define MTU2TCR_4 MTU2.TCR_4
+#define MTU2TMDR_3 MTU2.TMDR_3
+#define MTU2TMDR_4 MTU2.TMDR_4
+#define MTU2TIORH_3 MTU2.TIORH_3
+#define MTU2TIORL_3 MTU2.TIORL_3
+#define MTU2TIORH_4 MTU2.TIORH_4
+#define MTU2TIORL_4 MTU2.TIORL_4
+#define MTU2TIER_3 MTU2.TIER_3
+#define MTU2TIER_4 MTU2.TIER_4
+#define MTU2TOER MTU2.TOER
+#define MTU2TGCR MTU2.TGCR
+#define MTU2TOCR1 MTU2.TOCR1
+#define MTU2TOCR2 MTU2.TOCR2
+#define MTU2TCNT_3 MTU2.TCNT_3
+#define MTU2TCNT_4 MTU2.TCNT_4
+#define MTU2TCDR MTU2.TCDR
+#define MTU2TDDR MTU2.TDDR
+#define MTU2TGRA_3 MTU2.TGRA_3
+#define MTU2TGRB_3 MTU2.TGRB_3
+#define MTU2TGRA_4 MTU2.TGRA_4
+#define MTU2TGRB_4 MTU2.TGRB_4
+#define MTU2TCNTS MTU2.TCNTS
+#define MTU2TCBR MTU2.TCBR
+#define MTU2TGRC_3 MTU2.TGRC_3
+#define MTU2TGRD_3 MTU2.TGRD_3
+#define MTU2TGRC_4 MTU2.TGRC_4
+#define MTU2TGRD_4 MTU2.TGRD_4
+#define MTU2TSR_3 MTU2.TSR_3
+#define MTU2TSR_4 MTU2.TSR_4
+#define MTU2TITCR MTU2.TITCR
+#define MTU2TITCNT MTU2.TITCNT
+#define MTU2TBTER MTU2.TBTER
+#define MTU2TDER MTU2.TDER
+#define MTU2TOLBR MTU2.TOLBR
+#define MTU2TBTM_3 MTU2.TBTM_3
+#define MTU2TBTM_4 MTU2.TBTM_4
+#define MTU2TADCR MTU2.TADCR
+#define MTU2TADCORA_4 MTU2.TADCORA_4
+#define MTU2TADCORB_4 MTU2.TADCORB_4
+#define MTU2TADCOBRA_4 MTU2.TADCOBRA_4
+#define MTU2TADCOBRB_4 MTU2.TADCOBRB_4
+#define MTU2TWCR MTU2.TWCR
+#define MTU2TSTR MTU2.TSTR
+#define MTU2TSYR MTU2.TSYR
+#define MTU2TRWER MTU2.TRWER
+#define MTU2TCR_0 MTU2.TCR_0
+#define MTU2TMDR_0 MTU2.TMDR_0
+#define MTU2TIORH_0 MTU2.TIORH_0
+#define MTU2TIORL_0 MTU2.TIORL_0
+#define MTU2TIER_0 MTU2.TIER_0
+#define MTU2TSR_0 MTU2.TSR_0
+#define MTU2TCNT_0 MTU2.TCNT_0
+#define MTU2TGRA_0 MTU2.TGRA_0
+#define MTU2TGRB_0 MTU2.TGRB_0
+#define MTU2TGRC_0 MTU2.TGRC_0
+#define MTU2TGRD_0 MTU2.TGRD_0
+#define MTU2TGRE_0 MTU2.TGRE_0
+#define MTU2TGRF_0 MTU2.TGRF_0
+#define MTU2TIER2_0 MTU2.TIER2_0
+#define MTU2TSR2_0 MTU2.TSR2_0
+#define MTU2TBTM_0 MTU2.TBTM_0
+#define MTU2TCR_1 MTU2.TCR_1
+#define MTU2TMDR_1 MTU2.TMDR_1
+#define MTU2TIOR_1 MTU2.TIOR_1
+#define MTU2TIER_1 MTU2.TIER_1
+#define MTU2TSR_1 MTU2.TSR_1
+#define MTU2TCNT_1 MTU2.TCNT_1
+#define MTU2TGRA_1 MTU2.TGRA_1
+#define MTU2TGRB_1 MTU2.TGRB_1
+#define MTU2TICCR MTU2.TICCR
+/* <-SEC M1.10.1 */
+#endif

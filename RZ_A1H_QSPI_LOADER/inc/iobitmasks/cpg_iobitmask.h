@@ -18,22 +18,14 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer
-*
+* Copyright (C) 2012 - 2015 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* File Name   : cpg_iobitmask.h
+* $Rev: 1320 $
+* $Date:: 2015-01-29 15:54:51 +0900#$
+* Description : CPG register define header
 *******************************************************************************/
-/*******************************************************************************
-* File Name     : cpg_iobitmask.h
-* Device(s)     : RZ/A1H RSK2+RZA1H
-* H/W Platform  : RSK2+RZA1H CPU Board
-* Description   : CPG register define header
-*******************************************************************************/
-/*******************************************************************************
-* History       : DD.MM.YYYY Version Description
-*               : 18.06.2013 1.00
-*******************************************************************************/
-
 #ifndef CPG_IOBITMASK_H
 #define CPG_IOBITMASK_H
 
@@ -45,7 +37,7 @@
 
 #define CPG_FRQCR2_GFC                  (0x0003u)
 
-#define CPG_CPUSTS_ISBUSY0              (0x10u)
+#define CPG_CPUSTS_ISBUSY               (0x10u)
 
 #define CPG_STBCR1_DEEP                 (0x40u)
 #define CPG_STBCR1_STBY                 (0x80u)
@@ -54,6 +46,7 @@
 #define CPG_STBCR2_HIZ                  (0x80u)
 
 #define CPG_STBREQ1_STBRQ10             (0x01u)
+#define CPG_STBREQ1_STBRQ12             (0x04u)
 #define CPG_STBREQ1_STBRQ13             (0x08u)
 #define CPG_STBREQ1_STBRQ15             (0x20u)
 
@@ -67,6 +60,7 @@
 #define CPG_STBREQ2_STBRQ27             (0x80u)
 
 #define CPG_STBACK1_STBAK10             (0x01u)
+#define CPG_STBACK1_STBAK12             (0x04u)
 #define CPG_STBACK1_STBAK13             (0x08u)
 #define CPG_STBACK1_STBAK15             (0x20u)
 
@@ -140,6 +134,7 @@
 #define CPG_STBCR7_MSTP77               (0x80u)
 
 #define CPG_STBCR8_MSTP81               (0x02u)
+#define CPG_STBCR8_MSTP82               (0x04u)
 #define CPG_STBCR8_MSTP83               (0x08u)
 #define CPG_STBCR8_MSTP84               (0x10u)
 #define CPG_STBCR8_MSTP85               (0x20u)
@@ -176,6 +171,9 @@
 #define CPG_STBCR12_MSTP122             (0x04u)
 #define CPG_STBCR12_MSTP123             (0x08u)
 
+#define CPG_STBCR13_MSTP131             (0x02u)
+#define CPG_STBCR13_MSTP132             (0x04u)
+
 #define CPG_SWRSTCR1_SRST11             (0x02u)
 #define CPG_SWRSTCR1_SRST12             (0x04u)
 #define CPG_SWRSTCR1_SRST13             (0x08u)
@@ -185,22 +183,8 @@
 #define CPG_SWRSTCR1_AXTALE             (0x80u)
 
 #define CPG_SWRSTCR2_SRST21             (0x02u)
-#define CPG_SWRSTCR2_SRST22             (0x04u)
-#define CPG_SWRSTCR2_SRST23             (0x08u)
-#define CPG_SWRSTCR2_SRST24             (0x10u)
-#define CPG_SWRSTCR2_SRST25             (0x20u)
-#define CPG_SWRSTCR2_SRST26             (0x40u)
-#define CPG_SWRSTCR2_SRST27             (0x80u)
 
-#define CPG_SWRSTCR3_SRST31             (0x02u)
 #define CPG_SWRSTCR3_SRST32             (0x04u)
-#define CPG_SWRSTCR3_SRST33             (0x08u)
-#define CPG_SWRSTCR3_SRST34             (0x10u)
-#define CPG_SWRSTCR3_SRST35             (0x20u)
-#define CPG_SWRSTCR3_SRST36             (0x40u)
-
-#define CPG_SWRSTCR4_SRST40             (0x01u)
-#define CPG_SWRSTCR4_SRST41             (0x02u)
 
 #define CPG_RRAMKP_RRAMKP0              (0x01u)
 #define CPG_RRAMKP_RRAMKP1              (0x02u)
@@ -266,7 +250,7 @@
 
 #define CPG_FRQCR2_GFC_SHIFT            (0u)
 
-#define CPG_CPUSTS_ISBUSY0_SHIFT        (4u)
+#define CPG_CPUSTS_ISBUSY_SHIFT         (4u)
 
 #define CPG_STBCR1_DEEP_SHIFT           (6u)
 #define CPG_STBCR1_STBY_SHIFT           (7u)
@@ -275,6 +259,7 @@
 #define CPG_STBCR2_HIZ_SHIFT            (7u)
 
 #define CPG_STBREQ1_STBRQ10_SHIFT       (0u)
+#define CPG_STBREQ1_STBRQ12_SHIFT       (2u)
 #define CPG_STBREQ1_STBRQ13_SHIFT       (3u)
 #define CPG_STBREQ1_STBRQ15_SHIFT       (5u)
 
@@ -288,6 +273,7 @@
 #define CPG_STBREQ2_STBRQ27_SHIFT       (7u)
 
 #define CPG_STBACK1_STBAK10_SHIFT       (0u)
+#define CPG_STBACK1_STBAK12_SHIFT       (2u)
 #define CPG_STBACK1_STBAK13_SHIFT       (3u)
 #define CPG_STBACK1_STBAK15_SHIFT       (5u)
 
@@ -361,6 +347,7 @@
 #define CPG_STBCR7_MSTP77_SHIFT         (7u)
 
 #define CPG_STBCR8_MSTP81_SHIFT         (1u)
+#define CPG_STBCR8_MSTP82_SHIFT         (2u)
 #define CPG_STBCR8_MSTP83_SHIFT         (3u)
 #define CPG_STBCR8_MSTP84_SHIFT         (4u)
 #define CPG_STBCR8_MSTP85_SHIFT         (5u)
@@ -397,6 +384,9 @@
 #define CPG_STBCR12_MSTP122_SHIFT       (2u)
 #define CPG_STBCR12_MSTP123_SHIFT       (3u)
 
+#define CPG_STBCR13_MSTP131_SHIFT       (1u)
+#define CPG_STBCR13_MSTP132_SHIFT       (2u)
+
 #define CPG_SWRSTCR1_SRST11_SHIFT       (1u)
 #define CPG_SWRSTCR1_SRST12_SHIFT       (2u)
 #define CPG_SWRSTCR1_SRST13_SHIFT       (3u)
@@ -406,22 +396,8 @@
 #define CPG_SWRSTCR1_AXTALE_SHIFT       (7u)
 
 #define CPG_SWRSTCR2_SRST21_SHIFT       (1u)
-#define CPG_SWRSTCR2_SRST22_SHIFT       (2u)
-#define CPG_SWRSTCR2_SRST23_SHIFT       (3u)
-#define CPG_SWRSTCR2_SRST24_SHIFT       (4u)
-#define CPG_SWRSTCR2_SRST25_SHIFT       (5u)
-#define CPG_SWRSTCR2_SRST26_SHIFT       (6u)
-#define CPG_SWRSTCR2_SRST27_SHIFT       (7u)
 
-#define CPG_SWRSTCR3_SRST31_SHIFT       (1u)
 #define CPG_SWRSTCR3_SRST32_SHIFT       (2u)
-#define CPG_SWRSTCR3_SRST33_SHIFT       (3u)
-#define CPG_SWRSTCR3_SRST34_SHIFT       (4u)
-#define CPG_SWRSTCR3_SRST35_SHIFT       (5u)
-#define CPG_SWRSTCR3_SRST36_SHIFT       (6u)
-
-#define CPG_SWRSTCR4_SRST40_SHIFT       (0u)
-#define CPG_SWRSTCR4_SRST41_SHIFT       (1u)
 
 #define CPG_RRAMKP_RRAMKP0_SHIFT        (0u)
 #define CPG_RRAMKP_RRAMKP1_SHIFT        (1u)

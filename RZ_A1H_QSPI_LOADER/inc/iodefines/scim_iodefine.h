@@ -18,35 +18,36 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer*
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
 * File Name : scim_iodefine.h
-* $Rev: 809 $
-* $Date:: 2014-03-28 19:15:55 +0000#$
-* Description : Definition of I/O Register (V0.50j)
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
 ******************************************************************************/
 #ifndef SCIM_IODEFINE_H
 #define SCIM_IODEFINE_H
+/* ->SEC M1.10.1 : Not magic number */
 
 struct st_scim
 {                                                          /* SCIM             */
-    uint8_t        SMR;                                    /*  SMR             */
-    uint8_t        BRR;                                    /*  BRR             */
-    uint8_t        SCR;                                    /*  SCR             */
-    uint8_t        TDR;                                    /*  TDR             */
-    uint8_t        SSR;                                    /*  SSR             */
-    uint8_t        RDR;                                    /*  RDR             */
-    uint8_t        SCMR;                                   /*  SCMR            */
-    uint8_t        SEMR;                                   /*  SEMR            */
-    uint8_t        SNFR;                                   /*  SNFR            */
-    uint8_t        dummy1[4];                              /*                  */
-    uint8_t        SECR;                                   /*  SECR            */
+    volatile uint8_t   SMR;                                    /*  SMR             */
+    volatile uint8_t   BRR;                                    /*  BRR             */
+    volatile uint8_t   SCR;                                    /*  SCR             */
+    volatile uint8_t   TDR;                                    /*  TDR             */
+    volatile uint8_t   SSR;                                    /*  SSR             */
+    volatile uint8_t   RDR;                                    /*  RDR             */
+    volatile uint8_t   SCMR;                                   /*  SCMR            */
+    volatile uint8_t   SEMR;                                   /*  SEMR            */
+    volatile uint8_t   SNFR;                                   /*  SNFR            */
+    volatile uint8_t   dummy1[4];                              /*                  */
+    volatile uint8_t   SECR;                                   /*  SECR            */
 };
 
 
-#define SCIM0   (*(volatile struct st_scim    *)0xE800B000uL) /* SCIM0 */
-#define SCIM1   (*(volatile struct st_scim    *)0xE800B800uL) /* SCIM1 */
+#define SCIM0   (*(struct st_scim    *)0xE800B000uL) /* SCIM0 */
+#define SCIM1   (*(struct st_scim    *)0xE800B800uL) /* SCIM1 */
 
 
 /* Start of channnel array defines of SCIM */
@@ -55,7 +56,9 @@ struct st_scim
 /*(Sample) value = SCIM[ channel ]->SMR; */
 #define SCIM_COUNT  2
 #define SCIM_ADDRESS_LIST \
-    &SCIM0, &SCIM1
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
+    &SCIM0, &SCIM1 \
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
 
 /* End of channnel array defines of SCIM */
 
@@ -80,4 +83,5 @@ struct st_scim
 #define SEMR1 SCIM1.SEMR
 #define SNFR1 SCIM1.SNFR
 #define SECR1 SCIM1.SECR
+/* <-SEC M1.10.1 */
 #endif

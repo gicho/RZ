@@ -18,374 +18,376 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer*
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
 * File Name : dmac_iodefine.h
-* $Rev: 809 $
-* $Date:: 2014-03-28 19:15:55 +0000#$
-* Description : Definition of I/O Register (V0.50j)
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
 ******************************************************************************/
 #ifndef DMAC_IODEFINE_H
 #define DMAC_IODEFINE_H
+/* ->QAC 0639 : Over 127 members (C90) */
+/* ->SEC M1.10.1 : Not magic number */
 
 struct st_dmac
 {                                                          /* DMAC             */
 /* start of struct st_dmac_n */
-    uint32_t       N0SA_0;                                 /*  N0SA_0          */
-    uint32_t       N0DA_0;                                 /*  N0DA_0          */
-    uint32_t       N0TB_0;                                 /*  N0TB_0          */
-    uint32_t       N1SA_0;                                 /*  N1SA_0          */
-    uint32_t       N1DA_0;                                 /*  N1DA_0          */
-    uint32_t       N1TB_0;                                 /*  N1TB_0          */
-    uint32_t       CRSA_0;                                 /*  CRSA_0          */
-    uint32_t       CRDA_0;                                 /*  CRDA_0          */
-    uint32_t       CRTB_0;                                 /*  CRTB_0          */
-    uint32_t       CHSTAT_0;                               /*  CHSTAT_0        */
-    uint32_t       CHCTRL_0;                               /*  CHCTRL_0        */
-    uint32_t       CHCFG_0;                                /*  CHCFG_0         */
-    uint32_t       CHITVL_0;                               /*  CHITVL_0        */
-    uint32_t       CHEXT_0;                                /*  CHEXT_0         */
-    uint32_t       NXLA_0;                                 /*  NXLA_0          */
-    uint32_t       CRLA_0;                                 /*  CRLA_0          */
+    volatile uint32_t  N0SA_0;                                 /*  N0SA_0          */
+    volatile uint32_t  N0DA_0;                                 /*  N0DA_0          */
+    volatile uint32_t  N0TB_0;                                 /*  N0TB_0          */
+    volatile uint32_t  N1SA_0;                                 /*  N1SA_0          */
+    volatile uint32_t  N1DA_0;                                 /*  N1DA_0          */
+    volatile uint32_t  N1TB_0;                                 /*  N1TB_0          */
+    volatile uint32_t  CRSA_0;                                 /*  CRSA_0          */
+    volatile uint32_t  CRDA_0;                                 /*  CRDA_0          */
+    volatile uint32_t  CRTB_0;                                 /*  CRTB_0          */
+    volatile uint32_t  CHSTAT_0;                               /*  CHSTAT_0        */
+    volatile uint32_t  CHCTRL_0;                               /*  CHCTRL_0        */
+    volatile uint32_t  CHCFG_0;                                /*  CHCFG_0         */
+    volatile uint32_t  CHITVL_0;                               /*  CHITVL_0        */
+    volatile uint32_t  CHEXT_0;                                /*  CHEXT_0         */
+    volatile uint32_t  NXLA_0;                                 /*  NXLA_0          */
+    volatile uint32_t  CRLA_0;                                 /*  CRLA_0          */
 /* end of struct st_dmac_n */
 /* start of struct st_dmac_n */
-    uint32_t       N0SA_1;                                 /*  N0SA_1          */
-    uint32_t       N0DA_1;                                 /*  N0DA_1          */
-    uint32_t       N0TB_1;                                 /*  N0TB_1          */
-    uint32_t       N1SA_1;                                 /*  N1SA_1          */
-    uint32_t       N1DA_1;                                 /*  N1DA_1          */
-    uint32_t       N1TB_1;                                 /*  N1TB_1          */
-    uint32_t       CRSA_1;                                 /*  CRSA_1          */
-    uint32_t       CRDA_1;                                 /*  CRDA_1          */
-    uint32_t       CRTB_1;                                 /*  CRTB_1          */
-    uint32_t       CHSTAT_1;                               /*  CHSTAT_1        */
-    uint32_t       CHCTRL_1;                               /*  CHCTRL_1        */
-    uint32_t       CHCFG_1;                                /*  CHCFG_1         */
-    uint32_t       CHITVL_1;                               /*  CHITVL_1        */
-    uint32_t       CHEXT_1;                                /*  CHEXT_1         */
-    uint32_t       NXLA_1;                                 /*  NXLA_1          */
-    uint32_t       CRLA_1;                                 /*  CRLA_1          */
+    volatile uint32_t  N0SA_1;                                 /*  N0SA_1          */
+    volatile uint32_t  N0DA_1;                                 /*  N0DA_1          */
+    volatile uint32_t  N0TB_1;                                 /*  N0TB_1          */
+    volatile uint32_t  N1SA_1;                                 /*  N1SA_1          */
+    volatile uint32_t  N1DA_1;                                 /*  N1DA_1          */
+    volatile uint32_t  N1TB_1;                                 /*  N1TB_1          */
+    volatile uint32_t  CRSA_1;                                 /*  CRSA_1          */
+    volatile uint32_t  CRDA_1;                                 /*  CRDA_1          */
+    volatile uint32_t  CRTB_1;                                 /*  CRTB_1          */
+    volatile uint32_t  CHSTAT_1;                               /*  CHSTAT_1        */
+    volatile uint32_t  CHCTRL_1;                               /*  CHCTRL_1        */
+    volatile uint32_t  CHCFG_1;                                /*  CHCFG_1         */
+    volatile uint32_t  CHITVL_1;                               /*  CHITVL_1        */
+    volatile uint32_t  CHEXT_1;                                /*  CHEXT_1         */
+    volatile uint32_t  NXLA_1;                                 /*  NXLA_1          */
+    volatile uint32_t  CRLA_1;                                 /*  CRLA_1          */
 /* end of struct st_dmac_n */
 /* start of struct st_dmac_n */
-    uint32_t       N0SA_2;                                 /*  N0SA_2          */
-    uint32_t       N0DA_2;                                 /*  N0DA_2          */
-    uint32_t       N0TB_2;                                 /*  N0TB_2          */
-    uint32_t       N1SA_2;                                 /*  N1SA_2          */
-    uint32_t       N1DA_2;                                 /*  N1DA_2          */
-    uint32_t       N1TB_2;                                 /*  N1TB_2          */
-    uint32_t       CRSA_2;                                 /*  CRSA_2          */
-    uint32_t       CRDA_2;                                 /*  CRDA_2          */
-    uint32_t       CRTB_2;                                 /*  CRTB_2          */
-    uint32_t       CHSTAT_2;                               /*  CHSTAT_2        */
-    uint32_t       CHCTRL_2;                               /*  CHCTRL_2        */
-    uint32_t       CHCFG_2;                                /*  CHCFG_2         */
-    uint32_t       CHITVL_2;                               /*  CHITVL_2        */
-    uint32_t       CHEXT_2;                                /*  CHEXT_2         */
-    uint32_t       NXLA_2;                                 /*  NXLA_2          */
-    uint32_t       CRLA_2;                                 /*  CRLA_2          */
+    volatile uint32_t  N0SA_2;                                 /*  N0SA_2          */
+    volatile uint32_t  N0DA_2;                                 /*  N0DA_2          */
+    volatile uint32_t  N0TB_2;                                 /*  N0TB_2          */
+    volatile uint32_t  N1SA_2;                                 /*  N1SA_2          */
+    volatile uint32_t  N1DA_2;                                 /*  N1DA_2          */
+    volatile uint32_t  N1TB_2;                                 /*  N1TB_2          */
+    volatile uint32_t  CRSA_2;                                 /*  CRSA_2          */
+    volatile uint32_t  CRDA_2;                                 /*  CRDA_2          */
+    volatile uint32_t  CRTB_2;                                 /*  CRTB_2          */
+    volatile uint32_t  CHSTAT_2;                               /*  CHSTAT_2        */
+    volatile uint32_t  CHCTRL_2;                               /*  CHCTRL_2        */
+    volatile uint32_t  CHCFG_2;                                /*  CHCFG_2         */
+    volatile uint32_t  CHITVL_2;                               /*  CHITVL_2        */
+    volatile uint32_t  CHEXT_2;                                /*  CHEXT_2         */
+    volatile uint32_t  NXLA_2;                                 /*  NXLA_2          */
+    volatile uint32_t  CRLA_2;                                 /*  CRLA_2          */
 /* end of struct st_dmac_n */
 /* start of struct st_dmac_n */
-    uint32_t       N0SA_3;                                 /*  N0SA_3          */
-    uint32_t       N0DA_3;                                 /*  N0DA_3          */
-    uint32_t       N0TB_3;                                 /*  N0TB_3          */
-    uint32_t       N1SA_3;                                 /*  N1SA_3          */
-    uint32_t       N1DA_3;                                 /*  N1DA_3          */
-    uint32_t       N1TB_3;                                 /*  N1TB_3          */
-    uint32_t       CRSA_3;                                 /*  CRSA_3          */
-    uint32_t       CRDA_3;                                 /*  CRDA_3          */
-    uint32_t       CRTB_3;                                 /*  CRTB_3          */
-    uint32_t       CHSTAT_3;                               /*  CHSTAT_3        */
-    uint32_t       CHCTRL_3;                               /*  CHCTRL_3        */
-    uint32_t       CHCFG_3;                                /*  CHCFG_3         */
-    uint32_t       CHITVL_3;                               /*  CHITVL_3        */
-    uint32_t       CHEXT_3;                                /*  CHEXT_3         */
-    uint32_t       NXLA_3;                                 /*  NXLA_3          */
-    uint32_t       CRLA_3;                                 /*  CRLA_3          */
+    volatile uint32_t  N0SA_3;                                 /*  N0SA_3          */
+    volatile uint32_t  N0DA_3;                                 /*  N0DA_3          */
+    volatile uint32_t  N0TB_3;                                 /*  N0TB_3          */
+    volatile uint32_t  N1SA_3;                                 /*  N1SA_3          */
+    volatile uint32_t  N1DA_3;                                 /*  N1DA_3          */
+    volatile uint32_t  N1TB_3;                                 /*  N1TB_3          */
+    volatile uint32_t  CRSA_3;                                 /*  CRSA_3          */
+    volatile uint32_t  CRDA_3;                                 /*  CRDA_3          */
+    volatile uint32_t  CRTB_3;                                 /*  CRTB_3          */
+    volatile uint32_t  CHSTAT_3;                               /*  CHSTAT_3        */
+    volatile uint32_t  CHCTRL_3;                               /*  CHCTRL_3        */
+    volatile uint32_t  CHCFG_3;                                /*  CHCFG_3         */
+    volatile uint32_t  CHITVL_3;                               /*  CHITVL_3        */
+    volatile uint32_t  CHEXT_3;                                /*  CHEXT_3         */
+    volatile uint32_t  NXLA_3;                                 /*  NXLA_3          */
+    volatile uint32_t  CRLA_3;                                 /*  CRLA_3          */
 /* end of struct st_dmac_n */
 /* start of struct st_dmac_n */
-    uint32_t       N0SA_4;                                 /*  N0SA_4          */
-    uint32_t       N0DA_4;                                 /*  N0DA_4          */
-    uint32_t       N0TB_4;                                 /*  N0TB_4          */
-    uint32_t       N1SA_4;                                 /*  N1SA_4          */
-    uint32_t       N1DA_4;                                 /*  N1DA_4          */
-    uint32_t       N1TB_4;                                 /*  N1TB_4          */
-    uint32_t       CRSA_4;                                 /*  CRSA_4          */
-    uint32_t       CRDA_4;                                 /*  CRDA_4          */
-    uint32_t       CRTB_4;                                 /*  CRTB_4          */
-    uint32_t       CHSTAT_4;                               /*  CHSTAT_4        */
-    uint32_t       CHCTRL_4;                               /*  CHCTRL_4        */
-    uint32_t       CHCFG_4;                                /*  CHCFG_4         */
-    uint32_t       CHITVL_4;                               /*  CHITVL_4        */
-    uint32_t       CHEXT_4;                                /*  CHEXT_4         */
-    uint32_t       NXLA_4;                                 /*  NXLA_4          */
-    uint32_t       CRLA_4;                                 /*  CRLA_4          */
+    volatile uint32_t  N0SA_4;                                 /*  N0SA_4          */
+    volatile uint32_t  N0DA_4;                                 /*  N0DA_4          */
+    volatile uint32_t  N0TB_4;                                 /*  N0TB_4          */
+    volatile uint32_t  N1SA_4;                                 /*  N1SA_4          */
+    volatile uint32_t  N1DA_4;                                 /*  N1DA_4          */
+    volatile uint32_t  N1TB_4;                                 /*  N1TB_4          */
+    volatile uint32_t  CRSA_4;                                 /*  CRSA_4          */
+    volatile uint32_t  CRDA_4;                                 /*  CRDA_4          */
+    volatile uint32_t  CRTB_4;                                 /*  CRTB_4          */
+    volatile uint32_t  CHSTAT_4;                               /*  CHSTAT_4        */
+    volatile uint32_t  CHCTRL_4;                               /*  CHCTRL_4        */
+    volatile uint32_t  CHCFG_4;                                /*  CHCFG_4         */
+    volatile uint32_t  CHITVL_4;                               /*  CHITVL_4        */
+    volatile uint32_t  CHEXT_4;                                /*  CHEXT_4         */
+    volatile uint32_t  NXLA_4;                                 /*  NXLA_4          */
+    volatile uint32_t  CRLA_4;                                 /*  CRLA_4          */
 /* end of struct st_dmac_n */
 /* start of struct st_dmac_n */
-    uint32_t       N0SA_5;                                 /*  N0SA_5          */
-    uint32_t       N0DA_5;                                 /*  N0DA_5          */
-    uint32_t       N0TB_5;                                 /*  N0TB_5          */
-    uint32_t       N1SA_5;                                 /*  N1SA_5          */
-    uint32_t       N1DA_5;                                 /*  N1DA_5          */
-    uint32_t       N1TB_5;                                 /*  N1TB_5          */
-    uint32_t       CRSA_5;                                 /*  CRSA_5          */
-    uint32_t       CRDA_5;                                 /*  CRDA_5          */
-    uint32_t       CRTB_5;                                 /*  CRTB_5          */
-    uint32_t       CHSTAT_5;                               /*  CHSTAT_5        */
-    uint32_t       CHCTRL_5;                               /*  CHCTRL_5        */
-    uint32_t       CHCFG_5;                                /*  CHCFG_5         */
-    uint32_t       CHITVL_5;                               /*  CHITVL_5        */
-    uint32_t       CHEXT_5;                                /*  CHEXT_5         */
-    uint32_t       NXLA_5;                                 /*  NXLA_5          */
-    uint32_t       CRLA_5;                                 /*  CRLA_5          */
+    volatile uint32_t  N0SA_5;                                 /*  N0SA_5          */
+    volatile uint32_t  N0DA_5;                                 /*  N0DA_5          */
+    volatile uint32_t  N0TB_5;                                 /*  N0TB_5          */
+    volatile uint32_t  N1SA_5;                                 /*  N1SA_5          */
+    volatile uint32_t  N1DA_5;                                 /*  N1DA_5          */
+    volatile uint32_t  N1TB_5;                                 /*  N1TB_5          */
+    volatile uint32_t  CRSA_5;                                 /*  CRSA_5          */
+    volatile uint32_t  CRDA_5;                                 /*  CRDA_5          */
+    volatile uint32_t  CRTB_5;                                 /*  CRTB_5          */
+    volatile uint32_t  CHSTAT_5;                               /*  CHSTAT_5        */
+    volatile uint32_t  CHCTRL_5;                               /*  CHCTRL_5        */
+    volatile uint32_t  CHCFG_5;                                /*  CHCFG_5         */
+    volatile uint32_t  CHITVL_5;                               /*  CHITVL_5        */
+    volatile uint32_t  CHEXT_5;                                /*  CHEXT_5         */
+    volatile uint32_t  NXLA_5;                                 /*  NXLA_5          */
+    volatile uint32_t  CRLA_5;                                 /*  CRLA_5          */
 /* end of struct st_dmac_n */
 /* start of struct st_dmac_n */
-    uint32_t       N0SA_6;                                 /*  N0SA_6          */
-    uint32_t       N0DA_6;                                 /*  N0DA_6          */
-    uint32_t       N0TB_6;                                 /*  N0TB_6          */
-    uint32_t       N1SA_6;                                 /*  N1SA_6          */
-    uint32_t       N1DA_6;                                 /*  N1DA_6          */
-    uint32_t       N1TB_6;                                 /*  N1TB_6          */
-    uint32_t       CRSA_6;                                 /*  CRSA_6          */
-    uint32_t       CRDA_6;                                 /*  CRDA_6          */
-    uint32_t       CRTB_6;                                 /*  CRTB_6          */
-    uint32_t       CHSTAT_6;                               /*  CHSTAT_6        */
-    uint32_t       CHCTRL_6;                               /*  CHCTRL_6        */
-    uint32_t       CHCFG_6;                                /*  CHCFG_6         */
-    uint32_t       CHITVL_6;                               /*  CHITVL_6        */
-    uint32_t       CHEXT_6;                                /*  CHEXT_6         */
-    uint32_t       NXLA_6;                                 /*  NXLA_6          */
-    uint32_t       CRLA_6;                                 /*  CRLA_6          */
+    volatile uint32_t  N0SA_6;                                 /*  N0SA_6          */
+    volatile uint32_t  N0DA_6;                                 /*  N0DA_6          */
+    volatile uint32_t  N0TB_6;                                 /*  N0TB_6          */
+    volatile uint32_t  N1SA_6;                                 /*  N1SA_6          */
+    volatile uint32_t  N1DA_6;                                 /*  N1DA_6          */
+    volatile uint32_t  N1TB_6;                                 /*  N1TB_6          */
+    volatile uint32_t  CRSA_6;                                 /*  CRSA_6          */
+    volatile uint32_t  CRDA_6;                                 /*  CRDA_6          */
+    volatile uint32_t  CRTB_6;                                 /*  CRTB_6          */
+    volatile uint32_t  CHSTAT_6;                               /*  CHSTAT_6        */
+    volatile uint32_t  CHCTRL_6;                               /*  CHCTRL_6        */
+    volatile uint32_t  CHCFG_6;                                /*  CHCFG_6         */
+    volatile uint32_t  CHITVL_6;                               /*  CHITVL_6        */
+    volatile uint32_t  CHEXT_6;                                /*  CHEXT_6         */
+    volatile uint32_t  NXLA_6;                                 /*  NXLA_6          */
+    volatile uint32_t  CRLA_6;                                 /*  CRLA_6          */
 /* end of struct st_dmac_n */
 /* start of struct st_dmac_n */
-    uint32_t       N0SA_7;                                 /*  N0SA_7          */
-    uint32_t       N0DA_7;                                 /*  N0DA_7          */
-    uint32_t       N0TB_7;                                 /*  N0TB_7          */
-    uint32_t       N1SA_7;                                 /*  N1SA_7          */
-    uint32_t       N1DA_7;                                 /*  N1DA_7          */
-    uint32_t       N1TB_7;                                 /*  N1TB_7          */
-    uint32_t       CRSA_7;                                 /*  CRSA_7          */
-    uint32_t       CRDA_7;                                 /*  CRDA_7          */
-    uint32_t       CRTB_7;                                 /*  CRTB_7          */
-    uint32_t       CHSTAT_7;                               /*  CHSTAT_7        */
-    uint32_t       CHCTRL_7;                               /*  CHCTRL_7        */
-    uint32_t       CHCFG_7;                                /*  CHCFG_7         */
-    uint32_t       CHITVL_7;                               /*  CHITVL_7        */
-    uint32_t       CHEXT_7;                                /*  CHEXT_7         */
-    uint32_t       NXLA_7;                                 /*  NXLA_7          */
-    uint32_t       CRLA_7;                                 /*  CRLA_7          */
+    volatile uint32_t  N0SA_7;                                 /*  N0SA_7          */
+    volatile uint32_t  N0DA_7;                                 /*  N0DA_7          */
+    volatile uint32_t  N0TB_7;                                 /*  N0TB_7          */
+    volatile uint32_t  N1SA_7;                                 /*  N1SA_7          */
+    volatile uint32_t  N1DA_7;                                 /*  N1DA_7          */
+    volatile uint32_t  N1TB_7;                                 /*  N1TB_7          */
+    volatile uint32_t  CRSA_7;                                 /*  CRSA_7          */
+    volatile uint32_t  CRDA_7;                                 /*  CRDA_7          */
+    volatile uint32_t  CRTB_7;                                 /*  CRTB_7          */
+    volatile uint32_t  CHSTAT_7;                               /*  CHSTAT_7        */
+    volatile uint32_t  CHCTRL_7;                               /*  CHCTRL_7        */
+    volatile uint32_t  CHCFG_7;                                /*  CHCFG_7         */
+    volatile uint32_t  CHITVL_7;                               /*  CHITVL_7        */
+    volatile uint32_t  CHEXT_7;                                /*  CHEXT_7         */
+    volatile uint32_t  NXLA_7;                                 /*  NXLA_7          */
+    volatile uint32_t  CRLA_7;                                 /*  CRLA_7          */
 /* end of struct st_dmac_n */
-    uint8_t        dummy204[256];                          /*                  */
+    volatile uint8_t   dummy187[256];                          /*                  */
 /* start of struct st_dmaccommon_n */
-    uint32_t       DCTRL_0_7;                              /*  DCTRL_0_7       */
-    uint8_t        dummy205[12];                           /*                  */
-    uint32_t       DSTAT_EN_0_7;                           /*  DSTAT_EN_0_7    */
-    uint32_t       DSTAT_ER_0_7;                           /*  DSTAT_ER_0_7    */
-    uint32_t       DSTAT_END_0_7;                          /*  DSTAT_END_0_7   */
-    uint32_t       DSTAT_TC_0_7;                           /*  DSTAT_TC_0_7    */
-    uint32_t       DSTAT_SUS_0_7;                          /*  DSTAT_SUS_0_7   */
+    volatile uint32_t  DCTRL_0_7;                              /*  DCTRL_0_7       */
+    volatile uint8_t   dummy188[12];                           /*                  */
+    volatile uint32_t  DSTAT_EN_0_7;                           /*  DSTAT_EN_0_7    */
+    volatile uint32_t  DSTAT_ER_0_7;                           /*  DSTAT_ER_0_7    */
+    volatile uint32_t  DSTAT_END_0_7;                          /*  DSTAT_END_0_7   */
+    volatile uint32_t  DSTAT_TC_0_7;                           /*  DSTAT_TC_0_7    */
+    volatile uint32_t  DSTAT_SUS_0_7;                          /*  DSTAT_SUS_0_7   */
 /* end of struct st_dmaccommon_n */
-    uint8_t        dummy206[220];                          /*                  */
+    volatile uint8_t   dummy189[220];                          /*                  */
 /* start of struct st_dmac_n */
-    uint32_t       N0SA_8;                                 /*  N0SA_8          */
-    uint32_t       N0DA_8;                                 /*  N0DA_8          */
-    uint32_t       N0TB_8;                                 /*  N0TB_8          */
-    uint32_t       N1SA_8;                                 /*  N1SA_8          */
-    uint32_t       N1DA_8;                                 /*  N1DA_8          */
-    uint32_t       N1TB_8;                                 /*  N1TB_8          */
-    uint32_t       CRSA_8;                                 /*  CRSA_8          */
-    uint32_t       CRDA_8;                                 /*  CRDA_8          */
-    uint32_t       CRTB_8;                                 /*  CRTB_8          */
-    uint32_t       CHSTAT_8;                               /*  CHSTAT_8        */
-    uint32_t       CHCTRL_8;                               /*  CHCTRL_8        */
-    uint32_t       CHCFG_8;                                /*  CHCFG_8         */
-    uint32_t       CHITVL_8;                               /*  CHITVL_8        */
-    uint32_t       CHEXT_8;                                /*  CHEXT_8         */
-    uint32_t       NXLA_8;                                 /*  NXLA_8          */
-    uint32_t       CRLA_8;                                 /*  CRLA_8          */
+    volatile uint32_t  N0SA_8;                                 /*  N0SA_8          */
+    volatile uint32_t  N0DA_8;                                 /*  N0DA_8          */
+    volatile uint32_t  N0TB_8;                                 /*  N0TB_8          */
+    volatile uint32_t  N1SA_8;                                 /*  N1SA_8          */
+    volatile uint32_t  N1DA_8;                                 /*  N1DA_8          */
+    volatile uint32_t  N1TB_8;                                 /*  N1TB_8          */
+    volatile uint32_t  CRSA_8;                                 /*  CRSA_8          */
+    volatile uint32_t  CRDA_8;                                 /*  CRDA_8          */
+    volatile uint32_t  CRTB_8;                                 /*  CRTB_8          */
+    volatile uint32_t  CHSTAT_8;                               /*  CHSTAT_8        */
+    volatile uint32_t  CHCTRL_8;                               /*  CHCTRL_8        */
+    volatile uint32_t  CHCFG_8;                                /*  CHCFG_8         */
+    volatile uint32_t  CHITVL_8;                               /*  CHITVL_8        */
+    volatile uint32_t  CHEXT_8;                                /*  CHEXT_8         */
+    volatile uint32_t  NXLA_8;                                 /*  NXLA_8          */
+    volatile uint32_t  CRLA_8;                                 /*  CRLA_8          */
 /* end of struct st_dmac_n */
 /* start of struct st_dmac_n */
-    uint32_t       N0SA_9;                                 /*  N0SA_9          */
-    uint32_t       N0DA_9;                                 /*  N0DA_9          */
-    uint32_t       N0TB_9;                                 /*  N0TB_9          */
-    uint32_t       N1SA_9;                                 /*  N1SA_9          */
-    uint32_t       N1DA_9;                                 /*  N1DA_9          */
-    uint32_t       N1TB_9;                                 /*  N1TB_9          */
-    uint32_t       CRSA_9;                                 /*  CRSA_9          */
-    uint32_t       CRDA_9;                                 /*  CRDA_9          */
-    uint32_t       CRTB_9;                                 /*  CRTB_9          */
-    uint32_t       CHSTAT_9;                               /*  CHSTAT_9        */
-    uint32_t       CHCTRL_9;                               /*  CHCTRL_9        */
-    uint32_t       CHCFG_9;                                /*  CHCFG_9         */
-    uint32_t       CHITVL_9;                               /*  CHITVL_9        */
-    uint32_t       CHEXT_9;                                /*  CHEXT_9         */
-    uint32_t       NXLA_9;                                 /*  NXLA_9          */
-    uint32_t       CRLA_9;                                 /*  CRLA_9          */
+    volatile uint32_t  N0SA_9;                                 /*  N0SA_9          */
+    volatile uint32_t  N0DA_9;                                 /*  N0DA_9          */
+    volatile uint32_t  N0TB_9;                                 /*  N0TB_9          */
+    volatile uint32_t  N1SA_9;                                 /*  N1SA_9          */
+    volatile uint32_t  N1DA_9;                                 /*  N1DA_9          */
+    volatile uint32_t  N1TB_9;                                 /*  N1TB_9          */
+    volatile uint32_t  CRSA_9;                                 /*  CRSA_9          */
+    volatile uint32_t  CRDA_9;                                 /*  CRDA_9          */
+    volatile uint32_t  CRTB_9;                                 /*  CRTB_9          */
+    volatile uint32_t  CHSTAT_9;                               /*  CHSTAT_9        */
+    volatile uint32_t  CHCTRL_9;                               /*  CHCTRL_9        */
+    volatile uint32_t  CHCFG_9;                                /*  CHCFG_9         */
+    volatile uint32_t  CHITVL_9;                               /*  CHITVL_9        */
+    volatile uint32_t  CHEXT_9;                                /*  CHEXT_9         */
+    volatile uint32_t  NXLA_9;                                 /*  NXLA_9          */
+    volatile uint32_t  CRLA_9;                                 /*  CRLA_9          */
 /* end of struct st_dmac_n */
 /* start of struct st_dmac_n */
-    uint32_t       N0SA_10;                                /*  N0SA_10         */
-    uint32_t       N0DA_10;                                /*  N0DA_10         */
-    uint32_t       N0TB_10;                                /*  N0TB_10         */
-    uint32_t       N1SA_10;                                /*  N1SA_10         */
-    uint32_t       N1DA_10;                                /*  N1DA_10         */
-    uint32_t       N1TB_10;                                /*  N1TB_10         */
-    uint32_t       CRSA_10;                                /*  CRSA_10         */
-    uint32_t       CRDA_10;                                /*  CRDA_10         */
-    uint32_t       CRTB_10;                                /*  CRTB_10         */
-    uint32_t       CHSTAT_10;                              /*  CHSTAT_10       */
-    uint32_t       CHCTRL_10;                              /*  CHCTRL_10       */
-    uint32_t       CHCFG_10;                               /*  CHCFG_10        */
-    uint32_t       CHITVL_10;                              /*  CHITVL_10       */
-    uint32_t       CHEXT_10;                               /*  CHEXT_10        */
-    uint32_t       NXLA_10;                                /*  NXLA_10         */
-    uint32_t       CRLA_10;                                /*  CRLA_10         */
+    volatile uint32_t  N0SA_10;                                /*  N0SA_10         */
+    volatile uint32_t  N0DA_10;                                /*  N0DA_10         */
+    volatile uint32_t  N0TB_10;                                /*  N0TB_10         */
+    volatile uint32_t  N1SA_10;                                /*  N1SA_10         */
+    volatile uint32_t  N1DA_10;                                /*  N1DA_10         */
+    volatile uint32_t  N1TB_10;                                /*  N1TB_10         */
+    volatile uint32_t  CRSA_10;                                /*  CRSA_10         */
+    volatile uint32_t  CRDA_10;                                /*  CRDA_10         */
+    volatile uint32_t  CRTB_10;                                /*  CRTB_10         */
+    volatile uint32_t  CHSTAT_10;                              /*  CHSTAT_10       */
+    volatile uint32_t  CHCTRL_10;                              /*  CHCTRL_10       */
+    volatile uint32_t  CHCFG_10;                               /*  CHCFG_10        */
+    volatile uint32_t  CHITVL_10;                              /*  CHITVL_10       */
+    volatile uint32_t  CHEXT_10;                               /*  CHEXT_10        */
+    volatile uint32_t  NXLA_10;                                /*  NXLA_10         */
+    volatile uint32_t  CRLA_10;                                /*  CRLA_10         */
 /* end of struct st_dmac_n */
 /* start of struct st_dmac_n */
-    uint32_t       N0SA_11;                                /*  N0SA_11         */
-    uint32_t       N0DA_11;                                /*  N0DA_11         */
-    uint32_t       N0TB_11;                                /*  N0TB_11         */
-    uint32_t       N1SA_11;                                /*  N1SA_11         */
-    uint32_t       N1DA_11;                                /*  N1DA_11         */
-    uint32_t       N1TB_11;                                /*  N1TB_11         */
-    uint32_t       CRSA_11;                                /*  CRSA_11         */
-    uint32_t       CRDA_11;                                /*  CRDA_11         */
-    uint32_t       CRTB_11;                                /*  CRTB_11         */
-    uint32_t       CHSTAT_11;                              /*  CHSTAT_11       */
-    uint32_t       CHCTRL_11;                              /*  CHCTRL_11       */
-    uint32_t       CHCFG_11;                               /*  CHCFG_11        */
-    uint32_t       CHITVL_11;                              /*  CHITVL_11       */
-    uint32_t       CHEXT_11;                               /*  CHEXT_11        */
-    uint32_t       NXLA_11;                                /*  NXLA_11         */
-    uint32_t       CRLA_11;                                /*  CRLA_11         */
+    volatile uint32_t  N0SA_11;                                /*  N0SA_11         */
+    volatile uint32_t  N0DA_11;                                /*  N0DA_11         */
+    volatile uint32_t  N0TB_11;                                /*  N0TB_11         */
+    volatile uint32_t  N1SA_11;                                /*  N1SA_11         */
+    volatile uint32_t  N1DA_11;                                /*  N1DA_11         */
+    volatile uint32_t  N1TB_11;                                /*  N1TB_11         */
+    volatile uint32_t  CRSA_11;                                /*  CRSA_11         */
+    volatile uint32_t  CRDA_11;                                /*  CRDA_11         */
+    volatile uint32_t  CRTB_11;                                /*  CRTB_11         */
+    volatile uint32_t  CHSTAT_11;                              /*  CHSTAT_11       */
+    volatile uint32_t  CHCTRL_11;                              /*  CHCTRL_11       */
+    volatile uint32_t  CHCFG_11;                               /*  CHCFG_11        */
+    volatile uint32_t  CHITVL_11;                              /*  CHITVL_11       */
+    volatile uint32_t  CHEXT_11;                               /*  CHEXT_11        */
+    volatile uint32_t  NXLA_11;                                /*  NXLA_11         */
+    volatile uint32_t  CRLA_11;                                /*  CRLA_11         */
 /* end of struct st_dmac_n */
 /* start of struct st_dmac_n */
-    uint32_t       N0SA_12;                                /*  N0SA_12         */
-    uint32_t       N0DA_12;                                /*  N0DA_12         */
-    uint32_t       N0TB_12;                                /*  N0TB_12         */
-    uint32_t       N1SA_12;                                /*  N1SA_12         */
-    uint32_t       N1DA_12;                                /*  N1DA_12         */
-    uint32_t       N1TB_12;                                /*  N1TB_12         */
-    uint32_t       CRSA_12;                                /*  CRSA_12         */
-    uint32_t       CRDA_12;                                /*  CRDA_12         */
-    uint32_t       CRTB_12;                                /*  CRTB_12         */
-    uint32_t       CHSTAT_12;                              /*  CHSTAT_12       */
-    uint32_t       CHCTRL_12;                              /*  CHCTRL_12       */
-    uint32_t       CHCFG_12;                               /*  CHCFG_12        */
-    uint32_t       CHITVL_12;                              /*  CHITVL_12       */
-    uint32_t       CHEXT_12;                               /*  CHEXT_12        */
-    uint32_t       NXLA_12;                                /*  NXLA_12         */
-    uint32_t       CRLA_12;                                /*  CRLA_12         */
+    volatile uint32_t  N0SA_12;                                /*  N0SA_12         */
+    volatile uint32_t  N0DA_12;                                /*  N0DA_12         */
+    volatile uint32_t  N0TB_12;                                /*  N0TB_12         */
+    volatile uint32_t  N1SA_12;                                /*  N1SA_12         */
+    volatile uint32_t  N1DA_12;                                /*  N1DA_12         */
+    volatile uint32_t  N1TB_12;                                /*  N1TB_12         */
+    volatile uint32_t  CRSA_12;                                /*  CRSA_12         */
+    volatile uint32_t  CRDA_12;                                /*  CRDA_12         */
+    volatile uint32_t  CRTB_12;                                /*  CRTB_12         */
+    volatile uint32_t  CHSTAT_12;                              /*  CHSTAT_12       */
+    volatile uint32_t  CHCTRL_12;                              /*  CHCTRL_12       */
+    volatile uint32_t  CHCFG_12;                               /*  CHCFG_12        */
+    volatile uint32_t  CHITVL_12;                              /*  CHITVL_12       */
+    volatile uint32_t  CHEXT_12;                               /*  CHEXT_12        */
+    volatile uint32_t  NXLA_12;                                /*  NXLA_12         */
+    volatile uint32_t  CRLA_12;                                /*  CRLA_12         */
 /* end of struct st_dmac_n */
 /* start of struct st_dmac_n */
-    uint32_t       N0SA_13;                                /*  N0SA_13         */
-    uint32_t       N0DA_13;                                /*  N0DA_13         */
-    uint32_t       N0TB_13;                                /*  N0TB_13         */
-    uint32_t       N1SA_13;                                /*  N1SA_13         */
-    uint32_t       N1DA_13;                                /*  N1DA_13         */
-    uint32_t       N1TB_13;                                /*  N1TB_13         */
-    uint32_t       CRSA_13;                                /*  CRSA_13         */
-    uint32_t       CRDA_13;                                /*  CRDA_13         */
-    uint32_t       CRTB_13;                                /*  CRTB_13         */
-    uint32_t       CHSTAT_13;                              /*  CHSTAT_13       */
-    uint32_t       CHCTRL_13;                              /*  CHCTRL_13       */
-    uint32_t       CHCFG_13;                               /*  CHCFG_13        */
-    uint32_t       CHITVL_13;                              /*  CHITVL_13       */
-    uint32_t       CHEXT_13;                               /*  CHEXT_13        */
-    uint32_t       NXLA_13;                                /*  NXLA_13         */
-    uint32_t       CRLA_13;                                /*  CRLA_13         */
+    volatile uint32_t  N0SA_13;                                /*  N0SA_13         */
+    volatile uint32_t  N0DA_13;                                /*  N0DA_13         */
+    volatile uint32_t  N0TB_13;                                /*  N0TB_13         */
+    volatile uint32_t  N1SA_13;                                /*  N1SA_13         */
+    volatile uint32_t  N1DA_13;                                /*  N1DA_13         */
+    volatile uint32_t  N1TB_13;                                /*  N1TB_13         */
+    volatile uint32_t  CRSA_13;                                /*  CRSA_13         */
+    volatile uint32_t  CRDA_13;                                /*  CRDA_13         */
+    volatile uint32_t  CRTB_13;                                /*  CRTB_13         */
+    volatile uint32_t  CHSTAT_13;                              /*  CHSTAT_13       */
+    volatile uint32_t  CHCTRL_13;                              /*  CHCTRL_13       */
+    volatile uint32_t  CHCFG_13;                               /*  CHCFG_13        */
+    volatile uint32_t  CHITVL_13;                              /*  CHITVL_13       */
+    volatile uint32_t  CHEXT_13;                               /*  CHEXT_13        */
+    volatile uint32_t  NXLA_13;                                /*  NXLA_13         */
+    volatile uint32_t  CRLA_13;                                /*  CRLA_13         */
 /* end of struct st_dmac_n */
 /* start of struct st_dmac_n */
-    uint32_t       N0SA_14;                                /*  N0SA_14         */
-    uint32_t       N0DA_14;                                /*  N0DA_14         */
-    uint32_t       N0TB_14;                                /*  N0TB_14         */
-    uint32_t       N1SA_14;                                /*  N1SA_14         */
-    uint32_t       N1DA_14;                                /*  N1DA_14         */
-    uint32_t       N1TB_14;                                /*  N1TB_14         */
-    uint32_t       CRSA_14;                                /*  CRSA_14         */
-    uint32_t       CRDA_14;                                /*  CRDA_14         */
-    uint32_t       CRTB_14;                                /*  CRTB_14         */
-    uint32_t       CHSTAT_14;                              /*  CHSTAT_14       */
-    uint32_t       CHCTRL_14;                              /*  CHCTRL_14       */
-    uint32_t       CHCFG_14;                               /*  CHCFG_14        */
-    uint32_t       CHITVL_14;                              /*  CHITVL_14       */
-    uint32_t       CHEXT_14;                               /*  CHEXT_14        */
-    uint32_t       NXLA_14;                                /*  NXLA_14         */
-    uint32_t       CRLA_14;                                /*  CRLA_14         */
+    volatile uint32_t  N0SA_14;                                /*  N0SA_14         */
+    volatile uint32_t  N0DA_14;                                /*  N0DA_14         */
+    volatile uint32_t  N0TB_14;                                /*  N0TB_14         */
+    volatile uint32_t  N1SA_14;                                /*  N1SA_14         */
+    volatile uint32_t  N1DA_14;                                /*  N1DA_14         */
+    volatile uint32_t  N1TB_14;                                /*  N1TB_14         */
+    volatile uint32_t  CRSA_14;                                /*  CRSA_14         */
+    volatile uint32_t  CRDA_14;                                /*  CRDA_14         */
+    volatile uint32_t  CRTB_14;                                /*  CRTB_14         */
+    volatile uint32_t  CHSTAT_14;                              /*  CHSTAT_14       */
+    volatile uint32_t  CHCTRL_14;                              /*  CHCTRL_14       */
+    volatile uint32_t  CHCFG_14;                               /*  CHCFG_14        */
+    volatile uint32_t  CHITVL_14;                              /*  CHITVL_14       */
+    volatile uint32_t  CHEXT_14;                               /*  CHEXT_14        */
+    volatile uint32_t  NXLA_14;                                /*  NXLA_14         */
+    volatile uint32_t  CRLA_14;                                /*  CRLA_14         */
 /* end of struct st_dmac_n */
 /* start of struct st_dmac_n */
-    uint32_t       N0SA_15;                                /*  N0SA_15         */
-    uint32_t       N0DA_15;                                /*  N0DA_15         */
-    uint32_t       N0TB_15;                                /*  N0TB_15         */
-    uint32_t       N1SA_15;                                /*  N1SA_15         */
-    uint32_t       N1DA_15;                                /*  N1DA_15         */
-    uint32_t       N1TB_15;                                /*  N1TB_15         */
-    uint32_t       CRSA_15;                                /*  CRSA_15         */
-    uint32_t       CRDA_15;                                /*  CRDA_15         */
-    uint32_t       CRTB_15;                                /*  CRTB_15         */
-    uint32_t       CHSTAT_15;                              /*  CHSTAT_15       */
-    uint32_t       CHCTRL_15;                              /*  CHCTRL_15       */
-    uint32_t       CHCFG_15;                               /*  CHCFG_15        */
-    uint32_t       CHITVL_15;                              /*  CHITVL_15       */
-    uint32_t       CHEXT_15;                               /*  CHEXT_15        */
-    uint32_t       NXLA_15;                                /*  NXLA_15         */
-    uint32_t       CRLA_15;                                /*  CRLA_15         */
+    volatile uint32_t  N0SA_15;                                /*  N0SA_15         */
+    volatile uint32_t  N0DA_15;                                /*  N0DA_15         */
+    volatile uint32_t  N0TB_15;                                /*  N0TB_15         */
+    volatile uint32_t  N1SA_15;                                /*  N1SA_15         */
+    volatile uint32_t  N1DA_15;                                /*  N1DA_15         */
+    volatile uint32_t  N1TB_15;                                /*  N1TB_15         */
+    volatile uint32_t  CRSA_15;                                /*  CRSA_15         */
+    volatile uint32_t  CRDA_15;                                /*  CRDA_15         */
+    volatile uint32_t  CRTB_15;                                /*  CRTB_15         */
+    volatile uint32_t  CHSTAT_15;                              /*  CHSTAT_15       */
+    volatile uint32_t  CHCTRL_15;                              /*  CHCTRL_15       */
+    volatile uint32_t  CHCFG_15;                               /*  CHCFG_15        */
+    volatile uint32_t  CHITVL_15;                              /*  CHITVL_15       */
+    volatile uint32_t  CHEXT_15;                               /*  CHEXT_15        */
+    volatile uint32_t  NXLA_15;                                /*  NXLA_15         */
+    volatile uint32_t  CRLA_15;                                /*  CRLA_15         */
 /* end of struct st_dmac_n */
-    uint8_t        dummy207[256];                          /*                  */
+    volatile uint8_t   dummy190[256];                          /*                  */
 /* start of struct st_dmaccommon_n */
-    uint32_t       DCTRL_8_15;                             /*  DCTRL_8_15      */
-    uint8_t        dummy208[12];                           /*                  */
-    uint32_t       DSTAT_EN_8_15;                          /*  DSTAT_EN_8_15   */
-    uint32_t       DSTAT_ER_8_15;                          /*  DSTAT_ER_8_15   */
-    uint32_t       DSTAT_END_8_15;                         /*  DSTAT_END_8_15  */
-    uint32_t       DSTAT_TC_8_15;                          /*  DSTAT_TC_8_15   */
-    uint32_t       DSTAT_SUS_8_15;                         /*  DSTAT_SUS_8_15  */
+    volatile uint32_t  DCTRL_8_15;                             /*  DCTRL_8_15      */
+    volatile uint8_t   dummy191[12];                           /*                  */
+    volatile uint32_t  DSTAT_EN_8_15;                          /*  DSTAT_EN_8_15   */
+    volatile uint32_t  DSTAT_ER_8_15;                          /*  DSTAT_ER_8_15   */
+    volatile uint32_t  DSTAT_END_8_15;                         /*  DSTAT_END_8_15  */
+    volatile uint32_t  DSTAT_TC_8_15;                          /*  DSTAT_TC_8_15   */
+    volatile uint32_t  DSTAT_SUS_8_15;                         /*  DSTAT_SUS_8_15  */
 /* end of struct st_dmaccommon_n */
-    uint8_t        dummy209[350095580];                    /*                  */
-    uint32_t       DMARS0;                                 /*  DMARS0          */
-    uint32_t       DMARS1;                                 /*  DMARS1          */
-    uint32_t       DMARS2;                                 /*  DMARS2          */
-    uint32_t       DMARS3;                                 /*  DMARS3          */
-    uint32_t       DMARS4;                                 /*  DMARS4          */
-    uint32_t       DMARS5;                                 /*  DMARS5          */
-    uint32_t       DMARS6;                                 /*  DMARS6          */
-    uint32_t       DMARS7;                                 /*  DMARS7          */
+    volatile uint8_t   dummy192[350095580];                    /*                  */
+    volatile uint32_t  DMARS0;                                 /*  DMARS0          */
+    volatile uint32_t  DMARS1;                                 /*  DMARS1          */
+    volatile uint32_t  DMARS2;                                 /*  DMARS2          */
+    volatile uint32_t  DMARS3;                                 /*  DMARS3          */
+    volatile uint32_t  DMARS4;                                 /*  DMARS4          */
+    volatile uint32_t  DMARS5;                                 /*  DMARS5          */
+    volatile uint32_t  DMARS6;                                 /*  DMARS6          */
+    volatile uint32_t  DMARS7;                                 /*  DMARS7          */
 };
 
 
 struct st_dmaccommon_n
 {
-    uint32_t       DCTRL_0_7;                              /*  DCTRL_0_7       */
-    uint8_t        dummy1[12];                             /*                  */
-    uint32_t       DSTAT_EN_0_7;                           /*  DSTAT_EN_0_7    */
-    uint32_t       DSTAT_ER_0_7;                           /*  DSTAT_ER_0_7    */
-    uint32_t       DSTAT_END_0_7;                          /*  DSTAT_END_0_7   */
-    uint32_t       DSTAT_TC_0_7;                           /*  DSTAT_TC_0_7    */
-    uint32_t       DSTAT_SUS_0_7;                          /*  DSTAT_SUS_0_7   */
+    volatile uint32_t  DCTRL_0_7;                              /*  DCTRL_0_7       */
+    volatile uint8_t   dummy1[12];                             /*                  */
+    volatile uint32_t  DSTAT_EN_0_7;                           /*  DSTAT_EN_0_7    */
+    volatile uint32_t  DSTAT_ER_0_7;                           /*  DSTAT_ER_0_7    */
+    volatile uint32_t  DSTAT_END_0_7;                          /*  DSTAT_END_0_7   */
+    volatile uint32_t  DSTAT_TC_0_7;                           /*  DSTAT_TC_0_7    */
+    volatile uint32_t  DSTAT_SUS_0_7;                          /*  DSTAT_SUS_0_7   */
 };
 
 
 struct st_dmac_n
 {
-    uint32_t       N0SA_n;                                 /*  N0SA_n          */
-    uint32_t       N0DA_n;                                 /*  N0DA_n          */
-    uint32_t       N0TB_n;                                 /*  N0TB_n          */
-    uint32_t       N1SA_n;                                 /*  N1SA_n          */
-    uint32_t       N1DA_n;                                 /*  N1DA_n          */
-    uint32_t       N1TB_n;                                 /*  N1TB_n          */
-    uint32_t       CRSA_n;                                 /*  CRSA_n          */
-    uint32_t       CRDA_n;                                 /*  CRDA_n          */
-    uint32_t       CRTB_n;                                 /*  CRTB_n          */
-    uint32_t       CHSTAT_n;                               /*  CHSTAT_n        */
-    uint32_t       CHCTRL_n;                               /*  CHCTRL_n        */
-    uint32_t       CHCFG_n;                                /*  CHCFG_n         */
-    uint32_t       CHITVL_n;                               /*  CHITVL_n        */
-    uint32_t       CHEXT_n;                                /*  CHEXT_n         */
-    uint32_t       NXLA_n;                                 /*  NXLA_n          */
-    uint32_t       CRLA_n;                                 /*  CRLA_n          */
+    volatile uint32_t  N0SA_n;                                 /*  N0SA_n          */
+    volatile uint32_t  N0DA_n;                                 /*  N0DA_n          */
+    volatile uint32_t  N0TB_n;                                 /*  N0TB_n          */
+    volatile uint32_t  N1SA_n;                                 /*  N1SA_n          */
+    volatile uint32_t  N1DA_n;                                 /*  N1DA_n          */
+    volatile uint32_t  N1TB_n;                                 /*  N1TB_n          */
+    volatile uint32_t  CRSA_n;                                 /*  CRSA_n          */
+    volatile uint32_t  CRDA_n;                                 /*  CRDA_n          */
+    volatile uint32_t  CRTB_n;                                 /*  CRTB_n          */
+    volatile uint32_t  CHSTAT_n;                               /*  CHSTAT_n        */
+    volatile uint32_t  CHCTRL_n;                               /*  CHCTRL_n        */
+    volatile uint32_t  CHCFG_n;                                /*  CHCFG_n         */
+    volatile uint32_t  CHITVL_n;                               /*  CHITVL_n        */
+    volatile uint32_t  CHEXT_n;                                /*  CHEXT_n         */
+    volatile uint32_t  NXLA_n;                                 /*  NXLA_n          */
+    volatile uint32_t  CRLA_n;                                 /*  CRLA_n          */
 };
 
 
-#define DMAC    (*(volatile struct st_dmac    *)0xE8200000uL) /* DMAC */
+#define DMAC    (*(struct st_dmac    *)0xE8200000uL) /* DMAC */
 
 
 /* Start of channnel array defines of DMAC */
@@ -394,33 +396,37 @@ struct st_dmac_n
 /*(Sample) value = DMACn[ channel ]->N0SA_n; */
 #define DMACn_COUNT  16
 #define DMACn_ADDRESS_LIST \
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
     &DMAC0, &DMAC1, &DMAC2, &DMAC3, &DMAC4, &DMAC5, &DMAC6, &DMAC7, \
-    &DMAC8, &DMAC9, &DMAC10, &DMAC11, &DMAC12, &DMAC13, &DMAC14, &DMAC15
-#define DMAC0   (*(volatile struct st_dmac_n *)&DMAC.N0SA_0)              /* DMAC0 */
-#define DMAC1   (*(volatile struct st_dmac_n *)&DMAC.N0SA_1)              /* DMAC1 */
-#define DMAC2   (*(volatile struct st_dmac_n *)&DMAC.N0SA_2)              /* DMAC2 */
-#define DMAC3   (*(volatile struct st_dmac_n *)&DMAC.N0SA_3)              /* DMAC3 */
-#define DMAC4   (*(volatile struct st_dmac_n *)&DMAC.N0SA_4)              /* DMAC4 */
-#define DMAC5   (*(volatile struct st_dmac_n *)&DMAC.N0SA_5)              /* DMAC5 */
-#define DMAC6   (*(volatile struct st_dmac_n *)&DMAC.N0SA_6)              /* DMAC6 */
-#define DMAC7   (*(volatile struct st_dmac_n *)&DMAC.N0SA_7)              /* DMAC7 */
-#define DMAC8   (*(volatile struct st_dmac_n *)&DMAC.N0SA_8)              /* DMAC8 */
-#define DMAC9   (*(volatile struct st_dmac_n *)&DMAC.N0SA_9)              /* DMAC9 */
-#define DMAC10  (*(volatile struct st_dmac_n *)&DMAC.N0SA_10)             /* DMAC10 */
-#define DMAC11  (*(volatile struct st_dmac_n *)&DMAC.N0SA_11)             /* DMAC11 */
-#define DMAC12  (*(volatile struct st_dmac_n *)&DMAC.N0SA_12)             /* DMAC12 */
-#define DMAC13  (*(volatile struct st_dmac_n *)&DMAC.N0SA_13)             /* DMAC13 */
-#define DMAC14  (*(volatile struct st_dmac_n *)&DMAC.N0SA_14)             /* DMAC14 */
-#define DMAC15  (*(volatile struct st_dmac_n *)&DMAC.N0SA_15)             /* DMAC15 */
+    &DMAC8, &DMAC9, &DMAC10, &DMAC11, &DMAC12, &DMAC13, &DMAC14, &DMAC15 \
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
+#define DMAC0   (*(struct st_dmac_n *)&DMAC.N0SA_0)              /* DMAC0 */
+#define DMAC1   (*(struct st_dmac_n *)&DMAC.N0SA_1)              /* DMAC1 */
+#define DMAC2   (*(struct st_dmac_n *)&DMAC.N0SA_2)              /* DMAC2 */
+#define DMAC3   (*(struct st_dmac_n *)&DMAC.N0SA_3)              /* DMAC3 */
+#define DMAC4   (*(struct st_dmac_n *)&DMAC.N0SA_4)              /* DMAC4 */
+#define DMAC5   (*(struct st_dmac_n *)&DMAC.N0SA_5)              /* DMAC5 */
+#define DMAC6   (*(struct st_dmac_n *)&DMAC.N0SA_6)              /* DMAC6 */
+#define DMAC7   (*(struct st_dmac_n *)&DMAC.N0SA_7)              /* DMAC7 */
+#define DMAC8   (*(struct st_dmac_n *)&DMAC.N0SA_8)              /* DMAC8 */
+#define DMAC9   (*(struct st_dmac_n *)&DMAC.N0SA_9)              /* DMAC9 */
+#define DMAC10  (*(struct st_dmac_n *)&DMAC.N0SA_10)             /* DMAC10 */
+#define DMAC11  (*(struct st_dmac_n *)&DMAC.N0SA_11)             /* DMAC11 */
+#define DMAC12  (*(struct st_dmac_n *)&DMAC.N0SA_12)             /* DMAC12 */
+#define DMAC13  (*(struct st_dmac_n *)&DMAC.N0SA_13)             /* DMAC13 */
+#define DMAC14  (*(struct st_dmac_n *)&DMAC.N0SA_14)             /* DMAC14 */
+#define DMAC15  (*(struct st_dmac_n *)&DMAC.N0SA_15)             /* DMAC15 */
 
 
 /* Channnel array defines of DMACnn */
 /*(Sample) value = DMACnn[ channel / 8 ]->DCTRL_0_7; */
 #define DMACnn_COUNT  2
 #define DMACnn_ADDRESS_LIST \
-    &DMAC07, &DMAC815
-#define DMAC07  (*(volatile struct st_dmaccommon_n *)&DMAC.DCTRL_0_7)     /* DMAC07 */
-#define DMAC815 (*(volatile struct st_dmaccommon_n *)&DMAC.DCTRL_8_15)    /* DMAC815 */
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
+    &DMAC07, &DMAC815 \
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
+#define DMAC07  (*(struct st_dmaccommon_n *)&DMAC.DCTRL_0_7)     /* DMAC07 */
+#define DMAC815 (*(struct st_dmaccommon_n *)&DMAC.DCTRL_8_15)    /* DMAC815 */
 
 
 /* Channnel array defines of DMACmm */
@@ -431,15 +437,17 @@ struct st_dmars_mm
 };
 #define DMACmm_COUNT  8
 #define DMACmm_ADDRESS_LIST \
-    &DMAC01, &DMAC23, &DMAC45, &DMAC67, &DMAC89, &DMAC1011, &DMAC1213, &DMAC1415
-#define DMAC01    (*(volatile struct st_dmars_mm *)&DMAC.DMARS0)  /* DMAC0-1   */
-#define DMAC23    (*(volatile struct st_dmars_mm *)&DMAC.DMARS1)  /* DMAC2-3   */
-#define DMAC45    (*(volatile struct st_dmars_mm *)&DMAC.DMARS2)  /* DMAC4-5   */
-#define DMAC67    (*(volatile struct st_dmars_mm *)&DMAC.DMARS3)  /* DMAC6-7   */
-#define DMAC89    (*(volatile struct st_dmars_mm *)&DMAC.DMARS4)  /* DMAC8-9   */
-#define DMAC1011  (*(volatile struct st_dmars_mm *)&DMAC.DMARS5)  /* DMAC10-11 */
-#define DMAC1213  (*(volatile struct st_dmars_mm *)&DMAC.DMARS6)  /* DMAC12-13 */
-#define DMAC1415  (*(volatile struct st_dmars_mm *)&DMAC.DMARS7)  /* DMAC14-15 */
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
+    &DMAC01, &DMAC23, &DMAC45, &DMAC67, &DMAC89, &DMAC1011, &DMAC1213, &DMAC1415 \
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
+#define DMAC01    (*(struct st_dmars_mm *)&DMAC.DMARS0)  /* DMAC0-1   */
+#define DMAC23    (*(struct st_dmars_mm *)&DMAC.DMARS1)  /* DMAC2-3   */
+#define DMAC45    (*(struct st_dmars_mm *)&DMAC.DMARS2)  /* DMAC4-5   */
+#define DMAC67    (*(struct st_dmars_mm *)&DMAC.DMARS3)  /* DMAC6-7   */
+#define DMAC89    (*(struct st_dmars_mm *)&DMAC.DMARS4)  /* DMAC8-9   */
+#define DMAC1011  (*(struct st_dmars_mm *)&DMAC.DMARS5)  /* DMAC10-11 */
+#define DMAC1213  (*(struct st_dmars_mm *)&DMAC.DMARS6)  /* DMAC12-13 */
+#define DMAC1415  (*(struct st_dmars_mm *)&DMAC.DMARS7)  /* DMAC14-15 */
 
 /* End of channnel array defines of DMAC */
 
@@ -720,4 +728,6 @@ struct st_dmars_mm
 #define DMACDMARS5 DMAC.DMARS5
 #define DMACDMARS6 DMAC.DMARS6
 #define DMACDMARS7 DMAC.DMARS7
+/* <-SEC M1.10.1 */
+/* <-QAC 0639 */
 #endif

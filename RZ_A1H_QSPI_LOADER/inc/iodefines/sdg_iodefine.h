@@ -18,32 +18,32 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer*
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
 * File Name : sdg_iodefine.h
-* $Rev: 809 $
-* $Date:: 2014-03-28 19:15:55 +0000#$
-* Description : Definition of I/O Register (V0.50j)
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
 ******************************************************************************/
 #ifndef SDG_IODEFINE_H
 #define SDG_IODEFINE_H
 
 struct st_sdg
 {                                                          /* SDG              */
-    uint8_t        SGCR1;                                  /*  SGCR1           */
-    uint8_t        SGCSR;                                  /*  SGCSR           */
-    uint8_t        SGCR2;                                  /*  SGCR2           */
-    uint8_t        SGLR;                                   /*  SGLR            */
-    uint8_t        SGTFR;                                  /*  SGTFR           */
-    uint8_t        SGSFR;                                  /*  SGSFR           */
+    volatile uint8_t   SGCR1;                                  /*  SGCR1           */
+    volatile uint8_t   SGCSR;                                  /*  SGCSR           */
+    volatile uint8_t   SGCR2;                                  /*  SGCR2           */
+    volatile uint8_t   SGLR;                                   /*  SGLR            */
+    volatile uint8_t   SGTFR;                                  /*  SGTFR           */
+    volatile uint8_t   SGSFR;                                  /*  SGSFR           */
 };
 
 
-#define SDG0    (*(volatile struct st_sdg     *)0xFCFF4800uL) /* SDG0 */
-#define SDG1    (*(volatile struct st_sdg     *)0xFCFF4A00uL) /* SDG1 */
-#define SDG2    (*(volatile struct st_sdg     *)0xFCFF4C00uL) /* SDG2 */
-#define SDG3    (*(volatile struct st_sdg     *)0xFCFF4E00uL) /* SDG3 */
+#define SDG0    (*(struct st_sdg     *)0xFCFF4800uL) /* SDG0 */
+#define SDG1    (*(struct st_sdg     *)0xFCFF4A00uL) /* SDG1 */
+#define SDG2    (*(struct st_sdg     *)0xFCFF4C00uL) /* SDG2 */
+#define SDG3    (*(struct st_sdg     *)0xFCFF4E00uL) /* SDG3 */
 
 
 /* Start of channnel array defines of SDG */
@@ -52,7 +52,9 @@ struct st_sdg
 /*(Sample) value = SDG[ channel ]->SGCR1; */
 #define SDG_COUNT  4
 #define SDG_ADDRESS_LIST \
-    &SDG0, &SDG1, &SDG2, &SDG3
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
+    &SDG0, &SDG1, &SDG2, &SDG3 \
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
 
 /* End of channnel array defines of SDG */
 

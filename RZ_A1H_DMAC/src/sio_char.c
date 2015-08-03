@@ -109,7 +109,7 @@ void IoInitScif2(void)
 
     /* === Enable SCIF2 transmission/reception ==== */
     /* ---- Serial control register (SCSCRi) setting ---- */
-    SCIF2.SCSCR.WORD = 0x0070u;
+    SCIF2.SCSCR = 0x0070u;
 }
 
 /******************************************************************************
@@ -124,7 +124,7 @@ char_t IoGetchar(void)
     char_t data;
 
     /* Confirming receive error(ER,BRK,FER,PER) */
-    if (SCIF2.SCFSR.WORD & 0x09Cu)
+    if (SCIF2.SCFSR & 0x09Cu)
     {
         /* ---- Detect receive error ---- */
         /* Disable reception             */
@@ -132,31 +132,31 @@ char_t IoGetchar(void)
         /* Clearing FIFO reception reset */
         /* Error bit clear               */
         /* Enable reception              */
-        RZA_IO_RegWrite_16(&SCIF2.SCSCR.WORD, 0, SCIF2_SCSCR_RE_SHIFT,    SCIF2_SCSCR_RE);
-        RZA_IO_RegWrite_16(&SCIF2.SCFCR.WORD, 1, SCIF2_SCFCR_RFRST_SHIFT, SCIF2_SCFCR_RFRST);
-        RZA_IO_RegWrite_16(&SCIF2.SCFCR.WORD, 0, SCIF2_SCFCR_RFRST_SHIFT, SCIF2_SCFCR_RFRST);
-        SCIF2.SCFSR.WORD &= (uint16_t)~0x9Cu;
-        RZA_IO_RegWrite_16(&SCIF2.SCSCR.WORD, 1, SCIF2_SCSCR_RE_SHIFT,    SCIF2_SCSCR_RE);
+        RZA_IO_RegWrite_16(&SCIF2.SCSCR, 0, SCIF2_SCSCR_RE_SHIFT,    SCIF2_SCSCR_RE);
+        RZA_IO_RegWrite_16(&SCIF2.SCFCR, 1, SCIF2_SCFCR_RFRST_SHIFT, SCIF2_SCFCR_RFRST);
+        RZA_IO_RegWrite_16(&SCIF2.SCFCR, 0, SCIF2_SCFCR_RFRST_SHIFT, SCIF2_SCFCR_RFRST);
+        SCIF2.SCFSR &= (uint16_t)~0x9Cu;
+        RZA_IO_RegWrite_16(&SCIF2.SCSCR, 1, SCIF2_SCSCR_RE_SHIFT,    SCIF2_SCSCR_RE);
 
         return 0;
     }
 
     /* Is there receive FIFO data? */
-    while (0 == RZA_IO_RegRead_16(&SCIF2.SCFSR.WORD, SCIF2_SCFSR_RDF_SHIFT, SCIF2_SCFSR_RDF))
+    while (0 == RZA_IO_RegRead_16(&SCIF2.SCFSR, SCIF2_SCFSR_RDF_SHIFT, SCIF2_SCFSR_RDF))
     {
         /* WAIT */
     }
 
     /* Read receive data */
-    data = SCIF2.SCFRDR.BYTE;
+    data = SCIF2.SCFRDR;
     /* Clear RDF */
-    RZA_IO_RegWrite_16(&SCIF2.SCFSR.WORD, 0, SCIF2_SCFSR_RDF_SHIFT, SCIF2_SCFSR_RDF);
+    RZA_IO_RegWrite_16(&SCIF2.SCFSR, 0, SCIF2_SCFSR_RDF_SHIFT, SCIF2_SCFSR_RDF);
 
     /* Is it overflowed? */
-    if (1 == RZA_IO_RegRead_16(&SCIF2.SCLSR.WORD, SCIF2_SCLSR_ORER_SHIFT, SCIF2_SCLSR_ORER))
+    if (1 == RZA_IO_RegRead_16(&SCIF2.SCLSR, SCIF2_SCLSR_ORER_SHIFT, SCIF2_SCLSR_ORER))
     {
         /* ORER clear */
-        RZA_IO_RegWrite_16(&SCIF2.SCLSR.WORD, 0, SCIF2_SCLSR_ORER_SHIFT, SCIF2_SCLSR_ORER);
+        RZA_IO_RegWrite_16(&SCIF2.SCLSR, 0, SCIF2_SCLSR_ORER_SHIFT, SCIF2_SCLSR_ORER);
     }
 
     return data;
@@ -173,16 +173,16 @@ char_t IoGetchar(void)
 void IoPutchar(char_t buffer)
 {
     /* Check if it is possible to transmit (TDFE flag) */
-    while (0 == RZA_IO_RegRead_16(&SCIF2.SCFSR.WORD, SCIF2_SCFSR_TDFE_SHIFT, SCIF2_SCFSR_TDFE))
+    while (0 == RZA_IO_RegRead_16(&SCIF2.SCFSR, SCIF2_SCFSR_TDFE_SHIFT, SCIF2_SCFSR_TDFE))
     {
         /* Wait */
     }
 
     /* Write the receiving data in TDR */
-    SCIF2.SCFTDR.BYTE = buffer;
+    SCIF2.SCFTDR = buffer;
 
     /* Clear TDRE and TEND flag */
-    SCIF2.SCFSR.WORD &= (uint16_t)~0x0060u;
+    SCIF2.SCFSR &= (uint16_t)~0x0060u;
 }
 
 

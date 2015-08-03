@@ -18,172 +18,173 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer*
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
 * File Name : ceu_iodefine.h
-* $Rev: 809 $
-* $Date:: 2014-03-28 19:15:55 +0000#$
-* Description : Definition of I/O Register (V0.50j)
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
 ******************************************************************************/
 #ifndef CEU_IODEFINE_H
 #define CEU_IODEFINE_H
+/* ->SEC M1.10.1 : Not magic number */
 
 struct st_ceu
 {                                                          /* CEU              */
 /* start of struct st_ceu_n */
-    uint32_t       CAPSR;                                  /*  CAPSR           */
-    uint32_t       CAPCR;                                  /*  CAPCR           */
-    uint32_t       CAMCR;                                  /*  CAMCR           */
-    uint32_t       CMCYR;                                  /*  CMCYR           */
-    uint32_t       CAMOR_A;                                /*  CAMOR_A         */
-    uint32_t       CAPWR_A;                                /*  CAPWR_A         */
-    uint32_t       CAIFR;                                  /*  CAIFR           */
-    uint8_t        dummy322[12];                           /*                  */
-    uint32_t       CRCNTR;                                 /*  CRCNTR          */
-    uint32_t       CRCMPR;                                 /*  CRCMPR          */
-    uint32_t       CFLCR_A;                                /*  CFLCR_A         */
-    uint32_t       CFSZR_A;                                /*  CFSZR_A         */
-    uint32_t       CDWDR_A;                                /*  CDWDR_A         */
-    uint32_t       CDAYR_A;                                /*  CDAYR_A         */
-    uint32_t       CDACR_A;                                /*  CDACR_A         */
-    uint32_t       CDBYR_A;                                /*  CDBYR_A         */
-    uint32_t       CDBCR_A;                                /*  CDBCR_A         */
-    uint32_t       CBDSR_A;                                /*  CBDSR_A         */
-    uint8_t        dummy323[12];                           /*                  */
-    uint32_t       CFWCR;                                  /*  CFWCR           */
-    uint32_t       CLFCR_A;                                /*  CLFCR_A         */
-    uint32_t       CDOCR_A;                                /*  CDOCR_A         */
-    uint8_t        dummy324[8];                            /*                  */
-    uint32_t       CEIER;                                  /*  CEIER           */
-    uint32_t       CETCR;                                  /*  CETCR           */
-    uint8_t        dummy325[4];                            /*                  */
-    uint32_t       CSTSR;                                  /*  CSTSR           */
-    uint8_t        dummy326[4];                            /*                  */
-    uint32_t       CDSSR;                                  /*  CDSSR           */
-    uint8_t        dummy327[8];                            /*                  */
-    uint32_t       CDAYR2_A;                               /*  CDAYR2_A        */
-    uint32_t       CDACR2_A;                               /*  CDACR2_A        */
-    uint32_t       CDBYR2_A;                               /*  CDBYR2_A        */
-    uint32_t       CDBCR2_A;                               /*  CDBCR2_A        */
+    volatile uint32_t  CAPSR;                                  /*  CAPSR           */
+    volatile uint32_t  CAPCR;                                  /*  CAPCR           */
+    volatile uint32_t  CAMCR;                                  /*  CAMCR           */
+    volatile uint32_t  CMCYR;                                  /*  CMCYR           */
+    volatile uint32_t  CAMOR_A;                                /*  CAMOR_A         */
+    volatile uint32_t  CAPWR_A;                                /*  CAPWR_A         */
+    volatile uint32_t  CAIFR;                                  /*  CAIFR           */
+    volatile uint8_t   dummy305[12];                           /*                  */
+    volatile uint32_t  CRCNTR;                                 /*  CRCNTR          */
+    volatile uint32_t  CRCMPR;                                 /*  CRCMPR          */
+    volatile uint32_t  CFLCR_A;                                /*  CFLCR_A         */
+    volatile uint32_t  CFSZR_A;                                /*  CFSZR_A         */
+    volatile uint32_t  CDWDR_A;                                /*  CDWDR_A         */
+    volatile uint32_t  CDAYR_A;                                /*  CDAYR_A         */
+    volatile uint32_t  CDACR_A;                                /*  CDACR_A         */
+    volatile uint32_t  CDBYR_A;                                /*  CDBYR_A         */
+    volatile uint32_t  CDBCR_A;                                /*  CDBCR_A         */
+    volatile uint32_t  CBDSR_A;                                /*  CBDSR_A         */
+    volatile uint8_t   dummy306[12];                           /*                  */
+    volatile uint32_t  CFWCR;                                  /*  CFWCR           */
+    volatile uint32_t  CLFCR_A;                                /*  CLFCR_A         */
+    volatile uint32_t  CDOCR_A;                                /*  CDOCR_A         */
+    volatile uint8_t   dummy307[8];                            /*                  */
+    volatile uint32_t  CEIER;                                  /*  CEIER           */
+    volatile uint32_t  CETCR;                                  /*  CETCR           */
+    volatile uint8_t   dummy308[4];                            /*                  */
+    volatile uint32_t  CSTSR;                                  /*  CSTSR           */
+    volatile uint8_t   dummy309[4];                            /*                  */
+    volatile uint32_t  CDSSR;                                  /*  CDSSR           */
+    volatile uint8_t   dummy310[8];                            /*                  */
+    volatile uint32_t  CDAYR2_A;                               /*  CDAYR2_A        */
+    volatile uint32_t  CDACR2_A;                               /*  CDACR2_A        */
+    volatile uint32_t  CDBYR2_A;                               /*  CDBYR2_A        */
+    volatile uint32_t  CDBCR2_A;                               /*  CDBCR2_A        */
 /* end of struct st_ceu_n */
-    uint8_t        dummy3280[3936];                        /*                  */
+    volatile uint8_t   dummy3110[3936];                        /*                  */
 /* start of struct st_ceu_n */
-    uint8_t        dummy3281[4];                           /*                  */
-    uint8_t        dummy3282[4];                           /*                  */
-    uint8_t        dummy3283[4];                           /*                  */
-    uint8_t        dummy3284[4];                           /*                  */
-    uint32_t       CAMOR_B;                                /*  CAMOR_B         */
-    uint32_t       CAPWR_B;                                /*  CAPWR_B         */
-    uint8_t        dummy3290[4];                           /*                  */
-    uint8_t        dummy3291[12];                          /*                  */
-    uint8_t        dummy3292[4];                           /*                  */
-    uint8_t        dummy3293[4];                           /*                  */
-    uint32_t       CFLCR_B;                                /*  CFLCR_B         */
-    uint32_t       CFSZR_B;                                /*  CFSZR_B         */
-    uint32_t       CDWDR_B;                                /*  CDWDR_B         */
-    uint32_t       CDAYR_B;                                /*  CDAYR_B         */
-    uint32_t       CDACR_B;                                /*  CDACR_B         */
-    uint32_t       CDBYR_B;                                /*  CDBYR_B         */
-    uint32_t       CDBCR_B;                                /*  CDBCR_B         */
-    uint32_t       CBDSR_B;                                /*  CBDSR_B         */
-    uint8_t        dummy3300[12];                          /*                  */
-    uint8_t        dummy3301[4];                           /*                  */
-    uint32_t       CLFCR_B;                                /*  CLFCR_B         */
-    uint32_t       CDOCR_B;                                /*  CDOCR_B         */
-    uint8_t        dummy3310[8];                           /*                  */
-    uint8_t        dummy3311[4];                           /*                  */
-    uint8_t        dummy3312[4];                           /*                  */
-    uint8_t        dummy3313[4];                           /*                  */
-    uint8_t        dummy3314[4];                           /*                  */
-    uint8_t        dummy3315[4];                           /*                  */
-    uint8_t        dummy3316[4];                           /*                  */
-    uint8_t        dummy3317[8];                           /*                  */
-    uint32_t       CDAYR2_B;                               /*  CDAYR2_B        */
-    uint32_t       CDACR2_B;                               /*  CDACR2_B        */
-    uint32_t       CDBYR2_B;                               /*  CDBYR2_B        */
-    uint32_t       CDBCR2_B;                               /*  CDBCR2_B        */
+    volatile uint8_t   dummy3111[4];                           /*                  */
+    volatile uint8_t   dummy3112[4];                           /*                  */
+    volatile uint8_t   dummy3113[4];                           /*                  */
+    volatile uint8_t   dummy3114[4];                           /*                  */
+    volatile uint32_t  CAMOR_B;                                /*  CAMOR_B         */
+    volatile uint32_t  CAPWR_B;                                /*  CAPWR_B         */
+    volatile uint8_t   dummy3120[4];                           /*                  */
+    volatile uint8_t   dummy3121[12];                          /*                  */
+    volatile uint8_t   dummy3122[4];                           /*                  */
+    volatile uint8_t   dummy3123[4];                           /*                  */
+    volatile uint32_t  CFLCR_B;                                /*  CFLCR_B         */
+    volatile uint32_t  CFSZR_B;                                /*  CFSZR_B         */
+    volatile uint32_t  CDWDR_B;                                /*  CDWDR_B         */
+    volatile uint32_t  CDAYR_B;                                /*  CDAYR_B         */
+    volatile uint32_t  CDACR_B;                                /*  CDACR_B         */
+    volatile uint32_t  CDBYR_B;                                /*  CDBYR_B         */
+    volatile uint32_t  CDBCR_B;                                /*  CDBCR_B         */
+    volatile uint32_t  CBDSR_B;                                /*  CBDSR_B         */
+    volatile uint8_t   dummy3130[12];                          /*                  */
+    volatile uint8_t   dummy3131[4];                           /*                  */
+    volatile uint32_t  CLFCR_B;                                /*  CLFCR_B         */
+    volatile uint32_t  CDOCR_B;                                /*  CDOCR_B         */
+    volatile uint8_t   dummy3140[8];                           /*                  */
+    volatile uint8_t   dummy3141[4];                           /*                  */
+    volatile uint8_t   dummy3142[4];                           /*                  */
+    volatile uint8_t   dummy3143[4];                           /*                  */
+    volatile uint8_t   dummy3144[4];                           /*                  */
+    volatile uint8_t   dummy3145[4];                           /*                  */
+    volatile uint8_t   dummy3146[4];                           /*                  */
+    volatile uint8_t   dummy3147[8];                           /*                  */
+    volatile uint32_t  CDAYR2_B;                               /*  CDAYR2_B        */
+    volatile uint32_t  CDACR2_B;                               /*  CDACR2_B        */
+    volatile uint32_t  CDBYR2_B;                               /*  CDBYR2_B        */
+    volatile uint32_t  CDBCR2_B;                               /*  CDBCR2_B        */
 /* end of struct st_ceu_n */
-    uint8_t        dummy3320[3936];                        /*                  */
+    volatile uint8_t   dummy3150[3936];                        /*                  */
 /* start of struct st_ceu_n */
-    uint8_t        dummy3321[4];                           /*                  */
-    uint8_t        dummy3322[4];                           /*                  */
-    uint8_t        dummy3323[4];                           /*                  */
-    uint8_t        dummy3324[4];                           /*                  */
-    uint32_t       CAMOR_M;                                /*  CAMOR_M         */
-    uint32_t       CAPWR_M;                                /*  CAPWR_M         */
-    uint8_t        dummy3330[4];                           /*                  */
-    uint8_t        dummy3331[12];                          /*                  */
-    uint8_t        dummy3332[4];                           /*                  */
-    uint8_t        dummy3333[4];                           /*                  */
-    uint32_t       CFLCR_M;                                /*  CFLCR_M         */
-    uint32_t       CFSZR_M;                                /*  CFSZR_M         */
-    uint32_t       CDWDR_M;                                /*  CDWDR_M         */
-    uint32_t       CDAYR_M;                                /*  CDAYR_M         */
-    uint32_t       CDACR_M;                                /*  CDACR_M         */
-    uint32_t       CDBYR_M;                                /*  CDBYR_M         */
-    uint32_t       CDBCR_M;                                /*  CDBCR_M         */
-    uint32_t       CBDSR_M;                                /*  CBDSR_M         */
-    uint8_t        dummy3340[12];                          /*                  */
-    uint8_t        dummy3341[4];                           /*                  */
-    uint32_t       CLFCR_M;                                /*  CLFCR_M         */
-    uint32_t       CDOCR_M;                                /*  CDOCR_M         */
-    uint8_t        dummy3350[8];                           /*                  */
-    uint8_t        dummy3351[4];                           /*                  */
-    uint8_t        dummy3352[4];                           /*                  */
-    uint8_t        dummy3353[4];                           /*                  */
-    uint8_t        dummy3354[4];                           /*                  */
-    uint8_t        dummy3355[4];                           /*                  */
-    uint8_t        dummy3356[4];                           /*                  */
-    uint8_t        dummy3357[8];                           /*                  */
-    uint32_t       CDAYR2_M;                               /*  CDAYR2_M        */
-    uint32_t       CDACR2_M;                               /*  CDACR2_M        */
-    uint32_t       CDBYR2_M;                               /*  CDBYR2_M        */
-    uint32_t       CDBCR2_M;                               /*  CDBCR2_M        */
+    volatile uint8_t   dummy3151[4];                           /*                  */
+    volatile uint8_t   dummy3152[4];                           /*                  */
+    volatile uint8_t   dummy3153[4];                           /*                  */
+    volatile uint8_t   dummy3154[4];                           /*                  */
+    volatile uint32_t  CAMOR_M;                                /*  CAMOR_M         */
+    volatile uint32_t  CAPWR_M;                                /*  CAPWR_M         */
+    volatile uint8_t   dummy3160[4];                           /*                  */
+    volatile uint8_t   dummy3161[12];                          /*                  */
+    volatile uint8_t   dummy3162[4];                           /*                  */
+    volatile uint8_t   dummy3163[4];                           /*                  */
+    volatile uint32_t  CFLCR_M;                                /*  CFLCR_M         */
+    volatile uint32_t  CFSZR_M;                                /*  CFSZR_M         */
+    volatile uint32_t  CDWDR_M;                                /*  CDWDR_M         */
+    volatile uint32_t  CDAYR_M;                                /*  CDAYR_M         */
+    volatile uint32_t  CDACR_M;                                /*  CDACR_M         */
+    volatile uint32_t  CDBYR_M;                                /*  CDBYR_M         */
+    volatile uint32_t  CDBCR_M;                                /*  CDBCR_M         */
+    volatile uint32_t  CBDSR_M;                                /*  CBDSR_M         */
+    volatile uint8_t   dummy3170[12];                          /*                  */
+    volatile uint8_t   dummy3171[4];                           /*                  */
+    volatile uint32_t  CLFCR_M;                                /*  CLFCR_M         */
+    volatile uint32_t  CDOCR_M;                                /*  CDOCR_M         */
+    volatile uint8_t   dummy3180[8];                           /*                  */
+    volatile uint8_t   dummy3181[4];                           /*                  */
+    volatile uint8_t   dummy3182[4];                           /*                  */
+    volatile uint8_t   dummy3183[4];                           /*                  */
+    volatile uint8_t   dummy3184[4];                           /*                  */
+    volatile uint8_t   dummy3185[4];                           /*                  */
+    volatile uint8_t   dummy3186[4];                           /*                  */
+    volatile uint8_t   dummy3187[8];                           /*                  */
+    volatile uint32_t  CDAYR2_M;                               /*  CDAYR2_M        */
+    volatile uint32_t  CDACR2_M;                               /*  CDACR2_M        */
+    volatile uint32_t  CDBYR2_M;                               /*  CDBYR2_M        */
+    volatile uint32_t  CDBCR2_M;                               /*  CDBCR2_M        */
 /* end of struct st_ceu_n */
 };
 
 
 struct st_ceu_n
 {
-    uint32_t       not_common1;                            /*                  */
-    uint32_t       not_common2;                            /*                  */
-    uint32_t       not_common3;                            /*                  */
-    uint32_t       not_common4;                            /*                  */
-    uint32_t       CAMOR;                                  /*  CAMOR           */
-    uint32_t       CAPWR;                                  /*  CAPWR           */
-    uint32_t       not_common5;                            /*                  */
-    uint8_t        dummy322[12];                           /*                  */
-    uint32_t       not_common6;                            /*                  */
-    uint32_t       not_common7;                            /*                  */
-    uint32_t       CFLCR;                                  /*  CFLCR           */
-    uint32_t       CFSZR;                                  /*  CFSZR           */
-    uint32_t       CDWDR;                                  /*  CDWDR           */
-    uint32_t       CDAYR;                                  /*  CDAYR           */
-    uint32_t       CDACR;                                  /*  CDACR           */
-    uint32_t       CDBYR;                                  /*  CDBYR           */
-    uint32_t       CDBCR;                                  /*  CDBCR           */
-    uint32_t       CBDSR;                                  /*  CBDSR           */
-    uint8_t        dummy323[12];                           /*                  */
-    uint32_t       not_common8;                            /*                  */
-    uint32_t       CLFCR;                                  /*  CLFCR           */
-    uint32_t       CDOCR;                                  /*  CDOCR           */
-    uint8_t        dummy324[8];                            /*                  */
-    uint32_t       not_common9;                            /*                  */
-    uint32_t       not_common10;                           /*                  */
-    uint8_t        dummy325[4];                            /*                  */
-    uint32_t       not_common11;                           /*                  */
-    uint8_t        dummy326[4];                            /*                  */
-    uint32_t       not_common12;                           /*                  */
-    uint8_t        dummy327[8];                            /*                  */
-    uint32_t       CDAYR2;                                 /*  CDAYR2          */
-    uint32_t       CDACR2;                                 /*  CDACR2          */
-    uint32_t       CDBYR2;                                 /*  CDBYR2          */
-    uint32_t       CDBCR2;                                 /*  CDBCR2          */
+    volatile uint32_t  not_common1;                            /*                  */
+    volatile uint32_t  not_common2;                            /*                  */
+    volatile uint32_t  not_common3;                            /*                  */
+    volatile uint32_t  not_common4;                            /*                  */
+    volatile uint32_t  CAMOR;                                  /*  CAMOR           */
+    volatile uint32_t  CAPWR;                                  /*  CAPWR           */
+    volatile uint32_t  not_common5;                            /*                  */
+    volatile uint8_t   dummy322[12];                           /*                  */
+    volatile uint32_t  not_common6;                            /*                  */
+    volatile uint32_t  not_common7;                            /*                  */
+    volatile uint32_t  CFLCR;                                  /*  CFLCR           */
+    volatile uint32_t  CFSZR;                                  /*  CFSZR           */
+    volatile uint32_t  CDWDR;                                  /*  CDWDR           */
+    volatile uint32_t  CDAYR;                                  /*  CDAYR           */
+    volatile uint32_t  CDACR;                                  /*  CDACR           */
+    volatile uint32_t  CDBYR;                                  /*  CDBYR           */
+    volatile uint32_t  CDBCR;                                  /*  CDBCR           */
+    volatile uint32_t  CBDSR;                                  /*  CBDSR           */
+    volatile uint8_t   dummy323[12];                           /*                  */
+    volatile uint32_t  not_common8;                            /*                  */
+    volatile uint32_t  CLFCR;                                  /*  CLFCR           */
+    volatile uint32_t  CDOCR;                                  /*  CDOCR           */
+    volatile uint8_t   dummy324[8];                            /*                  */
+    volatile uint32_t  not_common9;                            /*                  */
+    volatile uint32_t  not_common10;                           /*                  */
+    volatile uint8_t   dummy325[4];                            /*                  */
+    volatile uint32_t  not_common11;                           /*                  */
+    volatile uint8_t   dummy326[4];                            /*                  */
+    volatile uint32_t  not_common12;                           /*                  */
+    volatile uint8_t   dummy327[8];                            /*                  */
+    volatile uint32_t  CDAYR2;                                 /*  CDAYR2          */
+    volatile uint32_t  CDACR2;                                 /*  CDACR2          */
+    volatile uint32_t  CDBYR2;                                 /*  CDBYR2          */
+    volatile uint32_t  CDBCR2;                                 /*  CDBCR2          */
 };
 
 
-#define CEU     (*(volatile struct st_ceu     *)0xE8210000uL) /* CEU */
+#define CEU     (*(struct st_ceu     *)0xE8210000uL) /* CEU */
 
 
 /* Start of channnel array defines of CEU */
@@ -192,12 +193,14 @@ struct st_ceu_n
 /*(Sample) value = CEUn[ channel ]->CAMOR; */
 #define CEUn_COUNT  3
 #define CEUn_ADDRESS_LIST \
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
     (volatile struct st_ceu_n*)&CEU_A, \
     (volatile struct st_ceu_n*)&CEU_B, \
-    (volatile struct st_ceu_n*)&CEU_M
-#define CEU_A   (*(volatile struct st_ceu_n *)&CEU.CAPSR)                 /* CEU_A */
-#define CEU_B   (*(volatile struct st_ceu_n *)&CEU.dummy3281)             /* CEU_B */
-#define CEU_M   (*(volatile struct st_ceu_n *)&CEU.dummy3321)             /* CEU_M */
+    (volatile struct st_ceu_n*)&CEU_M \
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
+#define CEU_A   (*(struct st_ceu_n *)&CEU.CAPSR)                 /* CEU_A */
+#define CEU_B   (*(struct st_ceu_n *)&CEU.dummy3111)             /* CEU_B */
+#define CEU_M   (*(struct st_ceu_n *)&CEU.dummy3151)             /* CEU_M */
 
 /* End of channnel array defines of CEU */
 
@@ -262,4 +265,5 @@ struct st_ceu_n
 #define CEUCDACR2_M CEU.CDACR2_M
 #define CEUCDBYR2_M CEU.CDBYR2_M
 #define CEUCDBCR2_M CEU.CDBCR2_M
+/* <-SEC M1.10.1 */
 #endif

@@ -18,22 +18,14 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer
-*
+* Copyright (C) 2012 - 2015 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* File Name   : ostm_iobitmask.h
+* $Rev: 1320 $
+* $Date:: 2015-01-29 15:54:51 +0900#$
+* Description : OSTM register define header
 *******************************************************************************/
-/*******************************************************************************
-* File Name     : ostm_iobitmask.h
-* Device(s)     : RZ/A1H RSK2+RZA1H
-* H/W Platform  : RSK2+RZA1H CPU Board
-* Description   : OSTM register define header
-*******************************************************************************/
-/*******************************************************************************
-* History       : DD.MM.YYYY Version Description
-*               : 18.06.2013 1.00
-*******************************************************************************/
-
 #ifndef OSTM_IOBITMASK_H
 #define OSTM_IOBITMASK_H
 
@@ -67,6 +59,20 @@
 #define OSTM1_OSTMnCTL_MD0                      (0x00000001uL)
 #define OSTM1_OSTMnCTL_MD1                      (0x00000002uL)
 
+/* ---- OSTMn ---- */
+#define OSTMn_OSTMnCMP_OSTMnCMP                 (0xFFFFFFFFuL)
+
+#define OSTMn_OSTMnCNT_OSTMnCNT                 (0xFFFFFFFFuL)
+
+#define OSTMn_OSTMnTE_OSTMnTE                   (0x01u)
+
+#define OSTMn_OSTMnTS_OSTMnTS                   (0x01u)
+
+#define OSTMn_OSTMnTT_OSTMnTT                   (0x01u)
+
+#define OSTMn_OSTMnCTL_MD0                      (0x00000001uL)
+#define OSTMn_OSTMnCTL_MD1                      (0x00000002uL)
+
 
 /* ==== Shift values for IO registers ==== */
 /* ---- OSTM0 ---- */
@@ -96,6 +102,20 @@
 
 #define OSTM1_OSTMnCTL_MD0_SHIFT                (0u)
 #define OSTM1_OSTMnCTL_MD1_SHIFT                (1u)
+
+/* ---- OSTMn ---- */
+#define OSTMn_OSTMnCMP_OSTMnCMP_SHIFT           (0u)
+
+#define OSTMn_OSTMnCNT_OSTMnCNT_SHIFT           (0u)
+
+#define OSTMn_OSTMnTE_OSTMnTE_SHIFT             (0u)
+
+#define OSTMn_OSTMnTS_OSTMnTS_SHIFT             (0u)
+
+#define OSTMn_OSTMnTT_OSTMnTT_SHIFT             (0u)
+
+#define OSTMn_OSTMnCTL_MD0_SHIFT                (0u)
+#define OSTMn_OSTMnCTL_MD1_SHIFT                (1u)
 
 
 #endif /* OSTM_IOBITMASK_H */

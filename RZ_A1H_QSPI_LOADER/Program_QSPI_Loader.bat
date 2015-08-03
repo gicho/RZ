@@ -6,7 +6,7 @@ echo .
 
 rem <> Manually set path to JLink install directory here if you do not
 rem    want to use the auto detect method
-set BASE=C:\work\dev\SEGGER\JLink_V488b
+set BASE=C:\work\dev\e2_studio4\DebugComp\JLink_ARM
 if exist "%BASE%\JLink.exe" goto PATH_SET
 
 rem <> Try to automatically detect JLink install directory

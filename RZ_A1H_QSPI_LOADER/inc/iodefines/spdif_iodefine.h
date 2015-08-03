@@ -18,37 +18,37 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer*
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
 * File Name : spdif_iodefine.h
-* $Rev: 809 $
-* $Date:: 2014-03-28 19:15:55 +0000#$
-* Description : Definition of I/O Register (V0.50j)
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
 ******************************************************************************/
 #ifndef SPDIF_IODEFINE_H
 #define SPDIF_IODEFINE_H
 
 struct st_spdif
 {                                                          /* SPDIF            */
-    uint32_t       TLCA;                                   /*  TLCA            */
-    uint32_t       TRCA;                                   /*  TRCA            */
-    uint32_t       TLCS;                                   /*  TLCS            */
-    uint32_t       TRCS;                                   /*  TRCS            */
-    uint32_t       TUI;                                    /*  TUI             */
-    uint32_t       RLCA;                                   /*  RLCA            */
-    uint32_t       RRCA;                                   /*  RRCA            */
-    uint32_t       RLCS;                                   /*  RLCS            */
-    uint32_t       RRCS;                                   /*  RRCS            */
-    uint32_t       RUI;                                    /*  RUI             */
-    uint32_t       CTRL;                                   /*  CTRL            */
-    uint32_t       STAT;                                   /*  STAT            */
-    uint32_t       TDAD;                                   /*  TDAD            */
-    uint32_t       RDAD;                                   /*  RDAD            */
+    volatile uint32_t  TLCA;                                   /*  TLCA            */
+    volatile uint32_t  TRCA;                                   /*  TRCA            */
+    volatile uint32_t  TLCS;                                   /*  TLCS            */
+    volatile uint32_t  TRCS;                                   /*  TRCS            */
+    volatile uint32_t  TUI;                                    /*  TUI             */
+    volatile uint32_t  RLCA;                                   /*  RLCA            */
+    volatile uint32_t  RRCA;                                   /*  RRCA            */
+    volatile uint32_t  RLCS;                                   /*  RLCS            */
+    volatile uint32_t  RRCS;                                   /*  RRCS            */
+    volatile uint32_t  RUI;                                    /*  RUI             */
+    volatile uint32_t  CTRL;                                   /*  CTRL            */
+    volatile uint32_t  STAT;                                   /*  STAT            */
+    volatile uint32_t  TDAD;                                   /*  TDAD            */
+    volatile uint32_t  RDAD;                                   /*  RDAD            */
 };
 
 
-#define SPDIF   (*(volatile struct st_spdif   *)0xE8012000uL) /* SPDIF */
+#define SPDIF   (*(struct st_spdif   *)0xE8012000uL) /* SPDIF */
 
 
 #define SPDIFTLCA SPDIF.TLCA

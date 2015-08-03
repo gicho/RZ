@@ -17,26 +17,18 @@
 * and to discontinue the availability of this software. By using this software,
 * you agree to the additional terms and conditions found by accessing the
 * following link:
-* http://www.renesas.com/disclaimer
-*
+* http://www.renesas.com/disclaimer*
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
-*******************************************************************************/
-/*******************************************************************************
-* File Name     : ostm_iodefine.h
-* Version       : 0.01
-* Device(s)     : RZ/A1H RSK2+RZA1H
-* Tool-Chain    : GNUARM-RZv13.01-EABI
-* H/W Platform  : RSK+RZA1H CPU Board
-* Description   : header file for ostm_iodefine.h
-*******************************************************************************/
-/*******************************************************************************
-* History : DD.MM.YYYY Version Description
-*******************************************************************************/
-
-#ifndef __OSTM_IODEFINE_H__
-#define __OSTM_IODEFINE_H__
+* File Name : ostm_iodefine.h
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
+******************************************************************************/
+#ifndef OSTM_IODEFINE_H
+#define OSTM_IODEFINE_H
+/* ->SEC M1.10.1 : Not magic number */
 
 struct st_ostm
 {                                                          /* OSTM             */
@@ -63,7 +55,9 @@ struct st_ostm
 /*(Sample) value = OSTM[ channel ]->OSTMnCMP; */
 #define OSTM_COUNT  2
 #define OSTM_ADDRESS_LIST \
-    &OSTM0, &OSTM1
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
+    &OSTM0, &OSTM1 \
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
 
 /* End of channnel array defines of OSTM */
 
@@ -80,4 +74,5 @@ struct st_ostm
 #define OSTM1TS OSTM1.OSTMnTS
 #define OSTM1TT OSTM1.OSTMnTT
 #define OSTM1CTL OSTM1.OSTMnCTL
+/* <-SEC M1.10.1 */
 #endif

@@ -17,311 +17,83 @@
 * and to discontinue the availability of this software. By using this software,
 * you agree to the additional terms and conditions found by accessing the
 * following link:
-* http://www.renesas.com/disclaimer
-*
+* http://www.renesas.com/disclaimer*
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
-*******************************************************************************/
-/*******************************************************************************
-* File Name     : bsc_iodefine.h
-* Device(s)     : RZ/A1H RSK2+RZA1H
-* Tool-Chain    : GNUARM-RZv13.01-EABI
-* H/W Platform  : RSK+RZA1H CPU Board
-* Description   : header file for bsc_iodefine.h
-*******************************************************************************/
-/*******************************************************************************
-* History       : DD.MM.YYYY Version Description
-*               : 18.06.2013 1.00
-*******************************************************************************/
+* File Name : bsc_iodefine.h
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
+******************************************************************************/
+#ifndef BSC_IODEFINE_H
+#define BSC_IODEFINE_H
+/* ->SEC M1.10.1 : Not magic number */
 
-#ifndef __BSC_IODEFINE_H__
-#define __BSC_IODEFINE_H__
+struct st_bsc
+{                                                          /* BSC              */
+    volatile uint32_t  CMNCR;                                  /*  CMNCR           */
+#define BSC_CSnBCR_COUNT 6
+    volatile uint32_t  CS0BCR;                                 /*  CS0BCR          */
+    volatile uint32_t  CS1BCR;                                 /*  CS1BCR          */
+    volatile uint32_t  CS2BCR;                                 /*  CS2BCR          */
+    volatile uint32_t  CS3BCR;                                 /*  CS3BCR          */
+    volatile uint32_t  CS4BCR;                                 /*  CS4BCR          */
+    volatile uint32_t  CS5BCR;                                 /*  CS5BCR          */
+    volatile uint8_t   dummy4[12];                             /*                  */
+#define BSC_CSnWCR_COUNT 6
+    volatile uint32_t  CS0WCR;                                 /*  CS0WCR          */
+    volatile uint32_t  CS1WCR;                                 /*  CS1WCR          */
+    volatile uint32_t  CS2WCR;                                 /*  CS2WCR          */
+    volatile uint32_t  CS3WCR;                                 /*  CS3WCR          */
+    volatile uint32_t  CS4WCR;                                 /*  CS4WCR          */
+    volatile uint32_t  CS5WCR;                                 /*  CS5WCR          */
+    volatile uint8_t   dummy5[12];                             /*                  */
+    volatile uint32_t  SDCR;                                   /*  SDCR            */
+    volatile uint32_t  RTCSR;                                  /*  RTCSR           */
+    volatile uint32_t  RTCNT;                                  /*  RTCNT           */
+    volatile uint32_t  RTCOR;                                  /*  RTCOR           */
+    volatile uint8_t   dummy6[4];                              /*                  */
+#define BSC_TOSCORn_COUNT 6
+    volatile uint32_t  TOSCOR0;                                /*  TOSCOR0         */
+    volatile uint32_t  TOSCOR1;                                /*  TOSCOR1         */
+    volatile uint32_t  TOSCOR2;                                /*  TOSCOR2         */
+    volatile uint32_t  TOSCOR3;                                /*  TOSCOR3         */
+    volatile uint32_t  TOSCOR4;                                /*  TOSCOR4         */
+    volatile uint32_t  TOSCOR5;                                /*  TOSCOR5         */
+    volatile uint8_t   dummy7[8];                              /*                  */
+    volatile uint32_t  TOSTR;                                  /*  TOSTR           */
+    volatile uint32_t  TOENR;                                  /*  TOENR           */
+};
 
-#include "typedefine.h"
 
-typedef union {                                 /* CSnBCR       */
-      _UDWORD LONG;                             /*  Long Access */
-      struct {                                  /*  Bit Access  */
-             _UDWORD :9;                        /*              */
-             _UDWORD BSZ:2;                     /*   BSZ        */
-             _UDWORD :1;                        /*              */
-             _UDWORD TYPE:3;                    /*   TYPE       */
-             _UDWORD :1;                        /*              */
-             _UDWORD IWRRS:3;                   /*   IWRRS      */
-             _UDWORD IWRRD:3;                   /*   IWRRD      */
-             _UDWORD IWRWS:3;                   /*   IWRWS      */
-             _UDWORD IWRWD:3;                   /*   IWRWD      */
-             _UDWORD IWW:3;                     /*   IWW        */
-             _UDWORD :1;                        /*              */
-             } BIT;                             /*              */
-} CSnBCR;                                       /*              */
-typedef union {                                 /* TOSCORn      */
-      _UDWORD LONG;                             /*  Long Access */
-      struct {                                  /*  Bit Access  */
-             _UDWORD xxx:16;                    /*   xxx        */
-             _UDWORD :16;                       /*              */
-              } BIT;                            /*              */
-} TOSCORn;                                      /*              */
+#define BSC     (*(struct st_bsc     *)0x3FFFC000uL) /* BSC */
 
-struct st_bsc {                                 /* struct BSC   */
-       union {                                  /* CMNCR        */
-             _UDWORD LONG;                      /*  Long Access */
-             struct {                           /*  Bit Access  */
-                    _UDWORD HIZCNT:1;           /*   HIZCNT     */
-                    _UDWORD HIZMEM:1;           /*   HIZMEM     */
-                    _UDWORD :7;                 /*              */
-                    _UDWORD DPRTY:2;            /*   DPRTY      */
-                    _UDWORD :13;                /*              */
-                    _UDWORD AL0:1;              /*   AL0        */
-                    _UDWORD :3;                 /*              */
-                    _UDWORD TL0:1;              /*   TL0        */
-                    _UDWORD :3;                 /*              */
-                    } BIT;                      /*              */
-             } CMNCR;                           /*              */
-       CSnBCR CS0BCR;                           /* CS0BCR       */
-       CSnBCR CS1BCR;                           /* CS1BCR       */
-       CSnBCR CS2BCR;                           /* CS2BCR       */
-       CSnBCR CS3BCR;                           /* CS3BCR       */
-       CSnBCR CS4BCR;                           /* CS4BCR       */
-       CSnBCR CS5BCR;                           /* CS5BCR       */
-       _UBYTE wk0[12];                          /*              */
-       union {                                  /* CS0WCR       */
-             union {                            /* CS0WCR(NORMAL) */
-                    _UDWORD LONG;               /*  Long Access */
-                    struct {                    /*  Bit Access  */
-                           _UDWORD HW:2;        /*   HW         */
-                           _UDWORD :4;          /*              */
-                           _UDWORD WM:1;        /*   WM         */
-                           _UDWORD WR:4;        /*   WR         */
-                           _UDWORD SW:2;        /*   SW         */
-                           _UDWORD :7;          /*              */
-                           _UDWORD BAS:1;       /*   BAS        */
-                           _UDWORD :11;         /*              */
-                           } BIT;               /*              */
-                    } NORMAL;                   /*              */
-             union {                            /* CS0WCR(BROM_ASY) */
-                    _UDWORD LONG;               /*  Long Access */
-                    struct {                    /*  Bit Access  */
-                           _UDWORD :6;          /*              */
-                           _UDWORD WM:1;        /*   WM         */
-                           _UDWORD W:4;         /*   W          */
-                           _UDWORD :5;          /*              */
-                           _UDWORD BW:2;        /*   BW         */
-                           _UDWORD :2;          /*              */
-                           _UDWORD BST:2;       /*   BST        */
-                           _UDWORD :10;         /*              */
-                           } BIT;               /*              */
-                    } BROM_ASY;                 /*              */
-             union {                            /* CS0WCR(BROM_SY) */
-                    _UDWORD LONG;               /*  Long Access */
-                    struct {                    /*  Bit Access  */
-                           _UDWORD :6;          /*              */
-                           _UDWORD WM:1;        /*   WM         */
-                           _UDWORD W:4;         /*   W          */
-                           _UDWORD :5;          /*              */
-                           _UDWORD BW:2;        /*   BW         */
-                           _UDWORD :14;         /*              */
-                           } BIT;               /*              */
-                    } BROM_SY;                  /*              */
-             } CS0WCR;                          /*              */
-       union {                                  /* CS1WCR       */
-                    _UDWORD LONG;               /*  Long Access */
-                    struct {                    /*  Bit Access  */
-                           _UDWORD HW:2;        /*   HW         */
-                           _UDWORD :4;          /*              */
-                           _UDWORD WM:1;        /*   WM         */
-                           _UDWORD WR:4;        /*   WR         */
-                           _UDWORD SW:2;        /*   SW         */
-                           _UDWORD :3;          /*              */
-                           _UDWORD WW:3;        /*   WW         */
-                           _UDWORD :1;          /*              */
-                           _UDWORD BAS:1;       /*   BAS        */
-                           _UDWORD :11;         /*              */
-                           } BIT;               /*              */
-             } CS1WCR;                          /*              */
-       union {                                  /* CS2WCR       */
-             union {                            /* CS2WCR(NORMAL) */
-                    _UDWORD LONG;               /*  Long Access */
-                    struct {                    /*  Bit Access  */
-                           _UDWORD :6;          /*              */
-                           _UDWORD WM:1;        /*   WM         */
-                           _UDWORD WR:4;        /*   WR         */
-                           _UDWORD :9;          /*              */
-                           _UDWORD BAS:1;       /*   BAS        */
-                           _UDWORD :11;         /*              */
-                           } BIT;               /*              */
-                    } NORMAL;                   /*              */
-             union {                            /* CS2WCR(SDRAM) */
-                    _UDWORD LONG;               /*  Long Access */
-                    struct {                    /*  Bit Access  */
-                           _UDWORD :7;          /*              */
-                           _UDWORD A2CL:2;      /*   A2CL       */
-                           _UDWORD :23;         /*              */
-                           } BIT;               /*              */
-                    } SDRAM;                    /*              */
-             } CS2WCR;                          /*              */
-       union {                                  /* CS3WCR       */
-             union {                            /* CS3WCR(NORMAL) */
-                    _UDWORD LONG;               /*  Long Access */
-                    struct {                    /*  Bit Access  */
-                           _UDWORD :6;          /*              */
-                           _UDWORD WM:1;        /*   WM         */
-                           _UDWORD WR:4;        /*   WR         */
-                           _UDWORD :9;          /*              */
-                           _UDWORD BAS:1;       /*   BAS        */
-                           _UDWORD :11;         /*              */
-                           } BIT;               /*              */
-                    } NORMAL;                   /*              */
-             union {                            /* CS3WCR(SDRAM) */
-                    _UDWORD LONG;               /*  Long Access */
-                    struct {                    /*  Bit Access  */
-                           _UDWORD WTRC:2;      /*   WTRC       */
-                           _UDWORD :1;          /*              */
-                           _UDWORD TRWL:2;      /*   TRWL       */
-                           _UDWORD :2;          /*              */
-                           _UDWORD A3CL:2;      /*   A3CL       */
-                           _UDWORD :1;          /*              */
-                           _UDWORD WTRCD:2;     /*   WTRCD      */
-                           _UDWORD :1;          /*              */
-                           _UDWORD WTRP:2;      /*   WTRP       */
-                           _UDWORD :17;         /*              */
-                           } BIT;               /*              */
-                    } SDRAM;                    /*              */
-             } CS3WCR;                          /*              */
-       union {                                  /* CS4WCR       */
-             union {                            /* CS4WCR(NORMAL) */
-                    _UDWORD LONG;               /*  Long Access */
-                    struct {                    /*  Bit Access  */
-                           _UDWORD HW:2;        /*   HW         */
-                           _UDWORD :4;          /*              */
-                           _UDWORD WM:1;        /*   WM         */
-                           _UDWORD WR:4;        /*   WR         */
-                           _UDWORD SW:2;        /*   SW         */
-                           _UDWORD :3;          /*              */
-                           _UDWORD WW:3;        /*   WW         */
-                           _UDWORD :1;          /*              */
-                           _UDWORD BAS:1;       /*   BAS        */
-                           _UDWORD :11;         /*              */
-                           } BIT;               /*              */
-                    } NORMAL;                   /*              */
-             union {                            /* CS4WCR(BROM_ASY) */
-                    _UDWORD LONG;               /*  Long Access */
-                    struct {                    /*  Bit Access  */
-                           _UDWORD HW:2;        /*   HW         */
-                           _UDWORD :4;          /*              */
-                           _UDWORD WM:1;        /*   WM         */
-                           _UDWORD W:4;         /*   W          */
-                           _UDWORD SW:2;        /*   SW         */
-                           _UDWORD :3;          /*              */
-                           _UDWORD BW:2;        /*   BW         */
-                           _UDWORD :2;          /*              */
-                           _UDWORD BST:2;       /*   BST        */
-                           _UDWORD :10;         /*              */
-                           } BIT;               /*              */
-                    } BROM_ASY;                 /*              */
-             } CS4WCR;                          /*              */
-       union {                                  /* CS5WCR       */
-             union {                            /* CS5WCR(NORMAL) */
-                    _UDWORD LONG;               /*  Long Access */
-                    struct {                    /*  Bit Access  */
-                           _UDWORD HW:2;        /*   HW         */
-                           _UDWORD :4;          /*              */
-                           _UDWORD WM:1;        /*   WM         */
-                           _UDWORD WR:4;        /*   WR         */
-                           _UDWORD SW:2;        /*   SW         */
-                           _UDWORD :3;          /*              */
-                           _UDWORD WW:3;        /*   WW         */
-                           _UDWORD :1;          /*              */
-                           _UDWORD MPXWBAS:1;   /*   MPXW/BAS   */
-                           _UDWORD SZSEL:1;     /*   SZSEL      */
-                           _UDWORD :10;         /*              */
-                           } BIT;               /*              */
-                    } NORMAL;                   /*              */
-             } CS5WCR;                          /*              */
-       _UBYTE wk1[12];                          /*              */
-       union {                                  /* SDCR         */
-             _UDWORD LONG;                      /*  Long Access */
-             struct {                           /*  Bit Access  */
-                    _UDWORD A3COL:2;            /*   A3COL      */
-                    _UDWORD :1;                 /*              */
-                    _UDWORD A3ROW:2;            /*   A3ROW      */
-                    _UDWORD :3;                 /*              */
-                    _UDWORD BACTV:1;            /*   BACTV      */
-                    _UDWORD PDOWN:1;            /*   PDOWN      */
-                    _UDWORD RMODE:1;            /*   RMODE      */
-                    _UDWORD RFSH:1;             /*   RFSH       */
-                    _UDWORD :1;                 /*              */
-                    _UDWORD DEEP:1;             /*   DEEP       */
-                    _UDWORD :2;                 /*              */
-                    _UDWORD A2COL:2;            /*   A2COL      */
-                    _UDWORD :1;                 /*              */
-                    _UDWORD A2ROW:2;            /*   A2ROW      */
-                    _UDWORD :11;                /*              */
-                    } BIT;                      /*              */
-             } SDCR;                            /*              */
-       union {                                  /* RTCSR        */
-             _UDWORD LONG;                      /*  Long Access */
-             struct {                           /*  Bit Access  */
-                    _UDWORD RRC:3;              /*   RRC        */
-                    _UDWORD CKS:3;              /*   CKS        */
-                    _UDWORD CMIE:1;             /*   CMIE       */
-                    _UDWORD CMF:1;              /*   CMF        */
-                    _UDWORD :24;                /*              */
-                    } BIT;                      /*              */
-             } RTCSR;                           /*              */
-       union {                                  /* RTCNT        */
-             _UDWORD LONG;                      /*  Long Access */
-             struct {                           /*  Bit Access  */
-                    _UDWORD D:32;               /*   D          */
-                    } BIT;                      /*              */
-             } RTCNT;                           /*              */
-       union {                                  /* RTCOR        */
-             _UDWORD LONG;                      /*  Long Access */
-             struct {                           /*  Bit Access  */
-                    _UDWORD D:32;               /*   D          */
-                    } BIT;                      /*              */
-             } RTCOR;                           /*              */
-       _UBYTE wk2[4];                           /*              */
-       TOSCORn TOSCOR0;                         /* TOSCOR0      */
-       TOSCORn TOSCOR1;                         /* TOSCOR1      */
-       TOSCORn TOSCOR2;                         /* TOSCOR2      */
-       TOSCORn TOSCOR3;                         /* TOSCOR3      */
-       TOSCORn TOSCOR4;                         /* TOSCOR4      */
-       TOSCORn TOSCOR5;                         /* TOSCOR5      */
-       _UBYTE wk3[8];                           /*              */
-       union {                                  /* TOSTR        */
-             _UDWORD LONG;                      /*  Long Access */
-             struct {                           /*  Bit Access  */
-                    _UDWORD CS0TOSTF:1;         /*   CS0TOSTF   */
-                    _UDWORD CS1TOSTF:1;         /*   CS1TOSTF   */
-                    _UDWORD CS2TOSTF:1;         /*   CS2TOSTF   */
-                    _UDWORD CS3TOSTF:1;         /*   CS3TOSTF   */
-                    _UDWORD CS4TOSTF:1;         /*   CS4TOSTF   */
-                    _UDWORD CS5TOSTF:1;         /*   CS5TOSTF   */
-                    _UDWORD :26;                /*              */
-                    } BIT;                      /*              */
-             } TOSTR;                           /*              */
-       union {                                  /* TOENR        */
-             _UDWORD LONG;                      /*  Long Access */
-             struct {                           /*  Bit Access  */
-                    _UDWORD CS0TOEN:1;          /*   CS0TOEN    */
-                    _UDWORD CS1TOEN:1;          /*   CS1TOEN    */
-                    _UDWORD CS2TOEN:1;          /*   CS2TOEN    */
-                    _UDWORD CS3TOEN:1;          /*   CS3TOEN    */
-                    _UDWORD CS4TOEN:1;          /*   CS4TOEN    */
-                    _UDWORD CS5TOEN:1;          /*   CS5TOEN    */
-                    _UDWORD :26;                /*              */
-                    } BIT;                      /*              */
-             } TOENR;                           /*              */
-};                                              /*              */
 
-#ifndef ARM_SIM
-#define	BSC		(*(volatile struct st_bsc *)0x3FFFC000)   /* BSC Address */
-#else	/* ARM_SIM */
-#define	BSC		(*(volatile struct st_bsc *)0x0FFFC000)   /* BSC Address */
-#endif	/* ARM_SIM */
-
-#endif /* __BSC_IODEFINE_H__ */
-
-/* End of File */
+#define BSCCMNCR BSC.CMNCR
+#define BSCCS0BCR BSC.CS0BCR
+#define BSCCS1BCR BSC.CS1BCR
+#define BSCCS2BCR BSC.CS2BCR
+#define BSCCS3BCR BSC.CS3BCR
+#define BSCCS4BCR BSC.CS4BCR
+#define BSCCS5BCR BSC.CS5BCR
+#define BSCCS0WCR BSC.CS0WCR
+#define BSCCS1WCR BSC.CS1WCR
+#define BSCCS2WCR BSC.CS2WCR
+#define BSCCS3WCR BSC.CS3WCR
+#define BSCCS4WCR BSC.CS4WCR
+#define BSCCS5WCR BSC.CS5WCR
+#define BSCSDCR BSC.SDCR
+#define BSCRTCSR BSC.RTCSR
+#define BSCRTCNT BSC.RTCNT
+#define BSCRTCOR BSC.RTCOR
+#define BSCTOSCOR0 BSC.TOSCOR0
+#define BSCTOSCOR1 BSC.TOSCOR1
+#define BSCTOSCOR2 BSC.TOSCOR2
+#define BSCTOSCOR3 BSC.TOSCOR3
+#define BSCTOSCOR4 BSC.TOSCOR4
+#define BSCTOSCOR5 BSC.TOSCOR5
+#define BSCTOSTR BSC.TOSTR
+#define BSCTOENR BSC.TOENR
+/* <-SEC M1.10.1 */
+#endif

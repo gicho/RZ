@@ -79,6 +79,8 @@ Includes   <System Includes> , "Project Includes"
 // #include "sflash.h"
 #include "qspi_setup.h"
 
+#include "flash_type_definitions.h"
+
 /******************************************************************************
 Typedef definitions
 ******************************************************************************/
@@ -690,8 +692,8 @@ typedef struct
 	spiOptionalDataDdrEnable_t	optionalDataRateMode;
 	spiDataTransferDdrEnable_t	transferDataRateMode;
 
-	qspiDataRegister_t writeData0; // write data register
-	qspiDataRegister_t writeData1;
+	qspiDataRegister_t writeData0; // write data register for chip0
+	qspiDataRegister_t writeData1; // write data register for chip1
 
 } spiTransfer_t;
 
@@ -708,24 +710,26 @@ void qspiControllerSetPortMode(uint8_t singleDualMode);
 void qspiConfigureSpiTransfer(spiTransfer_t* transferConfig, dataBusSize_t busSize);
 void qspiReadByte(uint8_t* dataDevice0, uint8_t* dataDevice1, dataBusSize_t busSize);
 void qspiRead2Byte(uint16_t* dataDevice0, uint16_t* dataDevice1, dataBusSize_t busSize);
-void qspiRead4Byte(uint32_t* dataDevice0, uint16_t* dataDevice1, dataBusSize_t busSize);
+void qspiRead4Byte(uint32_t* dataDevice0, uint32_t* dataDevice1, dataBusSize_t busSize);
 void qspiStartTransfer(void);
 
-void qspiReadStatusRegister1(uint8_t* dataDevice0, uint8_t* dataDevice1, dataBusSize_t busSize);
-void qspiReadStatusRegister2(uint8_t* dataDevice0, uint8_t* dataDevice1, dataBusSize_t busSize);
-void qspiReadConfigRegister(uint8_t* dataDevice0, uint8_t* dataDevice1, dataBusSize_t busSize);
+void qspiReadIdentification(identification_t deviceId0, identification_t deviceId1, dataBusSize_t busSize);
+void qspiSoftwareReset(dataBusSize_t busSize);
+void qspiReadStatusRegister1(flashStatusRegister1* dataDevice0, flashStatusRegister1* dataDevice1, dataBusSize_t busSize);
+void qspiReadStatusRegister2(flashStatusRegister2* dataDevice0, flashStatusRegister2* dataDevice1, dataBusSize_t busSize);
+void qspiReadConfigRegister(flashConfigRegister1* dataDevice0, flashConfigRegister1* dataDevice1, dataBusSize_t busSize);
 void qspiReadBankRegister(uint8_t* dataDevice0, uint8_t* dataDevice1, dataBusSize_t busSize);
 void qspiWriteBankRegister(uint8_t dataDevice0, uint8_t dataDevice1, dataBusSize_t busSize);
 void qspiWriteEnable(dataBusSize_t busSize);
 void qspiWriteDisable(dataBusSize_t busSize);
 void qspiClearStatusRegister(dataBusSize_t busSize);
-void qspiWriteStatusRegister(uint8_t statusDevice0, uint8_t statusDevice1, dataBusSize_t busSize);
-void qspiWriteStatusConfigRegister(uint8_t statusDevice0, uint8_t configDevice0, uint8_t statusDevice1, uint8_t configDevice1, dataBusSize_t busSize);
-void qspiReadElectronicManufacturerSignature(uint16_t* signature0, uint16_t* signature1, dataBusSize_t busSize);
+void qspiWriteStatusRegister(flashStatusRegister1 statusDevice0, flashStatusRegister1 statusDevice1, dataBusSize_t busSize);
+void qspiWriteStatusConfigRegister(flashStatusRegister1 statusDevice0, flashConfigRegister1 configDevice0, flashStatusRegister1 statusDevice1, flashConfigRegister1 configDevice1, dataBusSize_t busSize);
+void qspiReadElectronicManufacturerSignature(deviceSignature* signature0, deviceSignature* signature1, dataBusSize_t busSize);
 
 // functions for External Address Mode
 void qspiExternalAddressForceIdleAndWait(void);
-void qspiConfigureExternalAddressTransfer(externalAddressTransfer_t* externalAddressTransferConfig);
+void qspiConfigureExternalAddressTransfer(const externalAddressTransfer_t* externalAddressTransferConfig);
 void qspiExternalAddressFlushReadCache(void);
 
 

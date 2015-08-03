@@ -91,7 +91,7 @@ void CPG_Init(void)
     /* ==== CPG Settings ==== */
 
     /* PLL(x30), I:G:B:P1:P0 = 30:20:10:5:5/2 */
-    CPG.FRQCR.WORD  = 0x1035u;
+    CPG.FRQCR  = 0x1035u;
 
     /* CKIO:Output at time usually output     *
      * when bus right is opened output at     *
@@ -102,11 +102,11 @@ void CPG_Init(void)
 	 * B  Clock = 133.33MHz,                  *
 	 * P1 Clock =  66.67MHz,                  *
 	 * P0 Clock =  33.33MHz                   */
-    CPG.FRQCR2.WORD = 0x0001u;
+    CPG.FRQCR2 = 0x0001u;
 
     /* ----  Writing to On-Chip Data-Retention RAM is enabled. ---- */
-    CPG.SYSCR3.BYTE = 0x0Fu;
-    dummy = CPG.SYSCR3.BYTE;
+    CPG.SYSCR3 = 0x0Fu;
+    dummy = CPG.SYSCR3;
 }
 
 void ExternalBus_AddressDataLines_Init(void) {

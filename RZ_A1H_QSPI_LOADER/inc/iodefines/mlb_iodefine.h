@@ -18,263 +18,266 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer*
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
 * File Name : mlb_iodefine.h
-* $Rev: 809 $
-* $Date:: 2014-03-28 19:15:55 +0000#$
-* Description : Definition of I/O Register (V0.50j)
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
 ******************************************************************************/
 #ifndef MLB_IODEFINE_H
 #define MLB_IODEFINE_H
+/* ->QAC 0639 : Over 127 members (C90) */
+/* ->QAC 0857 : Over 1024 #define (C90) */
+/* ->SEC M1.10.1 : Not magic number */
 
 struct st_mlb
 {                                                          /* MLB              */
-    uint32_t       DCCR;                                   /*  DCCR            */
-    uint32_t       SSCR;                                   /*  SSCR            */
-    uint32_t       SDCR;                                   /*  SDCR            */
-    uint32_t       SMCR;                                   /*  SMCR            */
-    uint8_t        dummy172[12];                           /*                  */
-    uint32_t       VCCR;                                   /*  VCCR            */
-    uint32_t       SBCR;                                   /*  SBCR            */
-    uint32_t       ABCR;                                   /*  ABCR            */
-    uint32_t       CBCR;                                   /*  CBCR            */
-    uint32_t       IBCR;                                   /*  IBCR            */
-    uint32_t       CICR;                                   /*  CICR            */
-    uint8_t        dummy173[12];                           /*                  */
+    volatile uint32_t  DCCR;                                   /*  DCCR            */
+    volatile uint32_t  SSCR;                                   /*  SSCR            */
+    volatile uint32_t  SDCR;                                   /*  SDCR            */
+    volatile uint32_t  SMCR;                                   /*  SMCR            */
+    volatile uint8_t   dummy156[12];                           /*                  */
+    volatile uint32_t  VCCR;                                   /*  VCCR            */
+    volatile uint32_t  SBCR;                                   /*  SBCR            */
+    volatile uint32_t  ABCR;                                   /*  ABCR            */
+    volatile uint32_t  CBCR;                                   /*  CBCR            */
+    volatile uint32_t  IBCR;                                   /*  IBCR            */
+    volatile uint32_t  CICR;                                   /*  CICR            */
+    volatile uint8_t   dummy157[12];                           /*                  */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR0;                                  /*  CECR0           */
-    uint32_t       CSCR0;                                  /*  CSCR0           */
-    uint32_t       CCBCR0;                                 /*  CCBCR0          */
-    uint32_t       CNBCR0;                                 /*  CNBCR0          */
+    volatile uint32_t  CECR0;                                  /*  CECR0           */
+    volatile uint32_t  CSCR0;                                  /*  CSCR0           */
+    volatile uint32_t  CCBCR0;                                 /*  CCBCR0          */
+    volatile uint32_t  CNBCR0;                                 /*  CNBCR0          */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR1;                                  /*  CECR1           */
-    uint32_t       CSCR1;                                  /*  CSCR1           */
-    uint32_t       CCBCR1;                                 /*  CCBCR1          */
-    uint32_t       CNBCR1;                                 /*  CNBCR1          */
+    volatile uint32_t  CECR1;                                  /*  CECR1           */
+    volatile uint32_t  CSCR1;                                  /*  CSCR1           */
+    volatile uint32_t  CCBCR1;                                 /*  CCBCR1          */
+    volatile uint32_t  CNBCR1;                                 /*  CNBCR1          */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR2;                                  /*  CECR2           */
-    uint32_t       CSCR2;                                  /*  CSCR2           */
-    uint32_t       CCBCR2;                                 /*  CCBCR2          */
-    uint32_t       CNBCR2;                                 /*  CNBCR2          */
+    volatile uint32_t  CECR2;                                  /*  CECR2           */
+    volatile uint32_t  CSCR2;                                  /*  CSCR2           */
+    volatile uint32_t  CCBCR2;                                 /*  CCBCR2          */
+    volatile uint32_t  CNBCR2;                                 /*  CNBCR2          */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR3;                                  /*  CECR3           */
-    uint32_t       CSCR3;                                  /*  CSCR3           */
-    uint32_t       CCBCR3;                                 /*  CCBCR3          */
-    uint32_t       CNBCR3;                                 /*  CNBCR3          */
+    volatile uint32_t  CECR3;                                  /*  CECR3           */
+    volatile uint32_t  CSCR3;                                  /*  CSCR3           */
+    volatile uint32_t  CCBCR3;                                 /*  CCBCR3          */
+    volatile uint32_t  CNBCR3;                                 /*  CNBCR3          */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR4;                                  /*  CECR4           */
-    uint32_t       CSCR4;                                  /*  CSCR4           */
-    uint32_t       CCBCR4;                                 /*  CCBCR4          */
-    uint32_t       CNBCR4;                                 /*  CNBCR4          */
+    volatile uint32_t  CECR4;                                  /*  CECR4           */
+    volatile uint32_t  CSCR4;                                  /*  CSCR4           */
+    volatile uint32_t  CCBCR4;                                 /*  CCBCR4          */
+    volatile uint32_t  CNBCR4;                                 /*  CNBCR4          */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR5;                                  /*  CECR5           */
-    uint32_t       CSCR5;                                  /*  CSCR5           */
-    uint32_t       CCBCR5;                                 /*  CCBCR5          */
-    uint32_t       CNBCR5;                                 /*  CNBCR5          */
+    volatile uint32_t  CECR5;                                  /*  CECR5           */
+    volatile uint32_t  CSCR5;                                  /*  CSCR5           */
+    volatile uint32_t  CCBCR5;                                 /*  CCBCR5          */
+    volatile uint32_t  CNBCR5;                                 /*  CNBCR5          */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR6;                                  /*  CECR6           */
-    uint32_t       CSCR6;                                  /*  CSCR6           */
-    uint32_t       CCBCR6;                                 /*  CCBCR6          */
-    uint32_t       CNBCR6;                                 /*  CNBCR6          */
+    volatile uint32_t  CECR6;                                  /*  CECR6           */
+    volatile uint32_t  CSCR6;                                  /*  CSCR6           */
+    volatile uint32_t  CCBCR6;                                 /*  CCBCR6          */
+    volatile uint32_t  CNBCR6;                                 /*  CNBCR6          */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR7;                                  /*  CECR7           */
-    uint32_t       CSCR7;                                  /*  CSCR7           */
-    uint32_t       CCBCR7;                                 /*  CCBCR7          */
-    uint32_t       CNBCR7;                                 /*  CNBCR7          */
+    volatile uint32_t  CECR7;                                  /*  CECR7           */
+    volatile uint32_t  CSCR7;                                  /*  CSCR7           */
+    volatile uint32_t  CCBCR7;                                 /*  CCBCR7          */
+    volatile uint32_t  CNBCR7;                                 /*  CNBCR7          */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR8;                                  /*  CECR8           */
-    uint32_t       CSCR8;                                  /*  CSCR8           */
-    uint32_t       CCBCR8;                                 /*  CCBCR8          */
-    uint32_t       CNBCR8;                                 /*  CNBCR8          */
+    volatile uint32_t  CECR8;                                  /*  CECR8           */
+    volatile uint32_t  CSCR8;                                  /*  CSCR8           */
+    volatile uint32_t  CCBCR8;                                 /*  CCBCR8          */
+    volatile uint32_t  CNBCR8;                                 /*  CNBCR8          */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR9;                                  /*  CECR9           */
-    uint32_t       CSCR9;                                  /*  CSCR9           */
-    uint32_t       CCBCR9;                                 /*  CCBCR9          */
-    uint32_t       CNBCR9;                                 /*  CNBCR9          */
+    volatile uint32_t  CECR9;                                  /*  CECR9           */
+    volatile uint32_t  CSCR9;                                  /*  CSCR9           */
+    volatile uint32_t  CCBCR9;                                 /*  CCBCR9          */
+    volatile uint32_t  CNBCR9;                                 /*  CNBCR9          */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR10;                                 /*  CECR10          */
-    uint32_t       CSCR10;                                 /*  CSCR10          */
-    uint32_t       CCBCR10;                                /*  CCBCR10         */
-    uint32_t       CNBCR10;                                /*  CNBCR10         */
+    volatile uint32_t  CECR10;                                 /*  CECR10          */
+    volatile uint32_t  CSCR10;                                 /*  CSCR10          */
+    volatile uint32_t  CCBCR10;                                /*  CCBCR10         */
+    volatile uint32_t  CNBCR10;                                /*  CNBCR10         */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR11;                                 /*  CECR11          */
-    uint32_t       CSCR11;                                 /*  CSCR11          */
-    uint32_t       CCBCR11;                                /*  CCBCR11         */
-    uint32_t       CNBCR11;                                /*  CNBCR11         */
+    volatile uint32_t  CECR11;                                 /*  CECR11          */
+    volatile uint32_t  CSCR11;                                 /*  CSCR11          */
+    volatile uint32_t  CCBCR11;                                /*  CCBCR11         */
+    volatile uint32_t  CNBCR11;                                /*  CNBCR11         */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR12;                                 /*  CECR12          */
-    uint32_t       CSCR12;                                 /*  CSCR12          */
-    uint32_t       CCBCR12;                                /*  CCBCR12         */
-    uint32_t       CNBCR12;                                /*  CNBCR12         */
+    volatile uint32_t  CECR12;                                 /*  CECR12          */
+    volatile uint32_t  CSCR12;                                 /*  CSCR12          */
+    volatile uint32_t  CCBCR12;                                /*  CCBCR12         */
+    volatile uint32_t  CNBCR12;                                /*  CNBCR12         */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR13;                                 /*  CECR13          */
-    uint32_t       CSCR13;                                 /*  CSCR13          */
-    uint32_t       CCBCR13;                                /*  CCBCR13         */
-    uint32_t       CNBCR13;                                /*  CNBCR13         */
+    volatile uint32_t  CECR13;                                 /*  CECR13          */
+    volatile uint32_t  CSCR13;                                 /*  CSCR13          */
+    volatile uint32_t  CCBCR13;                                /*  CCBCR13         */
+    volatile uint32_t  CNBCR13;                                /*  CNBCR13         */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR14;                                 /*  CECR14          */
-    uint32_t       CSCR14;                                 /*  CSCR14          */
-    uint32_t       CCBCR14;                                /*  CCBCR14         */
-    uint32_t       CNBCR14;                                /*  CNBCR14         */
+    volatile uint32_t  CECR14;                                 /*  CECR14          */
+    volatile uint32_t  CSCR14;                                 /*  CSCR14          */
+    volatile uint32_t  CCBCR14;                                /*  CCBCR14         */
+    volatile uint32_t  CNBCR14;                                /*  CNBCR14         */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR15;                                 /*  CECR15          */
-    uint32_t       CSCR15;                                 /*  CSCR15          */
-    uint32_t       CCBCR15;                                /*  CCBCR15         */
-    uint32_t       CNBCR15;                                /*  CNBCR15         */
+    volatile uint32_t  CECR15;                                 /*  CECR15          */
+    volatile uint32_t  CSCR15;                                 /*  CSCR15          */
+    volatile uint32_t  CCBCR15;                                /*  CCBCR15         */
+    volatile uint32_t  CNBCR15;                                /*  CNBCR15         */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR16;                                 /*  CECR16          */
-    uint32_t       CSCR16;                                 /*  CSCR16          */
-    uint32_t       CCBCR16;                                /*  CCBCR16         */
-    uint32_t       CNBCR16;                                /*  CNBCR16         */
+    volatile uint32_t  CECR16;                                 /*  CECR16          */
+    volatile uint32_t  CSCR16;                                 /*  CSCR16          */
+    volatile uint32_t  CCBCR16;                                /*  CCBCR16         */
+    volatile uint32_t  CNBCR16;                                /*  CNBCR16         */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR17;                                 /*  CECR17          */
-    uint32_t       CSCR17;                                 /*  CSCR17          */
-    uint32_t       CCBCR17;                                /*  CCBCR17         */
-    uint32_t       CNBCR17;                                /*  CNBCR17         */
+    volatile uint32_t  CECR17;                                 /*  CECR17          */
+    volatile uint32_t  CSCR17;                                 /*  CSCR17          */
+    volatile uint32_t  CCBCR17;                                /*  CCBCR17         */
+    volatile uint32_t  CNBCR17;                                /*  CNBCR17         */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR18;                                 /*  CECR18          */
-    uint32_t       CSCR18;                                 /*  CSCR18          */
-    uint32_t       CCBCR18;                                /*  CCBCR18         */
-    uint32_t       CNBCR18;                                /*  CNBCR18         */
+    volatile uint32_t  CECR18;                                 /*  CECR18          */
+    volatile uint32_t  CSCR18;                                 /*  CSCR18          */
+    volatile uint32_t  CCBCR18;                                /*  CCBCR18         */
+    volatile uint32_t  CNBCR18;                                /*  CNBCR18         */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR19;                                 /*  CECR19          */
-    uint32_t       CSCR19;                                 /*  CSCR19          */
-    uint32_t       CCBCR19;                                /*  CCBCR19         */
-    uint32_t       CNBCR19;                                /*  CNBCR19         */
+    volatile uint32_t  CECR19;                                 /*  CECR19          */
+    volatile uint32_t  CSCR19;                                 /*  CSCR19          */
+    volatile uint32_t  CCBCR19;                                /*  CCBCR19         */
+    volatile uint32_t  CNBCR19;                                /*  CNBCR19         */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR20;                                 /*  CECR20          */
-    uint32_t       CSCR20;                                 /*  CSCR20          */
-    uint32_t       CCBCR20;                                /*  CCBCR20         */
-    uint32_t       CNBCR20;                                /*  CNBCR20         */
+    volatile uint32_t  CECR20;                                 /*  CECR20          */
+    volatile uint32_t  CSCR20;                                 /*  CSCR20          */
+    volatile uint32_t  CCBCR20;                                /*  CCBCR20         */
+    volatile uint32_t  CNBCR20;                                /*  CNBCR20         */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR21;                                 /*  CECR21          */
-    uint32_t       CSCR21;                                 /*  CSCR21          */
-    uint32_t       CCBCR21;                                /*  CCBCR21         */
-    uint32_t       CNBCR21;                                /*  CNBCR21         */
+    volatile uint32_t  CECR21;                                 /*  CECR21          */
+    volatile uint32_t  CSCR21;                                 /*  CSCR21          */
+    volatile uint32_t  CCBCR21;                                /*  CCBCR21         */
+    volatile uint32_t  CNBCR21;                                /*  CNBCR21         */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR22;                                 /*  CECR22          */
-    uint32_t       CSCR22;                                 /*  CSCR22          */
-    uint32_t       CCBCR22;                                /*  CCBCR22         */
-    uint32_t       CNBCR22;                                /*  CNBCR22         */
+    volatile uint32_t  CECR22;                                 /*  CECR22          */
+    volatile uint32_t  CSCR22;                                 /*  CSCR22          */
+    volatile uint32_t  CCBCR22;                                /*  CCBCR22         */
+    volatile uint32_t  CNBCR22;                                /*  CNBCR22         */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR23;                                 /*  CECR23          */
-    uint32_t       CSCR23;                                 /*  CSCR23          */
-    uint32_t       CCBCR23;                                /*  CCBCR23         */
-    uint32_t       CNBCR23;                                /*  CNBCR23         */
+    volatile uint32_t  CECR23;                                 /*  CECR23          */
+    volatile uint32_t  CSCR23;                                 /*  CSCR23          */
+    volatile uint32_t  CCBCR23;                                /*  CCBCR23         */
+    volatile uint32_t  CNBCR23;                                /*  CNBCR23         */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR24;                                 /*  CECR24          */
-    uint32_t       CSCR24;                                 /*  CSCR24          */
-    uint32_t       CCBCR24;                                /*  CCBCR24         */
-    uint32_t       CNBCR24;                                /*  CNBCR24         */
+    volatile uint32_t  CECR24;                                 /*  CECR24          */
+    volatile uint32_t  CSCR24;                                 /*  CSCR24          */
+    volatile uint32_t  CCBCR24;                                /*  CCBCR24         */
+    volatile uint32_t  CNBCR24;                                /*  CNBCR24         */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR25;                                 /*  CECR25          */
-    uint32_t       CSCR25;                                 /*  CSCR25          */
-    uint32_t       CCBCR25;                                /*  CCBCR25         */
-    uint32_t       CNBCR25;                                /*  CNBCR25         */
+    volatile uint32_t  CECR25;                                 /*  CECR25          */
+    volatile uint32_t  CSCR25;                                 /*  CSCR25          */
+    volatile uint32_t  CCBCR25;                                /*  CCBCR25         */
+    volatile uint32_t  CNBCR25;                                /*  CNBCR25         */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR26;                                 /*  CECR26          */
-    uint32_t       CSCR26;                                 /*  CSCR26          */
-    uint32_t       CCBCR26;                                /*  CCBCR26         */
-    uint32_t       CNBCR26;                                /*  CNBCR26         */
+    volatile uint32_t  CECR26;                                 /*  CECR26          */
+    volatile uint32_t  CSCR26;                                 /*  CSCR26          */
+    volatile uint32_t  CCBCR26;                                /*  CCBCR26         */
+    volatile uint32_t  CNBCR26;                                /*  CNBCR26         */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR27;                                 /*  CECR27          */
-    uint32_t       CSCR27;                                 /*  CSCR27          */
-    uint32_t       CCBCR27;                                /*  CCBCR27         */
-    uint32_t       CNBCR27;                                /*  CNBCR27         */
+    volatile uint32_t  CECR27;                                 /*  CECR27          */
+    volatile uint32_t  CSCR27;                                 /*  CSCR27          */
+    volatile uint32_t  CCBCR27;                                /*  CCBCR27         */
+    volatile uint32_t  CNBCR27;                                /*  CNBCR27         */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR28;                                 /*  CECR28          */
-    uint32_t       CSCR28;                                 /*  CSCR28          */
-    uint32_t       CCBCR28;                                /*  CCBCR28         */
-    uint32_t       CNBCR28;                                /*  CNBCR28         */
+    volatile uint32_t  CECR28;                                 /*  CECR28          */
+    volatile uint32_t  CSCR28;                                 /*  CSCR28          */
+    volatile uint32_t  CCBCR28;                                /*  CCBCR28         */
+    volatile uint32_t  CNBCR28;                                /*  CNBCR28         */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR29;                                 /*  CECR29          */
-    uint32_t       CSCR29;                                 /*  CSCR29          */
-    uint32_t       CCBCR29;                                /*  CCBCR29         */
-    uint32_t       CNBCR29;                                /*  CNBCR29         */
+    volatile uint32_t  CECR29;                                 /*  CECR29          */
+    volatile uint32_t  CSCR29;                                 /*  CSCR29          */
+    volatile uint32_t  CCBCR29;                                /*  CCBCR29         */
+    volatile uint32_t  CNBCR29;                                /*  CNBCR29         */
 /* end of struct st_mlb_from_cecr0 */
 /* start of struct st_mlb_from_cecr0 */
-    uint32_t       CECR30;                                 /*  CECR30          */
-    uint32_t       CSCR30;                                 /*  CSCR30          */
-    uint32_t       CCBCR30;                                /*  CCBCR30         */
-    uint32_t       CNBCR30;                                /*  CNBCR30         */
+    volatile uint32_t  CECR30;                                 /*  CECR30          */
+    volatile uint32_t  CSCR30;                                 /*  CSCR30          */
+    volatile uint32_t  CCBCR30;                                /*  CCBCR30         */
+    volatile uint32_t  CNBCR30;                                /*  CNBCR30         */
 /* end of struct st_mlb_from_cecr0 */
-    uint8_t        dummy174[80];                           /*                  */
+    volatile uint8_t   dummy158[80];                           /*                  */
 #define MLB_LCBCR0_COUNT 31
-    uint32_t       LCBCR0;                                 /*  LCBCR0          */
-    uint32_t       LCBCR1;                                 /*  LCBCR1          */
-    uint32_t       LCBCR2;                                 /*  LCBCR2          */
-    uint32_t       LCBCR3;                                 /*  LCBCR3          */
-    uint32_t       LCBCR4;                                 /*  LCBCR4          */
-    uint32_t       LCBCR5;                                 /*  LCBCR5          */
-    uint32_t       LCBCR6;                                 /*  LCBCR6          */
-    uint32_t       LCBCR7;                                 /*  LCBCR7          */
-    uint32_t       LCBCR8;                                 /*  LCBCR8          */
-    uint32_t       LCBCR9;                                 /*  LCBCR9          */
-    uint32_t       LCBCR10;                                /*  LCBCR10         */
-    uint32_t       LCBCR11;                                /*  LCBCR11         */
-    uint32_t       LCBCR12;                                /*  LCBCR12         */
-    uint32_t       LCBCR13;                                /*  LCBCR13         */
-    uint32_t       LCBCR14;                                /*  LCBCR14         */
-    uint32_t       LCBCR15;                                /*  LCBCR15         */
-    uint32_t       LCBCR16;                                /*  LCBCR16         */
-    uint32_t       LCBCR17;                                /*  LCBCR17         */
-    uint32_t       LCBCR18;                                /*  LCBCR18         */
-    uint32_t       LCBCR19;                                /*  LCBCR19         */
-    uint32_t       LCBCR20;                                /*  LCBCR20         */
-    uint32_t       LCBCR21;                                /*  LCBCR21         */
-    uint32_t       LCBCR22;                                /*  LCBCR22         */
-    uint32_t       LCBCR23;                                /*  LCBCR23         */
-    uint32_t       LCBCR24;                                /*  LCBCR24         */
-    uint32_t       LCBCR25;                                /*  LCBCR25         */
-    uint32_t       LCBCR26;                                /*  LCBCR26         */
-    uint32_t       LCBCR27;                                /*  LCBCR27         */
-    uint32_t       LCBCR28;                                /*  LCBCR28         */
-    uint32_t       LCBCR29;                                /*  LCBCR29         */
-    uint32_t       LCBCR30;                                /*  LCBCR30         */
+    volatile uint32_t  LCBCR0;                                 /*  LCBCR0          */
+    volatile uint32_t  LCBCR1;                                 /*  LCBCR1          */
+    volatile uint32_t  LCBCR2;                                 /*  LCBCR2          */
+    volatile uint32_t  LCBCR3;                                 /*  LCBCR3          */
+    volatile uint32_t  LCBCR4;                                 /*  LCBCR4          */
+    volatile uint32_t  LCBCR5;                                 /*  LCBCR5          */
+    volatile uint32_t  LCBCR6;                                 /*  LCBCR6          */
+    volatile uint32_t  LCBCR7;                                 /*  LCBCR7          */
+    volatile uint32_t  LCBCR8;                                 /*  LCBCR8          */
+    volatile uint32_t  LCBCR9;                                 /*  LCBCR9          */
+    volatile uint32_t  LCBCR10;                                /*  LCBCR10         */
+    volatile uint32_t  LCBCR11;                                /*  LCBCR11         */
+    volatile uint32_t  LCBCR12;                                /*  LCBCR12         */
+    volatile uint32_t  LCBCR13;                                /*  LCBCR13         */
+    volatile uint32_t  LCBCR14;                                /*  LCBCR14         */
+    volatile uint32_t  LCBCR15;                                /*  LCBCR15         */
+    volatile uint32_t  LCBCR16;                                /*  LCBCR16         */
+    volatile uint32_t  LCBCR17;                                /*  LCBCR17         */
+    volatile uint32_t  LCBCR18;                                /*  LCBCR18         */
+    volatile uint32_t  LCBCR19;                                /*  LCBCR19         */
+    volatile uint32_t  LCBCR20;                                /*  LCBCR20         */
+    volatile uint32_t  LCBCR21;                                /*  LCBCR21         */
+    volatile uint32_t  LCBCR22;                                /*  LCBCR22         */
+    volatile uint32_t  LCBCR23;                                /*  LCBCR23         */
+    volatile uint32_t  LCBCR24;                                /*  LCBCR24         */
+    volatile uint32_t  LCBCR25;                                /*  LCBCR25         */
+    volatile uint32_t  LCBCR26;                                /*  LCBCR26         */
+    volatile uint32_t  LCBCR27;                                /*  LCBCR27         */
+    volatile uint32_t  LCBCR28;                                /*  LCBCR28         */
+    volatile uint32_t  LCBCR29;                                /*  LCBCR29         */
+    volatile uint32_t  LCBCR30;                                /*  LCBCR30         */
 };
 
 
 struct st_mlb_from_cecr0
 {
-    uint32_t       CECR0;                                  /*  CECR0           */
-    uint32_t       CSCR0;                                  /*  CSCR0           */
-    uint32_t       CCBCR0;                                 /*  CCBCR0          */
-    uint32_t       CNBCR0;                                 /*  CNBCR0          */
+    volatile uint32_t  CECR0;                                  /*  CECR0           */
+    volatile uint32_t  CSCR0;                                  /*  CSCR0           */
+    volatile uint32_t  CCBCR0;                                 /*  CCBCR0          */
+    volatile uint32_t  CNBCR0;                                 /*  CNBCR0          */
 };
 
 
-#define MLB     (*(volatile struct st_mlb     *)0xE8034000uL) /* MLB */
+#define MLB     (*(struct st_mlb     *)0xE8034000uL) /* MLB */
 
 
 /* Start of channnel array defines of MLB */
@@ -283,41 +286,43 @@ struct st_mlb_from_cecr0
 /*(Sample) value = MLB_FROM_CECR0_ARRAY[ channel ]->CECR0; */
 #define MLB_FROM_CECR0_ARRAY_COUNT  31
 #define MLB_FROM_CECR0_ARRAY_ADDRESS_LIST \
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
     &MLB_FROM_CECR0, &MLB_FROM_CECR1, &MLB_FROM_CECR2, &MLB_FROM_CECR3, &MLB_FROM_CECR4, &MLB_FROM_CECR5, &MLB_FROM_CECR6, &MLB_FROM_CECR7, \
     &MLB_FROM_CECR8, &MLB_FROM_CECR9, &MLB_FROM_CECR10, &MLB_FROM_CECR11, &MLB_FROM_CECR12, &MLB_FROM_CECR13, &MLB_FROM_CECR14, &MLB_FROM_CECR15, \
     &MLB_FROM_CECR16, &MLB_FROM_CECR17, &MLB_FROM_CECR18, &MLB_FROM_CECR19, &MLB_FROM_CECR20, &MLB_FROM_CECR21, &MLB_FROM_CECR22, &MLB_FROM_CECR23, \
-    &MLB_FROM_CECR24, &MLB_FROM_CECR25, &MLB_FROM_CECR26, &MLB_FROM_CECR27, &MLB_FROM_CECR28, &MLB_FROM_CECR29, &MLB_FROM_CECR30
-#define MLB_FROM_CECR0 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR0) /* MLB_FROM_CECR0 */
-#define MLB_FROM_CECR1 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR1) /* MLB_FROM_CECR1 */
-#define MLB_FROM_CECR2 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR2) /* MLB_FROM_CECR2 */
-#define MLB_FROM_CECR3 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR3) /* MLB_FROM_CECR3 */
-#define MLB_FROM_CECR4 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR4) /* MLB_FROM_CECR4 */
-#define MLB_FROM_CECR5 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR5) /* MLB_FROM_CECR5 */
-#define MLB_FROM_CECR6 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR6) /* MLB_FROM_CECR6 */
-#define MLB_FROM_CECR7 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR7) /* MLB_FROM_CECR7 */
-#define MLB_FROM_CECR8 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR8) /* MLB_FROM_CECR8 */
-#define MLB_FROM_CECR9 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR9) /* MLB_FROM_CECR9 */
-#define MLB_FROM_CECR10 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR10) /* MLB_FROM_CECR10 */
-#define MLB_FROM_CECR11 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR11) /* MLB_FROM_CECR11 */
-#define MLB_FROM_CECR12 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR12) /* MLB_FROM_CECR12 */
-#define MLB_FROM_CECR13 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR13) /* MLB_FROM_CECR13 */
-#define MLB_FROM_CECR14 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR14) /* MLB_FROM_CECR14 */
-#define MLB_FROM_CECR15 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR15) /* MLB_FROM_CECR15 */
-#define MLB_FROM_CECR16 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR16) /* MLB_FROM_CECR16 */
-#define MLB_FROM_CECR17 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR17) /* MLB_FROM_CECR17 */
-#define MLB_FROM_CECR18 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR18) /* MLB_FROM_CECR18 */
-#define MLB_FROM_CECR19 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR19) /* MLB_FROM_CECR19 */
-#define MLB_FROM_CECR20 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR20) /* MLB_FROM_CECR20 */
-#define MLB_FROM_CECR21 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR21) /* MLB_FROM_CECR21 */
-#define MLB_FROM_CECR22 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR22) /* MLB_FROM_CECR22 */
-#define MLB_FROM_CECR23 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR23) /* MLB_FROM_CECR23 */
-#define MLB_FROM_CECR24 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR24) /* MLB_FROM_CECR24 */
-#define MLB_FROM_CECR25 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR25) /* MLB_FROM_CECR25 */
-#define MLB_FROM_CECR26 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR26) /* MLB_FROM_CECR26 */
-#define MLB_FROM_CECR27 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR27) /* MLB_FROM_CECR27 */
-#define MLB_FROM_CECR28 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR28) /* MLB_FROM_CECR28 */
-#define MLB_FROM_CECR29 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR29) /* MLB_FROM_CECR29 */
-#define MLB_FROM_CECR30 (*(volatile struct st_mlb_from_cecr0 *)&MLB.CECR30) /* MLB_FROM_CECR30 */
+    &MLB_FROM_CECR24, &MLB_FROM_CECR25, &MLB_FROM_CECR26, &MLB_FROM_CECR27, &MLB_FROM_CECR28, &MLB_FROM_CECR29, &MLB_FROM_CECR30 \
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
+#define MLB_FROM_CECR0 (*(struct st_mlb_from_cecr0 *)&MLB.CECR0) /* MLB_FROM_CECR0 */
+#define MLB_FROM_CECR1 (*(struct st_mlb_from_cecr0 *)&MLB.CECR1) /* MLB_FROM_CECR1 */
+#define MLB_FROM_CECR2 (*(struct st_mlb_from_cecr0 *)&MLB.CECR2) /* MLB_FROM_CECR2 */
+#define MLB_FROM_CECR3 (*(struct st_mlb_from_cecr0 *)&MLB.CECR3) /* MLB_FROM_CECR3 */
+#define MLB_FROM_CECR4 (*(struct st_mlb_from_cecr0 *)&MLB.CECR4) /* MLB_FROM_CECR4 */
+#define MLB_FROM_CECR5 (*(struct st_mlb_from_cecr0 *)&MLB.CECR5) /* MLB_FROM_CECR5 */
+#define MLB_FROM_CECR6 (*(struct st_mlb_from_cecr0 *)&MLB.CECR6) /* MLB_FROM_CECR6 */
+#define MLB_FROM_CECR7 (*(struct st_mlb_from_cecr0 *)&MLB.CECR7) /* MLB_FROM_CECR7 */
+#define MLB_FROM_CECR8 (*(struct st_mlb_from_cecr0 *)&MLB.CECR8) /* MLB_FROM_CECR8 */
+#define MLB_FROM_CECR9 (*(struct st_mlb_from_cecr0 *)&MLB.CECR9) /* MLB_FROM_CECR9 */
+#define MLB_FROM_CECR10 (*(struct st_mlb_from_cecr0 *)&MLB.CECR10) /* MLB_FROM_CECR10 */
+#define MLB_FROM_CECR11 (*(struct st_mlb_from_cecr0 *)&MLB.CECR11) /* MLB_FROM_CECR11 */
+#define MLB_FROM_CECR12 (*(struct st_mlb_from_cecr0 *)&MLB.CECR12) /* MLB_FROM_CECR12 */
+#define MLB_FROM_CECR13 (*(struct st_mlb_from_cecr0 *)&MLB.CECR13) /* MLB_FROM_CECR13 */
+#define MLB_FROM_CECR14 (*(struct st_mlb_from_cecr0 *)&MLB.CECR14) /* MLB_FROM_CECR14 */
+#define MLB_FROM_CECR15 (*(struct st_mlb_from_cecr0 *)&MLB.CECR15) /* MLB_FROM_CECR15 */
+#define MLB_FROM_CECR16 (*(struct st_mlb_from_cecr0 *)&MLB.CECR16) /* MLB_FROM_CECR16 */
+#define MLB_FROM_CECR17 (*(struct st_mlb_from_cecr0 *)&MLB.CECR17) /* MLB_FROM_CECR17 */
+#define MLB_FROM_CECR18 (*(struct st_mlb_from_cecr0 *)&MLB.CECR18) /* MLB_FROM_CECR18 */
+#define MLB_FROM_CECR19 (*(struct st_mlb_from_cecr0 *)&MLB.CECR19) /* MLB_FROM_CECR19 */
+#define MLB_FROM_CECR20 (*(struct st_mlb_from_cecr0 *)&MLB.CECR20) /* MLB_FROM_CECR20 */
+#define MLB_FROM_CECR21 (*(struct st_mlb_from_cecr0 *)&MLB.CECR21) /* MLB_FROM_CECR21 */
+#define MLB_FROM_CECR22 (*(struct st_mlb_from_cecr0 *)&MLB.CECR22) /* MLB_FROM_CECR22 */
+#define MLB_FROM_CECR23 (*(struct st_mlb_from_cecr0 *)&MLB.CECR23) /* MLB_FROM_CECR23 */
+#define MLB_FROM_CECR24 (*(struct st_mlb_from_cecr0 *)&MLB.CECR24) /* MLB_FROM_CECR24 */
+#define MLB_FROM_CECR25 (*(struct st_mlb_from_cecr0 *)&MLB.CECR25) /* MLB_FROM_CECR25 */
+#define MLB_FROM_CECR26 (*(struct st_mlb_from_cecr0 *)&MLB.CECR26) /* MLB_FROM_CECR26 */
+#define MLB_FROM_CECR27 (*(struct st_mlb_from_cecr0 *)&MLB.CECR27) /* MLB_FROM_CECR27 */
+#define MLB_FROM_CECR28 (*(struct st_mlb_from_cecr0 *)&MLB.CECR28) /* MLB_FROM_CECR28 */
+#define MLB_FROM_CECR29 (*(struct st_mlb_from_cecr0 *)&MLB.CECR29) /* MLB_FROM_CECR29 */
+#define MLB_FROM_CECR30 (*(struct st_mlb_from_cecr0 *)&MLB.CECR30) /* MLB_FROM_CECR30 */
 
 /* End of channnel array defines of MLB */
 
@@ -487,4 +492,7 @@ struct st_mlb_from_cecr0
 #define MLBLCBCR28 MLB.LCBCR28
 #define MLBLCBCR29 MLB.LCBCR29
 #define MLBLCBCR30 MLB.LCBCR30
+/* <-SEC M1.10.1 */
+/* <-QAC 0857 */
+/* <-QAC 0639 */
 #endif

@@ -37,6 +37,8 @@
 /*******************************************************************************
 Includes   <System Includes> , "Project Includes"
 *******************************************************************************/
+#include <stdint.h>
+
 /* definition of I/O register */
 #include "iodefine.h"
 /* Default  type definition header */

@@ -18,58 +18,59 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer*
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
 * File Name : pfv_iodefine.h
-* $Rev: 809 $
-* $Date:: 2014-03-28 19:15:55 +0000#$
-* Description : Definition of I/O Register (V0.50j)
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
 ******************************************************************************/
 #ifndef PFV_IODEFINE_H
 #define PFV_IODEFINE_H
+/* ->SEC M1.10.1 : Not magic number */
 
 struct st_pfv
 {                                                          /* PFV              */
-    uint32_t       PFVCR;                                  /*  PFVCR           */
-    uint32_t       PFVICR;                                 /*  PFVICR          */
-    uint32_t       PFVISR;                                 /*  PFVISR          */
-    uint8_t        dummy1[20];                             /*                  */
+    volatile uint32_t  PFVCR;                                  /*  PFVCR           */
+    volatile uint32_t  PFVICR;                                 /*  PFVICR          */
+    volatile uint32_t  PFVISR;                                 /*  PFVISR          */
+    volatile uint8_t   dummy1[20];                             /*                  */
 #define PFVID_COUNT 8
-    uint32_t       PFVID0;                                 /*  PFVID0          */
-    uint32_t       PFVID1;                                 /*  PFVID1          */
-    uint32_t       PFVID2;                                 /*  PFVID2          */
-    uint32_t       PFVID3;                                 /*  PFVID3          */
-    uint32_t       PFVID4;                                 /*  PFVID4          */
-    uint32_t       PFVID5;                                 /*  PFVID5          */
-    uint32_t       PFVID6;                                 /*  PFVID6          */
-    uint32_t       PFVID7;                                 /*  PFVID7          */
+    volatile uint32_t  PFVID0;                                 /*  PFVID0          */
+    volatile uint32_t  PFVID1;                                 /*  PFVID1          */
+    volatile uint32_t  PFVID2;                                 /*  PFVID2          */
+    volatile uint32_t  PFVID3;                                 /*  PFVID3          */
+    volatile uint32_t  PFVID4;                                 /*  PFVID4          */
+    volatile uint32_t  PFVID5;                                 /*  PFVID5          */
+    volatile uint32_t  PFVID6;                                 /*  PFVID6          */
+    volatile uint32_t  PFVID7;                                 /*  PFVID7          */
 #define PFVOD_COUNT 8
-    uint32_t       PFVOD0;                                 /*  PFVOD0          */
-    uint32_t       PFVOD1;                                 /*  PFVOD1          */
-    uint32_t       PFVOD2;                                 /*  PFVOD2          */
-    uint32_t       PFVOD3;                                 /*  PFVOD3          */
-    uint32_t       PFVOD4;                                 /*  PFVOD4          */
-    uint32_t       PFVOD5;                                 /*  PFVOD5          */
-    uint32_t       PFVOD6;                                 /*  PFVOD6          */
-    uint32_t       PFVOD7;                                 /*  PFVOD7          */
-    uint8_t        dummy2[4];                              /*                  */
-    uint32_t       PFVIFSR;                                /*  PFVIFSR         */
-    uint32_t       PFVOFSR;                                /*  PFVOFSR         */
-    uint32_t       PFVACR;                                 /*  PFVACR          */
-    uint32_t       PFV_MTX_MODE;                           /*  PFV_MTX_MODE    */
-    uint32_t       PFV_MTX_YG_ADJ0;                        /*  PFV_MTX_YG_ADJ0 */
-    uint32_t       PFV_MTX_YG_ADJ1;                        /*  PFV_MTX_YG_ADJ1 */
-    uint32_t       PFV_MTX_CBB_ADJ0;                       /*  PFV_MTX_CBB_ADJ0 */
-    uint32_t       PFV_MTX_CBB_ADJ1;                       /*  PFV_MTX_CBB_ADJ1 */
-    uint32_t       PFV_MTX_CRR_ADJ0;                       /*  PFV_MTX_CRR_ADJ0 */
-    uint32_t       PFV_MTX_CRR_ADJ1;                       /*  PFV_MTX_CRR_ADJ1 */
-    uint32_t       PFVSZR;                                 /*  PFVSZR          */
+    volatile uint32_t  PFVOD0;                                 /*  PFVOD0          */
+    volatile uint32_t  PFVOD1;                                 /*  PFVOD1          */
+    volatile uint32_t  PFVOD2;                                 /*  PFVOD2          */
+    volatile uint32_t  PFVOD3;                                 /*  PFVOD3          */
+    volatile uint32_t  PFVOD4;                                 /*  PFVOD4          */
+    volatile uint32_t  PFVOD5;                                 /*  PFVOD5          */
+    volatile uint32_t  PFVOD6;                                 /*  PFVOD6          */
+    volatile uint32_t  PFVOD7;                                 /*  PFVOD7          */
+    volatile uint8_t   dummy2[4];                              /*                  */
+    volatile uint32_t  PFVIFSR;                                /*  PFVIFSR         */
+    volatile uint32_t  PFVOFSR;                                /*  PFVOFSR         */
+    volatile uint32_t  PFVACR;                                 /*  PFVACR          */
+    volatile uint32_t  PFV_MTX_MODE;                           /*  PFV_MTX_MODE    */
+    volatile uint32_t  PFV_MTX_YG_ADJ0;                        /*  PFV_MTX_YG_ADJ0 */
+    volatile uint32_t  PFV_MTX_YG_ADJ1;                        /*  PFV_MTX_YG_ADJ1 */
+    volatile uint32_t  PFV_MTX_CBB_ADJ0;                       /*  PFV_MTX_CBB_ADJ0 */
+    volatile uint32_t  PFV_MTX_CBB_ADJ1;                       /*  PFV_MTX_CBB_ADJ1 */
+    volatile uint32_t  PFV_MTX_CRR_ADJ0;                       /*  PFV_MTX_CRR_ADJ0 */
+    volatile uint32_t  PFV_MTX_CRR_ADJ1;                       /*  PFV_MTX_CRR_ADJ1 */
+    volatile uint32_t  PFVSZR;                                 /*  PFVSZR          */
 };
 
 
-#define PFV0    (*(volatile struct st_pfv     *)0xE8205000uL) /* PFV0 */
-#define PFV1    (*(volatile struct st_pfv     *)0xE8205800uL) /* PFV1 */
+#define PFV0    (*(struct st_pfv     *)0xE8205000uL) /* PFV0 */
+#define PFV1    (*(struct st_pfv     *)0xE8205800uL) /* PFV1 */
 
 
 /* Start of channnel array defines of PFV */
@@ -78,7 +79,9 @@ struct st_pfv
 /*(Sample) value = PFV[ channel ]->PFVCR; */
 #define PFV_COUNT  2
 #define PFV_ADDRESS_LIST \
-    &PFV0, &PFV1
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
+    &PFV0, &PFV1 \
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
 
 /* End of channnel array defines of PFV */
 
@@ -143,4 +146,5 @@ struct st_pfv
 #define PFV1PFV_MTX_CRR_ADJ0 PFV1.PFV_MTX_CRR_ADJ0
 #define PFV1PFV_MTX_CRR_ADJ1 PFV1.PFV_MTX_CRR_ADJ1
 #define PFV1PFVSZR PFV1.PFVSZR
+/* <-SEC M1.10.1 */
 #endif

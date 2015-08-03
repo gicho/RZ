@@ -18,91 +18,92 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer*
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
 * File Name : jcu_iodefine.h
-* $Rev: 809 $
-* $Date:: 2014-03-28 19:15:55 +0000#$
-* Description : Definition of I/O Register (V0.50j)
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
 ******************************************************************************/
 #ifndef JCU_IODEFINE_H
 #define JCU_IODEFINE_H
+/* ->SEC M1.10.1 : Not magic number */
 
 struct st_jcu
 {                                                          /* JCU              */
-    uint8_t        JCMOD;                                  /*  JCMOD           */
-    uint8_t        JCCMD;                                  /*  JCCMD           */
-    uint8_t        dummy145[1];                            /*                  */
-    uint8_t        JCQTN;                                  /*  JCQTN           */
-    uint8_t        JCHTN;                                  /*  JCHTN           */
-    uint8_t        JCDRIU;                                 /*  JCDRIU          */
-    uint8_t        JCDRID;                                 /*  JCDRID          */
-    uint8_t        JCVSZU;                                 /*  JCVSZU          */
-    uint8_t        JCVSZD;                                 /*  JCVSZD          */
-    uint8_t        JCHSZU;                                 /*  JCHSZU          */
-    uint8_t        JCHSZD;                                 /*  JCHSZD          */
-    uint8_t        JCDTCU;                                 /*  JCDTCU          */
-    uint8_t        JCDTCM;                                 /*  JCDTCM          */
-    uint8_t        JCDTCD;                                 /*  JCDTCD          */
-    uint8_t        JINTE0;                                 /*  JINTE0          */
-    uint8_t        JINTS0;                                 /*  JINTS0          */
-    uint8_t        JCDERR;                                 /*  JCDERR          */
-    uint8_t        JCRST;                                  /*  JCRST           */
-    uint8_t        dummy146[46];                           /*                  */
-    uint32_t       JIFECNT;                                /*  JIFECNT         */
-    uint32_t       JIFESA;                                 /*  JIFESA          */
-    uint32_t       JIFESOFST;                              /*  JIFESOFST       */
-    uint32_t       JIFEDA;                                 /*  JIFEDA          */
-    uint32_t       JIFESLC;                                /*  JIFESLC         */
-    uint32_t       JIFEDDC;                                /*  JIFEDDC         */
-    uint32_t       JIFDCNT;                                /*  JIFDCNT         */
-    uint32_t       JIFDSA;                                 /*  JIFDSA          */
-    uint32_t       JIFDDOFST;                              /*  JIFDDOFST       */
-    uint32_t       JIFDDA;                                 /*  JIFDDA          */
-    uint32_t       JIFDSDC;                                /*  JIFDSDC         */
-    uint32_t       JIFDDLC;                                /*  JIFDDLC         */
-    uint32_t       JIFDADT;                                /*  JIFDADT         */
-    uint8_t        dummy147[24];                           /*                  */
-    uint32_t       JINTE1;                                 /*  JINTE1          */
-    uint32_t       JINTS1;                                 /*  JINTS1          */
-    uint32_t       JIFESVSZ;                               /*  JIFESVSZ        */
-    uint32_t       JIFESHSZ;                               /*  JIFESHSZ        */
-    uint8_t        dummy148[100];                          /*                  */
+    volatile uint8_t   JCMOD;                                  /*  JCMOD           */
+    volatile uint8_t   JCCMD;                                  /*  JCCMD           */
+    volatile uint8_t   dummy145[1];                            /*                  */
+    volatile uint8_t   JCQTN;                                  /*  JCQTN           */
+    volatile uint8_t   JCHTN;                                  /*  JCHTN           */
+    volatile uint8_t   JCDRIU;                                 /*  JCDRIU          */
+    volatile uint8_t   JCDRID;                                 /*  JCDRID          */
+    volatile uint8_t   JCVSZU;                                 /*  JCVSZU          */
+    volatile uint8_t   JCVSZD;                                 /*  JCVSZD          */
+    volatile uint8_t   JCHSZU;                                 /*  JCHSZU          */
+    volatile uint8_t   JCHSZD;                                 /*  JCHSZD          */
+    volatile uint8_t   JCDTCU;                                 /*  JCDTCU          */
+    volatile uint8_t   JCDTCM;                                 /*  JCDTCM          */
+    volatile uint8_t   JCDTCD;                                 /*  JCDTCD          */
+    volatile uint8_t   JINTE0;                                 /*  JINTE0          */
+    volatile uint8_t   JINTS0;                                 /*  JINTS0          */
+    volatile uint8_t   JCDERR;                                 /*  JCDERR          */
+    volatile uint8_t   JCRST;                                  /*  JCRST           */
+    volatile uint8_t   dummy146[46];                           /*                  */
+    volatile uint32_t  JIFECNT;                                /*  JIFECNT         */
+    volatile uint32_t  JIFESA;                                 /*  JIFESA          */
+    volatile uint32_t  JIFESOFST;                              /*  JIFESOFST       */
+    volatile uint32_t  JIFEDA;                                 /*  JIFEDA          */
+    volatile uint32_t  JIFESLC;                                /*  JIFESLC         */
+    volatile uint32_t  JIFEDDC;                                /*  JIFEDDC         */
+    volatile uint32_t  JIFDCNT;                                /*  JIFDCNT         */
+    volatile uint32_t  JIFDSA;                                 /*  JIFDSA          */
+    volatile uint32_t  JIFDDOFST;                              /*  JIFDDOFST       */
+    volatile uint32_t  JIFDDA;                                 /*  JIFDDA          */
+    volatile uint32_t  JIFDSDC;                                /*  JIFDSDC         */
+    volatile uint32_t  JIFDDLC;                                /*  JIFDDLC         */
+    volatile uint32_t  JIFDADT;                                /*  JIFDADT         */
+    volatile uint8_t   dummy147[24];                           /*                  */
+    volatile uint32_t  JINTE1;                                 /*  JINTE1          */
+    volatile uint32_t  JINTS1;                                 /*  JINTS1          */
+    volatile uint32_t  JIFESVSZ;                               /*  JIFESVSZ        */
+    volatile uint32_t  JIFESHSZ;                               /*  JIFESHSZ        */
+    volatile uint8_t   dummy148[100];                          /*                  */
 /* start of struct st_jcu_from_jcqtbl0 */
-    uint8_t        JCQTBL0;                                /*  JCQTBL0         */
-    uint8_t        dummy149[63];                           /*                  */
+    volatile uint8_t   JCQTBL0;                                /*  JCQTBL0         */
+    volatile uint8_t   dummy149[63];                           /*                  */
 /* end of struct st_jcu_from_jcqtbl0 */
 /* start of struct st_jcu_from_jcqtbl0 */
-    uint8_t        JCQTBL1;                                /*  JCQTBL1         */
-    uint8_t        dummy150[63];                           /*                  */
+    volatile uint8_t   JCQTBL1;                                /*  JCQTBL1         */
+    volatile uint8_t   dummy150[63];                           /*                  */
 /* end of struct st_jcu_from_jcqtbl0 */
 /* start of struct st_jcu_from_jcqtbl0 */
-    uint8_t        JCQTBL2;                                /*  JCQTBL2         */
-    uint8_t        dummy151[63];                           /*                  */
+    volatile uint8_t   JCQTBL2;                                /*  JCQTBL2         */
+    volatile uint8_t   dummy151[63];                           /*                  */
 /* end of struct st_jcu_from_jcqtbl0 */
 /* start of struct st_jcu_from_jcqtbl0 */
-    uint8_t        JCQTBL3;                                /*  JCQTBL3         */
-    uint8_t        dummy152[63];                           /*                  */
+    volatile uint8_t   JCQTBL3;                                /*  JCQTBL3         */
+    volatile uint8_t   dummy152[63];                           /*                  */
 /* end of struct st_jcu_from_jcqtbl0 */
-    uint8_t        JCHTBD0;                                /*  JCHTBD0         */
-    uint8_t        dummy153[31];                           /*                  */
-    uint8_t        JCHTBA0;                                /*  JCHTBA0         */
-    uint8_t        dummy154[223];                          /*                  */
-    uint8_t        JCHTBD1;                                /*  JCHTBD1         */
-    uint8_t        dummy155[31];                           /*                  */
-    uint8_t        JCHTBA1;                                /*  JCHTBA1         */
+    volatile uint8_t   JCHTBD0;                                /*  JCHTBD0         */
+    volatile uint8_t   dummy153[31];                           /*                  */
+    volatile uint8_t   JCHTBA0;                                /*  JCHTBA0         */
+    volatile uint8_t   dummy154[223];                          /*                  */
+    volatile uint8_t   JCHTBD1;                                /*  JCHTBD1         */
+    volatile uint8_t   dummy155[31];                           /*                  */
+    volatile uint8_t   JCHTBA1;                                /*  JCHTBA1         */
 };
 
 
 struct st_jcu_from_jcqtbl0
 {
-    uint8_t        JCQTBL0;                                /*  JCQTBL0         */
-    uint8_t        dummy1[63];                             /*                  */
+    volatile uint8_t   JCQTBL0;                                /*  JCQTBL0         */
+    volatile uint8_t   dummy1[63];                             /*                  */
 };
 
 
-#define JCU     (*(volatile struct st_jcu     *)0xE8017000uL) /* JCU */
+#define JCU     (*(struct st_jcu     *)0xE8017000uL) /* JCU */
 
 
 /* Start of channnel array defines of JCU */
@@ -111,11 +112,13 @@ struct st_jcu_from_jcqtbl0
 /*(Sample) value = JCU_JCQTBL0[ channel ]->JCQTBL0; */
 #define JCU_JCQTBL0_COUNT  4
 #define JCU_JCQTBL0_ADDRESS_LIST \
-    &JCU_FROM_JCQTBL0, &JCU_FROM_JCQTBL1, &JCU_FROM_JCQTBL2, &JCU_FROM_JCQTBL3
-#define JCU_FROM_JCQTBL0 (*(volatile struct st_jcu_from_jcqtbl0 *)&JCU.JCQTBL0) /* JCU_FROM_JCQTBL0 */
-#define JCU_FROM_JCQTBL1 (*(volatile struct st_jcu_from_jcqtbl0 *)&JCU.JCQTBL1) /* JCU_FROM_JCQTBL1 */
-#define JCU_FROM_JCQTBL2 (*(volatile struct st_jcu_from_jcqtbl0 *)&JCU.JCQTBL2) /* JCU_FROM_JCQTBL2 */
-#define JCU_FROM_JCQTBL3 (*(volatile struct st_jcu_from_jcqtbl0 *)&JCU.JCQTBL3) /* JCU_FROM_JCQTBL3 */
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
+    &JCU_FROM_JCQTBL0, &JCU_FROM_JCQTBL1, &JCU_FROM_JCQTBL2, &JCU_FROM_JCQTBL3 \
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
+#define JCU_FROM_JCQTBL0 (*(struct st_jcu_from_jcqtbl0 *)&JCU.JCQTBL0) /* JCU_FROM_JCQTBL0 */
+#define JCU_FROM_JCQTBL1 (*(struct st_jcu_from_jcqtbl0 *)&JCU.JCQTBL1) /* JCU_FROM_JCQTBL1 */
+#define JCU_FROM_JCQTBL2 (*(struct st_jcu_from_jcqtbl0 *)&JCU.JCQTBL2) /* JCU_FROM_JCQTBL2 */
+#define JCU_FROM_JCQTBL3 (*(struct st_jcu_from_jcqtbl0 *)&JCU.JCQTBL3) /* JCU_FROM_JCQTBL3 */
 
 /* End of channnel array defines of JCU */
 
@@ -162,4 +165,5 @@ struct st_jcu_from_jcqtbl0
 #define JCUJCHTBA0 JCU.JCHTBA0
 #define JCUJCHTBD1 JCU.JCHTBD1
 #define JCUJCHTBA1 JCU.JCHTBA1
+/* <-SEC M1.10.1 */
 #endif

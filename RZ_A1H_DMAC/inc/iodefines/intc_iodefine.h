@@ -17,25 +17,19 @@
 * and to discontinue the availability of this software. By using this software,
 * you agree to the additional terms and conditions found by accessing the
 * following link:
-* http://www.renesas.com/disclaimer
-*
+* http://www.renesas.com/disclaimer*
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
-*******************************************************************************/
-/*******************************************************************************
-* File Name     : intc_iodefine.h
-* Device(s)     : RZ/A1H RSK2+RZA1H
-* Tool-Chain    : GNUARM-RZv13.01-EABI
-* H/W Platform  : RSK+RZA1H CPU Board
-* Description   : Definition of I/O Register
-*******************************************************************************/
-/*******************************************************************************
-* History       : DD.MM.YYYY Version Description
-*               : 18.06.2013 1.00
-*******************************************************************************/
+* File Name : intc_iodefine.h
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
+******************************************************************************/
 #ifndef INTC_IODEFINE_H
 #define INTC_IODEFINE_H
+/* ->QAC 0639 : Over 127 members (C90) */
+/* ->SEC M1.10.1 : Not magic number */
 
 struct st_intc
 {                                                          /* INTC             */
@@ -1027,4 +1021,6 @@ struct st_intc
 #define INTCICR0 INTC.ICR0
 #define INTCICR1 INTC.ICR1
 #define INTCIRQRR INTC.IRQRR
+/* <-SEC M1.10.1 */
+/* <-QAC 0639 */
 #endif

@@ -18,14 +18,18 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer*
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
 * File Name : gpio_iodefine.h
-* Description : Definition of I/O Register
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
 ******************************************************************************/
 #ifndef GPIO_IODEFINE_H
 #define GPIO_IODEFINE_H
+/* ->QAC 0639 : Over 127 members (C90) */
+/* ->SEC M1.10.1 : Not magic number */
 
 struct st_gpio
 {                                                          /* GPIO             */
@@ -672,10 +676,10 @@ struct st_gpio_from_pipc1
 /*(Sample) value = GPIO_FROM_PIPC1_ARRAY[ channel ]->PIPC1; */
 #define GPIO_FROM_PIPC1_ARRAY_COUNT  11
 #define GPIO_FROM_PIPC1_ARRAY_ADDRESS_LIST \
-    /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
     &GPIO_FROM_PIPC1, &GPIO_FROM_PIPC2, &GPIO_FROM_PIPC3, &GPIO_FROM_PIPC4, &GPIO_FROM_PIPC5, &GPIO_FROM_PIPC6, &GPIO_FROM_PIPC7, &GPIO_FROM_PIPC8, \
     &GPIO_FROM_PIPC9, &GPIO_FROM_PIPC10, &GPIO_FROM_PIPC11 \
-    /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
 #define GPIO_FROM_PIPC1 (*(struct st_gpio_from_pipc1 *)&GPIO.PIPC1) /* GPIO_FROM_PIPC1 */
 #define GPIO_FROM_PIPC2 (*(struct st_gpio_from_pipc1 *)&GPIO.PIPC2) /* GPIO_FROM_PIPC2 */
 #define GPIO_FROM_PIPC3 (*(struct st_gpio_from_pipc1 *)&GPIO.PIPC3) /* GPIO_FROM_PIPC3 */
@@ -693,10 +697,10 @@ struct st_gpio_from_pipc1
 /*(Sample) value = GPIO_FROM_PBDC1_ARRAY[ channel ]->PBDC1; */
 #define GPIO_FROM_PBDC1_ARRAY_COUNT  11
 #define GPIO_FROM_PBDC1_ARRAY_ADDRESS_LIST \
-    /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
     &GPIO_FROM_PBDC1, &GPIO_FROM_PBDC2, &GPIO_FROM_PBDC3, &GPIO_FROM_PBDC4, &GPIO_FROM_PBDC5, &GPIO_FROM_PBDC6, &GPIO_FROM_PBDC7, &GPIO_FROM_PBDC8, \
     &GPIO_FROM_PBDC9, &GPIO_FROM_PBDC10, &GPIO_FROM_PBDC11 \
-    /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
 #define GPIO_FROM_PBDC1 (*(struct st_gpio_from_pbdc1 *)&GPIO.PBDC1) /* GPIO_FROM_PBDC1 */
 #define GPIO_FROM_PBDC2 (*(struct st_gpio_from_pbdc1 *)&GPIO.PBDC2) /* GPIO_FROM_PBDC2 */
 #define GPIO_FROM_PBDC3 (*(struct st_gpio_from_pbdc1 *)&GPIO.PBDC3) /* GPIO_FROM_PBDC3 */
@@ -714,10 +718,10 @@ struct st_gpio_from_pipc1
 /*(Sample) value = GPIO_FROM_PIBC1_ARRAY[ channel ]->PIBC1; */
 #define GPIO_FROM_PIBC1_ARRAY_COUNT  11
 #define GPIO_FROM_PIBC1_ARRAY_ADDRESS_LIST \
-    /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
     &GPIO_FROM_PIBC1, &GPIO_FROM_PIBC2, &GPIO_FROM_PIBC3, &GPIO_FROM_PIBC4, &GPIO_FROM_PIBC5, &GPIO_FROM_PIBC6, &GPIO_FROM_PIBC7, &GPIO_FROM_PIBC8, \
     &GPIO_FROM_PIBC9, &GPIO_FROM_PIBC10, &GPIO_FROM_PIBC11 \
-    /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
 #define GPIO_FROM_PIBC1 (*(struct st_gpio_from_pibc1 *)&GPIO.PIBC1) /* GPIO_FROM_PIBC1 */
 #define GPIO_FROM_PIBC2 (*(struct st_gpio_from_pibc1 *)&GPIO.PIBC2) /* GPIO_FROM_PIBC2 */
 #define GPIO_FROM_PIBC3 (*(struct st_gpio_from_pibc1 *)&GPIO.PIBC3) /* GPIO_FROM_PIBC3 */
@@ -735,10 +739,10 @@ struct st_gpio_from_pipc1
 /*(Sample) value = GPIO_FROM_PFCAE1_ARRAY[ channel ]->PFCAE1; */
 #define GPIO_FROM_PFCAE1_ARRAY_COUNT  11
 #define GPIO_FROM_PFCAE1_ARRAY_ADDRESS_LIST \
-    /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
     &GPIO_FROM_PFCAE1, &GPIO_FROM_PFCAE2, &GPIO_FROM_PFCAE3, &GPIO_FROM_PFCAE4, &GPIO_FROM_PFCAE5, &GPIO_FROM_PFCAE6, &GPIO_FROM_PFCAE7, &GPIO_FROM_PFCAE8, \
     &GPIO_FROM_PFCAE9, &GPIO_FROM_PFCAE10, &GPIO_FROM_PFCAE11 \
-    /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
 #define GPIO_FROM_PFCAE1 (*(struct st_gpio_from_pfcae1 *)&GPIO.PFCAE1) /* GPIO_FROM_PFCAE1 */
 #define GPIO_FROM_PFCAE2 (*(struct st_gpio_from_pfcae1 *)&GPIO.PFCAE2) /* GPIO_FROM_PFCAE2 */
 #define GPIO_FROM_PFCAE3 (*(struct st_gpio_from_pfcae1 *)&GPIO.PFCAE3) /* GPIO_FROM_PFCAE3 */
@@ -756,10 +760,10 @@ struct st_gpio_from_pipc1
 /*(Sample) value = GPIO_FROM_PNOT1_ARRAY[ channel ]->PNOT1; */
 #define GPIO_FROM_PNOT1_ARRAY_COUNT  11
 #define GPIO_FROM_PNOT1_ARRAY_ADDRESS_LIST \
-    /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
     &GPIO_FROM_PNOT1, &GPIO_FROM_PNOT2, &GPIO_FROM_PNOT3, &GPIO_FROM_PNOT4, &GPIO_FROM_PNOT5, &GPIO_FROM_PNOT6, &GPIO_FROM_PNOT7, &GPIO_FROM_PNOT8, \
     &GPIO_FROM_PNOT9, &GPIO_FROM_PNOT10, &GPIO_FROM_PNOT11 \
-    /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
 #define GPIO_FROM_PNOT1 (*(struct st_gpio_from_pnot1 *)&GPIO.PNOT1) /* GPIO_FROM_PNOT1 */
 #define GPIO_FROM_PNOT2 (*(struct st_gpio_from_pnot1 *)&GPIO.PNOT2) /* GPIO_FROM_PNOT2 */
 #define GPIO_FROM_PNOT3 (*(struct st_gpio_from_pnot1 *)&GPIO.PNOT3) /* GPIO_FROM_PNOT3 */
@@ -777,10 +781,10 @@ struct st_gpio_from_pipc1
 /*(Sample) value = GPIO_FROM_PFCE1_ARRAY[ channel ]->PFCE1; */
 #define GPIO_FROM_PFCE1_ARRAY_COUNT  11
 #define GPIO_FROM_PFCE1_ARRAY_ADDRESS_LIST \
-    /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
     &GPIO_FROM_PFCE1, &GPIO_FROM_PFCE2, &GPIO_FROM_PFCE3, &GPIO_FROM_PFCE4, &GPIO_FROM_PFCE5, &GPIO_FROM_PFCE6, &GPIO_FROM_PFCE7, &GPIO_FROM_PFCE8, \
     &GPIO_FROM_PFCE9, &GPIO_FROM_PFCE10, &GPIO_FROM_PFCE11 \
-    /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
 #define GPIO_FROM_PFCE1 (*(struct st_gpio_from_pfce1 *)&GPIO.PFCE1) /* GPIO_FROM_PFCE1 */
 #define GPIO_FROM_PFCE2 (*(struct st_gpio_from_pfce1 *)&GPIO.PFCE2) /* GPIO_FROM_PFCE2 */
 #define GPIO_FROM_PFCE3 (*(struct st_gpio_from_pfce1 *)&GPIO.PFCE3) /* GPIO_FROM_PFCE3 */
@@ -798,10 +802,10 @@ struct st_gpio_from_pipc1
 /*(Sample) value = GPIO_FROM_PFC1_ARRAY[ channel ]->PFC1; */
 #define GPIO_FROM_PFC1_ARRAY_COUNT  11
 #define GPIO_FROM_PFC1_ARRAY_ADDRESS_LIST \
-    /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
     &GPIO_FROM_PFC1, &GPIO_FROM_PFC2, &GPIO_FROM_PFC3, &GPIO_FROM_PFC4, &GPIO_FROM_PFC5, &GPIO_FROM_PFC6, &GPIO_FROM_PFC7, &GPIO_FROM_PFC8, \
     &GPIO_FROM_PFC9, &GPIO_FROM_PFC10, &GPIO_FROM_PFC11 \
-    /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
 #define GPIO_FROM_PFC1 (*(struct st_gpio_from_pfc1 *)&GPIO.PFC1) /* GPIO_FROM_PFC1 */
 #define GPIO_FROM_PFC2 (*(struct st_gpio_from_pfc1 *)&GPIO.PFC2) /* GPIO_FROM_PFC2 */
 #define GPIO_FROM_PFC3 (*(struct st_gpio_from_pfc1 *)&GPIO.PFC3) /* GPIO_FROM_PFC3 */
@@ -819,10 +823,10 @@ struct st_gpio_from_pipc1
 /*(Sample) value = GPIO_FROM_PMC0_ARRAY[ channel ]->PMC0; */
 #define GPIO_FROM_PMC0_ARRAY_COUNT  12
 #define GPIO_FROM_PMC0_ARRAY_ADDRESS_LIST \
-    /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
     &GPIO_FROM_PMC0, &GPIO_FROM_PMC1, &GPIO_FROM_PMC2, &GPIO_FROM_PMC3, &GPIO_FROM_PMC4, &GPIO_FROM_PMC5, &GPIO_FROM_PMC6, &GPIO_FROM_PMC7, \
     &GPIO_FROM_PMC8, &GPIO_FROM_PMC9, &GPIO_FROM_PMC10, &GPIO_FROM_PMC11 \
-    /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
 #define GPIO_FROM_PMC0 (*(struct st_gpio_from_pmc0 *)&GPIO.PMC0) /* GPIO_FROM_PMC0 */
 #define GPIO_FROM_PMC1 (*(struct st_gpio_from_pmc0 *)&GPIO.PMC1) /* GPIO_FROM_PMC1 */
 #define GPIO_FROM_PMC2 (*(struct st_gpio_from_pmc0 *)&GPIO.PMC2) /* GPIO_FROM_PMC2 */
@@ -841,10 +845,10 @@ struct st_gpio_from_pipc1
 /*(Sample) value = GPIO_FROM_PM1_ARRAY[ channel ]->PM1; */
 #define GPIO_FROM_PM1_ARRAY_COUNT  11
 #define GPIO_FROM_PM1_ARRAY_ADDRESS_LIST \
-    /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
     &GPIO_FROM_PM1, &GPIO_FROM_PM2, &GPIO_FROM_PM3, &GPIO_FROM_PM4, &GPIO_FROM_PM5, &GPIO_FROM_PM6, &GPIO_FROM_PM7, &GPIO_FROM_PM8, \
     &GPIO_FROM_PM9, &GPIO_FROM_PM10, &GPIO_FROM_PM11 \
-    /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
 #define GPIO_FROM_PM1 (*(struct st_gpio_from_pm1 *)&GPIO.PM1)    /* GPIO_FROM_PM1 */
 #define GPIO_FROM_PM2 (*(struct st_gpio_from_pm1 *)&GPIO.PM2)    /* GPIO_FROM_PM2 */
 #define GPIO_FROM_PM3 (*(struct st_gpio_from_pm1 *)&GPIO.PM3)    /* GPIO_FROM_PM3 */
@@ -862,10 +866,10 @@ struct st_gpio_from_pipc1
 /*(Sample) value = GPIO_FROM_PPR0_ARRAY[ channel ]->PPR0; */
 #define GPIO_FROM_PPR0_ARRAY_COUNT  12
 #define GPIO_FROM_PPR0_ARRAY_ADDRESS_LIST \
-    /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
     &GPIO_FROM_PPR0, &GPIO_FROM_PPR1, &GPIO_FROM_PPR2, &GPIO_FROM_PPR3, &GPIO_FROM_PPR4, &GPIO_FROM_PPR5, &GPIO_FROM_PPR6, &GPIO_FROM_PPR7, \
     &GPIO_FROM_PPR8, &GPIO_FROM_PPR9, &GPIO_FROM_PPR10, &GPIO_FROM_PPR11 \
-    /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
 #define GPIO_FROM_PPR0 (*(struct st_gpio_from_ppr0 *)&GPIO.PPR0) /* GPIO_FROM_PPR0 */
 #define GPIO_FROM_PPR1 (*(struct st_gpio_from_ppr0 *)&GPIO.PPR1) /* GPIO_FROM_PPR1 */
 #define GPIO_FROM_PPR2 (*(struct st_gpio_from_ppr0 *)&GPIO.PPR2) /* GPIO_FROM_PPR2 */
@@ -884,10 +888,10 @@ struct st_gpio_from_pipc1
 /*(Sample) value = GPIO_FROM_P1_ARRAY[ channel ]->P1; */
 #define GPIO_FROM_P1_ARRAY_COUNT  11
 #define GPIO_FROM_P1_ARRAY_ADDRESS_LIST \
-    /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
     &GPIO_FROM_P1, &GPIO_FROM_P2, &GPIO_FROM_P3, &GPIO_FROM_P4, &GPIO_FROM_P5, &GPIO_FROM_P6, &GPIO_FROM_P7, &GPIO_FROM_P8, \
     &GPIO_FROM_P9, &GPIO_FROM_P10, &GPIO_FROM_P11 \
-    /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
 #define GPIO_FROM_P1 (*(struct st_gpio_from_p1 *)&GPIO.P1)       /* GPIO_FROM_P1 */
 #define GPIO_FROM_P2 (*(struct st_gpio_from_p1 *)&GPIO.P2)       /* GPIO_FROM_P2 */
 #define GPIO_FROM_P3 (*(struct st_gpio_from_p1 *)&GPIO.P3)       /* GPIO_FROM_P3 */
@@ -1066,4 +1070,6 @@ struct st_gpio_from_pipc1
 #define GPIOJPMC0 GPIO.JPMC0
 #define GPIOJPMCSR0 GPIO.JPMCSR0
 #define GPIOJPIBC0 GPIO.JPIBC0
+/* <-SEC M1.10.1 */
+/* <-QAC 0639 */
 #endif

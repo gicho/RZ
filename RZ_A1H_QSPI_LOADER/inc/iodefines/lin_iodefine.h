@@ -18,164 +18,157 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer*
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
 * File Name : lin_iodefine.h
-* $Rev: 809 $
-* $Date:: 2014-03-28 19:15:55 +0000#$
-* Description : Definition of I/O Register (V0.50j)
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
 ******************************************************************************/
 #ifndef LIN_IODEFINE_H
 #define LIN_IODEFINE_H
+/* ->MISRA 18.4 : Pack unpack union */ /* ->SEC M1.6.2 */
+/* ->SEC M1.10.1 : Not magic number */
 
 struct st_lin
 {                                                          /* LIN              */
-    uint8_t        dummy1[1];                              /*                  */
-    uint8_t        LWBR;                                   /*  LWBR            */
-    uint8_t        LBRP0;                                  /*  LBRP0           */
-    uint8_t        LBRP1;                                  /*  LBRP1           */
-    uint8_t        LSTC;                                   /*  LSTC            */
-    uint8_t        dummy2[3];                              /*                  */
-    uint8_t        LMD;                                    /*  LMD             */
-    uint8_t        LBFC;                                   /*  LBFC            */
-    uint8_t        LSC;                                    /*  LSC             */
-    uint8_t        LWUP;                                   /*  LWUP            */
-    uint8_t        LIE;                                    /*  LIE             */
-    uint8_t        LEDE;                                   /*  LEDE            */
-    uint8_t        LCUC;                                   /*  LCUC            */
-    uint8_t        dummy3[1];                              /*                  */
-    uint8_t        LTRC;                                   /*  LTRC            */
-    uint8_t        LMST;                                   /*  LMST            */
-    uint8_t        LST;                                    /*  LST             */
-    uint8_t        LEST;                                   /*  LEST            */
-    uint8_t        LDFC;                                   /*  LDFC            */
-    uint8_t        LIDB;                                   /*  LIDB            */
-    uint8_t        LCBR;                                   /*  LCBR            */
-    uint8_t        LUDB0;                                  /*  LUDB0           */
+    volatile uint8_t   dummy1[1];                              /*                  */
+    volatile uint8_t   RLN3nLWBR;                              /*  RLN3nLWBR       */
+    union iodefine_reg16_8_t  RLN3nLBRP01;                     /*  RLN3nLBRP01 */
+    
+    volatile uint8_t   RLN3nLSTC;                              /*  RLN3nLSTC       */
+    volatile uint8_t   dummy2[3];                              /*                  */
+    volatile uint8_t   RLN3nLMD;                               /*  RLN3nLMD        */
+    volatile uint8_t   RLN3nLBFC;                              /*  RLN3nLBFC       */
+    volatile uint8_t   RLN3nLSC;                               /*  RLN3nLSC        */
+    volatile uint8_t   RLN3nLWUP;                              /*  RLN3nLWUP       */
+    volatile uint8_t   RLN3nLIE;                               /*  RLN3nLIE        */
+    volatile uint8_t   RLN3nLEDE;                              /*  RLN3nLEDE       */
+    volatile uint8_t   RLN3nLCUC;                              /*  RLN3nLCUC       */
+    volatile uint8_t   dummy3[1];                              /*                  */
+    volatile uint8_t   RLN3nLTRC;                              /*  RLN3nLTRC       */
+    volatile uint8_t   RLN3nLMST;                              /*  RLN3nLMST       */
+    volatile uint8_t   RLN3nLST;                               /*  RLN3nLST        */
+    volatile uint8_t   RLN3nLEST;                              /*  RLN3nLEST       */
+    volatile uint8_t   RLN3nLDFC;                              /*  RLN3nLDFC       */
+    volatile uint8_t   RLN3nLIDB;                              /*  RLN3nLIDB       */
+    volatile uint8_t   RLN3nLCBR;                              /*  RLN3nLCBR       */
+    volatile uint8_t   RLN3nLUDB0;                             /*  RLN3nLUDB0      */
 #define LIN_LDBn_COUNT 8
-    uint8_t        LDB1;                                   /*  LDB1            */
-    uint8_t        LDB2;                                   /*  LDB2            */
-    uint8_t        LDB3;                                   /*  LDB3            */
-    uint8_t        LDB4;                                   /*  LDB4            */
-    uint8_t        LDB5;                                   /*  LDB5            */
-    uint8_t        LDB6;                                   /*  LDB6            */
-    uint8_t        LDB7;                                   /*  LDB7            */
-    uint8_t        LDB8;                                   /*  LDB8            */
-    uint8_t        LUOER;                                  /*  LUOER           */
-    uint8_t        LUOR1;                                  /*  LUOR1           */
-    uint8_t        dummy4[2];                              /*                  */
-    
-    union                                                  /*                  */
-    {                                                      /* LUTDR            */
-        uint16_t       UINT16;                             /*  16-bit Access   */
-        uint8_t        UINT8[2];                           /*  8-bit Access    */
-    } LUTDR;                                               /*                  */
-    
-    union                                                  /*                  */
-    {                                                      /* LURDR            */
-        uint16_t       UINT16;                             /*  16-bit Access   */
-        uint8_t        UINT8[2];                           /*  8-bit Access    */
-    } LURDR;                                               /*                  */
-    
-    union                                                  /*                  */
-    {                                                      /* LUWTDR           */
-        uint16_t       UINT16;                             /*  16-bit Access   */
-        uint8_t        UINT8[2];                           /*  8-bit Access    */
-    } LUWTDR;                                              /*                  */
+    volatile uint8_t   RLN3nLDBR1;                             /*  RLN3nLDBR1      */
+    volatile uint8_t   RLN3nLDBR2;                             /*  RLN3nLDBR2      */
+    volatile uint8_t   RLN3nLDBR3;                             /*  RLN3nLDBR3      */
+    volatile uint8_t   RLN3nLDBR4;                             /*  RLN3nLDBR4      */
+    volatile uint8_t   RLN3nLDBR5;                             /*  RLN3nLDBR5      */
+    volatile uint8_t   RLN3nLDBR6;                             /*  RLN3nLDBR6      */
+    volatile uint8_t   RLN3nLDBR7;                             /*  RLN3nLDBR7      */
+    volatile uint8_t   RLN3nLDBR8;                             /*  RLN3nLDBR8      */
+    volatile uint8_t   RLN3nLUOER;                             /*  RLN3nLUOER      */
+    volatile uint8_t   RLN3nLUOR1;                             /*  RLN3nLUOR1      */
+    volatile uint8_t   dummy4[2];                              /*                  */
+    union iodefine_reg16_8_t  RLN3nLUTDR;                      /*  RLN3nLUTDR  */
+    union iodefine_reg16_8_t  RLN3nLURDR;                      /*  RLN3nLURDR  */
+    union iodefine_reg16_8_t  RLN3nLUWTDR;                     /*  RLN3nLUWTDR */
     
 };
 
 
-#define LIN0    (*(volatile struct st_lin     *)0xFCFE9000uL) /* LIN0 */
-#define LIN1    (*(volatile struct st_lin     *)0xFCFE9800uL) /* LIN1 */
+#define LIN0    (*(struct st_lin     *)0xFCFE9000uL) /* LIN0 */
+#define LIN1    (*(struct st_lin     *)0xFCFE9800uL) /* LIN1 */
 
 
 /* Start of channnel array defines of LIN */
 
 /* Channnel array defines of LIN */
-/*(Sample) value = LIN[ channel ]->LWBR; */
+/*(Sample) value = LIN[ channel ]->RLN3nLWBR; */
 #define LIN_COUNT  2
 #define LIN_ADDRESS_LIST \
-    &LIN0, &LIN1
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
+    &LIN0, &LIN1 \
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
 
 /* End of channnel array defines of LIN */
 
 
-#define LIN0LWBR LIN0.LWBR
-#define LIN0LBRP0 LIN0.LBRP0
-#define LIN0LBRP1 LIN0.LBRP1
-#define LIN0LSTC LIN0.LSTC
-#define LIN0LMD LIN0.LMD
-#define LIN0LBFC LIN0.LBFC
-#define LIN0LSC LIN0.LSC
-#define LIN0LWUP LIN0.LWUP
-#define LIN0LIE LIN0.LIE
-#define LIN0LEDE LIN0.LEDE
-#define LIN0LCUC LIN0.LCUC
-#define LIN0LTRC LIN0.LTRC
-#define LIN0LMST LIN0.LMST
-#define LIN0LST LIN0.LST
-#define LIN0LEST LIN0.LEST
-#define LIN0LDFC LIN0.LDFC
-#define LIN0LIDB LIN0.LIDB
-#define LIN0LCBR LIN0.LCBR
-#define LIN0LUDB0 LIN0.LUDB0
-#define LIN0LDB1 LIN0.LDB1
-#define LIN0LDB2 LIN0.LDB2
-#define LIN0LDB3 LIN0.LDB3
-#define LIN0LDB4 LIN0.LDB4
-#define LIN0LDB5 LIN0.LDB5
-#define LIN0LDB6 LIN0.LDB6
-#define LIN0LDB7 LIN0.LDB7
-#define LIN0LDB8 LIN0.LDB8
-#define LIN0LUOER LIN0.LUOER
-#define LIN0LUOR1 LIN0.LUOR1
-#define LIN0LUTDR LIN0.LUTDR.UINT16
-#define LIN0LUTDR_BYTE_L LIN0.LUTDR.UINT8[L]
-#define LIN0LUTDR_BYTE_H LIN0.LUTDR.UINT8[H]
-#define LIN0LURDR LIN0.LURDR.UINT16
-#define LIN0LURDR_BYTE_L LIN0.LURDR.UINT8[L]
-#define LIN0LURDR_BYTE_H LIN0.LURDR.UINT8[H]
-#define LIN0LUWTDR LIN0.LUWTDR.UINT16
-#define LIN0LUWTDR_BYTE_L LIN0.LUWTDR.UINT8[L]
-#define LIN0LUWTDR_BYTE_H LIN0.LUWTDR.UINT8[H]
-#define LIN1LWBR LIN1.LWBR
-#define LIN1LBRP0 LIN1.LBRP0
-#define LIN1LBRP1 LIN1.LBRP1
-#define LIN1LSTC LIN1.LSTC
-#define LIN1LMD LIN1.LMD
-#define LIN1LBFC LIN1.LBFC
-#define LIN1LSC LIN1.LSC
-#define LIN1LWUP LIN1.LWUP
-#define LIN1LIE LIN1.LIE
-#define LIN1LEDE LIN1.LEDE
-#define LIN1LCUC LIN1.LCUC
-#define LIN1LTRC LIN1.LTRC
-#define LIN1LMST LIN1.LMST
-#define LIN1LST LIN1.LST
-#define LIN1LEST LIN1.LEST
-#define LIN1LDFC LIN1.LDFC
-#define LIN1LIDB LIN1.LIDB
-#define LIN1LCBR LIN1.LCBR
-#define LIN1LUDB0 LIN1.LUDB0
-#define LIN1LDB1 LIN1.LDB1
-#define LIN1LDB2 LIN1.LDB2
-#define LIN1LDB3 LIN1.LDB3
-#define LIN1LDB4 LIN1.LDB4
-#define LIN1LDB5 LIN1.LDB5
-#define LIN1LDB6 LIN1.LDB6
-#define LIN1LDB7 LIN1.LDB7
-#define LIN1LDB8 LIN1.LDB8
-#define LIN1LUOER LIN1.LUOER
-#define LIN1LUOR1 LIN1.LUOR1
-#define LIN1LUTDR LIN1.LUTDR.UINT16
-#define LIN1LUTDR_BYTE_L LIN1.LUTDR.UINT8[L]
-#define LIN1LUTDR_BYTE_H LIN1.LUTDR.UINT8[H]
-#define LIN1LURDR LIN1.LURDR.UINT16
-#define LIN1LURDR_BYTE_L LIN1.LURDR.UINT8[L]
-#define LIN1LURDR_BYTE_H LIN1.LURDR.UINT8[H]
-#define LIN1LUWTDR LIN1.LUWTDR.UINT16
-#define LIN1LUWTDR_BYTE_L LIN1.LUWTDR.UINT8[L]
-#define LIN1LUWTDR_BYTE_H LIN1.LUWTDR.UINT8[H]
+#define LIN0RLN30LWBR LIN0.RLN3nLWBR
+#define LIN0RLN30LBRP01 LIN0.RLN3nLBRP01.UINT16
+#define LIN0RLN30LBRP0 LIN0.RLN3nLBRP01.UINT8[L]
+#define LIN0RLN30LBRP1 LIN0.RLN3nLBRP01.UINT8[H]
+#define LIN0RLN30LSTC LIN0.RLN3nLSTC
+#define LIN0RLN30LMD LIN0.RLN3nLMD
+#define LIN0RLN30LBFC LIN0.RLN3nLBFC
+#define LIN0RLN30LSC LIN0.RLN3nLSC
+#define LIN0RLN30LWUP LIN0.RLN3nLWUP
+#define LIN0RLN30LIE LIN0.RLN3nLIE
+#define LIN0RLN30LEDE LIN0.RLN3nLEDE
+#define LIN0RLN30LCUC LIN0.RLN3nLCUC
+#define LIN0RLN30LTRC LIN0.RLN3nLTRC
+#define LIN0RLN30LMST LIN0.RLN3nLMST
+#define LIN0RLN30LST LIN0.RLN3nLST
+#define LIN0RLN30LEST LIN0.RLN3nLEST
+#define LIN0RLN30LDFC LIN0.RLN3nLDFC
+#define LIN0RLN30LIDB LIN0.RLN3nLIDB
+#define LIN0RLN30LCBR LIN0.RLN3nLCBR
+#define LIN0RLN30LUDB0 LIN0.RLN3nLUDB0
+#define LIN0RLN30LDBR1 LIN0.RLN3nLDBR1
+#define LIN0RLN30LDBR2 LIN0.RLN3nLDBR2
+#define LIN0RLN30LDBR3 LIN0.RLN3nLDBR3
+#define LIN0RLN30LDBR4 LIN0.RLN3nLDBR4
+#define LIN0RLN30LDBR5 LIN0.RLN3nLDBR5
+#define LIN0RLN30LDBR6 LIN0.RLN3nLDBR6
+#define LIN0RLN30LDBR7 LIN0.RLN3nLDBR7
+#define LIN0RLN30LDBR8 LIN0.RLN3nLDBR8
+#define LIN0RLN30LUOER LIN0.RLN3nLUOER
+#define LIN0RLN30LUOR1 LIN0.RLN3nLUOR1
+#define LIN0RLN30LUTDR LIN0.RLN3nLUTDR.UINT16
+#define LIN0RLN30LUTDRL LIN0.RLN3nLUTDR.UINT8[L]
+#define LIN0RLN30LUTDRH LIN0.RLN3nLUTDR.UINT8[H]
+#define LIN0RLN30LURDR LIN0.RLN3nLURDR.UINT16
+#define LIN0RLN30LURDRL LIN0.RLN3nLURDR.UINT8[L]
+#define LIN0RLN30LURDRH LIN0.RLN3nLURDR.UINT8[H]
+#define LIN0RLN30LUWTDR LIN0.RLN3nLUWTDR.UINT16
+#define LIN0RLN30LUWTDRL LIN0.RLN3nLUWTDR.UINT8[L]
+#define LIN0RLN30LUWTDRH LIN0.RLN3nLUWTDR.UINT8[H]
+#define LIN1RLN31LWBR LIN1.RLN3nLWBR
+#define LIN1RLN31LBRP01 LIN1.RLN3nLBRP01.UINT16
+#define LIN1RLN31LBRP0 LIN1.RLN3nLBRP01.UINT8[L]
+#define LIN1RLN31LBRP1 LIN1.RLN3nLBRP01.UINT8[H]
+#define LIN1RLN31LSTC LIN1.RLN3nLSTC
+#define LIN1RLN31LMD LIN1.RLN3nLMD
+#define LIN1RLN31LBFC LIN1.RLN3nLBFC
+#define LIN1RLN31LSC LIN1.RLN3nLSC
+#define LIN1RLN31LWUP LIN1.RLN3nLWUP
+#define LIN1RLN31LIE LIN1.RLN3nLIE
+#define LIN1RLN31LEDE LIN1.RLN3nLEDE
+#define LIN1RLN31LCUC LIN1.RLN3nLCUC
+#define LIN1RLN31LTRC LIN1.RLN3nLTRC
+#define LIN1RLN31LMST LIN1.RLN3nLMST
+#define LIN1RLN31LST LIN1.RLN3nLST
+#define LIN1RLN31LEST LIN1.RLN3nLEST
+#define LIN1RLN31LDFC LIN1.RLN3nLDFC
+#define LIN1RLN31LIDB LIN1.RLN3nLIDB
+#define LIN1RLN31LCBR LIN1.RLN3nLCBR
+#define LIN1RLN31LUDB0 LIN1.RLN3nLUDB0
+#define LIN1RLN31LDBR1 LIN1.RLN3nLDBR1
+#define LIN1RLN31LDBR2 LIN1.RLN3nLDBR2
+#define LIN1RLN31LDBR3 LIN1.RLN3nLDBR3
+#define LIN1RLN31LDBR4 LIN1.RLN3nLDBR4
+#define LIN1RLN31LDBR5 LIN1.RLN3nLDBR5
+#define LIN1RLN31LDBR6 LIN1.RLN3nLDBR6
+#define LIN1RLN31LDBR7 LIN1.RLN3nLDBR7
+#define LIN1RLN31LDBR8 LIN1.RLN3nLDBR8
+#define LIN1RLN31LUOER LIN1.RLN3nLUOER
+#define LIN1RLN31LUOR1 LIN1.RLN3nLUOR1
+#define LIN1RLN31LUTDR LIN1.RLN3nLUTDR.UINT16
+#define LIN1RLN31LUTDRL LIN1.RLN3nLUTDR.UINT8[L]
+#define LIN1RLN31LUTDRH LIN1.RLN3nLUTDR.UINT8[H]
+#define LIN1RLN31LURDR LIN1.RLN3nLURDR.UINT16
+#define LIN1RLN31LURDRL LIN1.RLN3nLURDR.UINT8[L]
+#define LIN1RLN31LURDRH LIN1.RLN3nLURDR.UINT8[H]
+#define LIN1RLN31LUWTDR LIN1.RLN3nLUWTDR.UINT16
+#define LIN1RLN31LUWTDRL LIN1.RLN3nLUWTDR.UINT8[L]
+#define LIN1RLN31LUWTDRH LIN1.RLN3nLUWTDR.UINT8[H]
+/* <-SEC M1.10.1 */
+/* <-MISRA 18.4 */ /* <-SEC M1.6.2 */
 #endif

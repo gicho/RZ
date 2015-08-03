@@ -18,39 +18,40 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer*
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
 * File Name : ssif_iodefine.h
-* $Rev: 809 $
-* $Date:: 2014-03-28 19:15:55 +0000#$
-* Description : Definition of I/O Register (V0.50j)
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
 ******************************************************************************/
 #ifndef SSIF_IODEFINE_H
 #define SSIF_IODEFINE_H
+/* ->SEC M1.10.1 : Not magic number */
 
 struct st_ssif
 {                                                          /* SSIF             */
-    uint32_t       SSICR;                                  /*  SSICR           */
-    uint32_t       SSISR;                                  /*  SSISR           */
-    uint8_t        dummy1[8];                              /*                  */
-    uint32_t       SSIFCR;                                 /*  SSIFCR          */
-    uint32_t       SSIFSR;                                 /*  SSIFSR          */
-    uint32_t       SSIFTDR;                                /*  SSIFTDR         */
-    uint32_t       SSIFRDR;                                /*  SSIFRDR         */
-    uint32_t       SSITDMR;                                /*  SSITDMR         */
-    uint32_t       SSIFCCR;                                /*  SSIFCCR         */
-    uint32_t       SSIFCMR;                                /*  SSIFCMR         */
-    uint32_t       SSIFCSR;                                /*  SSIFCSR         */
+    volatile uint32_t  SSICR;                                  /*  SSICR           */
+    volatile uint32_t  SSISR;                                  /*  SSISR           */
+    volatile uint8_t   dummy1[8];                              /*                  */
+    volatile uint32_t  SSIFCR;                                 /*  SSIFCR          */
+    volatile uint32_t  SSIFSR;                                 /*  SSIFSR          */
+    volatile uint32_t  SSIFTDR;                                /*  SSIFTDR         */
+    volatile uint32_t  SSIFRDR;                                /*  SSIFRDR         */
+    volatile uint32_t  SSITDMR;                                /*  SSITDMR         */
+    volatile uint32_t  SSIFCCR;                                /*  SSIFCCR         */
+    volatile uint32_t  SSIFCMR;                                /*  SSIFCMR         */
+    volatile uint32_t  SSIFCSR;                                /*  SSIFCSR         */
 };
 
 
-#define SSIF0   (*(volatile struct st_ssif    *)0xE820B000uL) /* SSIF0 */
-#define SSIF1   (*(volatile struct st_ssif    *)0xE820B800uL) /* SSIF1 */
-#define SSIF2   (*(volatile struct st_ssif    *)0xE820C000uL) /* SSIF2 */
-#define SSIF3   (*(volatile struct st_ssif    *)0xE820C800uL) /* SSIF3 */
-#define SSIF4   (*(volatile struct st_ssif    *)0xE820D000uL) /* SSIF4 */
-#define SSIF5   (*(volatile struct st_ssif    *)0xE820D800uL) /* SSIF5 */
+#define SSIF0   (*(struct st_ssif    *)0xE820B000uL) /* SSIF0 */
+#define SSIF1   (*(struct st_ssif    *)0xE820B800uL) /* SSIF1 */
+#define SSIF2   (*(struct st_ssif    *)0xE820C000uL) /* SSIF2 */
+#define SSIF3   (*(struct st_ssif    *)0xE820C800uL) /* SSIF3 */
+#define SSIF4   (*(struct st_ssif    *)0xE820D000uL) /* SSIF4 */
+#define SSIF5   (*(struct st_ssif    *)0xE820D800uL) /* SSIF5 */
 
 
 /* Start of channnel array defines of SSIF */
@@ -59,7 +60,9 @@ struct st_ssif
 /*(Sample) value = SSIF[ channel ]->SSICR; */
 #define SSIF_COUNT  6
 #define SSIF_ADDRESS_LIST \
-    &SSIF0, &SSIF1, &SSIF2, &SSIF3, &SSIF4, &SSIF5
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
+    &SSIF0, &SSIF1, &SSIF2, &SSIF3, &SSIF4, &SSIF5 \
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
 
 /* End of channnel array defines of SSIF */
 
@@ -124,4 +127,5 @@ struct st_ssif
 #define SSIFCCR_5 SSIF5.SSIFCCR
 #define SSIFCMR_5 SSIF5.SSIFCMR
 #define SSIFCSR_5 SSIF5.SSIFCSR
+/* <-SEC M1.10.1 */
 #endif

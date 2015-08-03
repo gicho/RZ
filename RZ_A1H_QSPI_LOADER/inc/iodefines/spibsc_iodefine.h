@@ -18,49 +18,53 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer*
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
 * File Name : spibsc_iodefine.h
-* $Rev: 809 $
-* $Date:: 2014-03-28 19:15:55 +0000#$
-* Description : Definition of I/O Register (V0.50j)
+* $Rev: 1275 $
+* $Date:: 2014-11-07 15:16:20 +0900#$
+* Description : Definition of I/O Register (V1.01a)
 ******************************************************************************/
 #ifndef SPIBSC_IODEFINE_H
 #define SPIBSC_IODEFINE_H
+/* ->SEC M1.10.1 : Not magic number */
 
 struct st_spibsc
 {                                                          /* SPIBSC           */
-    uint32_t       CMNCR;                                  /*  CMNCR           */
-    uint32_t       SSLDR;                                  /*  SSLDR           */
-    uint32_t       SPBCR;                                  /*  SPBCR           */
-    uint32_t       DRCR;                                   /*  DRCR            */
-    uint32_t       DRCMR;                                  /*  DRCMR           */
-    uint32_t       DREAR;                                  /*  DREAR           */
-    uint32_t       DROPR;                                  /*  DROPR           */
-    uint32_t       DRENR;                                  /*  DRENR           */
-    uint32_t       SMCR;                                   /*  SMCR            */
-    uint32_t       SMCMR;                                  /*  SMCMR           */
-    uint32_t       SMADR;                                  /*  SMADR           */
-    uint32_t       SMOPR;                                  /*  SMOPR           */
-    uint32_t       SMENR;                                  /*  SMENR           */
-    uint8_t        dummy1[4];                              /*                  */
+    volatile uint32_t  CMNCR;                                  /*  CMNCR           */
+    volatile uint32_t  SSLDR;                                  /*  SSLDR           */
+    volatile uint32_t  SPBCR;                                  /*  SPBCR           */
+    volatile uint32_t  DRCR;                                   /*  DRCR            */
+    volatile uint32_t  DRCMR;                                  /*  DRCMR           */
+    volatile uint32_t  DREAR;                                  /*  DREAR           */
+    volatile uint32_t  DROPR;                                  /*  DROPR           */
+    volatile uint32_t  DRENR;                                  /*  DRENR           */
+    volatile uint32_t  SMCR;                                   /*  SMCR            */
+    volatile uint32_t  SMCMR;                                  /*  SMCMR           */
+    volatile uint32_t  SMADR;                                  /*  SMADR           */
+    volatile uint32_t  SMOPR;                                  /*  SMOPR           */
+    volatile uint32_t  SMENR;                                  /*  SMENR           */
+    volatile uint8_t   dummy1[4];                              /*                  */
     union iodefine_reg32_t  SMRDR0;                        /*  SMRDR0          */
     union iodefine_reg32_t  SMRDR1;                        /*  SMRDR1          */
     union iodefine_reg32_t  SMWDR0;                        /*  SMWDR0          */
     union iodefine_reg32_t  SMWDR1;                        /*  SMWDR1          */
     
-    uint32_t       CMNSR;                                  /*  CMNSR           */
-    uint8_t        dummy2[12];                             /*                  */
-    uint32_t       DRDMCR;                                 /*  DRDMCR          */
-    uint32_t       DRDRENR;                                /*  DRDRENR         */
-    uint32_t       SMDMCR;                                 /*  SMDMCR          */
-    uint32_t       SMDRENR;                                /*  SMDRENR         */
+    volatile uint32_t  CMNSR;                                  /*  CMNSR           */
+    volatile uint8_t   dummy2[4];                              /*                  */
+    volatile uint32_t  CKDLY;                                  /*  CKDLY           */
+    volatile uint8_t   dummy3[4];                              /*                  */
+    volatile uint32_t  DRDMCR;                                 /*  DRDMCR          */
+    volatile uint32_t  DRDRENR;                                /*  DRDRENR         */
+    volatile uint32_t  SMDMCR;                                 /*  SMDMCR          */
+    volatile uint32_t  SMDRENR;                                /*  SMDRENR         */
+    volatile uint32_t  SPODLY;                                 /*  SPODLY          */
 };
 
 
-#define SPIBSC0 (*(volatile struct st_spibsc  *)0x3FEFA000uL) /* SPIBSC0 */
-#define SPIBSC1 (*(volatile struct st_spibsc  *)0x3FEFB000uL) /* SPIBSC1 */
+#define SPIBSC0 (*(struct st_spibsc  *)0x3FEFA000uL) /* SPIBSC0 */
+#define SPIBSC1 (*(struct st_spibsc  *)0x3FEFB000uL) /* SPIBSC1 */
 
 
 /* Start of channnel array defines of SPIBSC */
@@ -69,7 +73,9 @@ struct st_spibsc
 /*(Sample) value = SPIBSC[ channel ]->CMNCR; */
 #define SPIBSC_COUNT  2
 #define SPIBSC_ADDRESS_LIST \
-    &SPIBSC0, &SPIBSC1
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
+    &SPIBSC0, &SPIBSC1 \
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
 
 /* End of channnel array defines of SPIBSC */
 
@@ -116,10 +122,12 @@ struct st_spibsc
 #define SMWDR1_0HL SPIBSC0.SMWDR1.UINT8[HL]
 #define SMWDR1_0HH SPIBSC0.SMWDR1.UINT8[HH]
 #define CMNSR_0 SPIBSC0.CMNSR
+#define CKDLY_0 SPIBSC0.CKDLY
 #define DRDMCR_0 SPIBSC0.DRDMCR
 #define DRDRENR_0 SPIBSC0.DRDRENR
 #define SMDMCR_0 SPIBSC0.SMDMCR
 #define SMDRENR_0 SPIBSC0.SMDRENR
+#define SPODLY_0 SPIBSC0.SPODLY
 #define CMNCR_1 SPIBSC1.CMNCR
 #define SSLDR_1 SPIBSC1.SSLDR
 #define SPBCR_1 SPIBSC1.SPBCR
@@ -162,8 +170,11 @@ struct st_spibsc
 #define SMWDR1_1HL SPIBSC1.SMWDR1.UINT8[HL]
 #define SMWDR1_1HH SPIBSC1.SMWDR1.UINT8[HH]
 #define CMNSR_1 SPIBSC1.CMNSR
+#define CKDLY_1 SPIBSC1.CKDLY
 #define DRDMCR_1 SPIBSC1.DRDMCR
 #define DRDRENR_1 SPIBSC1.DRDRENR
 #define SMDMCR_1 SPIBSC1.SMDMCR
 #define SMDRENR_1 SPIBSC1.SMDRENR
+#define SPODLY_1 SPIBSC1.SPODLY
+/* <-SEC M1.10.1 */
 #endif

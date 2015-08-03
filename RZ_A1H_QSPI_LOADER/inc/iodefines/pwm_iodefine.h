@@ -18,90 +18,70 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer*
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
 * File Name : pwm_iodefine.h
-* $Rev: 809 $
-* $Date:: 2014-03-28 19:15:55 +0000#$
-* Description : Definition of I/O Register (V0.50j)
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
 ******************************************************************************/
 #ifndef PWM_IODEFINE_H
 #define PWM_IODEFINE_H
+/* ->MISRA 18.4 : Pack unpack union */ /* ->SEC M1.6.2 */
+/* ->SEC M1.10.1 : Not magic number */
 
 struct st_pwm
 {                                                          /* PWM              */
+    volatile uint8_t   dummy559[2];                            /*                  */
+    union iodefine_reg16_8_t  PWBTCR;                          /*  PWBTCR      */
+    
+    volatile uint8_t   dummy560[216];                          /*                  */
+    
 /* start of struct st_pwm_common */
-    union                                                  /*                  */
-    {                                                      /* PWCR_1           */
-        uint16_t       UINT16;                             /*  16-bit Access   */
-        uint8_t        UINT8[2];                           /*  8-bit Access    */
-    } PWCR_1;                                              /*                  */
+    union iodefine_reg16_8_t  PWCR_1;                          /*  PWCR_1      */
     
-    uint8_t        dummy572[2];                            /*                  */
+    volatile uint8_t   dummy561[2];                            /*                  */
+    union iodefine_reg16_8_t  PWPR_1;                          /*  PWPR_1      */
     
-    union                                                  /*                  */
-    {                                                      /* PWPR_1           */
-        uint16_t       UINT16;                             /*  16-bit Access   */
-        uint8_t        UINT8[2];                           /*  8-bit Access    */
-    } PWPR_1;                                              /*                  */
-    
-    uint16_t       PWCYR_1;                                /*  PWCYR_1         */
-    uint16_t       PWBFR_1A;                               /*  PWBFR_1A        */
-    uint16_t       PWBFR_1C;                               /*  PWBFR_1C        */
-    uint16_t       PWBFR_1E;                               /*  PWBFR_1E        */
-    uint16_t       PWBFR_1G;                               /*  PWBFR_1G        */
+    volatile uint16_t PWCYR_1;                                /*  PWCYR_1         */
+    volatile uint16_t PWBFR_1A;                               /*  PWBFR_1A        */
+    volatile uint16_t PWBFR_1C;                               /*  PWBFR_1C        */
+    volatile uint16_t PWBFR_1E;                               /*  PWBFR_1E        */
+    volatile uint16_t PWBFR_1G;                               /*  PWBFR_1G        */
 /* end of struct st_pwm_common */
     
 /* start of struct st_pwm_common */
-    union                                                  /*                  */
-    {                                                      /* PWCR_2           */
-        uint16_t       UINT16;                             /*  16-bit Access   */
-        uint8_t        UINT8[2];                           /*  8-bit Access    */
-    } PWCR_2;                                              /*                  */
+    union iodefine_reg16_8_t  PWCR_2;                          /*  PWCR_2      */
     
-    uint8_t        dummy573[2];                            /*                  */
+    volatile uint8_t   dummy562[2];                            /*                  */
+    union iodefine_reg16_8_t  PWPR_2;                          /*  PWPR_2      */
     
-    union                                                  /*                  */
-    {                                                      /* PWPR_2           */
-        uint16_t       UINT16;                             /*  16-bit Access   */
-        uint8_t        UINT8[2];                           /*  8-bit Access    */
-    } PWPR_2;                                              /*                  */
-    
-    uint16_t       PWCYR_2;                                /*  PWCYR_2         */
-    uint16_t       PWBFR_2A;                               /*  PWBFR_2A        */
-    uint16_t       PWBFR_2C;                               /*  PWBFR_2C        */
-    uint16_t       PWBFR_2E;                               /*  PWBFR_2E        */
-    uint16_t       PWBFR_2G;                               /*  PWBFR_2G        */
+    volatile uint16_t PWCYR_2;                                /*  PWCYR_2         */
+    volatile uint16_t PWBFR_2A;                               /*  PWBFR_2A        */
+    volatile uint16_t PWBFR_2C;                               /*  PWBFR_2C        */
+    volatile uint16_t PWBFR_2E;                               /*  PWBFR_2E        */
+    volatile uint16_t PWBFR_2G;                               /*  PWBFR_2G        */
 /* end of struct st_pwm_common */
 };
 
 
 struct st_pwm_common
 {
-    union                                                  /*                  */
-    {                                                      /* PWCR_1           */
-        uint16_t       UINT16;                             /*  16-bit Access   */
-        uint8_t        UINT8[2];                           /*  8-bit Access    */
-    } PWCR_1;                                              /*                  */
+    union iodefine_reg16_8_t  PWCR_1;                          /*  PWCR_1      */
     
-    uint8_t        dummy572[2];                            /*                  */
+    volatile uint8_t   dummy572[2];                            /*                  */
+    union iodefine_reg16_8_t  PWPR_1;                          /*  PWPR_1      */
     
-    union                                                  /*                  */
-    {                                                      /* PWPR_1           */
-        uint16_t       UINT16;                             /*  16-bit Access   */
-        uint8_t        UINT8[2];                           /*  8-bit Access    */
-    } PWPR_1;                                              /*                  */
-    
-    uint16_t       PWCYR_1;                                /*  PWCYR_1         */
-    uint16_t       PWBFR_1A;                               /*  PWBFR_1A        */
-    uint16_t       PWBFR_1C;                               /*  PWBFR_1C        */
-    uint16_t       PWBFR_1E;                               /*  PWBFR_1E        */
-    uint16_t       PWBFR_1G;                               /*  PWBFR_1G        */
+    volatile uint16_t PWCYR_1;                                /*  PWCYR_1         */
+    volatile uint16_t PWBFR_1A;                               /*  PWBFR_1A        */
+    volatile uint16_t PWBFR_1C;                               /*  PWBFR_1C        */
+    volatile uint16_t PWBFR_1E;                               /*  PWBFR_1E        */
+    volatile uint16_t PWBFR_1G;                               /*  PWBFR_1G        */
 };
 
 
-#define PWM     (*(volatile struct st_pwm     *)0xFCFF50E0uL) /* PWM */
+#define PWM     (*(struct st_pwm     *)0xFCFF5004uL) /* PWM */
 
 
 /* Start of channnel array defines of PWM */
@@ -110,13 +90,18 @@ struct st_pwm_common
 /*(Sample) value = PWMn[ channel ]->PWCR_1.UINT16; */
 #define PWMn_COUNT  2
 #define PWMn_ADDRESS_LIST \
-    &PWM1, &PWM2
-#define PWM1    (*(volatile struct st_pwm_common *)&PWM.PWCR_1)           /* PWM1 */
-#define PWM2    (*(volatile struct st_pwm_common *)&PWM.PWCR_2)           /* PWM2 */
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
+    &PWM1, &PWM2 \
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
+#define PWM1    (*(struct st_pwm_common *)&PWM.PWCR_1)           /* PWM1 */
+#define PWM2    (*(struct st_pwm_common *)&PWM.PWCR_2)           /* PWM2 */
 
 /* End of channnel array defines of PWM */
 
 
+#define PWMPWBTCR PWM.PWBTCR.UINT16
+#define PWMPWBTCR_BYTE_L PWM.PWBTCR.UINT8[L]
+#define PWMPWBTCR_BYTE_H PWM.PWBTCR.UINT8[H]
 #define PWMPWCR_1 PWM.PWCR_1.UINT16
 #define PWMPWCR_1_BYTE_L PWM.PWCR_1.UINT8[L]
 #define PWMPWCR_1_BYTE_H PWM.PWCR_1.UINT8[H]
@@ -139,4 +124,6 @@ struct st_pwm_common
 #define PWMPWBFR_2C PWM.PWBFR_2C
 #define PWMPWBFR_2E PWM.PWBFR_2E
 #define PWMPWBFR_2G PWM.PWBFR_2G
+/* <-SEC M1.10.1 */
+/* <-MISRA 18.4 */ /* <-SEC M1.6.2 */
 #endif

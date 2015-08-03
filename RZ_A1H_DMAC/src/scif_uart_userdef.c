@@ -94,12 +94,12 @@ void Userdef_SCIF2_UART_Init(uint8_t mode, uint16_t cks, uint8_t scbrr)
     		          CPG_STBCR4_MSTP45);
 
     /* Dummy read */
-    dummy_buf = CPG.STBCR4.BYTE;
+    dummy_buf = CPG.STBCR4;
 
     /* SCIF initial setting */
     /* Serial control register (SCSCR2) setting */
     /* SCIF transmitting and receiving operations stop */
-    SCIF2.SCSCR.WORD = 0x0000u;
+    SCIF2.SCSCR = 0x0000u;
 
     /* FIFO control register (SCFCR2) setting */
     if (SCIF_UART_MODE_W == (mode & SCIF_UART_MODE_W))
@@ -122,7 +122,7 @@ void Userdef_SCIF2_UART_Init(uint8_t mode, uint16_t cks, uint8_t scbrr)
 
     /* Serial status register (SCFSR2) setting */
     /* ER,BRK,DR bit clear */
-    SCIF2.SCFSR.WORD &= 0xFF6Eu;
+    SCIF2.SCFSR &= 0xFF6Eu;
 
     /* Line status register (SCLSR2) setting */
     /* ORER bit clear */
@@ -144,16 +144,16 @@ void Userdef_SCIF2_UART_Init(uint8_t mode, uint16_t cks, uint8_t scbrr)
     b5    PE   - Parity enable      : Add and check are disabled
     b3    STOP - Stop bit length    : 1 stop bit
     b1:b0 CKS  - Clock select       : cks(argument) */
-    SCIF2.SCSMR.WORD = cks & 0x0003u;
+    SCIF2.SCSMR = cks & 0x0003u;
 
     /* Serial extension mode register (SCEMR2) setting
     b7 BGDM - Baud rate generator double-speed mode  : Normal mode
     b0 ABCS - Base clock select in asynchronous mode : Base clock is 16
     times the bit rate */
-    SCIF2.SCEMR.WORD = 0x0000u;
+    SCIF2.SCEMR = 0x0000u;
 
     /* Bit rate register (SCBRR2) setting */
-    SCIF2.SCBRR.BYTE = scbrr;
+    SCIF2.SCBRR = scbrr;
 
     /* FIFO control register (SCFCR2) setting */
     if (SCIF_UART_MODE_RW == mode)
@@ -166,7 +166,7 @@ void Userdef_SCIF2_UART_Init(uint8_t mode, uint16_t cks, uint8_t scbrr)
 	    b2     TFRST - Transmit FIFO data register reset : Disabled
 	    b1     RFRST - Receive FIFO data register reset  : Disabled
 	    b0     LOOP  - Loop-back test                    : Disabled */
-        SCIF2.SCFCR.WORD = 0x0030u;
+        SCIF2.SCFCR = 0x0030u;
     }
     else
     {
@@ -180,7 +180,7 @@ void Userdef_SCIF2_UART_Init(uint8_t mode, uint16_t cks, uint8_t scbrr)
 		    b2     TFRST - Transmit FIFO data register reset : Disabled
 		    b1     RFRST - Receive FIFO data register reset  : Enabled
 		    b0     LOOP  - Loop-back test                    : Disabled */
-            SCIF2.SCFCR.WORD = 0x0032u;
+            SCIF2.SCFCR = 0x0032u;
         }
         else if (SCIF_UART_MODE_R == (mode & SCIF_UART_MODE_R))
         {
@@ -192,7 +192,7 @@ void Userdef_SCIF2_UART_Init(uint8_t mode, uint16_t cks, uint8_t scbrr)
 		    b2     TFRST - Transmit FIFO data register reset : Enabled
 		    b1     RFRST - Receive FIFO data register reset  : Disabled
 		    b0     LOOP  - Loop-back test                    : Disabled */
-            SCIF2.SCFCR.WORD = 0x0034u;
+            SCIF2.SCFCR = 0x0034u;
         }
         else
         {
@@ -204,14 +204,14 @@ void Userdef_SCIF2_UART_Init(uint8_t mode, uint16_t cks, uint8_t scbrr)
 		    b2     TFRST - Transmit FIFO data register reset : Enabled
 		    b1     RFRST - Receive FIFO data register reset  : Enabled
 		    b0     LOOP  - Loop-back test                    : Disabled */
-            SCIF2.SCFCR.WORD = 0x0036u;
+            SCIF2.SCFCR = 0x0036u;
         }
     }
 
     /* Serial port register (SCSPTR2) setting
     b1 SPB2IO - Serial port break output : Enabled
     b0 SPB2DT - Serial port break data   : High-level */
-    SCIF2.SCSPTR.WORD |= 0x0003u;
+    SCIF2.SCSPTR |= 0x0003u;
 }
 
 

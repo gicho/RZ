@@ -18,74 +18,75 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer*
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
 * File Name : ieb_iodefine.h
-* $Rev: 809 $
-* $Date:: 2014-03-28 19:15:55 +0000#$
-* Description : Definition of I/O Register (V0.50j)
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
 ******************************************************************************/
 #ifndef IEB_IODEFINE_H
 #define IEB_IODEFINE_H
+/* ->SEC M1.10.1 : Not magic number */
 
 struct st_ieb
 {                                                          /* IEB              */
-    uint8_t        B0BCR;                                  /*  B0BCR           */
-    uint8_t        dummy508[3];                            /*                  */
-    uint8_t        B0PSR;                                  /*  B0PSR           */
-    uint8_t        dummy509[3];                            /*                  */
-    uint16_t       B0UAR;                                  /*  B0UAR           */
-    uint8_t        dummy510[2];                            /*                  */
-    uint16_t       B0SAR;                                  /*  B0SAR           */
-    uint8_t        dummy511[2];                            /*                  */
-    uint16_t       B0PAR;                                  /*  B0PAR           */
-    uint8_t        dummy512[2];                            /*                  */
-    uint16_t       B0RSA;                                  /*  B0RSA           */
-    uint8_t        dummy513[2];                            /*                  */
-    uint8_t        B0CDR;                                  /*  B0CDR           */
-    uint8_t        dummy514[3];                            /*                  */
-    uint8_t        B0TCD;                                  /*  B0TCD           */
-    uint8_t        dummy515[3];                            /*                  */
-    uint8_t        B0RCD;                                  /*  B0RCD           */
-    uint8_t        dummy516[3];                            /*                  */
-    uint8_t        B0DLR;                                  /*  B0DLR           */
-    uint8_t        dummy517[3];                            /*                  */
-    uint8_t        B0TDL;                                  /*  B0TDL           */
-    uint8_t        dummy518[3];                            /*                  */
-    uint8_t        B0RDL;                                  /*  B0RDL           */
-    uint8_t        dummy519[3];                            /*                  */
-    uint8_t        B0CKS;                                  /*  B0CKS           */
-    uint8_t        dummy520[3];                            /*                  */
-    uint8_t        B0TMS;                                  /*  B0TMS           */
-    uint8_t        dummy521[3];                            /*                  */
-    uint8_t        B0PCR;                                  /*  B0PCR           */
-    uint8_t        dummy522[3];                            /*                  */
-    uint16_t       B0BSR;                                  /*  B0BSR           */
-    uint8_t        dummy523[2];                            /*                  */
-    uint8_t        B0SSR;                                  /*  B0SSR           */
-    uint8_t        dummy524[3];                            /*                  */
-    uint8_t        B0USR;                                  /*  B0USR           */
-    uint8_t        dummy525[3];                            /*                  */
-    uint8_t        B0ISR;                                  /*  B0ISR           */
-    uint8_t        dummy526[3];                            /*                  */
-    uint8_t        B0ESR;                                  /*  B0ESR           */
-    uint8_t        dummy527[3];                            /*                  */
-    uint8_t        B0FSR;                                  /*  B0FSR           */
-    uint8_t        dummy528[3];                            /*                  */
-    uint8_t        B0SCR;                                  /*  B0SCR           */
-    uint8_t        dummy529[3];                            /*                  */
-    uint8_t        B0CCR;                                  /*  B0CCR           */
-    uint8_t        dummy530[3];                            /*                  */
-    uint8_t        B0STC0;                                 /*  B0STC0          */
-    uint8_t        dummy531[3];                            /*                  */
-    uint8_t        B0STC1;                                 /*  B0STC1          */
-    uint8_t        dummy532[3];                            /*                  */
-    uint8_t        B0DR;                                   /*  B0DR            */
+    volatile uint8_t   B0BCR;                                  /*  B0BCR           */
+    volatile uint8_t   dummy495[3];                            /*                  */
+    volatile uint8_t   B0PSR;                                  /*  B0PSR           */
+    volatile uint8_t   dummy496[3];                            /*                  */
+    volatile uint16_t B0UAR;                                  /*  B0UAR           */
+    volatile uint8_t   dummy497[2];                            /*                  */
+    volatile uint16_t B0SAR;                                  /*  B0SAR           */
+    volatile uint8_t   dummy498[2];                            /*                  */
+    volatile uint16_t B0PAR;                                  /*  B0PAR           */
+    volatile uint8_t   dummy499[2];                            /*                  */
+    volatile uint16_t B0RSA;                                  /*  B0RSA           */
+    volatile uint8_t   dummy500[2];                            /*                  */
+    volatile uint8_t   B0CDR;                                  /*  B0CDR           */
+    volatile uint8_t   dummy501[3];                            /*                  */
+    volatile uint8_t   B0TCD;                                  /*  B0TCD           */
+    volatile uint8_t   dummy502[3];                            /*                  */
+    volatile uint8_t   B0RCD;                                  /*  B0RCD           */
+    volatile uint8_t   dummy503[3];                            /*                  */
+    volatile uint8_t   B0DLR;                                  /*  B0DLR           */
+    volatile uint8_t   dummy504[3];                            /*                  */
+    volatile uint8_t   B0TDL;                                  /*  B0TDL           */
+    volatile uint8_t   dummy505[3];                            /*                  */
+    volatile uint8_t   B0RDL;                                  /*  B0RDL           */
+    volatile uint8_t   dummy506[3];                            /*                  */
+    volatile uint8_t   B0CKS;                                  /*  B0CKS           */
+    volatile uint8_t   dummy507[3];                            /*                  */
+    volatile uint8_t   B0TMS;                                  /*  B0TMS           */
+    volatile uint8_t   dummy508[3];                            /*                  */
+    volatile uint8_t   B0PCR;                                  /*  B0PCR           */
+    volatile uint8_t   dummy509[3];                            /*                  */
+    volatile uint16_t B0BSR;                                  /*  B0BSR           */
+    volatile uint8_t   dummy510[2];                            /*                  */
+    volatile uint8_t   B0SSR;                                  /*  B0SSR           */
+    volatile uint8_t   dummy511[3];                            /*                  */
+    volatile uint8_t   B0USR;                                  /*  B0USR           */
+    volatile uint8_t   dummy512[3];                            /*                  */
+    volatile uint8_t   B0ISR;                                  /*  B0ISR           */
+    volatile uint8_t   dummy513[3];                            /*                  */
+    volatile uint8_t   B0ESR;                                  /*  B0ESR           */
+    volatile uint8_t   dummy514[3];                            /*                  */
+    volatile uint8_t   B0FSR;                                  /*  B0FSR           */
+    volatile uint8_t   dummy515[3];                            /*                  */
+    volatile uint8_t   B0SCR;                                  /*  B0SCR           */
+    volatile uint8_t   dummy516[3];                            /*                  */
+    volatile uint8_t   B0CCR;                                  /*  B0CCR           */
+    volatile uint8_t   dummy517[3];                            /*                  */
+    volatile uint8_t   B0STC0;                                 /*  B0STC0          */
+    volatile uint8_t   dummy518[3];                            /*                  */
+    volatile uint8_t   B0STC1;                                 /*  B0STC1          */
+    volatile uint8_t   dummy519[3];                            /*                  */
+    volatile uint8_t   B0DR;                                   /*  B0DR            */
 };
 
 
-#define IEB     (*(volatile struct st_ieb     *)0xFCFEF000uL) /* IEB */
+#define IEB     (*(struct st_ieb     *)0xFCFEF000uL) /* IEB */
 
 
 #define IEBB0BCR IEB.B0BCR
@@ -114,4 +115,5 @@ struct st_ieb
 #define IEBB0STC0 IEB.B0STC0
 #define IEBB0STC1 IEB.B0STC1
 #define IEBB0DR IEB.B0DR
+/* <-SEC M1.10.1 */
 #endif

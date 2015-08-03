@@ -18,41 +18,41 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer*
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
 * File Name : flctl_iodefine.h
-* $Rev: 809 $
-* $Date:: 2014-03-28 19:15:55 +0000#$
-* Description : Definition of I/O Register (V0.50j)
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
 ******************************************************************************/
 #ifndef FLCTL_IODEFINE_H
 #define FLCTL_IODEFINE_H
+/* ->SEC M1.10.1 : Not magic number */
 
 struct st_flctl
 {                                                          /* FLCTL            */
-    uint32_t       FLCMNCR;                                /*  FLCMNCR         */
-    uint32_t       FLCMDCR;                                /*  FLCMDCR         */
-    uint32_t       FLCMCDR;                                /*  FLCMCDR         */
-    uint32_t       FLADR;                                  /*  FLADR           */
-    uint32_t       FLDATAR;                                /*  FLDATAR         */
-    uint32_t       FLDTCNTR;                               /*  FLDTCNTR        */
-    uint32_t       FLINTDMACR;                             /*  FLINTDMACR      */
-    uint32_t       FLBSYTMR;                               /*  FLBSYTMR        */
-    uint32_t       FLBSYCNT;                               /*  FLBSYCNT        */
-    uint8_t        dummy568[8];                            /*                  */
-    uint32_t       FLTRCR;                                 /*  FLTRCR          */
-    uint8_t        dummy569[8];                            /*                  */
-    uint32_t       FLHOLDCR;                               /*  FLHOLDCR        */
-    uint32_t       FLADR2;                                 /*  FLADR2          */
-    uint8_t        dummy570[16];                           /*                  */
-    uint32_t       FLDTFIFO;                               /*  FLDTFIFO        */
-    uint8_t        dummy571[12];                           /*                  */
-    uint32_t       FLECFIFO;                               /*  FLECFIFO        */
+    volatile uint32_t  FLCMNCR;                                /*  FLCMNCR         */
+    volatile uint32_t  FLCMDCR;                                /*  FLCMDCR         */
+    volatile uint32_t  FLCMCDR;                                /*  FLCMCDR         */
+    volatile uint32_t  FLADR;                                  /*  FLADR           */
+    volatile uint32_t  FLDATAR;                                /*  FLDATAR         */
+    volatile uint32_t  FLDTCNTR;                               /*  FLDTCNTR        */
+    volatile uint32_t  FLINTDMACR;                             /*  FLINTDMACR      */
+    volatile uint32_t  FLBSYTMR;                               /*  FLBSYTMR        */
+    volatile uint32_t  FLBSYCNT;                               /*  FLBSYCNT        */
+    volatile uint8_t   dummy555[8];                            /*                  */
+    volatile uint8_t   FLTRCR;                                 /*  FLTRCR          */
+    volatile uint8_t   dummy556[15];                           /*                  */
+    volatile uint32_t  FLADR2;                                 /*  FLADR2          */
+    volatile uint8_t   dummy557[16];                           /*                  */
+    volatile uint32_t  FLDTFIFO;                               /*  FLDTFIFO        */
+    volatile uint8_t   dummy558[12];                           /*                  */
+    volatile uint32_t  FLECFIFO;                               /*  FLECFIFO        */
 };
 
 
-#define FLCTL   (*(volatile struct st_flctl   *)0xFCFF4000uL) /* FLCTL */
+#define FLCTL   (*(struct st_flctl   *)0xFCFF4000uL) /* FLCTL */
 
 
 #define FLCTLFLCMNCR FLCTL.FLCMNCR
@@ -65,8 +65,8 @@ struct st_flctl
 #define FLCTLFLBSYTMR FLCTL.FLBSYTMR
 #define FLCTLFLBSYCNT FLCTL.FLBSYCNT
 #define FLCTLFLTRCR FLCTL.FLTRCR
-#define FLCTLFLHOLDCR FLCTL.FLHOLDCR
 #define FLCTLFLADR2 FLCTL.FLADR2
 #define FLCTLFLDTFIFO FLCTL.FLDTFIFO
 #define FLCTLFLECFIFO FLCTL.FLECFIFO
+/* <-SEC M1.10.1 */
 #endif

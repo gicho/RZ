@@ -32,7 +32,7 @@ Includes   <System Includes> , "Project Includes"
 ******************************************************************************/
 #include "r_typedefs.h"
 #include "iodefine.h"
-#include "spibsc.h"
+// #include "spibsc.h"
 #include "rza_io_regrw.h"
 
 #include "qspi_setup.h"
@@ -66,36 +66,126 @@ Private global variables and functions
 static void test_readBytes(dataBusSize_t busSize);
 #endif
 
-#define QUAD_MODE			1u
-#define SERIAL_DUAL_MODE	0u
-#define CFREG_QUAD_BIT      0x02          /* Quad mode bit(Configuration Register) */
-#define PROGRAM_ERASE_ERROR 0x60
+#if 1
+static void test_readSignature(dataBusSize_t busSize);
+#endif
 
-static externalAddressTransfer_t 	externalAddressTransfer;
-static spiConfig_t					spiConfiguration;
+static externalAddressTransfer_t quadIoRead4b = {
+
+	.addressBitSize = ADDRESS_4BIT,
+	.addressEnable = ADDRESS_32_BITS,
+	.command = QUAD_IO_READ_4B,
+	.commandBitSize = COMMAND_1BIT,
+	.commandEnable = COMMAND_ENABLED,
+
+	.dummyCycleBitSize = DUMMY_4BIT,
+	.dummyCycleEnable = DUMMY_CYCLE_ENABLED,
+	.dummyCycles = DUMMY_4CYCLE,
+	.extValidRange  = BITS_24,
+	.extendedUpperAddress = 0x0,
+
+	.optionalCommand = DUMMY_COMMAND,
+	.optionalCommandBitSize = OPTIONAL_COMMAND_1BIT,
+	.optionalCommandEnable = OPTIONAL_COMMAND_DISABLED,
+
+	.optionalData.UINT32 = 0x0,
+	.optionalDataBitSize = OPTIONAL_DATA_4BIT,
+	.optionalDataEnable = OPTIONAL_DATA_3,
+
+	.readBurstLenght = BURST_LEN_1,
+	.burstMode = READ_BURST_ON,
+	.readDataBitSize = READ_DATA_4BIT,
+	.sslNegateAfterBurst = SSL_NEGATE_AFTER_BURST,
+
+	.addressRateMode = ADDRESS_SDR_TYPE,
+	.dataReadRateMode = DATA_READ_SDR_TYPE,
+	.optionalDataRateMode = OPTIONAL_DATA_SDR_TYPE
+};
+
+static externalAddressTransfer_t quadRead4b = {
+
+	.addressBitSize = ADDRESS_4BIT,
+	.addressEnable = ADDRESS_32_BITS,
+	.command = QUAD_READ_4B,
+	.commandBitSize = COMMAND_1BIT,
+	.commandEnable = COMMAND_ENABLED,
+
+	.dummyCycleBitSize = DUMMY_4BIT,
+	.dummyCycleEnable = DUMMY_CYCLE_ENABLED,
+	.dummyCycles = DUMMY_8CYCLE,
+	.extValidRange  = BITS_24,
+	.extendedUpperAddress = 0x0,
+
+	.optionalCommand = DUMMY_COMMAND,
+	.optionalCommandBitSize = OPTIONAL_COMMAND_1BIT,
+	.optionalCommandEnable = OPTIONAL_COMMAND_DISABLED,
+
+	.optionalData.UINT32 = 0x0,
+	.optionalDataBitSize = OPTIONAL_DATA_4BIT,
+	.optionalDataEnable = OPTIONAL_DATA_DISABLED,
+
+	.readBurstLenght = BURST_LEN_1,
+	.burstMode = READ_BURST_ON,
+	.readDataBitSize = READ_DATA_4BIT,
+	.sslNegateAfterBurst = SSL_NEGATE_AFTER_BURST,
+
+	.addressRateMode = ADDRESS_SDR_TYPE,
+	.dataReadRateMode = DATA_READ_SDR_TYPE,
+	.optionalDataRateMode = OPTIONAL_DATA_SDR_TYPE
+};
+
+static spiConfig_t spiMode_33Mhz = {
+
+	    // QSPI HARDWARE defines if single or dual chip
+	    .dataBusSize = QSPI_HARDWARE,
+
+		// configure the SPI mode controller registers
+		.operatingMode = SPI,
+		.slaveSelectPolarity = ACTIVE_LOW,
+		.clockPolarity = IDLE_LOW,
+
+		.nextAccessDelay =  NA_DELAY_8,
+		.ssNegateDelay = SS_NEGATE_DELAY_8DOT5,
+		.clockDelay = CLOCK_DELAY_8,
+
+		.dataSwap = BYTE_SWAP,
+
+		.idleValue_30_31_2bitMode = IDLE_HI_Z,
+		.idleValue_20_21_2bitMode = IDLE_HI_Z,
+		.idleValue_00_01_1bitInput = IDLE_HI_Z,
+		.idleValue_00_01 = IDLE_HI_Z,
+		.idleValue_10_11 = IDLE_HI_Z,
+		.idleValue_20_21 = IDLE_HI_Z,
+		.idleValue_30_31 = IDLE_HI_Z,
+
+		// TODO: need to confirm why the odd setting works
+		// should be shift on even, latch on odd (working at 33 MHz, div.ratio 4)
+		.divisionRatio = DIV_RATIO_4,
+		.outputShift = SHIFT_ON_EVEN_EDGE,
+		.inputLatch = LATCH_ON_ODD_EDGE
+
+};
+
 typedef void (*fPtr)(void);
+static spiConfig_t* spiConfiguration;
+static externalAddressTransfer_t* extAddressTransfer;
 
 void qspi_change_config_and_start_application(void)
 {
-    uint8_t st_reg1_device0, st_reg1_device1;
-    uint8_t st_reg2_device0, st_reg2_device1;
-    uint8_t cf_device0, cf_device1;
+	flashStatusRegister1 statusReg1_device0, statusReg1_device1;
+	flashConfigRegister1 configReg1_device0, configReg1_device1;
+	flashStatusRegister2 statusReg2_device0, statusReg2_device1;
+
     uint8_t bf_device0, bf_device1;
-    uint16_t signature0, signature1;
+    deviceSignature signature0, signature1;
     uint32_t len;
 
     fPtr applicationEntry = (fPtr) DEF_USER_PROGRAM_SRC;
 
-
-    /* Release pin function for memory control without changing pin state. */
-    while(CPG.DSFR.BIT.IOKEEP == 1) {
-    	CPG.DSFR.BIT.IOKEEP = 0;
-    };
+    spiConfiguration = &spiMode_33Mhz;
+    extAddressTransfer = &quadRead4b;
 
     qspiExternalAddressForceIdleAndWait();
-
-    // QSPI HARDWARE defines if single or dual chip
-    spiConfiguration.dataBusSize = QSPI_HARDWARE;
 
     /* configure additional pins for quad mode - port 0 needed in all configurations */
 	/* ==== P9_6 : SPBIO20_0 ==== */
@@ -165,123 +255,99 @@ void qspi_change_config_and_start_application(void)
 
     }
 
-    // configure the rest of the SPI controller registers
-    spiConfiguration.operatingMode = SPI;
-    spiConfiguration.slaveSelectPolarity = ACTIVE_LOW;
-    spiConfiguration.clockPolarity = IDLE_LOW;
-    spiConfiguration.nextAccessDelay =  NA_DELAY_1;
-    spiConfiguration.ssNegateDelay = SS_NEGATE_DELAY_1DOT5;
-    spiConfiguration.clockDelay = CLOCK_DELAY_1;
-    spiConfiguration.outputShift = SHIFT_ON_EVEN_EDGE;
-    spiConfiguration.inputLatch = LATCH_ON_ODD_EDGE;
-    spiConfiguration.dataSwap = BYTE_SWAP;
-    spiConfiguration.divisionRatio = DIV_RATIO_4; // 33.33 MHz @ 133.33 Bclk
-    spiConfiguration.idleValue_30_31_2bitMode = IDLE_HI_Z;
-    spiConfiguration.idleValue_20_21_2bitMode = IDLE_HI_Z;
-    spiConfiguration.idleValue_00_01_1bitInput = IDLE_HI_Z;
-    spiConfiguration.idleValue_00_01 = IDLE_HI_Z;
-    spiConfiguration.idleValue_10_11 = IDLE_HI_Z;
-    spiConfiguration.idleValue_20_21 = IDLE_HI_Z;
-    spiConfiguration.idleValue_30_31 = IDLE_HI_Z;
-
     // now put the controller in SPI mode, single or dual chip
-    qspiControllerConfigure(&spiConfiguration);
+    // since we need to check and configure some SPI config registers
+    qspiControllerConfigure(spiConfiguration);
 
-    signature0 = signature1 = 0;
-    st_reg1_device0 = st_reg1_device1 = 0;
-    st_reg2_device0 = st_reg2_device1 = 0;
+    qspiSoftwareReset(spiConfiguration->dataBusSize);
 
-    qspiReadElectronicManufacturerSignature(&signature0, &signature1, spiConfiguration.dataBusSize);
-    qspiReadConfigRegister(&cf_device0, &cf_device1, spiConfiguration.dataBusSize);
-    qspiReadStatusRegister1(&st_reg1_device0, &st_reg1_device1, spiConfiguration.dataBusSize);
-    qspiReadStatusRegister2(&st_reg2_device0, &st_reg2_device1, spiConfiguration.dataBusSize);
-    qspiReadBankRegister(&bf_device0, &bf_device1, spiConfiguration.dataBusSize);
+    statusReg1_device0.stReg1 = statusReg1_device1.stReg1 = 0;
+    statusReg2_device0.stReg2 = statusReg2_device1.stReg2 = 0;
+
+    qspiReadElectronicManufacturerSignature(&signature0, &signature1, spiConfiguration->dataBusSize);
+
+    // check the EMS read was successful
+    if(	(signature0.deviceId != S25FL512S) ||
+    	(signature0.manufacturerId != SPANSION_ID))
+    {
+       	while(1);
+    };
+
+    if(QSPI_HARDWARE == DUAL_MEMORY) {
+
+        if(	(signature1.deviceId != S25FL512S) ||
+        	(signature1.manufacturerId != SPANSION_ID))
+        {
+        	while(1);
+        };
+
+    };
+
+    qspiReadConfigRegister(&configReg1_device0, &configReg1_device1, spiConfiguration->dataBusSize);
+
+    qspiReadStatusRegister1(&statusReg1_device0, &statusReg1_device1, spiConfiguration->dataBusSize);
+
+    qspiReadStatusRegister2(&statusReg2_device0, &statusReg2_device1, spiConfiguration->dataBusSize);
+
+    qspiReadBankRegister(&bf_device0, &bf_device1, spiConfiguration->dataBusSize);
 
     /* ---- set quad mode ---- */
-	if(	((cf_device0 & CFREG_QUAD_BIT) >> 1u) != QUAD_MODE)
-	cf_device0 = (cf_device0 | (uint8_t) CFREG_QUAD_BIT);
+	configReg1_device0.QUAD = QUAD_MODE;
 
 	/* always clear latency code to b'00 */
-	if((cf_device0 & 0xC0) != 0x0)
-		cf_device0 = (cf_device0 & ((uint8_t)~0xC0));
+	/* on RSK spansion device it means support up to 80 MHz frequency */
+	configReg1_device0.LC0 = 0;
+	configReg1_device0.LC1 = 0;
 
 	if (QSPI_HARDWARE == DUAL_MEMORY) {
 
-		if (((cf_device1 & CFREG_QUAD_BIT) >> 1u) != QUAD_MODE)
-			cf_device1 = (cf_device1 | (uint8_t) CFREG_QUAD_BIT);
+		configReg1_device1.QUAD = QUAD_MODE;
 
-		if((cf_device1 & 0xC0) != 0x0)
-			cf_device1 = (cf_device1 & ((uint8_t)~0xC0));
+		configReg1_device1.LC0 = 0;
+		configReg1_device1.LC1 = 0;
 	}
 
 	// enable writes to the status register
-	qspiWriteEnable(spiConfiguration.dataBusSize);
+	qspiWriteEnable(spiConfiguration->dataBusSize);
 
 	// check read enable latch is set
-	qspiReadStatusRegister1(&st_reg1_device0, &st_reg1_device1, spiConfiguration.dataBusSize);
+	qspiReadStatusRegister1(&statusReg1_device0, &statusReg1_device1, spiConfiguration->dataBusSize);
 
 	// configure the memory for quad mode
-	qspiWriteStatusConfigRegister(st_reg1_device0, cf_device0, st_reg1_device1, cf_device1, spiConfiguration.dataBusSize);
+	qspiWriteStatusConfigRegister(statusReg1_device0, configReg1_device0, statusReg1_device1, configReg1_device1, spiConfiguration->dataBusSize);
 
 	// disable writes to the status register
-	qspiWriteDisable(spiConfiguration.dataBusSize);
+	qspiWriteDisable(spiConfiguration->dataBusSize);
 
 	// read back config and status register
-	qspiReadConfigRegister(&cf_device0, &cf_device1, spiConfiguration.dataBusSize);
-	qspiReadStatusRegister1(&st_reg1_device0, &st_reg1_device1, spiConfiguration.dataBusSize);
+	qspiReadConfigRegister(&configReg1_device0, &configReg1_device1, spiConfiguration->dataBusSize);
+	qspiReadStatusRegister1(&statusReg1_device0, &statusReg1_device1, spiConfiguration->dataBusSize);
 
 #if 0
     test_readBytes(spiConfiguration.dataBusSize);
 #endif
 
+#if 1
+    test_readSignature(spiConfiguration->dataBusSize);
+#endif
+
     // now prepare scenario for external address mode
-    externalAddressTransfer.addressBitSize = ADDRESS_4BIT;
-    externalAddressTransfer.addressEnable = ADDRESS_32_BITS;
-
-    externalAddressTransfer.command = QUAD_IO_READ_4B;
-    externalAddressTransfer.commandBitSize = COMMAND_1BIT;
-    externalAddressTransfer.commandEnable = COMMAND_ENABLED;
-
-    externalAddressTransfer.dummyCycleBitSize = DUMMY_4BIT;
-    externalAddressTransfer.dummyCycleEnable = DUMMY_CYCLE_ENABLED;
-    externalAddressTransfer.dummyCycles = DUMMY_4CYCLE;
-
-    externalAddressTransfer.extValidRange  = BITS_25;
-    externalAddressTransfer.extendedUpperAddress = 0x0;
-
-    externalAddressTransfer.optionalCommand = DUMMY_COMMAND;
-    externalAddressTransfer.optionalCommandBitSize = OPTIONAL_COMMAND_1BIT;
-    externalAddressTransfer.optionalCommandEnable = OPTIONAL_COMMAND_DISABLED;
-
-    externalAddressTransfer.optionalData.UINT32 = 0x0;
-    externalAddressTransfer.optionalData.UINT8[3] = 0x20;
-    externalAddressTransfer.optionalDataBitSize = OPTIONAL_DATA_4BIT;
-    externalAddressTransfer.optionalDataEnable = OPTIONAL_DATA_3;
-
-    externalAddressTransfer.readBurstLenght = BURST_LEN_2;
-    externalAddressTransfer.burstMode = READ_BURST_ON;
-    externalAddressTransfer.readDataBitSize = READ_DATA_4BIT;
-    externalAddressTransfer.sslNegateAfterBurst = SSL_NEGATE_AFTER_BURST;
-
-    externalAddressTransfer.addressRateMode = ADDRESS_SDR_TYPE;
-    externalAddressTransfer.dataReadRateMode = DATA_READ_SDR_TYPE;
-    externalAddressTransfer.optionalDataRateMode = OPTIONAL_DATA_SDR_TYPE;
 
     // configure the specific registers for external address mode
     // does not yet switch the mode
-    qspiConfigureExternalAddressTransfer(&externalAddressTransfer);
+    qspiConfigureExternalAddressTransfer(extAddressTransfer);
 
     // change the controller configuration before reading the signature
 	// has to be done here since the application is programmed in single or dual mode
     // and the signature is also stored in the same mode
     // QSPI HARDWARE defines if single or dual chip
-    spiConfiguration.operatingMode = EXTERNAL_ADDRESS_SPACE;
+    spiConfiguration->operatingMode = EXTERNAL_ADDRESS_SPACE;
 
     // switch to external address mode
     // if the application space is configured in dual mode, the "single spi" mode
     // loader flash space cannot be accessed anymore after this point
     // (without reconfiguring again)
-    qspiControllerConfigure(&spiConfiguration);
+    qspiControllerConfigure(spiConfiguration);
 
     // now flush the read cache
     qspiExternalAddressFlushReadCache();
@@ -289,19 +355,12 @@ void qspi_change_config_and_start_application(void)
     // check if there is a valid image, can read bytes in external address mode
     len = check_image(DEF_USER_SIGNATURE);
 
-    // note: in dual mode need to read 2 bytes minimum
-//    if (QSPI_HARDWARE == SINGLE_MEMORY)
-//    	len = check_image_singleSpi(DEF_USER_SIGNATURE);
-//    else if (QSPI_HARDWARE == DUAL_MEMORY)
-//    	len = check_image_dualSpi(DEF_USER_SIGNATURE);
-
     /* If the length remaining is not zero then the signature validation failed. */
     if(0 != len)
     {
         /* This function will never return. */
     	error_image();
     }
-
 
 	// jump to the program application entry point
 	// does not return
@@ -311,6 +370,128 @@ void qspi_change_config_and_start_application(void)
 
 	while(1); // just in case
 }
+
+
+#if 1
+
+#define SIGLENGHT 16
+// limited to 50 MHz on READ+4byte address
+static void test_readSignature(dataBusSize_t busSize) {
+
+	spiTransfer_t spiConfigRegTransfer;
+
+	uint8_t data0[SIGLENGHT];
+	uint8_t data1[SIGLENGHT];
+
+	uint8_t i;
+
+	/* address  sent */
+	spiConfigRegTransfer.address.UINT32 = 0x0;
+	spiConfigRegTransfer.addressBitSize = ADDRESS_1BIT;
+	spiConfigRegTransfer.addressEnable = ADDRESS_32_BITS;
+	spiConfigRegTransfer.addressRateMode = ADDRESS_SDR_TYPE;
+
+	/* command on one bit */
+	spiConfigRegTransfer.command = READ_4B;
+	spiConfigRegTransfer.commandBitSize = COMMAND_1BIT;
+	spiConfigRegTransfer.commandEnable = COMMAND_ENABLED;
+
+	/* enable data read, disable data write */
+	spiConfigRegTransfer.dataReadEnable = DATA_READ_ENABLE;
+	spiConfigRegTransfer.dataWriteEnable = DATA_WRITE_DISABLE;
+
+	/* dummy cycles disabled */
+	spiConfigRegTransfer.dummyCycleBitSize = DUMMY_1BIT;
+	spiConfigRegTransfer.dummyCycleEnable = DUMMY_CYCLE_DISABLED;
+	spiConfigRegTransfer.dummyCycles = DUMMY_1CYCLE;
+
+	/* optional command disabled */
+	spiConfigRegTransfer.optionalCommand = DUMMY_COMMAND;
+	spiConfigRegTransfer.optionalCommandBitSize = OPTIONAL_COMMAND_1BIT;
+	spiConfigRegTransfer.optionalCommandEnable = OPTIONAL_COMMAND_DISABLED;
+
+	/* optional data disabled */
+	spiConfigRegTransfer.optionalData.UINT32 = 0x0;
+	spiConfigRegTransfer.optionalDataBitSize = OPTIONAL_DATA_1BIT;
+	spiConfigRegTransfer.optionalDataEnable = OPTIONAL_DATA_DISABLED;
+	spiConfigRegTransfer.optionalDataRateMode = OPTIONAL_DATA_SDR_TYPE;
+
+	/* transfer data size */
+	spiConfigRegTransfer.transferDataBitSize = TRANSFER_DATA_1BIT;
+	spiConfigRegTransfer.transferDataRateMode = TRANSFER_DATA_SDR_TYPE;
+
+	spiConfigRegTransfer.writeData0.UINT8[0] = 0x0;
+	spiConfigRegTransfer.writeData1.UINT8[0] = 0x0;
+
+	/* deassert SSL after transfer */
+	spiConfigRegTransfer.sslNegateAfterTransfer = SSL_NEGATE;
+
+	if(SINGLE_MEMORY == busSize) {
+
+		spiConfigRegTransfer.transferDataEnable = TRANSFER_DATA_SINGLE8_DUAL16;
+
+		for(i=0; i<(SIGLENGHT); i++) {
+
+			spiConfigRegTransfer.address.UINT32 = (uint32_t) (0x80040 + i);
+			qspiConfigureSpiTransfer(&spiConfigRegTransfer, busSize);
+			qspiReadByte((uint8_t*)&data0[i], (uint8_t*)&data1[i], busSize);
+		}
+
+		spiConfigRegTransfer.transferDataEnable = TRANSFER_DATA_SINGLE16_DUAL32;
+
+		for(i=0; i<(SIGLENGHT/2); i++) {
+
+			spiConfigRegTransfer.address.UINT32 = (uint32_t) (0x80040 + (i*2));
+			qspiConfigureSpiTransfer(&spiConfigRegTransfer, busSize);
+			qspiRead2Byte((uint16_t*)&data0[i*2], (uint16_t*)&data1[i*2], busSize);
+		}
+
+		spiConfigRegTransfer.transferDataEnable = TRANSFER_DATA_SINGLE32_DUAL64;
+
+		for(i=0; i<(SIGLENGHT/4); i++) {
+
+			spiConfigRegTransfer.address.UINT32 = (uint32_t) (0x80040 + (i*4));
+			qspiConfigureSpiTransfer(&spiConfigRegTransfer, busSize);
+			qspiRead4Byte((uint32_t*)&data0[i*4], (uint32_t*)&data1[i*4], busSize);
+		}
+
+	}
+	else if (DUAL_MEMORY == busSize) {
+
+		spiConfigRegTransfer.transferDataEnable = TRANSFER_DATA_SINGLE8_DUAL16;
+
+		// attention: in SPI mode with two memories I have to compute the offset for the single memory
+		// any address must be divided by two to get the proper "offset" for addressing the flash
+		for(i=0; i<(SIGLENGHT/2); i++) {
+
+			spiConfigRegTransfer.address.UINT32 = (uint32_t) ((0x80040/2) + i);
+			qspiConfigureSpiTransfer(&spiConfigRegTransfer, busSize);
+			qspiReadByte((uint8_t*)&data0[i], (uint8_t*)&data1[i], busSize);
+		}
+
+		spiConfigRegTransfer.transferDataEnable = TRANSFER_DATA_SINGLE16_DUAL32;
+
+		for(i=0; i<(SIGLENGHT/4); i++) {
+
+			spiConfigRegTransfer.address.UINT32 = (uint32_t) ((0x80040/2) + (i*2));
+			qspiConfigureSpiTransfer(&spiConfigRegTransfer, busSize);
+			qspiRead2Byte((uint16_t*)&data0[i*2], (uint16_t*)&data1[i*2], busSize);
+		}
+
+		spiConfigRegTransfer.transferDataEnable = TRANSFER_DATA_SINGLE32_DUAL64;
+
+		for(i=0; i<(SIGLENGHT/8); i++) {
+
+			spiConfigRegTransfer.address.UINT32 = (uint32_t) ((0x80040/2) + (i*4));
+			qspiConfigureSpiTransfer(&spiConfigRegTransfer, busSize);
+			qspiRead4Byte((uint32_t*)&data0[i*4], (uint32_t*)&data1[i*4], busSize);
+		}
+
+	}
+
+}
+
+#endif
 
 
 #if 0

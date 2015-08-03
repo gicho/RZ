@@ -18,24 +18,24 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer*
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
 * File Name : irda_iodefine.h
-* $Rev: 809 $
-* $Date:: 2014-03-28 19:15:55 +0000#$
-* Description : Definition of I/O Register (V0.50j)
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
 ******************************************************************************/
 #ifndef IRDA_IODEFINE_H
 #define IRDA_IODEFINE_H
 
 struct st_irda
 {                                                          /* IRDA             */
-    uint8_t        IRCR;                                   /*  IRCR            */
+    volatile uint8_t   IRCR;                                   /*  IRCR            */
 };
 
 
-#define IRDA    (*(volatile struct st_irda    *)0xE8014000uL) /* IRDA */
+#define IRDA    (*(struct st_irda    *)0xE8014000uL) /* IRDA */
 
 
 #define IRDAIRCR IRDA.IRCR

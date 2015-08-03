@@ -18,16 +18,19 @@
 * you agree to the additional terms and conditions found by accessing the
 * following link:
 * http://www.renesas.com/disclaimer*
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
 * File Name : rscan0_iodefine.h
-* $Rev: 809 $
-* $Date:: 2014-03-28 19:15:55 +0000#$
-* Description : Definition of I/O Register (V0.50j)
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
 ******************************************************************************/
 #ifndef RSCAN0_IODEFINE_H
 #define RSCAN0_IODEFINE_H
+/* ->QAC 0639 : Over 127 members (C90) */
+/* ->QAC 0857 : Over 1024 #define (C90) */
+/* ->SEC M1.10.1 : Not magic number */
 
 struct st_rscan0
 {                                                          /* RSCAN0           */
@@ -66,14 +69,7 @@ struct st_rscan0
     union iodefine_reg32_t  C4ERFL;                        /*  C4ERFL          */
 /* end of struct st_rscan_from_rscan0cncfg */
     
-/* start of struct st_rscan_from_rscan0cncfg */
-    union iodefine_reg32_t  C5CFG;                         /*  C5CFG           */
-    union iodefine_reg32_t  C5CTR;                         /*  C5CTR           */
-    union iodefine_reg32_t  C5STS;                         /*  C5STS           */
-    union iodefine_reg32_t  C5ERFL;                        /*  C5ERFL          */
-/* end of struct st_rscan_from_rscan0cncfg */
-    
-    uint8_t        dummy175[36];                           /*                  */
+    volatile uint8_t   dummy159[52];                           /*                  */
     union iodefine_reg32_t  GCFG;                          /*  GCFG            */
     union iodefine_reg32_t  GCTR;                          /*  GCTR            */
     union iodefine_reg32_t  GSTS;                          /*  GSTS            */
@@ -89,7 +85,7 @@ struct st_rscan0
     union iodefine_reg32_t  RMND1;                         /*  RMND1           */
     union iodefine_reg32_t  RMND2;                         /*  RMND2           */
     
-    uint8_t        dummy176[4];                            /*                  */
+    volatile uint8_t   dummy160[4];                            /*                  */
 #define RSCAN0_RFCC0_COUNT 8
     union iodefine_reg32_t  RFCC0;                         /*  RFCC0           */
     union iodefine_reg32_t  RFCC1;                         /*  RFCC1           */
@@ -117,7 +113,7 @@ struct st_rscan0
     union iodefine_reg32_t  RFPCTR5;                       /*  RFPCTR5         */
     union iodefine_reg32_t  RFPCTR6;                       /*  RFPCTR6         */
     union iodefine_reg32_t  RFPCTR7;                       /*  RFPCTR7         */
-#define RSCAN0_CFCC0_COUNT 18
+#define RSCAN0_CFCC0_COUNT 15
     union iodefine_reg32_t  CFCC0;                         /*  CFCC0           */
     union iodefine_reg32_t  CFCC1;                         /*  CFCC1           */
     union iodefine_reg32_t  CFCC2;                         /*  CFCC2           */
@@ -133,12 +129,9 @@ struct st_rscan0
     union iodefine_reg32_t  CFCC12;                        /*  CFCC12          */
     union iodefine_reg32_t  CFCC13;                        /*  CFCC13          */
     union iodefine_reg32_t  CFCC14;                        /*  CFCC14          */
-    union iodefine_reg32_t  CFCC15;                        /*  CFCC15          */
-    union iodefine_reg32_t  CFCC16;                        /*  CFCC16          */
-    union iodefine_reg32_t  CFCC17;                        /*  CFCC17          */
     
-    uint8_t        dummy177[24];                           /*                  */
-#define RSCAN0_CFSTS0_COUNT 18
+    volatile uint8_t   dummy161[36];                           /*                  */
+#define RSCAN0_CFSTS0_COUNT 15
     union iodefine_reg32_t  CFSTS0;                        /*  CFSTS0          */
     union iodefine_reg32_t  CFSTS1;                        /*  CFSTS1          */
     union iodefine_reg32_t  CFSTS2;                        /*  CFSTS2          */
@@ -154,12 +147,9 @@ struct st_rscan0
     union iodefine_reg32_t  CFSTS12;                       /*  CFSTS12         */
     union iodefine_reg32_t  CFSTS13;                       /*  CFSTS13         */
     union iodefine_reg32_t  CFSTS14;                       /*  CFSTS14         */
-    union iodefine_reg32_t  CFSTS15;                       /*  CFSTS15         */
-    union iodefine_reg32_t  CFSTS16;                       /*  CFSTS16         */
-    union iodefine_reg32_t  CFSTS17;                       /*  CFSTS17         */
     
-    uint8_t        dummy178[24];                           /*                  */
-#define RSCAN0_CFPCTR0_COUNT 18
+    volatile uint8_t   dummy162[36];                           /*                  */
+#define RSCAN0_CFPCTR0_COUNT 15
     union iodefine_reg32_t  CFPCTR0;                       /*  CFPCTR0         */
     union iodefine_reg32_t  CFPCTR1;                       /*  CFPCTR1         */
     union iodefine_reg32_t  CFPCTR2;                       /*  CFPCTR2         */
@@ -175,11 +165,8 @@ struct st_rscan0
     union iodefine_reg32_t  CFPCTR12;                      /*  CFPCTR12        */
     union iodefine_reg32_t  CFPCTR13;                      /*  CFPCTR13        */
     union iodefine_reg32_t  CFPCTR14;                      /*  CFPCTR14        */
-    union iodefine_reg32_t  CFPCTR15;                      /*  CFPCTR15        */
-    union iodefine_reg32_t  CFPCTR16;                      /*  CFPCTR16        */
-    union iodefine_reg32_t  CFPCTR17;                      /*  CFPCTR17        */
     
-    uint8_t        dummy179[24];                           /*                  */
+    volatile uint8_t   dummy163[36];                           /*                  */
     union iodefine_reg32_t  FESTS;                         /*  FESTS           */
     union iodefine_reg32_t  FFSTS;                         /*  FFSTS           */
     union iodefine_reg32_t  FMSTS;                         /*  FMSTS           */
@@ -187,296 +174,258 @@ struct st_rscan0
     union iodefine_reg32_t  CFRISTS;                       /*  CFRISTS         */
     union iodefine_reg32_t  CFTISTS;                       /*  CFTISTS         */
     
-#define RSCAN0_TMC0_COUNT 96
-    uint8_t        TMC0;                                   /*  TMC0            */
-    uint8_t        TMC1;                                   /*  TMC1            */
-    uint8_t        TMC2;                                   /*  TMC2            */
-    uint8_t        TMC3;                                   /*  TMC3            */
-    uint8_t        TMC4;                                   /*  TMC4            */
-    uint8_t        TMC5;                                   /*  TMC5            */
-    uint8_t        TMC6;                                   /*  TMC6            */
-    uint8_t        TMC7;                                   /*  TMC7            */
-    uint8_t        TMC8;                                   /*  TMC8            */
-    uint8_t        TMC9;                                   /*  TMC9            */
-    uint8_t        TMC10;                                  /*  TMC10           */
-    uint8_t        TMC11;                                  /*  TMC11           */
-    uint8_t        TMC12;                                  /*  TMC12           */
-    uint8_t        TMC13;                                  /*  TMC13           */
-    uint8_t        TMC14;                                  /*  TMC14           */
-    uint8_t        TMC15;                                  /*  TMC15           */
-    uint8_t        TMC16;                                  /*  TMC16           */
-    uint8_t        TMC17;                                  /*  TMC17           */
-    uint8_t        TMC18;                                  /*  TMC18           */
-    uint8_t        TMC19;                                  /*  TMC19           */
-    uint8_t        TMC20;                                  /*  TMC20           */
-    uint8_t        TMC21;                                  /*  TMC21           */
-    uint8_t        TMC22;                                  /*  TMC22           */
-    uint8_t        TMC23;                                  /*  TMC23           */
-    uint8_t        TMC24;                                  /*  TMC24           */
-    uint8_t        TMC25;                                  /*  TMC25           */
-    uint8_t        TMC26;                                  /*  TMC26           */
-    uint8_t        TMC27;                                  /*  TMC27           */
-    uint8_t        TMC28;                                  /*  TMC28           */
-    uint8_t        TMC29;                                  /*  TMC29           */
-    uint8_t        TMC30;                                  /*  TMC30           */
-    uint8_t        TMC31;                                  /*  TMC31           */
-    uint8_t        TMC32;                                  /*  TMC32           */
-    uint8_t        TMC33;                                  /*  TMC33           */
-    uint8_t        TMC34;                                  /*  TMC34           */
-    uint8_t        TMC35;                                  /*  TMC35           */
-    uint8_t        TMC36;                                  /*  TMC36           */
-    uint8_t        TMC37;                                  /*  TMC37           */
-    uint8_t        TMC38;                                  /*  TMC38           */
-    uint8_t        TMC39;                                  /*  TMC39           */
-    uint8_t        TMC40;                                  /*  TMC40           */
-    uint8_t        TMC41;                                  /*  TMC41           */
-    uint8_t        TMC42;                                  /*  TMC42           */
-    uint8_t        TMC43;                                  /*  TMC43           */
-    uint8_t        TMC44;                                  /*  TMC44           */
-    uint8_t        TMC45;                                  /*  TMC45           */
-    uint8_t        TMC46;                                  /*  TMC46           */
-    uint8_t        TMC47;                                  /*  TMC47           */
-    uint8_t        TMC48;                                  /*  TMC48           */
-    uint8_t        TMC49;                                  /*  TMC49           */
-    uint8_t        TMC50;                                  /*  TMC50           */
-    uint8_t        TMC51;                                  /*  TMC51           */
-    uint8_t        TMC52;                                  /*  TMC52           */
-    uint8_t        TMC53;                                  /*  TMC53           */
-    uint8_t        TMC54;                                  /*  TMC54           */
-    uint8_t        TMC55;                                  /*  TMC55           */
-    uint8_t        TMC56;                                  /*  TMC56           */
-    uint8_t        TMC57;                                  /*  TMC57           */
-    uint8_t        TMC58;                                  /*  TMC58           */
-    uint8_t        TMC59;                                  /*  TMC59           */
-    uint8_t        TMC60;                                  /*  TMC60           */
-    uint8_t        TMC61;                                  /*  TMC61           */
-    uint8_t        TMC62;                                  /*  TMC62           */
-    uint8_t        TMC63;                                  /*  TMC63           */
-    uint8_t        TMC64;                                  /*  TMC64           */
-    uint8_t        TMC65;                                  /*  TMC65           */
-    uint8_t        TMC66;                                  /*  TMC66           */
-    uint8_t        TMC67;                                  /*  TMC67           */
-    uint8_t        TMC68;                                  /*  TMC68           */
-    uint8_t        TMC69;                                  /*  TMC69           */
-    uint8_t        TMC70;                                  /*  TMC70           */
-    uint8_t        TMC71;                                  /*  TMC71           */
-    uint8_t        TMC72;                                  /*  TMC72           */
-    uint8_t        TMC73;                                  /*  TMC73           */
-    uint8_t        TMC74;                                  /*  TMC74           */
-    uint8_t        TMC75;                                  /*  TMC75           */
-    uint8_t        TMC76;                                  /*  TMC76           */
-    uint8_t        TMC77;                                  /*  TMC77           */
-    uint8_t        TMC78;                                  /*  TMC78           */
-    uint8_t        TMC79;                                  /*  TMC79           */
-    uint8_t        TMC80;                                  /*  TMC80           */
-    uint8_t        TMC81;                                  /*  TMC81           */
-    uint8_t        TMC82;                                  /*  TMC82           */
-    uint8_t        TMC83;                                  /*  TMC83           */
-    uint8_t        TMC84;                                  /*  TMC84           */
-    uint8_t        TMC85;                                  /*  TMC85           */
-    uint8_t        TMC86;                                  /*  TMC86           */
-    uint8_t        TMC87;                                  /*  TMC87           */
-    uint8_t        TMC88;                                  /*  TMC88           */
-    uint8_t        TMC89;                                  /*  TMC89           */
-    uint8_t        TMC90;                                  /*  TMC90           */
-    uint8_t        TMC91;                                  /*  TMC91           */
-    uint8_t        TMC92;                                  /*  TMC92           */
-    uint8_t        TMC93;                                  /*  TMC93           */
-    uint8_t        TMC94;                                  /*  TMC94           */
-    uint8_t        TMC95;                                  /*  TMC95           */
-    uint8_t        dummy180[32];                           /*                  */
-#define RSCAN0_TMSTS0_COUNT 96
-    uint8_t        TMSTS0;                                 /*  TMSTS0          */
-    uint8_t        TMSTS1;                                 /*  TMSTS1          */
-    uint8_t        TMSTS2;                                 /*  TMSTS2          */
-    uint8_t        TMSTS3;                                 /*  TMSTS3          */
-    uint8_t        TMSTS4;                                 /*  TMSTS4          */
-    uint8_t        TMSTS5;                                 /*  TMSTS5          */
-    uint8_t        TMSTS6;                                 /*  TMSTS6          */
-    uint8_t        TMSTS7;                                 /*  TMSTS7          */
-    uint8_t        TMSTS8;                                 /*  TMSTS8          */
-    uint8_t        TMSTS9;                                 /*  TMSTS9          */
-    uint8_t        TMSTS10;                                /*  TMSTS10         */
-    uint8_t        TMSTS11;                                /*  TMSTS11         */
-    uint8_t        TMSTS12;                                /*  TMSTS12         */
-    uint8_t        TMSTS13;                                /*  TMSTS13         */
-    uint8_t        TMSTS14;                                /*  TMSTS14         */
-    uint8_t        TMSTS15;                                /*  TMSTS15         */
-    uint8_t        TMSTS16;                                /*  TMSTS16         */
-    uint8_t        TMSTS17;                                /*  TMSTS17         */
-    uint8_t        TMSTS18;                                /*  TMSTS18         */
-    uint8_t        TMSTS19;                                /*  TMSTS19         */
-    uint8_t        TMSTS20;                                /*  TMSTS20         */
-    uint8_t        TMSTS21;                                /*  TMSTS21         */
-    uint8_t        TMSTS22;                                /*  TMSTS22         */
-    uint8_t        TMSTS23;                                /*  TMSTS23         */
-    uint8_t        TMSTS24;                                /*  TMSTS24         */
-    uint8_t        TMSTS25;                                /*  TMSTS25         */
-    uint8_t        TMSTS26;                                /*  TMSTS26         */
-    uint8_t        TMSTS27;                                /*  TMSTS27         */
-    uint8_t        TMSTS28;                                /*  TMSTS28         */
-    uint8_t        TMSTS29;                                /*  TMSTS29         */
-    uint8_t        TMSTS30;                                /*  TMSTS30         */
-    uint8_t        TMSTS31;                                /*  TMSTS31         */
-    uint8_t        TMSTS32;                                /*  TMSTS32         */
-    uint8_t        TMSTS33;                                /*  TMSTS33         */
-    uint8_t        TMSTS34;                                /*  TMSTS34         */
-    uint8_t        TMSTS35;                                /*  TMSTS35         */
-    uint8_t        TMSTS36;                                /*  TMSTS36         */
-    uint8_t        TMSTS37;                                /*  TMSTS37         */
-    uint8_t        TMSTS38;                                /*  TMSTS38         */
-    uint8_t        TMSTS39;                                /*  TMSTS39         */
-    uint8_t        TMSTS40;                                /*  TMSTS40         */
-    uint8_t        TMSTS41;                                /*  TMSTS41         */
-    uint8_t        TMSTS42;                                /*  TMSTS42         */
-    uint8_t        TMSTS43;                                /*  TMSTS43         */
-    uint8_t        TMSTS44;                                /*  TMSTS44         */
-    uint8_t        TMSTS45;                                /*  TMSTS45         */
-    uint8_t        TMSTS46;                                /*  TMSTS46         */
-    uint8_t        TMSTS47;                                /*  TMSTS47         */
-    uint8_t        TMSTS48;                                /*  TMSTS48         */
-    uint8_t        TMSTS49;                                /*  TMSTS49         */
-    uint8_t        TMSTS50;                                /*  TMSTS50         */
-    uint8_t        TMSTS51;                                /*  TMSTS51         */
-    uint8_t        TMSTS52;                                /*  TMSTS52         */
-    uint8_t        TMSTS53;                                /*  TMSTS53         */
-    uint8_t        TMSTS54;                                /*  TMSTS54         */
-    uint8_t        TMSTS55;                                /*  TMSTS55         */
-    uint8_t        TMSTS56;                                /*  TMSTS56         */
-    uint8_t        TMSTS57;                                /*  TMSTS57         */
-    uint8_t        TMSTS58;                                /*  TMSTS58         */
-    uint8_t        TMSTS59;                                /*  TMSTS59         */
-    uint8_t        TMSTS60;                                /*  TMSTS60         */
-    uint8_t        TMSTS61;                                /*  TMSTS61         */
-    uint8_t        TMSTS62;                                /*  TMSTS62         */
-    uint8_t        TMSTS63;                                /*  TMSTS63         */
-    uint8_t        TMSTS64;                                /*  TMSTS64         */
-    uint8_t        TMSTS65;                                /*  TMSTS65         */
-    uint8_t        TMSTS66;                                /*  TMSTS66         */
-    uint8_t        TMSTS67;                                /*  TMSTS67         */
-    uint8_t        TMSTS68;                                /*  TMSTS68         */
-    uint8_t        TMSTS69;                                /*  TMSTS69         */
-    uint8_t        TMSTS70;                                /*  TMSTS70         */
-    uint8_t        TMSTS71;                                /*  TMSTS71         */
-    uint8_t        TMSTS72;                                /*  TMSTS72         */
-    uint8_t        TMSTS73;                                /*  TMSTS73         */
-    uint8_t        TMSTS74;                                /*  TMSTS74         */
-    uint8_t        TMSTS75;                                /*  TMSTS75         */
-    uint8_t        TMSTS76;                                /*  TMSTS76         */
-    uint8_t        TMSTS77;                                /*  TMSTS77         */
-    uint8_t        TMSTS78;                                /*  TMSTS78         */
-    uint8_t        TMSTS79;                                /*  TMSTS79         */
-    uint8_t        TMSTS80;                                /*  TMSTS80         */
-    uint8_t        TMSTS81;                                /*  TMSTS81         */
-    uint8_t        TMSTS82;                                /*  TMSTS82         */
-    uint8_t        TMSTS83;                                /*  TMSTS83         */
-    uint8_t        TMSTS84;                                /*  TMSTS84         */
-    uint8_t        TMSTS85;                                /*  TMSTS85         */
-    uint8_t        TMSTS86;                                /*  TMSTS86         */
-    uint8_t        TMSTS87;                                /*  TMSTS87         */
-    uint8_t        TMSTS88;                                /*  TMSTS88         */
-    uint8_t        TMSTS89;                                /*  TMSTS89         */
-    uint8_t        TMSTS90;                                /*  TMSTS90         */
-    uint8_t        TMSTS91;                                /*  TMSTS91         */
-    uint8_t        TMSTS92;                                /*  TMSTS92         */
-    uint8_t        TMSTS93;                                /*  TMSTS93         */
-    uint8_t        TMSTS94;                                /*  TMSTS94         */
-    uint8_t        TMSTS95;                                /*  TMSTS95         */
-    uint8_t        dummy181[32];                           /*                  */
+#define RSCAN0_TMC0_COUNT 80
+    volatile uint8_t   TMC0;                                   /*  TMC0            */
+    volatile uint8_t   TMC1;                                   /*  TMC1            */
+    volatile uint8_t   TMC2;                                   /*  TMC2            */
+    volatile uint8_t   TMC3;                                   /*  TMC3            */
+    volatile uint8_t   TMC4;                                   /*  TMC4            */
+    volatile uint8_t   TMC5;                                   /*  TMC5            */
+    volatile uint8_t   TMC6;                                   /*  TMC6            */
+    volatile uint8_t   TMC7;                                   /*  TMC7            */
+    volatile uint8_t   TMC8;                                   /*  TMC8            */
+    volatile uint8_t   TMC9;                                   /*  TMC9            */
+    volatile uint8_t   TMC10;                                  /*  TMC10           */
+    volatile uint8_t   TMC11;                                  /*  TMC11           */
+    volatile uint8_t   TMC12;                                  /*  TMC12           */
+    volatile uint8_t   TMC13;                                  /*  TMC13           */
+    volatile uint8_t   TMC14;                                  /*  TMC14           */
+    volatile uint8_t   TMC15;                                  /*  TMC15           */
+    volatile uint8_t   TMC16;                                  /*  TMC16           */
+    volatile uint8_t   TMC17;                                  /*  TMC17           */
+    volatile uint8_t   TMC18;                                  /*  TMC18           */
+    volatile uint8_t   TMC19;                                  /*  TMC19           */
+    volatile uint8_t   TMC20;                                  /*  TMC20           */
+    volatile uint8_t   TMC21;                                  /*  TMC21           */
+    volatile uint8_t   TMC22;                                  /*  TMC22           */
+    volatile uint8_t   TMC23;                                  /*  TMC23           */
+    volatile uint8_t   TMC24;                                  /*  TMC24           */
+    volatile uint8_t   TMC25;                                  /*  TMC25           */
+    volatile uint8_t   TMC26;                                  /*  TMC26           */
+    volatile uint8_t   TMC27;                                  /*  TMC27           */
+    volatile uint8_t   TMC28;                                  /*  TMC28           */
+    volatile uint8_t   TMC29;                                  /*  TMC29           */
+    volatile uint8_t   TMC30;                                  /*  TMC30           */
+    volatile uint8_t   TMC31;                                  /*  TMC31           */
+    volatile uint8_t   TMC32;                                  /*  TMC32           */
+    volatile uint8_t   TMC33;                                  /*  TMC33           */
+    volatile uint8_t   TMC34;                                  /*  TMC34           */
+    volatile uint8_t   TMC35;                                  /*  TMC35           */
+    volatile uint8_t   TMC36;                                  /*  TMC36           */
+    volatile uint8_t   TMC37;                                  /*  TMC37           */
+    volatile uint8_t   TMC38;                                  /*  TMC38           */
+    volatile uint8_t   TMC39;                                  /*  TMC39           */
+    volatile uint8_t   TMC40;                                  /*  TMC40           */
+    volatile uint8_t   TMC41;                                  /*  TMC41           */
+    volatile uint8_t   TMC42;                                  /*  TMC42           */
+    volatile uint8_t   TMC43;                                  /*  TMC43           */
+    volatile uint8_t   TMC44;                                  /*  TMC44           */
+    volatile uint8_t   TMC45;                                  /*  TMC45           */
+    volatile uint8_t   TMC46;                                  /*  TMC46           */
+    volatile uint8_t   TMC47;                                  /*  TMC47           */
+    volatile uint8_t   TMC48;                                  /*  TMC48           */
+    volatile uint8_t   TMC49;                                  /*  TMC49           */
+    volatile uint8_t   TMC50;                                  /*  TMC50           */
+    volatile uint8_t   TMC51;                                  /*  TMC51           */
+    volatile uint8_t   TMC52;                                  /*  TMC52           */
+    volatile uint8_t   TMC53;                                  /*  TMC53           */
+    volatile uint8_t   TMC54;                                  /*  TMC54           */
+    volatile uint8_t   TMC55;                                  /*  TMC55           */
+    volatile uint8_t   TMC56;                                  /*  TMC56           */
+    volatile uint8_t   TMC57;                                  /*  TMC57           */
+    volatile uint8_t   TMC58;                                  /*  TMC58           */
+    volatile uint8_t   TMC59;                                  /*  TMC59           */
+    volatile uint8_t   TMC60;                                  /*  TMC60           */
+    volatile uint8_t   TMC61;                                  /*  TMC61           */
+    volatile uint8_t   TMC62;                                  /*  TMC62           */
+    volatile uint8_t   TMC63;                                  /*  TMC63           */
+    volatile uint8_t   TMC64;                                  /*  TMC64           */
+    volatile uint8_t   TMC65;                                  /*  TMC65           */
+    volatile uint8_t   TMC66;                                  /*  TMC66           */
+    volatile uint8_t   TMC67;                                  /*  TMC67           */
+    volatile uint8_t   TMC68;                                  /*  TMC68           */
+    volatile uint8_t   TMC69;                                  /*  TMC69           */
+    volatile uint8_t   TMC70;                                  /*  TMC70           */
+    volatile uint8_t   TMC71;                                  /*  TMC71           */
+    volatile uint8_t   TMC72;                                  /*  TMC72           */
+    volatile uint8_t   TMC73;                                  /*  TMC73           */
+    volatile uint8_t   TMC74;                                  /*  TMC74           */
+    volatile uint8_t   TMC75;                                  /*  TMC75           */
+    volatile uint8_t   TMC76;                                  /*  TMC76           */
+    volatile uint8_t   TMC77;                                  /*  TMC77           */
+    volatile uint8_t   TMC78;                                  /*  TMC78           */
+    volatile uint8_t   TMC79;                                  /*  TMC79           */
+    volatile uint8_t   dummy164[48];                           /*                  */
+#define RSCAN0_TMSTS0_COUNT 80
+    volatile uint8_t   TMSTS0;                                 /*  TMSTS0          */
+    volatile uint8_t   TMSTS1;                                 /*  TMSTS1          */
+    volatile uint8_t   TMSTS2;                                 /*  TMSTS2          */
+    volatile uint8_t   TMSTS3;                                 /*  TMSTS3          */
+    volatile uint8_t   TMSTS4;                                 /*  TMSTS4          */
+    volatile uint8_t   TMSTS5;                                 /*  TMSTS5          */
+    volatile uint8_t   TMSTS6;                                 /*  TMSTS6          */
+    volatile uint8_t   TMSTS7;                                 /*  TMSTS7          */
+    volatile uint8_t   TMSTS8;                                 /*  TMSTS8          */
+    volatile uint8_t   TMSTS9;                                 /*  TMSTS9          */
+    volatile uint8_t   TMSTS10;                                /*  TMSTS10         */
+    volatile uint8_t   TMSTS11;                                /*  TMSTS11         */
+    volatile uint8_t   TMSTS12;                                /*  TMSTS12         */
+    volatile uint8_t   TMSTS13;                                /*  TMSTS13         */
+    volatile uint8_t   TMSTS14;                                /*  TMSTS14         */
+    volatile uint8_t   TMSTS15;                                /*  TMSTS15         */
+    volatile uint8_t   TMSTS16;                                /*  TMSTS16         */
+    volatile uint8_t   TMSTS17;                                /*  TMSTS17         */
+    volatile uint8_t   TMSTS18;                                /*  TMSTS18         */
+    volatile uint8_t   TMSTS19;                                /*  TMSTS19         */
+    volatile uint8_t   TMSTS20;                                /*  TMSTS20         */
+    volatile uint8_t   TMSTS21;                                /*  TMSTS21         */
+    volatile uint8_t   TMSTS22;                                /*  TMSTS22         */
+    volatile uint8_t   TMSTS23;                                /*  TMSTS23         */
+    volatile uint8_t   TMSTS24;                                /*  TMSTS24         */
+    volatile uint8_t   TMSTS25;                                /*  TMSTS25         */
+    volatile uint8_t   TMSTS26;                                /*  TMSTS26         */
+    volatile uint8_t   TMSTS27;                                /*  TMSTS27         */
+    volatile uint8_t   TMSTS28;                                /*  TMSTS28         */
+    volatile uint8_t   TMSTS29;                                /*  TMSTS29         */
+    volatile uint8_t   TMSTS30;                                /*  TMSTS30         */
+    volatile uint8_t   TMSTS31;                                /*  TMSTS31         */
+    volatile uint8_t   TMSTS32;                                /*  TMSTS32         */
+    volatile uint8_t   TMSTS33;                                /*  TMSTS33         */
+    volatile uint8_t   TMSTS34;                                /*  TMSTS34         */
+    volatile uint8_t   TMSTS35;                                /*  TMSTS35         */
+    volatile uint8_t   TMSTS36;                                /*  TMSTS36         */
+    volatile uint8_t   TMSTS37;                                /*  TMSTS37         */
+    volatile uint8_t   TMSTS38;                                /*  TMSTS38         */
+    volatile uint8_t   TMSTS39;                                /*  TMSTS39         */
+    volatile uint8_t   TMSTS40;                                /*  TMSTS40         */
+    volatile uint8_t   TMSTS41;                                /*  TMSTS41         */
+    volatile uint8_t   TMSTS42;                                /*  TMSTS42         */
+    volatile uint8_t   TMSTS43;                                /*  TMSTS43         */
+    volatile uint8_t   TMSTS44;                                /*  TMSTS44         */
+    volatile uint8_t   TMSTS45;                                /*  TMSTS45         */
+    volatile uint8_t   TMSTS46;                                /*  TMSTS46         */
+    volatile uint8_t   TMSTS47;                                /*  TMSTS47         */
+    volatile uint8_t   TMSTS48;                                /*  TMSTS48         */
+    volatile uint8_t   TMSTS49;                                /*  TMSTS49         */
+    volatile uint8_t   TMSTS50;                                /*  TMSTS50         */
+    volatile uint8_t   TMSTS51;                                /*  TMSTS51         */
+    volatile uint8_t   TMSTS52;                                /*  TMSTS52         */
+    volatile uint8_t   TMSTS53;                                /*  TMSTS53         */
+    volatile uint8_t   TMSTS54;                                /*  TMSTS54         */
+    volatile uint8_t   TMSTS55;                                /*  TMSTS55         */
+    volatile uint8_t   TMSTS56;                                /*  TMSTS56         */
+    volatile uint8_t   TMSTS57;                                /*  TMSTS57         */
+    volatile uint8_t   TMSTS58;                                /*  TMSTS58         */
+    volatile uint8_t   TMSTS59;                                /*  TMSTS59         */
+    volatile uint8_t   TMSTS60;                                /*  TMSTS60         */
+    volatile uint8_t   TMSTS61;                                /*  TMSTS61         */
+    volatile uint8_t   TMSTS62;                                /*  TMSTS62         */
+    volatile uint8_t   TMSTS63;                                /*  TMSTS63         */
+    volatile uint8_t   TMSTS64;                                /*  TMSTS64         */
+    volatile uint8_t   TMSTS65;                                /*  TMSTS65         */
+    volatile uint8_t   TMSTS66;                                /*  TMSTS66         */
+    volatile uint8_t   TMSTS67;                                /*  TMSTS67         */
+    volatile uint8_t   TMSTS68;                                /*  TMSTS68         */
+    volatile uint8_t   TMSTS69;                                /*  TMSTS69         */
+    volatile uint8_t   TMSTS70;                                /*  TMSTS70         */
+    volatile uint8_t   TMSTS71;                                /*  TMSTS71         */
+    volatile uint8_t   TMSTS72;                                /*  TMSTS72         */
+    volatile uint8_t   TMSTS73;                                /*  TMSTS73         */
+    volatile uint8_t   TMSTS74;                                /*  TMSTS74         */
+    volatile uint8_t   TMSTS75;                                /*  TMSTS75         */
+    volatile uint8_t   TMSTS76;                                /*  TMSTS76         */
+    volatile uint8_t   TMSTS77;                                /*  TMSTS77         */
+    volatile uint8_t   TMSTS78;                                /*  TMSTS78         */
+    volatile uint8_t   TMSTS79;                                /*  TMSTS79         */
+    volatile uint8_t   dummy165[48];                           /*                  */
 #define RSCAN0_TMTRSTS0_COUNT 3
     union iodefine_reg32_t  TMTRSTS0;                      /*  TMTRSTS0        */
     union iodefine_reg32_t  TMTRSTS1;                      /*  TMTRSTS1        */
     union iodefine_reg32_t  TMTRSTS2;                      /*  TMTRSTS2        */
     
-    uint8_t        dummy182[4];                            /*                  */
+    volatile uint8_t   dummy166[4];                            /*                  */
 #define RSCAN0_TMTARSTS0_COUNT 3
     union iodefine_reg32_t  TMTARSTS0;                     /*  TMTARSTS0       */
     union iodefine_reg32_t  TMTARSTS1;                     /*  TMTARSTS1       */
     union iodefine_reg32_t  TMTARSTS2;                     /*  TMTARSTS2       */
     
-    uint8_t        dummy183[4];                            /*                  */
+    volatile uint8_t   dummy167[4];                            /*                  */
 #define RSCAN0_TMTCSTS0_COUNT 3
     union iodefine_reg32_t  TMTCSTS0;                      /*  TMTCSTS0        */
     union iodefine_reg32_t  TMTCSTS1;                      /*  TMTCSTS1        */
     union iodefine_reg32_t  TMTCSTS2;                      /*  TMTCSTS2        */
     
-    uint8_t        dummy184[4];                            /*                  */
+    volatile uint8_t   dummy168[4];                            /*                  */
 #define RSCAN0_TMTASTS0_COUNT 3
     union iodefine_reg32_t  TMTASTS0;                      /*  TMTASTS0        */
     union iodefine_reg32_t  TMTASTS1;                      /*  TMTASTS1        */
     union iodefine_reg32_t  TMTASTS2;                      /*  TMTASTS2        */
     
-    uint8_t        dummy185[4];                            /*                  */
+    volatile uint8_t   dummy169[4];                            /*                  */
 #define RSCAN0_TMIEC0_COUNT 3
     union iodefine_reg32_t  TMIEC0;                        /*  TMIEC0          */
     union iodefine_reg32_t  TMIEC1;                        /*  TMIEC1          */
     union iodefine_reg32_t  TMIEC2;                        /*  TMIEC2          */
     
-    uint8_t        dummy186[4];                            /*                  */
-#define RSCAN0_TXQCC0_COUNT 6
+    volatile uint8_t   dummy170[4];                            /*                  */
+#define RSCAN0_TXQCC0_COUNT 5
     union iodefine_reg32_t  TXQCC0;                        /*  TXQCC0          */
     union iodefine_reg32_t  TXQCC1;                        /*  TXQCC1          */
     union iodefine_reg32_t  TXQCC2;                        /*  TXQCC2          */
     union iodefine_reg32_t  TXQCC3;                        /*  TXQCC3          */
     union iodefine_reg32_t  TXQCC4;                        /*  TXQCC4          */
-    union iodefine_reg32_t  TXQCC5;                        /*  TXQCC5          */
     
-    uint8_t        dummy187[8];                            /*                  */
-#define RSCAN0_TXQSTS0_COUNT 6
+    volatile uint8_t   dummy171[12];                           /*                  */
+#define RSCAN0_TXQSTS0_COUNT 5
     union iodefine_reg32_t  TXQSTS0;                       /*  TXQSTS0         */
     union iodefine_reg32_t  TXQSTS1;                       /*  TXQSTS1         */
     union iodefine_reg32_t  TXQSTS2;                       /*  TXQSTS2         */
     union iodefine_reg32_t  TXQSTS3;                       /*  TXQSTS3         */
     union iodefine_reg32_t  TXQSTS4;                       /*  TXQSTS4         */
-    union iodefine_reg32_t  TXQSTS5;                       /*  TXQSTS5         */
     
-    uint8_t        dummy188[8];                            /*                  */
-#define RSCAN0_TXQPCTR0_COUNT 6
+    volatile uint8_t   dummy172[12];                           /*                  */
+#define RSCAN0_TXQPCTR0_COUNT 5
     union iodefine_reg32_t  TXQPCTR0;                      /*  TXQPCTR0        */
     union iodefine_reg32_t  TXQPCTR1;                      /*  TXQPCTR1        */
     union iodefine_reg32_t  TXQPCTR2;                      /*  TXQPCTR2        */
     union iodefine_reg32_t  TXQPCTR3;                      /*  TXQPCTR3        */
     union iodefine_reg32_t  TXQPCTR4;                      /*  TXQPCTR4        */
-    union iodefine_reg32_t  TXQPCTR5;                      /*  TXQPCTR5        */
     
-    uint8_t        dummy189[8];                            /*                  */
-#define RSCAN0_THLCC0_COUNT 6
+    volatile uint8_t   dummy173[12];                           /*                  */
+#define RSCAN0_THLCC0_COUNT 5
     union iodefine_reg32_t  THLCC0;                        /*  THLCC0          */
     union iodefine_reg32_t  THLCC1;                        /*  THLCC1          */
     union iodefine_reg32_t  THLCC2;                        /*  THLCC2          */
     union iodefine_reg32_t  THLCC3;                        /*  THLCC3          */
     union iodefine_reg32_t  THLCC4;                        /*  THLCC4          */
-    union iodefine_reg32_t  THLCC5;                        /*  THLCC5          */
     
-    uint8_t        dummy190[8];                            /*                  */
-#define RSCAN0_THLSTS0_COUNT 6
+    volatile uint8_t   dummy174[12];                           /*                  */
+#define RSCAN0_THLSTS0_COUNT 5
     union iodefine_reg32_t  THLSTS0;                       /*  THLSTS0         */
     union iodefine_reg32_t  THLSTS1;                       /*  THLSTS1         */
     union iodefine_reg32_t  THLSTS2;                       /*  THLSTS2         */
     union iodefine_reg32_t  THLSTS3;                       /*  THLSTS3         */
     union iodefine_reg32_t  THLSTS4;                       /*  THLSTS4         */
-    union iodefine_reg32_t  THLSTS5;                       /*  THLSTS5         */
     
-    uint8_t        dummy191[8];                            /*                  */
-#define RSCAN0_THLPCTR0_COUNT 6
+    volatile uint8_t   dummy175[12];                           /*                  */
+#define RSCAN0_THLPCTR0_COUNT 5
     union iodefine_reg32_t  THLPCTR0;                      /*  THLPCTR0        */
     union iodefine_reg32_t  THLPCTR1;                      /*  THLPCTR1        */
     union iodefine_reg32_t  THLPCTR2;                      /*  THLPCTR2        */
     union iodefine_reg32_t  THLPCTR3;                      /*  THLPCTR3        */
     union iodefine_reg32_t  THLPCTR4;                      /*  THLPCTR4        */
-    union iodefine_reg32_t  THLPCTR5;                      /*  THLPCTR5        */
     
-    uint8_t        dummy192[8];                            /*                  */
+    volatile uint8_t   dummy176[12];                           /*                  */
 #define RSCAN0_GTINTSTS0_COUNT 2
     union iodefine_reg32_t  GTINTSTS0;                     /*  GTINTSTS0       */
     union iodefine_reg32_t  GTINTSTS1;                     /*  GTINTSTS1       */
     union iodefine_reg32_t  GTSTCFG;                       /*  GTSTCFG         */
     union iodefine_reg32_t  GTSTCTR;                       /*  GTSTCTR         */
     
-    uint8_t        dummy193[12];                           /*                  */
+    volatile uint8_t   dummy177[12];                           /*                  */
     union iodefine_reg32_16_t  GLOCKK;                     /*  GLOCKK          */
     
-    uint8_t        dummy194[128];                          /*                  */
+    volatile uint8_t   dummy178[128];                          /*                  */
     
 /* start of struct st_rscan_from_rscan0gaflidj */
     union iodefine_reg32_t  GAFLID0;                       /*  GAFLID0         */
@@ -1150,119 +1099,7 @@ struct st_rscan0
     union iodefine_reg32_t  RMDF179;                       /*  RMDF179         */
 /* end of struct st_rscan_from_rscan0rmidp */
     
-/* start of struct st_rscan_from_rscan0rmidp */
-    union iodefine_reg32_t  RMID80;                        /*  RMID80          */
-    union iodefine_reg32_t  RMPTR80;                       /*  RMPTR80         */
-    union iodefine_reg32_t  RMDF080;                       /*  RMDF080         */
-    union iodefine_reg32_t  RMDF180;                       /*  RMDF180         */
-/* end of struct st_rscan_from_rscan0rmidp */
-    
-/* start of struct st_rscan_from_rscan0rmidp */
-    union iodefine_reg32_t  RMID81;                        /*  RMID81          */
-    union iodefine_reg32_t  RMPTR81;                       /*  RMPTR81         */
-    union iodefine_reg32_t  RMDF081;                       /*  RMDF081         */
-    union iodefine_reg32_t  RMDF181;                       /*  RMDF181         */
-/* end of struct st_rscan_from_rscan0rmidp */
-    
-/* start of struct st_rscan_from_rscan0rmidp */
-    union iodefine_reg32_t  RMID82;                        /*  RMID82          */
-    union iodefine_reg32_t  RMPTR82;                       /*  RMPTR82         */
-    union iodefine_reg32_t  RMDF082;                       /*  RMDF082         */
-    union iodefine_reg32_t  RMDF182;                       /*  RMDF182         */
-/* end of struct st_rscan_from_rscan0rmidp */
-    
-/* start of struct st_rscan_from_rscan0rmidp */
-    union iodefine_reg32_t  RMID83;                        /*  RMID83          */
-    union iodefine_reg32_t  RMPTR83;                       /*  RMPTR83         */
-    union iodefine_reg32_t  RMDF083;                       /*  RMDF083         */
-    union iodefine_reg32_t  RMDF183;                       /*  RMDF183         */
-/* end of struct st_rscan_from_rscan0rmidp */
-    
-/* start of struct st_rscan_from_rscan0rmidp */
-    union iodefine_reg32_t  RMID84;                        /*  RMID84          */
-    union iodefine_reg32_t  RMPTR84;                       /*  RMPTR84         */
-    union iodefine_reg32_t  RMDF084;                       /*  RMDF084         */
-    union iodefine_reg32_t  RMDF184;                       /*  RMDF184         */
-/* end of struct st_rscan_from_rscan0rmidp */
-    
-/* start of struct st_rscan_from_rscan0rmidp */
-    union iodefine_reg32_t  RMID85;                        /*  RMID85          */
-    union iodefine_reg32_t  RMPTR85;                       /*  RMPTR85         */
-    union iodefine_reg32_t  RMDF085;                       /*  RMDF085         */
-    union iodefine_reg32_t  RMDF185;                       /*  RMDF185         */
-/* end of struct st_rscan_from_rscan0rmidp */
-    
-/* start of struct st_rscan_from_rscan0rmidp */
-    union iodefine_reg32_t  RMID86;                        /*  RMID86          */
-    union iodefine_reg32_t  RMPTR86;                       /*  RMPTR86         */
-    union iodefine_reg32_t  RMDF086;                       /*  RMDF086         */
-    union iodefine_reg32_t  RMDF186;                       /*  RMDF186         */
-/* end of struct st_rscan_from_rscan0rmidp */
-    
-/* start of struct st_rscan_from_rscan0rmidp */
-    union iodefine_reg32_t  RMID87;                        /*  RMID87          */
-    union iodefine_reg32_t  RMPTR87;                       /*  RMPTR87         */
-    union iodefine_reg32_t  RMDF087;                       /*  RMDF087         */
-    union iodefine_reg32_t  RMDF187;                       /*  RMDF187         */
-/* end of struct st_rscan_from_rscan0rmidp */
-    
-/* start of struct st_rscan_from_rscan0rmidp */
-    union iodefine_reg32_t  RMID88;                        /*  RMID88          */
-    union iodefine_reg32_t  RMPTR88;                       /*  RMPTR88         */
-    union iodefine_reg32_t  RMDF088;                       /*  RMDF088         */
-    union iodefine_reg32_t  RMDF188;                       /*  RMDF188         */
-/* end of struct st_rscan_from_rscan0rmidp */
-    
-/* start of struct st_rscan_from_rscan0rmidp */
-    union iodefine_reg32_t  RMID89;                        /*  RMID89          */
-    union iodefine_reg32_t  RMPTR89;                       /*  RMPTR89         */
-    union iodefine_reg32_t  RMDF089;                       /*  RMDF089         */
-    union iodefine_reg32_t  RMDF189;                       /*  RMDF189         */
-/* end of struct st_rscan_from_rscan0rmidp */
-    
-/* start of struct st_rscan_from_rscan0rmidp */
-    union iodefine_reg32_t  RMID90;                        /*  RMID90          */
-    union iodefine_reg32_t  RMPTR90;                       /*  RMPTR90         */
-    union iodefine_reg32_t  RMDF090;                       /*  RMDF090         */
-    union iodefine_reg32_t  RMDF190;                       /*  RMDF190         */
-/* end of struct st_rscan_from_rscan0rmidp */
-    
-/* start of struct st_rscan_from_rscan0rmidp */
-    union iodefine_reg32_t  RMID91;                        /*  RMID91          */
-    union iodefine_reg32_t  RMPTR91;                       /*  RMPTR91         */
-    union iodefine_reg32_t  RMDF091;                       /*  RMDF091         */
-    union iodefine_reg32_t  RMDF191;                       /*  RMDF191         */
-/* end of struct st_rscan_from_rscan0rmidp */
-    
-/* start of struct st_rscan_from_rscan0rmidp */
-    union iodefine_reg32_t  RMID92;                        /*  RMID92          */
-    union iodefine_reg32_t  RMPTR92;                       /*  RMPTR92         */
-    union iodefine_reg32_t  RMDF092;                       /*  RMDF092         */
-    union iodefine_reg32_t  RMDF192;                       /*  RMDF192         */
-/* end of struct st_rscan_from_rscan0rmidp */
-    
-/* start of struct st_rscan_from_rscan0rmidp */
-    union iodefine_reg32_t  RMID93;                        /*  RMID93          */
-    union iodefine_reg32_t  RMPTR93;                       /*  RMPTR93         */
-    union iodefine_reg32_t  RMDF093;                       /*  RMDF093         */
-    union iodefine_reg32_t  RMDF193;                       /*  RMDF193         */
-/* end of struct st_rscan_from_rscan0rmidp */
-    
-/* start of struct st_rscan_from_rscan0rmidp */
-    union iodefine_reg32_t  RMID94;                        /*  RMID94          */
-    union iodefine_reg32_t  RMPTR94;                       /*  RMPTR94         */
-    union iodefine_reg32_t  RMDF094;                       /*  RMDF094         */
-    union iodefine_reg32_t  RMDF194;                       /*  RMDF194         */
-/* end of struct st_rscan_from_rscan0rmidp */
-    
-/* start of struct st_rscan_from_rscan0rmidp */
-    union iodefine_reg32_t  RMID95;                        /*  RMID95          */
-    union iodefine_reg32_t  RMPTR95;                       /*  RMPTR95         */
-    union iodefine_reg32_t  RMDF095;                       /*  RMDF095         */
-    union iodefine_reg32_t  RMDF195;                       /*  RMDF195         */
-/* end of struct st_rscan_from_rscan0rmidp */
-    
-    uint8_t        dummy195[512];                          /*                  */
+    volatile uint8_t   dummy179[768];                          /*                  */
     
 /* start of struct st_rscan_from_rscan0rfidm */
     union iodefine_reg32_t  RFID0;                         /*  RFID0           */
@@ -1425,28 +1262,7 @@ struct st_rscan0
     union iodefine_reg32_t  CFDF114;                       /*  CFDF114         */
 /* end of struct st_rscan_from_rscan0cfidm */
     
-/* start of struct st_rscan_from_rscan0cfidm */
-    union iodefine_reg32_t  CFID15;                        /*  CFID15          */
-    union iodefine_reg32_t  CFPTR15;                       /*  CFPTR15         */
-    union iodefine_reg32_t  CFDF015;                       /*  CFDF015         */
-    union iodefine_reg32_t  CFDF115;                       /*  CFDF115         */
-/* end of struct st_rscan_from_rscan0cfidm */
-    
-/* start of struct st_rscan_from_rscan0cfidm */
-    union iodefine_reg32_t  CFID16;                        /*  CFID16          */
-    union iodefine_reg32_t  CFPTR16;                       /*  CFPTR16         */
-    union iodefine_reg32_t  CFDF016;                       /*  CFDF016         */
-    union iodefine_reg32_t  CFDF116;                       /*  CFDF116         */
-/* end of struct st_rscan_from_rscan0cfidm */
-    
-/* start of struct st_rscan_from_rscan0cfidm */
-    union iodefine_reg32_t  CFID17;                        /*  CFID17          */
-    union iodefine_reg32_t  CFPTR17;                       /*  CFPTR17         */
-    union iodefine_reg32_t  CFDF017;                       /*  CFDF017         */
-    union iodefine_reg32_t  CFDF117;                       /*  CFDF117         */
-/* end of struct st_rscan_from_rscan0cfidm */
-    
-    uint8_t        dummy196[96];                           /*                  */
+    volatile uint8_t   dummy180[144];                          /*                  */
     
 /* start of struct st_rscan_from_rscan0tmidp */
     union iodefine_reg32_t  TMID0;                         /*  TMID0           */
@@ -2008,193 +1824,13 @@ struct st_rscan0
     union iodefine_reg32_t  TMDF179;                       /*  TMDF179         */
 /* end of struct st_rscan_from_rscan0tmidp */
     
-/* start of struct st_rscan_from_rscan0tmidp */
-    union iodefine_reg32_t  TMID80;                        /*  TMID80          */
-    union iodefine_reg32_t  TMPTR80;                       /*  TMPTR80         */
-    union iodefine_reg32_t  TMDF080;                       /*  TMDF080         */
-    union iodefine_reg32_t  TMDF180;                       /*  TMDF180         */
-/* end of struct st_rscan_from_rscan0tmidp */
-    
-/* start of struct st_rscan_from_rscan0tmidp */
-    union iodefine_reg32_t  TMID81;                        /*  TMID81          */
-    union iodefine_reg32_t  TMPTR81;                       /*  TMPTR81         */
-    union iodefine_reg32_t  TMDF081;                       /*  TMDF081         */
-    union iodefine_reg32_t  TMDF181;                       /*  TMDF181         */
-/* end of struct st_rscan_from_rscan0tmidp */
-    
-/* start of struct st_rscan_from_rscan0tmidp */
-    union iodefine_reg32_t  TMID82;                        /*  TMID82          */
-    union iodefine_reg32_t  TMPTR82;                       /*  TMPTR82         */
-    union iodefine_reg32_t  TMDF082;                       /*  TMDF082         */
-    union iodefine_reg32_t  TMDF182;                       /*  TMDF182         */
-/* end of struct st_rscan_from_rscan0tmidp */
-    
-/* start of struct st_rscan_from_rscan0tmidp */
-    union iodefine_reg32_t  TMID83;                        /*  TMID83          */
-    union iodefine_reg32_t  TMPTR83;                       /*  TMPTR83         */
-    union iodefine_reg32_t  TMDF083;                       /*  TMDF083         */
-    union iodefine_reg32_t  TMDF183;                       /*  TMDF183         */
-/* end of struct st_rscan_from_rscan0tmidp */
-    
-/* start of struct st_rscan_from_rscan0tmidp */
-    union iodefine_reg32_t  TMID84;                        /*  TMID84          */
-    union iodefine_reg32_t  TMPTR84;                       /*  TMPTR84         */
-    union iodefine_reg32_t  TMDF084;                       /*  TMDF084         */
-    union iodefine_reg32_t  TMDF184;                       /*  TMDF184         */
-/* end of struct st_rscan_from_rscan0tmidp */
-    
-/* start of struct st_rscan_from_rscan0tmidp */
-    union iodefine_reg32_t  TMID85;                        /*  TMID85          */
-    union iodefine_reg32_t  TMPTR85;                       /*  TMPTR85         */
-    union iodefine_reg32_t  TMDF085;                       /*  TMDF085         */
-    union iodefine_reg32_t  TMDF185;                       /*  TMDF185         */
-/* end of struct st_rscan_from_rscan0tmidp */
-    
-/* start of struct st_rscan_from_rscan0tmidp */
-    union iodefine_reg32_t  TMID86;                        /*  TMID86          */
-    union iodefine_reg32_t  TMPTR86;                       /*  TMPTR86         */
-    union iodefine_reg32_t  TMDF086;                       /*  TMDF086         */
-    union iodefine_reg32_t  TMDF186;                       /*  TMDF186         */
-/* end of struct st_rscan_from_rscan0tmidp */
-    
-/* start of struct st_rscan_from_rscan0tmidp */
-    union iodefine_reg32_t  TMID87;                        /*  TMID87          */
-    union iodefine_reg32_t  TMPTR87;                       /*  TMPTR87         */
-    union iodefine_reg32_t  TMDF087;                       /*  TMDF087         */
-    union iodefine_reg32_t  TMDF187;                       /*  TMDF187         */
-/* end of struct st_rscan_from_rscan0tmidp */
-    
-/* start of struct st_rscan_from_rscan0tmidp */
-    union iodefine_reg32_t  TMID88;                        /*  TMID88          */
-    union iodefine_reg32_t  TMPTR88;                       /*  TMPTR88         */
-    union iodefine_reg32_t  TMDF088;                       /*  TMDF088         */
-    union iodefine_reg32_t  TMDF188;                       /*  TMDF188         */
-/* end of struct st_rscan_from_rscan0tmidp */
-    
-/* start of struct st_rscan_from_rscan0tmidp */
-    union iodefine_reg32_t  TMID89;                        /*  TMID89          */
-    union iodefine_reg32_t  TMPTR89;                       /*  TMPTR89         */
-    union iodefine_reg32_t  TMDF089;                       /*  TMDF089         */
-    union iodefine_reg32_t  TMDF189;                       /*  TMDF189         */
-/* end of struct st_rscan_from_rscan0tmidp */
-    
-/* start of struct st_rscan_from_rscan0tmidp */
-    union iodefine_reg32_t  TMID90;                        /*  TMID90          */
-    union iodefine_reg32_t  TMPTR90;                       /*  TMPTR90         */
-    union iodefine_reg32_t  TMDF090;                       /*  TMDF090         */
-    union iodefine_reg32_t  TMDF190;                       /*  TMDF190         */
-/* end of struct st_rscan_from_rscan0tmidp */
-    
-/* start of struct st_rscan_from_rscan0tmidp */
-    union iodefine_reg32_t  TMID91;                        /*  TMID91          */
-    union iodefine_reg32_t  TMPTR91;                       /*  TMPTR91         */
-    union iodefine_reg32_t  TMDF091;                       /*  TMDF091         */
-    union iodefine_reg32_t  TMDF191;                       /*  TMDF191         */
-/* end of struct st_rscan_from_rscan0tmidp */
-    
-/* start of struct st_rscan_from_rscan0tmidp */
-    union iodefine_reg32_t  TMID92;                        /*  TMID92          */
-    union iodefine_reg32_t  TMPTR92;                       /*  TMPTR92         */
-    union iodefine_reg32_t  TMDF092;                       /*  TMDF092         */
-    union iodefine_reg32_t  TMDF192;                       /*  TMDF192         */
-/* end of struct st_rscan_from_rscan0tmidp */
-    
-/* start of struct st_rscan_from_rscan0tmidp */
-    union iodefine_reg32_t  TMID93;                        /*  TMID93          */
-    union iodefine_reg32_t  TMPTR93;                       /*  TMPTR93         */
-    union iodefine_reg32_t  TMDF093;                       /*  TMDF093         */
-    union iodefine_reg32_t  TMDF193;                       /*  TMDF193         */
-/* end of struct st_rscan_from_rscan0tmidp */
-    
-/* start of struct st_rscan_from_rscan0tmidp */
-    union iodefine_reg32_t  TMID94;                        /*  TMID94          */
-    union iodefine_reg32_t  TMPTR94;                       /*  TMPTR94         */
-    union iodefine_reg32_t  TMDF094;                       /*  TMDF094         */
-    union iodefine_reg32_t  TMDF194;                       /*  TMDF194         */
-/* end of struct st_rscan_from_rscan0tmidp */
-    
-/* start of struct st_rscan_from_rscan0tmidp */
-    union iodefine_reg32_t  TMID95;                        /*  TMID95          */
-    union iodefine_reg32_t  TMPTR95;                       /*  TMPTR95         */
-    union iodefine_reg32_t  TMDF095;                       /*  TMDF095         */
-    union iodefine_reg32_t  TMDF195;                       /*  TMDF195         */
-/* end of struct st_rscan_from_rscan0tmidp */
-    
-    uint8_t        dummy197[512];                          /*                  */
-#define RSCAN0_THLACC0_COUNT 6
+    volatile uint8_t   dummy181[768];                          /*                  */
+#define RSCAN0_THLACC0_COUNT 5
     union iodefine_reg32_t  THLACC0;                       /*  THLACC0         */
     union iodefine_reg32_t  THLACC1;                       /*  THLACC1         */
     union iodefine_reg32_t  THLACC2;                       /*  THLACC2         */
     union iodefine_reg32_t  THLACC3;                       /*  THLACC3         */
     union iodefine_reg32_t  THLACC4;                       /*  THLACC4         */
-    union iodefine_reg32_t  THLACC5;                       /*  THLACC5         */
-    
-    uint8_t        dummy198[232];                          /*                  */
-#define RSCAN0_RPGACC0_COUNT 64
-    union iodefine_reg32_t  RPGACC0;                       /*  RPGACC0         */
-    union iodefine_reg32_t  RPGACC1;                       /*  RPGACC1         */
-    union iodefine_reg32_t  RPGACC2;                       /*  RPGACC2         */
-    union iodefine_reg32_t  RPGACC3;                       /*  RPGACC3         */
-    union iodefine_reg32_t  RPGACC4;                       /*  RPGACC4         */
-    union iodefine_reg32_t  RPGACC5;                       /*  RPGACC5         */
-    union iodefine_reg32_t  RPGACC6;                       /*  RPGACC6         */
-    union iodefine_reg32_t  RPGACC7;                       /*  RPGACC7         */
-    union iodefine_reg32_t  RPGACC8;                       /*  RPGACC8         */
-    union iodefine_reg32_t  RPGACC9;                       /*  RPGACC9         */
-    union iodefine_reg32_t  RPGACC10;                      /*  RPGACC10        */
-    union iodefine_reg32_t  RPGACC11;                      /*  RPGACC11        */
-    union iodefine_reg32_t  RPGACC12;                      /*  RPGACC12        */
-    union iodefine_reg32_t  RPGACC13;                      /*  RPGACC13        */
-    union iodefine_reg32_t  RPGACC14;                      /*  RPGACC14        */
-    union iodefine_reg32_t  RPGACC15;                      /*  RPGACC15        */
-    union iodefine_reg32_t  RPGACC16;                      /*  RPGACC16        */
-    union iodefine_reg32_t  RPGACC17;                      /*  RPGACC17        */
-    union iodefine_reg32_t  RPGACC18;                      /*  RPGACC18        */
-    union iodefine_reg32_t  RPGACC19;                      /*  RPGACC19        */
-    union iodefine_reg32_t  RPGACC20;                      /*  RPGACC20        */
-    union iodefine_reg32_t  RPGACC21;                      /*  RPGACC21        */
-    union iodefine_reg32_t  RPGACC22;                      /*  RPGACC22        */
-    union iodefine_reg32_t  RPGACC23;                      /*  RPGACC23        */
-    union iodefine_reg32_t  RPGACC24;                      /*  RPGACC24        */
-    union iodefine_reg32_t  RPGACC25;                      /*  RPGACC25        */
-    union iodefine_reg32_t  RPGACC26;                      /*  RPGACC26        */
-    union iodefine_reg32_t  RPGACC27;                      /*  RPGACC27        */
-    union iodefine_reg32_t  RPGACC28;                      /*  RPGACC28        */
-    union iodefine_reg32_t  RPGACC29;                      /*  RPGACC29        */
-    union iodefine_reg32_t  RPGACC30;                      /*  RPGACC30        */
-    union iodefine_reg32_t  RPGACC31;                      /*  RPGACC31        */
-    union iodefine_reg32_t  RPGACC32;                      /*  RPGACC32        */
-    union iodefine_reg32_t  RPGACC33;                      /*  RPGACC33        */
-    union iodefine_reg32_t  RPGACC34;                      /*  RPGACC34        */
-    union iodefine_reg32_t  RPGACC35;                      /*  RPGACC35        */
-    union iodefine_reg32_t  RPGACC36;                      /*  RPGACC36        */
-    union iodefine_reg32_t  RPGACC37;                      /*  RPGACC37        */
-    union iodefine_reg32_t  RPGACC38;                      /*  RPGACC38        */
-    union iodefine_reg32_t  RPGACC39;                      /*  RPGACC39        */
-    union iodefine_reg32_t  RPGACC40;                      /*  RPGACC40        */
-    union iodefine_reg32_t  RPGACC41;                      /*  RPGACC41        */
-    union iodefine_reg32_t  RPGACC42;                      /*  RPGACC42        */
-    union iodefine_reg32_t  RPGACC43;                      /*  RPGACC43        */
-    union iodefine_reg32_t  RPGACC44;                      /*  RPGACC44        */
-    union iodefine_reg32_t  RPGACC45;                      /*  RPGACC45        */
-    union iodefine_reg32_t  RPGACC46;                      /*  RPGACC46        */
-    union iodefine_reg32_t  RPGACC47;                      /*  RPGACC47        */
-    union iodefine_reg32_t  RPGACC48;                      /*  RPGACC48        */
-    union iodefine_reg32_t  RPGACC49;                      /*  RPGACC49        */
-    union iodefine_reg32_t  RPGACC50;                      /*  RPGACC50        */
-    union iodefine_reg32_t  RPGACC51;                      /*  RPGACC51        */
-    union iodefine_reg32_t  RPGACC52;                      /*  RPGACC52        */
-    union iodefine_reg32_t  RPGACC53;                      /*  RPGACC53        */
-    union iodefine_reg32_t  RPGACC54;                      /*  RPGACC54        */
-    union iodefine_reg32_t  RPGACC55;                      /*  RPGACC55        */
-    union iodefine_reg32_t  RPGACC56;                      /*  RPGACC56        */
-    union iodefine_reg32_t  RPGACC57;                      /*  RPGACC57        */
-    union iodefine_reg32_t  RPGACC58;                      /*  RPGACC58        */
-    union iodefine_reg32_t  RPGACC59;                      /*  RPGACC59        */
-    union iodefine_reg32_t  RPGACC60;                      /*  RPGACC60        */
-    union iodefine_reg32_t  RPGACC61;                      /*  RPGACC61        */
-    union iodefine_reg32_t  RPGACC62;                      /*  RPGACC62        */
-    union iodefine_reg32_t  RPGACC63;                      /*  RPGACC63        */
     
 };
 
@@ -2253,42 +1889,41 @@ struct st_rscan_from_rscan0cfidm
 };
 
 
-#define RSCAN0  (*(volatile struct st_rscan0  *)0xE803A000uL) /* RSCAN0 */
+#define RSCAN0  (*(struct st_rscan0  *)0xE803A000uL) /* RSCAN0 */
 
 
 /* Start of channnel array defines of RSCAN0 */
 
 /* Channnel array defines of RSCAN_FROM_RSCAN0CFIDm */
 /*(Sample) value = RSCAN_FROM_RSCAN0CFIDm[ channel ]->CFIDm.UINT32; */
-#define RSCAN_FROM_RSCAN0CFIDm_COUNT  18
+#define RSCAN_FROM_RSCAN0CFIDm_COUNT  15
 #define RSCAN_FROM_RSCAN0CFIDm_ADDRESS_LIST \
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
     &RSCAN_FROM_RSCAN0CFID0, &RSCAN_FROM_RSCAN0CFID1, &RSCAN_FROM_RSCAN0CFID2, &RSCAN_FROM_RSCAN0CFID3, &RSCAN_FROM_RSCAN0CFID4, &RSCAN_FROM_RSCAN0CFID5, &RSCAN_FROM_RSCAN0CFID6, &RSCAN_FROM_RSCAN0CFID7, \
-    &RSCAN_FROM_RSCAN0CFID8, &RSCAN_FROM_RSCAN0CFID9, &RSCAN_FROM_RSCAN0CFID10, &RSCAN_FROM_RSCAN0CFID11, &RSCAN_FROM_RSCAN0CFID12, &RSCAN_FROM_RSCAN0CFID13, &RSCAN_FROM_RSCAN0CFID14, &RSCAN_FROM_RSCAN0CFID15, \
-    &RSCAN_FROM_RSCAN0CFID16, &RSCAN_FROM_RSCAN0CFID17
-#define RSCAN_FROM_RSCAN0CFID0 (*(volatile struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID0) /* RSCAN_FROM_RSCAN0CFID0 */
-#define RSCAN_FROM_RSCAN0CFID1 (*(volatile struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID1) /* RSCAN_FROM_RSCAN0CFID1 */
-#define RSCAN_FROM_RSCAN0CFID2 (*(volatile struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID2) /* RSCAN_FROM_RSCAN0CFID2 */
-#define RSCAN_FROM_RSCAN0CFID3 (*(volatile struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID3) /* RSCAN_FROM_RSCAN0CFID3 */
-#define RSCAN_FROM_RSCAN0CFID4 (*(volatile struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID4) /* RSCAN_FROM_RSCAN0CFID4 */
-#define RSCAN_FROM_RSCAN0CFID5 (*(volatile struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID5) /* RSCAN_FROM_RSCAN0CFID5 */
-#define RSCAN_FROM_RSCAN0CFID6 (*(volatile struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID6) /* RSCAN_FROM_RSCAN0CFID6 */
-#define RSCAN_FROM_RSCAN0CFID7 (*(volatile struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID7) /* RSCAN_FROM_RSCAN0CFID7 */
-#define RSCAN_FROM_RSCAN0CFID8 (*(volatile struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID8) /* RSCAN_FROM_RSCAN0CFID8 */
-#define RSCAN_FROM_RSCAN0CFID9 (*(volatile struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID9) /* RSCAN_FROM_RSCAN0CFID9 */
-#define RSCAN_FROM_RSCAN0CFID10 (*(volatile struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID10) /* RSCAN_FROM_RSCAN0CFID10 */
-#define RSCAN_FROM_RSCAN0CFID11 (*(volatile struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID11) /* RSCAN_FROM_RSCAN0CFID11 */
-#define RSCAN_FROM_RSCAN0CFID12 (*(volatile struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID12) /* RSCAN_FROM_RSCAN0CFID12 */
-#define RSCAN_FROM_RSCAN0CFID13 (*(volatile struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID13) /* RSCAN_FROM_RSCAN0CFID13 */
-#define RSCAN_FROM_RSCAN0CFID14 (*(volatile struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID14) /* RSCAN_FROM_RSCAN0CFID14 */
-#define RSCAN_FROM_RSCAN0CFID15 (*(volatile struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID15) /* RSCAN_FROM_RSCAN0CFID15 */
-#define RSCAN_FROM_RSCAN0CFID16 (*(volatile struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID16) /* RSCAN_FROM_RSCAN0CFID16 */
-#define RSCAN_FROM_RSCAN0CFID17 (*(volatile struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID17) /* RSCAN_FROM_RSCAN0CFID17 */
+    &RSCAN_FROM_RSCAN0CFID8, &RSCAN_FROM_RSCAN0CFID9, &RSCAN_FROM_RSCAN0CFID10, &RSCAN_FROM_RSCAN0CFID11, &RSCAN_FROM_RSCAN0CFID12, &RSCAN_FROM_RSCAN0CFID13, &RSCAN_FROM_RSCAN0CFID14 \
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
+#define RSCAN_FROM_RSCAN0CFID0 (*(struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID0) /* RSCAN_FROM_RSCAN0CFID0 */
+#define RSCAN_FROM_RSCAN0CFID1 (*(struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID1) /* RSCAN_FROM_RSCAN0CFID1 */
+#define RSCAN_FROM_RSCAN0CFID2 (*(struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID2) /* RSCAN_FROM_RSCAN0CFID2 */
+#define RSCAN_FROM_RSCAN0CFID3 (*(struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID3) /* RSCAN_FROM_RSCAN0CFID3 */
+#define RSCAN_FROM_RSCAN0CFID4 (*(struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID4) /* RSCAN_FROM_RSCAN0CFID4 */
+#define RSCAN_FROM_RSCAN0CFID5 (*(struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID5) /* RSCAN_FROM_RSCAN0CFID5 */
+#define RSCAN_FROM_RSCAN0CFID6 (*(struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID6) /* RSCAN_FROM_RSCAN0CFID6 */
+#define RSCAN_FROM_RSCAN0CFID7 (*(struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID7) /* RSCAN_FROM_RSCAN0CFID7 */
+#define RSCAN_FROM_RSCAN0CFID8 (*(struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID8) /* RSCAN_FROM_RSCAN0CFID8 */
+#define RSCAN_FROM_RSCAN0CFID9 (*(struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID9) /* RSCAN_FROM_RSCAN0CFID9 */
+#define RSCAN_FROM_RSCAN0CFID10 (*(struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID10) /* RSCAN_FROM_RSCAN0CFID10 */
+#define RSCAN_FROM_RSCAN0CFID11 (*(struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID11) /* RSCAN_FROM_RSCAN0CFID11 */
+#define RSCAN_FROM_RSCAN0CFID12 (*(struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID12) /* RSCAN_FROM_RSCAN0CFID12 */
+#define RSCAN_FROM_RSCAN0CFID13 (*(struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID13) /* RSCAN_FROM_RSCAN0CFID13 */
+#define RSCAN_FROM_RSCAN0CFID14 (*(struct st_rscan_from_rscan0cfidm *)&RSCAN0.CFID14) /* RSCAN_FROM_RSCAN0CFID14 */
 
 
 /* Channnel array defines of RSCAN_FROM_RSCAN0TMIDp */
 /*(Sample) value = RSCAN_FROM_RSCAN0TMIDp[ channel ]->TMIDp.UINT32; */
-#define RSCAN_FROM_RSCAN0TMIDp_COUNT  96
+#define RSCAN_FROM_RSCAN0TMIDp_COUNT  80
 #define RSCAN_FROM_RSCAN0TMIDp_ADDRESS_LIST \
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
     &RSCAN_FROM_RSCAN0TMID0, &RSCAN_FROM_RSCAN0TMID1, &RSCAN_FROM_RSCAN0TMID2, &RSCAN_FROM_RSCAN0TMID3, &RSCAN_FROM_RSCAN0TMID4, &RSCAN_FROM_RSCAN0TMID5, &RSCAN_FROM_RSCAN0TMID6, &RSCAN_FROM_RSCAN0TMID7, \
     &RSCAN_FROM_RSCAN0TMID8, &RSCAN_FROM_RSCAN0TMID9, &RSCAN_FROM_RSCAN0TMID10, &RSCAN_FROM_RSCAN0TMID11, &RSCAN_FROM_RSCAN0TMID12, &RSCAN_FROM_RSCAN0TMID13, &RSCAN_FROM_RSCAN0TMID14, &RSCAN_FROM_RSCAN0TMID15, \
     &RSCAN_FROM_RSCAN0TMID16, &RSCAN_FROM_RSCAN0TMID17, &RSCAN_FROM_RSCAN0TMID18, &RSCAN_FROM_RSCAN0TMID19, &RSCAN_FROM_RSCAN0TMID20, &RSCAN_FROM_RSCAN0TMID21, &RSCAN_FROM_RSCAN0TMID22, &RSCAN_FROM_RSCAN0TMID23, \
@@ -2298,126 +1933,112 @@ struct st_rscan_from_rscan0cfidm
     &RSCAN_FROM_RSCAN0TMID48, &RSCAN_FROM_RSCAN0TMID49, &RSCAN_FROM_RSCAN0TMID50, &RSCAN_FROM_RSCAN0TMID51, &RSCAN_FROM_RSCAN0TMID52, &RSCAN_FROM_RSCAN0TMID53, &RSCAN_FROM_RSCAN0TMID54, &RSCAN_FROM_RSCAN0TMID55, \
     &RSCAN_FROM_RSCAN0TMID56, &RSCAN_FROM_RSCAN0TMID57, &RSCAN_FROM_RSCAN0TMID58, &RSCAN_FROM_RSCAN0TMID59, &RSCAN_FROM_RSCAN0TMID60, &RSCAN_FROM_RSCAN0TMID61, &RSCAN_FROM_RSCAN0TMID62, &RSCAN_FROM_RSCAN0TMID63, \
     &RSCAN_FROM_RSCAN0TMID64, &RSCAN_FROM_RSCAN0TMID65, &RSCAN_FROM_RSCAN0TMID66, &RSCAN_FROM_RSCAN0TMID67, &RSCAN_FROM_RSCAN0TMID68, &RSCAN_FROM_RSCAN0TMID69, &RSCAN_FROM_RSCAN0TMID70, &RSCAN_FROM_RSCAN0TMID71, \
-    &RSCAN_FROM_RSCAN0TMID72, &RSCAN_FROM_RSCAN0TMID73, &RSCAN_FROM_RSCAN0TMID74, &RSCAN_FROM_RSCAN0TMID75, &RSCAN_FROM_RSCAN0TMID76, &RSCAN_FROM_RSCAN0TMID77, &RSCAN_FROM_RSCAN0TMID78, &RSCAN_FROM_RSCAN0TMID79, \
-    &RSCAN_FROM_RSCAN0TMID80, &RSCAN_FROM_RSCAN0TMID81, &RSCAN_FROM_RSCAN0TMID82, &RSCAN_FROM_RSCAN0TMID83, &RSCAN_FROM_RSCAN0TMID84, &RSCAN_FROM_RSCAN0TMID85, &RSCAN_FROM_RSCAN0TMID86, &RSCAN_FROM_RSCAN0TMID87, \
-    &RSCAN_FROM_RSCAN0TMID88, &RSCAN_FROM_RSCAN0TMID89, &RSCAN_FROM_RSCAN0TMID90, &RSCAN_FROM_RSCAN0TMID91, &RSCAN_FROM_RSCAN0TMID92, &RSCAN_FROM_RSCAN0TMID93, &RSCAN_FROM_RSCAN0TMID94, &RSCAN_FROM_RSCAN0TMID95
-#define RSCAN_FROM_RSCAN0TMID0 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID0) /* RSCAN_FROM_RSCAN0TMID0 */
-#define RSCAN_FROM_RSCAN0TMID1 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID1) /* RSCAN_FROM_RSCAN0TMID1 */
-#define RSCAN_FROM_RSCAN0TMID2 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID2) /* RSCAN_FROM_RSCAN0TMID2 */
-#define RSCAN_FROM_RSCAN0TMID3 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID3) /* RSCAN_FROM_RSCAN0TMID3 */
-#define RSCAN_FROM_RSCAN0TMID4 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID4) /* RSCAN_FROM_RSCAN0TMID4 */
-#define RSCAN_FROM_RSCAN0TMID5 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID5) /* RSCAN_FROM_RSCAN0TMID5 */
-#define RSCAN_FROM_RSCAN0TMID6 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID6) /* RSCAN_FROM_RSCAN0TMID6 */
-#define RSCAN_FROM_RSCAN0TMID7 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID7) /* RSCAN_FROM_RSCAN0TMID7 */
-#define RSCAN_FROM_RSCAN0TMID8 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID8) /* RSCAN_FROM_RSCAN0TMID8 */
-#define RSCAN_FROM_RSCAN0TMID9 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID9) /* RSCAN_FROM_RSCAN0TMID9 */
-#define RSCAN_FROM_RSCAN0TMID10 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID10) /* RSCAN_FROM_RSCAN0TMID10 */
-#define RSCAN_FROM_RSCAN0TMID11 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID11) /* RSCAN_FROM_RSCAN0TMID11 */
-#define RSCAN_FROM_RSCAN0TMID12 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID12) /* RSCAN_FROM_RSCAN0TMID12 */
-#define RSCAN_FROM_RSCAN0TMID13 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID13) /* RSCAN_FROM_RSCAN0TMID13 */
-#define RSCAN_FROM_RSCAN0TMID14 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID14) /* RSCAN_FROM_RSCAN0TMID14 */
-#define RSCAN_FROM_RSCAN0TMID15 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID15) /* RSCAN_FROM_RSCAN0TMID15 */
-#define RSCAN_FROM_RSCAN0TMID16 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID16) /* RSCAN_FROM_RSCAN0TMID16 */
-#define RSCAN_FROM_RSCAN0TMID17 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID17) /* RSCAN_FROM_RSCAN0TMID17 */
-#define RSCAN_FROM_RSCAN0TMID18 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID18) /* RSCAN_FROM_RSCAN0TMID18 */
-#define RSCAN_FROM_RSCAN0TMID19 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID19) /* RSCAN_FROM_RSCAN0TMID19 */
-#define RSCAN_FROM_RSCAN0TMID20 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID20) /* RSCAN_FROM_RSCAN0TMID20 */
-#define RSCAN_FROM_RSCAN0TMID21 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID21) /* RSCAN_FROM_RSCAN0TMID21 */
-#define RSCAN_FROM_RSCAN0TMID22 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID22) /* RSCAN_FROM_RSCAN0TMID22 */
-#define RSCAN_FROM_RSCAN0TMID23 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID23) /* RSCAN_FROM_RSCAN0TMID23 */
-#define RSCAN_FROM_RSCAN0TMID24 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID24) /* RSCAN_FROM_RSCAN0TMID24 */
-#define RSCAN_FROM_RSCAN0TMID25 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID25) /* RSCAN_FROM_RSCAN0TMID25 */
-#define RSCAN_FROM_RSCAN0TMID26 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID26) /* RSCAN_FROM_RSCAN0TMID26 */
-#define RSCAN_FROM_RSCAN0TMID27 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID27) /* RSCAN_FROM_RSCAN0TMID27 */
-#define RSCAN_FROM_RSCAN0TMID28 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID28) /* RSCAN_FROM_RSCAN0TMID28 */
-#define RSCAN_FROM_RSCAN0TMID29 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID29) /* RSCAN_FROM_RSCAN0TMID29 */
-#define RSCAN_FROM_RSCAN0TMID30 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID30) /* RSCAN_FROM_RSCAN0TMID30 */
-#define RSCAN_FROM_RSCAN0TMID31 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID31) /* RSCAN_FROM_RSCAN0TMID31 */
-#define RSCAN_FROM_RSCAN0TMID32 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID32) /* RSCAN_FROM_RSCAN0TMID32 */
-#define RSCAN_FROM_RSCAN0TMID33 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID33) /* RSCAN_FROM_RSCAN0TMID33 */
-#define RSCAN_FROM_RSCAN0TMID34 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID34) /* RSCAN_FROM_RSCAN0TMID34 */
-#define RSCAN_FROM_RSCAN0TMID35 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID35) /* RSCAN_FROM_RSCAN0TMID35 */
-#define RSCAN_FROM_RSCAN0TMID36 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID36) /* RSCAN_FROM_RSCAN0TMID36 */
-#define RSCAN_FROM_RSCAN0TMID37 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID37) /* RSCAN_FROM_RSCAN0TMID37 */
-#define RSCAN_FROM_RSCAN0TMID38 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID38) /* RSCAN_FROM_RSCAN0TMID38 */
-#define RSCAN_FROM_RSCAN0TMID39 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID39) /* RSCAN_FROM_RSCAN0TMID39 */
-#define RSCAN_FROM_RSCAN0TMID40 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID40) /* RSCAN_FROM_RSCAN0TMID40 */
-#define RSCAN_FROM_RSCAN0TMID41 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID41) /* RSCAN_FROM_RSCAN0TMID41 */
-#define RSCAN_FROM_RSCAN0TMID42 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID42) /* RSCAN_FROM_RSCAN0TMID42 */
-#define RSCAN_FROM_RSCAN0TMID43 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID43) /* RSCAN_FROM_RSCAN0TMID43 */
-#define RSCAN_FROM_RSCAN0TMID44 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID44) /* RSCAN_FROM_RSCAN0TMID44 */
-#define RSCAN_FROM_RSCAN0TMID45 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID45) /* RSCAN_FROM_RSCAN0TMID45 */
-#define RSCAN_FROM_RSCAN0TMID46 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID46) /* RSCAN_FROM_RSCAN0TMID46 */
-#define RSCAN_FROM_RSCAN0TMID47 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID47) /* RSCAN_FROM_RSCAN0TMID47 */
-#define RSCAN_FROM_RSCAN0TMID48 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID48) /* RSCAN_FROM_RSCAN0TMID48 */
-#define RSCAN_FROM_RSCAN0TMID49 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID49) /* RSCAN_FROM_RSCAN0TMID49 */
-#define RSCAN_FROM_RSCAN0TMID50 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID50) /* RSCAN_FROM_RSCAN0TMID50 */
-#define RSCAN_FROM_RSCAN0TMID51 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID51) /* RSCAN_FROM_RSCAN0TMID51 */
-#define RSCAN_FROM_RSCAN0TMID52 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID52) /* RSCAN_FROM_RSCAN0TMID52 */
-#define RSCAN_FROM_RSCAN0TMID53 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID53) /* RSCAN_FROM_RSCAN0TMID53 */
-#define RSCAN_FROM_RSCAN0TMID54 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID54) /* RSCAN_FROM_RSCAN0TMID54 */
-#define RSCAN_FROM_RSCAN0TMID55 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID55) /* RSCAN_FROM_RSCAN0TMID55 */
-#define RSCAN_FROM_RSCAN0TMID56 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID56) /* RSCAN_FROM_RSCAN0TMID56 */
-#define RSCAN_FROM_RSCAN0TMID57 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID57) /* RSCAN_FROM_RSCAN0TMID57 */
-#define RSCAN_FROM_RSCAN0TMID58 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID58) /* RSCAN_FROM_RSCAN0TMID58 */
-#define RSCAN_FROM_RSCAN0TMID59 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID59) /* RSCAN_FROM_RSCAN0TMID59 */
-#define RSCAN_FROM_RSCAN0TMID60 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID60) /* RSCAN_FROM_RSCAN0TMID60 */
-#define RSCAN_FROM_RSCAN0TMID61 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID61) /* RSCAN_FROM_RSCAN0TMID61 */
-#define RSCAN_FROM_RSCAN0TMID62 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID62) /* RSCAN_FROM_RSCAN0TMID62 */
-#define RSCAN_FROM_RSCAN0TMID63 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID63) /* RSCAN_FROM_RSCAN0TMID63 */
-#define RSCAN_FROM_RSCAN0TMID64 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID64) /* RSCAN_FROM_RSCAN0TMID64 */
-#define RSCAN_FROM_RSCAN0TMID65 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID65) /* RSCAN_FROM_RSCAN0TMID65 */
-#define RSCAN_FROM_RSCAN0TMID66 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID66) /* RSCAN_FROM_RSCAN0TMID66 */
-#define RSCAN_FROM_RSCAN0TMID67 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID67) /* RSCAN_FROM_RSCAN0TMID67 */
-#define RSCAN_FROM_RSCAN0TMID68 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID68) /* RSCAN_FROM_RSCAN0TMID68 */
-#define RSCAN_FROM_RSCAN0TMID69 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID69) /* RSCAN_FROM_RSCAN0TMID69 */
-#define RSCAN_FROM_RSCAN0TMID70 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID70) /* RSCAN_FROM_RSCAN0TMID70 */
-#define RSCAN_FROM_RSCAN0TMID71 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID71) /* RSCAN_FROM_RSCAN0TMID71 */
-#define RSCAN_FROM_RSCAN0TMID72 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID72) /* RSCAN_FROM_RSCAN0TMID72 */
-#define RSCAN_FROM_RSCAN0TMID73 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID73) /* RSCAN_FROM_RSCAN0TMID73 */
-#define RSCAN_FROM_RSCAN0TMID74 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID74) /* RSCAN_FROM_RSCAN0TMID74 */
-#define RSCAN_FROM_RSCAN0TMID75 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID75) /* RSCAN_FROM_RSCAN0TMID75 */
-#define RSCAN_FROM_RSCAN0TMID76 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID76) /* RSCAN_FROM_RSCAN0TMID76 */
-#define RSCAN_FROM_RSCAN0TMID77 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID77) /* RSCAN_FROM_RSCAN0TMID77 */
-#define RSCAN_FROM_RSCAN0TMID78 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID78) /* RSCAN_FROM_RSCAN0TMID78 */
-#define RSCAN_FROM_RSCAN0TMID79 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID79) /* RSCAN_FROM_RSCAN0TMID79 */
-#define RSCAN_FROM_RSCAN0TMID80 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID80) /* RSCAN_FROM_RSCAN0TMID80 */
-#define RSCAN_FROM_RSCAN0TMID81 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID81) /* RSCAN_FROM_RSCAN0TMID81 */
-#define RSCAN_FROM_RSCAN0TMID82 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID82) /* RSCAN_FROM_RSCAN0TMID82 */
-#define RSCAN_FROM_RSCAN0TMID83 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID83) /* RSCAN_FROM_RSCAN0TMID83 */
-#define RSCAN_FROM_RSCAN0TMID84 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID84) /* RSCAN_FROM_RSCAN0TMID84 */
-#define RSCAN_FROM_RSCAN0TMID85 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID85) /* RSCAN_FROM_RSCAN0TMID85 */
-#define RSCAN_FROM_RSCAN0TMID86 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID86) /* RSCAN_FROM_RSCAN0TMID86 */
-#define RSCAN_FROM_RSCAN0TMID87 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID87) /* RSCAN_FROM_RSCAN0TMID87 */
-#define RSCAN_FROM_RSCAN0TMID88 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID88) /* RSCAN_FROM_RSCAN0TMID88 */
-#define RSCAN_FROM_RSCAN0TMID89 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID89) /* RSCAN_FROM_RSCAN0TMID89 */
-#define RSCAN_FROM_RSCAN0TMID90 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID90) /* RSCAN_FROM_RSCAN0TMID90 */
-#define RSCAN_FROM_RSCAN0TMID91 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID91) /* RSCAN_FROM_RSCAN0TMID91 */
-#define RSCAN_FROM_RSCAN0TMID92 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID92) /* RSCAN_FROM_RSCAN0TMID92 */
-#define RSCAN_FROM_RSCAN0TMID93 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID93) /* RSCAN_FROM_RSCAN0TMID93 */
-#define RSCAN_FROM_RSCAN0TMID94 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID94) /* RSCAN_FROM_RSCAN0TMID94 */
-#define RSCAN_FROM_RSCAN0TMID95 (*(volatile struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID95) /* RSCAN_FROM_RSCAN0TMID95 */
+    &RSCAN_FROM_RSCAN0TMID72, &RSCAN_FROM_RSCAN0TMID73, &RSCAN_FROM_RSCAN0TMID74, &RSCAN_FROM_RSCAN0TMID75, &RSCAN_FROM_RSCAN0TMID76, &RSCAN_FROM_RSCAN0TMID77, &RSCAN_FROM_RSCAN0TMID78, &RSCAN_FROM_RSCAN0TMID79 \
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
+#define RSCAN_FROM_RSCAN0TMID0 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID0) /* RSCAN_FROM_RSCAN0TMID0 */
+#define RSCAN_FROM_RSCAN0TMID1 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID1) /* RSCAN_FROM_RSCAN0TMID1 */
+#define RSCAN_FROM_RSCAN0TMID2 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID2) /* RSCAN_FROM_RSCAN0TMID2 */
+#define RSCAN_FROM_RSCAN0TMID3 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID3) /* RSCAN_FROM_RSCAN0TMID3 */
+#define RSCAN_FROM_RSCAN0TMID4 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID4) /* RSCAN_FROM_RSCAN0TMID4 */
+#define RSCAN_FROM_RSCAN0TMID5 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID5) /* RSCAN_FROM_RSCAN0TMID5 */
+#define RSCAN_FROM_RSCAN0TMID6 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID6) /* RSCAN_FROM_RSCAN0TMID6 */
+#define RSCAN_FROM_RSCAN0TMID7 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID7) /* RSCAN_FROM_RSCAN0TMID7 */
+#define RSCAN_FROM_RSCAN0TMID8 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID8) /* RSCAN_FROM_RSCAN0TMID8 */
+#define RSCAN_FROM_RSCAN0TMID9 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID9) /* RSCAN_FROM_RSCAN0TMID9 */
+#define RSCAN_FROM_RSCAN0TMID10 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID10) /* RSCAN_FROM_RSCAN0TMID10 */
+#define RSCAN_FROM_RSCAN0TMID11 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID11) /* RSCAN_FROM_RSCAN0TMID11 */
+#define RSCAN_FROM_RSCAN0TMID12 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID12) /* RSCAN_FROM_RSCAN0TMID12 */
+#define RSCAN_FROM_RSCAN0TMID13 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID13) /* RSCAN_FROM_RSCAN0TMID13 */
+#define RSCAN_FROM_RSCAN0TMID14 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID14) /* RSCAN_FROM_RSCAN0TMID14 */
+#define RSCAN_FROM_RSCAN0TMID15 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID15) /* RSCAN_FROM_RSCAN0TMID15 */
+#define RSCAN_FROM_RSCAN0TMID16 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID16) /* RSCAN_FROM_RSCAN0TMID16 */
+#define RSCAN_FROM_RSCAN0TMID17 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID17) /* RSCAN_FROM_RSCAN0TMID17 */
+#define RSCAN_FROM_RSCAN0TMID18 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID18) /* RSCAN_FROM_RSCAN0TMID18 */
+#define RSCAN_FROM_RSCAN0TMID19 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID19) /* RSCAN_FROM_RSCAN0TMID19 */
+#define RSCAN_FROM_RSCAN0TMID20 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID20) /* RSCAN_FROM_RSCAN0TMID20 */
+#define RSCAN_FROM_RSCAN0TMID21 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID21) /* RSCAN_FROM_RSCAN0TMID21 */
+#define RSCAN_FROM_RSCAN0TMID22 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID22) /* RSCAN_FROM_RSCAN0TMID22 */
+#define RSCAN_FROM_RSCAN0TMID23 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID23) /* RSCAN_FROM_RSCAN0TMID23 */
+#define RSCAN_FROM_RSCAN0TMID24 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID24) /* RSCAN_FROM_RSCAN0TMID24 */
+#define RSCAN_FROM_RSCAN0TMID25 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID25) /* RSCAN_FROM_RSCAN0TMID25 */
+#define RSCAN_FROM_RSCAN0TMID26 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID26) /* RSCAN_FROM_RSCAN0TMID26 */
+#define RSCAN_FROM_RSCAN0TMID27 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID27) /* RSCAN_FROM_RSCAN0TMID27 */
+#define RSCAN_FROM_RSCAN0TMID28 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID28) /* RSCAN_FROM_RSCAN0TMID28 */
+#define RSCAN_FROM_RSCAN0TMID29 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID29) /* RSCAN_FROM_RSCAN0TMID29 */
+#define RSCAN_FROM_RSCAN0TMID30 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID30) /* RSCAN_FROM_RSCAN0TMID30 */
+#define RSCAN_FROM_RSCAN0TMID31 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID31) /* RSCAN_FROM_RSCAN0TMID31 */
+#define RSCAN_FROM_RSCAN0TMID32 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID32) /* RSCAN_FROM_RSCAN0TMID32 */
+#define RSCAN_FROM_RSCAN0TMID33 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID33) /* RSCAN_FROM_RSCAN0TMID33 */
+#define RSCAN_FROM_RSCAN0TMID34 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID34) /* RSCAN_FROM_RSCAN0TMID34 */
+#define RSCAN_FROM_RSCAN0TMID35 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID35) /* RSCAN_FROM_RSCAN0TMID35 */
+#define RSCAN_FROM_RSCAN0TMID36 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID36) /* RSCAN_FROM_RSCAN0TMID36 */
+#define RSCAN_FROM_RSCAN0TMID37 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID37) /* RSCAN_FROM_RSCAN0TMID37 */
+#define RSCAN_FROM_RSCAN0TMID38 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID38) /* RSCAN_FROM_RSCAN0TMID38 */
+#define RSCAN_FROM_RSCAN0TMID39 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID39) /* RSCAN_FROM_RSCAN0TMID39 */
+#define RSCAN_FROM_RSCAN0TMID40 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID40) /* RSCAN_FROM_RSCAN0TMID40 */
+#define RSCAN_FROM_RSCAN0TMID41 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID41) /* RSCAN_FROM_RSCAN0TMID41 */
+#define RSCAN_FROM_RSCAN0TMID42 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID42) /* RSCAN_FROM_RSCAN0TMID42 */
+#define RSCAN_FROM_RSCAN0TMID43 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID43) /* RSCAN_FROM_RSCAN0TMID43 */
+#define RSCAN_FROM_RSCAN0TMID44 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID44) /* RSCAN_FROM_RSCAN0TMID44 */
+#define RSCAN_FROM_RSCAN0TMID45 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID45) /* RSCAN_FROM_RSCAN0TMID45 */
+#define RSCAN_FROM_RSCAN0TMID46 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID46) /* RSCAN_FROM_RSCAN0TMID46 */
+#define RSCAN_FROM_RSCAN0TMID47 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID47) /* RSCAN_FROM_RSCAN0TMID47 */
+#define RSCAN_FROM_RSCAN0TMID48 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID48) /* RSCAN_FROM_RSCAN0TMID48 */
+#define RSCAN_FROM_RSCAN0TMID49 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID49) /* RSCAN_FROM_RSCAN0TMID49 */
+#define RSCAN_FROM_RSCAN0TMID50 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID50) /* RSCAN_FROM_RSCAN0TMID50 */
+#define RSCAN_FROM_RSCAN0TMID51 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID51) /* RSCAN_FROM_RSCAN0TMID51 */
+#define RSCAN_FROM_RSCAN0TMID52 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID52) /* RSCAN_FROM_RSCAN0TMID52 */
+#define RSCAN_FROM_RSCAN0TMID53 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID53) /* RSCAN_FROM_RSCAN0TMID53 */
+#define RSCAN_FROM_RSCAN0TMID54 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID54) /* RSCAN_FROM_RSCAN0TMID54 */
+#define RSCAN_FROM_RSCAN0TMID55 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID55) /* RSCAN_FROM_RSCAN0TMID55 */
+#define RSCAN_FROM_RSCAN0TMID56 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID56) /* RSCAN_FROM_RSCAN0TMID56 */
+#define RSCAN_FROM_RSCAN0TMID57 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID57) /* RSCAN_FROM_RSCAN0TMID57 */
+#define RSCAN_FROM_RSCAN0TMID58 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID58) /* RSCAN_FROM_RSCAN0TMID58 */
+#define RSCAN_FROM_RSCAN0TMID59 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID59) /* RSCAN_FROM_RSCAN0TMID59 */
+#define RSCAN_FROM_RSCAN0TMID60 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID60) /* RSCAN_FROM_RSCAN0TMID60 */
+#define RSCAN_FROM_RSCAN0TMID61 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID61) /* RSCAN_FROM_RSCAN0TMID61 */
+#define RSCAN_FROM_RSCAN0TMID62 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID62) /* RSCAN_FROM_RSCAN0TMID62 */
+#define RSCAN_FROM_RSCAN0TMID63 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID63) /* RSCAN_FROM_RSCAN0TMID63 */
+#define RSCAN_FROM_RSCAN0TMID64 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID64) /* RSCAN_FROM_RSCAN0TMID64 */
+#define RSCAN_FROM_RSCAN0TMID65 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID65) /* RSCAN_FROM_RSCAN0TMID65 */
+#define RSCAN_FROM_RSCAN0TMID66 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID66) /* RSCAN_FROM_RSCAN0TMID66 */
+#define RSCAN_FROM_RSCAN0TMID67 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID67) /* RSCAN_FROM_RSCAN0TMID67 */
+#define RSCAN_FROM_RSCAN0TMID68 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID68) /* RSCAN_FROM_RSCAN0TMID68 */
+#define RSCAN_FROM_RSCAN0TMID69 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID69) /* RSCAN_FROM_RSCAN0TMID69 */
+#define RSCAN_FROM_RSCAN0TMID70 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID70) /* RSCAN_FROM_RSCAN0TMID70 */
+#define RSCAN_FROM_RSCAN0TMID71 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID71) /* RSCAN_FROM_RSCAN0TMID71 */
+#define RSCAN_FROM_RSCAN0TMID72 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID72) /* RSCAN_FROM_RSCAN0TMID72 */
+#define RSCAN_FROM_RSCAN0TMID73 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID73) /* RSCAN_FROM_RSCAN0TMID73 */
+#define RSCAN_FROM_RSCAN0TMID74 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID74) /* RSCAN_FROM_RSCAN0TMID74 */
+#define RSCAN_FROM_RSCAN0TMID75 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID75) /* RSCAN_FROM_RSCAN0TMID75 */
+#define RSCAN_FROM_RSCAN0TMID76 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID76) /* RSCAN_FROM_RSCAN0TMID76 */
+#define RSCAN_FROM_RSCAN0TMID77 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID77) /* RSCAN_FROM_RSCAN0TMID77 */
+#define RSCAN_FROM_RSCAN0TMID78 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID78) /* RSCAN_FROM_RSCAN0TMID78 */
+#define RSCAN_FROM_RSCAN0TMID79 (*(struct st_rscan_from_rscan0tmidp *)&RSCAN0.TMID79) /* RSCAN_FROM_RSCAN0TMID79 */
 
 
 /* Channnel array defines of RSCAN_FROM_RSCAN0RFIDm */
 /*(Sample) value = RSCAN_FROM_RSCAN0RFIDm[ channel ]->RFIDm.UINT32; */
 #define RSCAN_FROM_RSCAN0RFIDm_COUNT  8
 #define RSCAN_FROM_RSCAN0RFIDm_ADDRESS_LIST \
-    &RSCAN_FROM_RSCAN0RFID0, &RSCAN_FROM_RSCAN0RFID1, &RSCAN_FROM_RSCAN0RFID2, &RSCAN_FROM_RSCAN0RFID3, &RSCAN_FROM_RSCAN0RFID4, &RSCAN_FROM_RSCAN0RFID5, &RSCAN_FROM_RSCAN0RFID6, &RSCAN_FROM_RSCAN0RFID7
-#define RSCAN_FROM_RSCAN0RFID0 (*(volatile struct st_rscan_from_rscan0rfidm *)&RSCAN0.RFID0) /* RSCAN_FROM_RSCAN0RFID0 */
-#define RSCAN_FROM_RSCAN0RFID1 (*(volatile struct st_rscan_from_rscan0rfidm *)&RSCAN0.RFID1) /* RSCAN_FROM_RSCAN0RFID1 */
-#define RSCAN_FROM_RSCAN0RFID2 (*(volatile struct st_rscan_from_rscan0rfidm *)&RSCAN0.RFID2) /* RSCAN_FROM_RSCAN0RFID2 */
-#define RSCAN_FROM_RSCAN0RFID3 (*(volatile struct st_rscan_from_rscan0rfidm *)&RSCAN0.RFID3) /* RSCAN_FROM_RSCAN0RFID3 */
-#define RSCAN_FROM_RSCAN0RFID4 (*(volatile struct st_rscan_from_rscan0rfidm *)&RSCAN0.RFID4) /* RSCAN_FROM_RSCAN0RFID4 */
-#define RSCAN_FROM_RSCAN0RFID5 (*(volatile struct st_rscan_from_rscan0rfidm *)&RSCAN0.RFID5) /* RSCAN_FROM_RSCAN0RFID5 */
-#define RSCAN_FROM_RSCAN0RFID6 (*(volatile struct st_rscan_from_rscan0rfidm *)&RSCAN0.RFID6) /* RSCAN_FROM_RSCAN0RFID6 */
-#define RSCAN_FROM_RSCAN0RFID7 (*(volatile struct st_rscan_from_rscan0rfidm *)&RSCAN0.RFID7) /* RSCAN_FROM_RSCAN0RFID7 */
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
+    &RSCAN_FROM_RSCAN0RFID0, &RSCAN_FROM_RSCAN0RFID1, &RSCAN_FROM_RSCAN0RFID2, &RSCAN_FROM_RSCAN0RFID3, &RSCAN_FROM_RSCAN0RFID4, &RSCAN_FROM_RSCAN0RFID5, &RSCAN_FROM_RSCAN0RFID6, &RSCAN_FROM_RSCAN0RFID7 \
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
+#define RSCAN_FROM_RSCAN0RFID0 (*(struct st_rscan_from_rscan0rfidm *)&RSCAN0.RFID0) /* RSCAN_FROM_RSCAN0RFID0 */
+#define RSCAN_FROM_RSCAN0RFID1 (*(struct st_rscan_from_rscan0rfidm *)&RSCAN0.RFID1) /* RSCAN_FROM_RSCAN0RFID1 */
+#define RSCAN_FROM_RSCAN0RFID2 (*(struct st_rscan_from_rscan0rfidm *)&RSCAN0.RFID2) /* RSCAN_FROM_RSCAN0RFID2 */
+#define RSCAN_FROM_RSCAN0RFID3 (*(struct st_rscan_from_rscan0rfidm *)&RSCAN0.RFID3) /* RSCAN_FROM_RSCAN0RFID3 */
+#define RSCAN_FROM_RSCAN0RFID4 (*(struct st_rscan_from_rscan0rfidm *)&RSCAN0.RFID4) /* RSCAN_FROM_RSCAN0RFID4 */
+#define RSCAN_FROM_RSCAN0RFID5 (*(struct st_rscan_from_rscan0rfidm *)&RSCAN0.RFID5) /* RSCAN_FROM_RSCAN0RFID5 */
+#define RSCAN_FROM_RSCAN0RFID6 (*(struct st_rscan_from_rscan0rfidm *)&RSCAN0.RFID6) /* RSCAN_FROM_RSCAN0RFID6 */
+#define RSCAN_FROM_RSCAN0RFID7 (*(struct st_rscan_from_rscan0rfidm *)&RSCAN0.RFID7) /* RSCAN_FROM_RSCAN0RFID7 */
 
 
 /* Channnel array defines of RSCAN_FROM_RSCAN0RMIDp */
 /*(Sample) value = RSCAN_FROM_RSCAN0RMIDp[ channel ]->RMIDp.UINT32; */
-#define RSCAN_FROM_RSCAN0RMIDp_COUNT  96
+#define RSCAN_FROM_RSCAN0RMIDp_COUNT  80
 #define RSCAN_FROM_RSCAN0RMIDp_ADDRESS_LIST \
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
     &RSCAN_FROM_RSCAN0RMID0, &RSCAN_FROM_RSCAN0RMID1, &RSCAN_FROM_RSCAN0RMID2, &RSCAN_FROM_RSCAN0RMID3, &RSCAN_FROM_RSCAN0RMID4, &RSCAN_FROM_RSCAN0RMID5, &RSCAN_FROM_RSCAN0RMID6, &RSCAN_FROM_RSCAN0RMID7, \
     &RSCAN_FROM_RSCAN0RMID8, &RSCAN_FROM_RSCAN0RMID9, &RSCAN_FROM_RSCAN0RMID10, &RSCAN_FROM_RSCAN0RMID11, &RSCAN_FROM_RSCAN0RMID12, &RSCAN_FROM_RSCAN0RMID13, &RSCAN_FROM_RSCAN0RMID14, &RSCAN_FROM_RSCAN0RMID15, \
     &RSCAN_FROM_RSCAN0RMID16, &RSCAN_FROM_RSCAN0RMID17, &RSCAN_FROM_RSCAN0RMID18, &RSCAN_FROM_RSCAN0RMID19, &RSCAN_FROM_RSCAN0RMID20, &RSCAN_FROM_RSCAN0RMID21, &RSCAN_FROM_RSCAN0RMID22, &RSCAN_FROM_RSCAN0RMID23, \
@@ -2427,142 +2048,128 @@ struct st_rscan_from_rscan0cfidm
     &RSCAN_FROM_RSCAN0RMID48, &RSCAN_FROM_RSCAN0RMID49, &RSCAN_FROM_RSCAN0RMID50, &RSCAN_FROM_RSCAN0RMID51, &RSCAN_FROM_RSCAN0RMID52, &RSCAN_FROM_RSCAN0RMID53, &RSCAN_FROM_RSCAN0RMID54, &RSCAN_FROM_RSCAN0RMID55, \
     &RSCAN_FROM_RSCAN0RMID56, &RSCAN_FROM_RSCAN0RMID57, &RSCAN_FROM_RSCAN0RMID58, &RSCAN_FROM_RSCAN0RMID59, &RSCAN_FROM_RSCAN0RMID60, &RSCAN_FROM_RSCAN0RMID61, &RSCAN_FROM_RSCAN0RMID62, &RSCAN_FROM_RSCAN0RMID63, \
     &RSCAN_FROM_RSCAN0RMID64, &RSCAN_FROM_RSCAN0RMID65, &RSCAN_FROM_RSCAN0RMID66, &RSCAN_FROM_RSCAN0RMID67, &RSCAN_FROM_RSCAN0RMID68, &RSCAN_FROM_RSCAN0RMID69, &RSCAN_FROM_RSCAN0RMID70, &RSCAN_FROM_RSCAN0RMID71, \
-    &RSCAN_FROM_RSCAN0RMID72, &RSCAN_FROM_RSCAN0RMID73, &RSCAN_FROM_RSCAN0RMID74, &RSCAN_FROM_RSCAN0RMID75, &RSCAN_FROM_RSCAN0RMID76, &RSCAN_FROM_RSCAN0RMID77, &RSCAN_FROM_RSCAN0RMID78, &RSCAN_FROM_RSCAN0RMID79, \
-    &RSCAN_FROM_RSCAN0RMID80, &RSCAN_FROM_RSCAN0RMID81, &RSCAN_FROM_RSCAN0RMID82, &RSCAN_FROM_RSCAN0RMID83, &RSCAN_FROM_RSCAN0RMID84, &RSCAN_FROM_RSCAN0RMID85, &RSCAN_FROM_RSCAN0RMID86, &RSCAN_FROM_RSCAN0RMID87, \
-    &RSCAN_FROM_RSCAN0RMID88, &RSCAN_FROM_RSCAN0RMID89, &RSCAN_FROM_RSCAN0RMID90, &RSCAN_FROM_RSCAN0RMID91, &RSCAN_FROM_RSCAN0RMID92, &RSCAN_FROM_RSCAN0RMID93, &RSCAN_FROM_RSCAN0RMID94, &RSCAN_FROM_RSCAN0RMID95
-#define RSCAN_FROM_RSCAN0RMID0 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID0) /* RSCAN_FROM_RSCAN0RMID0 */
-#define RSCAN_FROM_RSCAN0RMID1 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID1) /* RSCAN_FROM_RSCAN0RMID1 */
-#define RSCAN_FROM_RSCAN0RMID2 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID2) /* RSCAN_FROM_RSCAN0RMID2 */
-#define RSCAN_FROM_RSCAN0RMID3 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID3) /* RSCAN_FROM_RSCAN0RMID3 */
-#define RSCAN_FROM_RSCAN0RMID4 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID4) /* RSCAN_FROM_RSCAN0RMID4 */
-#define RSCAN_FROM_RSCAN0RMID5 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID5) /* RSCAN_FROM_RSCAN0RMID5 */
-#define RSCAN_FROM_RSCAN0RMID6 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID6) /* RSCAN_FROM_RSCAN0RMID6 */
-#define RSCAN_FROM_RSCAN0RMID7 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID7) /* RSCAN_FROM_RSCAN0RMID7 */
-#define RSCAN_FROM_RSCAN0RMID8 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID8) /* RSCAN_FROM_RSCAN0RMID8 */
-#define RSCAN_FROM_RSCAN0RMID9 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID9) /* RSCAN_FROM_RSCAN0RMID9 */
-#define RSCAN_FROM_RSCAN0RMID10 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID10) /* RSCAN_FROM_RSCAN0RMID10 */
-#define RSCAN_FROM_RSCAN0RMID11 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID11) /* RSCAN_FROM_RSCAN0RMID11 */
-#define RSCAN_FROM_RSCAN0RMID12 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID12) /* RSCAN_FROM_RSCAN0RMID12 */
-#define RSCAN_FROM_RSCAN0RMID13 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID13) /* RSCAN_FROM_RSCAN0RMID13 */
-#define RSCAN_FROM_RSCAN0RMID14 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID14) /* RSCAN_FROM_RSCAN0RMID14 */
-#define RSCAN_FROM_RSCAN0RMID15 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID15) /* RSCAN_FROM_RSCAN0RMID15 */
-#define RSCAN_FROM_RSCAN0RMID16 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID16) /* RSCAN_FROM_RSCAN0RMID16 */
-#define RSCAN_FROM_RSCAN0RMID17 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID17) /* RSCAN_FROM_RSCAN0RMID17 */
-#define RSCAN_FROM_RSCAN0RMID18 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID18) /* RSCAN_FROM_RSCAN0RMID18 */
-#define RSCAN_FROM_RSCAN0RMID19 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID19) /* RSCAN_FROM_RSCAN0RMID19 */
-#define RSCAN_FROM_RSCAN0RMID20 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID20) /* RSCAN_FROM_RSCAN0RMID20 */
-#define RSCAN_FROM_RSCAN0RMID21 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID21) /* RSCAN_FROM_RSCAN0RMID21 */
-#define RSCAN_FROM_RSCAN0RMID22 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID22) /* RSCAN_FROM_RSCAN0RMID22 */
-#define RSCAN_FROM_RSCAN0RMID23 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID23) /* RSCAN_FROM_RSCAN0RMID23 */
-#define RSCAN_FROM_RSCAN0RMID24 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID24) /* RSCAN_FROM_RSCAN0RMID24 */
-#define RSCAN_FROM_RSCAN0RMID25 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID25) /* RSCAN_FROM_RSCAN0RMID25 */
-#define RSCAN_FROM_RSCAN0RMID26 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID26) /* RSCAN_FROM_RSCAN0RMID26 */
-#define RSCAN_FROM_RSCAN0RMID27 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID27) /* RSCAN_FROM_RSCAN0RMID27 */
-#define RSCAN_FROM_RSCAN0RMID28 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID28) /* RSCAN_FROM_RSCAN0RMID28 */
-#define RSCAN_FROM_RSCAN0RMID29 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID29) /* RSCAN_FROM_RSCAN0RMID29 */
-#define RSCAN_FROM_RSCAN0RMID30 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID30) /* RSCAN_FROM_RSCAN0RMID30 */
-#define RSCAN_FROM_RSCAN0RMID31 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID31) /* RSCAN_FROM_RSCAN0RMID31 */
-#define RSCAN_FROM_RSCAN0RMID32 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID32) /* RSCAN_FROM_RSCAN0RMID32 */
-#define RSCAN_FROM_RSCAN0RMID33 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID33) /* RSCAN_FROM_RSCAN0RMID33 */
-#define RSCAN_FROM_RSCAN0RMID34 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID34) /* RSCAN_FROM_RSCAN0RMID34 */
-#define RSCAN_FROM_RSCAN0RMID35 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID35) /* RSCAN_FROM_RSCAN0RMID35 */
-#define RSCAN_FROM_RSCAN0RMID36 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID36) /* RSCAN_FROM_RSCAN0RMID36 */
-#define RSCAN_FROM_RSCAN0RMID37 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID37) /* RSCAN_FROM_RSCAN0RMID37 */
-#define RSCAN_FROM_RSCAN0RMID38 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID38) /* RSCAN_FROM_RSCAN0RMID38 */
-#define RSCAN_FROM_RSCAN0RMID39 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID39) /* RSCAN_FROM_RSCAN0RMID39 */
-#define RSCAN_FROM_RSCAN0RMID40 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID40) /* RSCAN_FROM_RSCAN0RMID40 */
-#define RSCAN_FROM_RSCAN0RMID41 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID41) /* RSCAN_FROM_RSCAN0RMID41 */
-#define RSCAN_FROM_RSCAN0RMID42 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID42) /* RSCAN_FROM_RSCAN0RMID42 */
-#define RSCAN_FROM_RSCAN0RMID43 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID43) /* RSCAN_FROM_RSCAN0RMID43 */
-#define RSCAN_FROM_RSCAN0RMID44 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID44) /* RSCAN_FROM_RSCAN0RMID44 */
-#define RSCAN_FROM_RSCAN0RMID45 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID45) /* RSCAN_FROM_RSCAN0RMID45 */
-#define RSCAN_FROM_RSCAN0RMID46 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID46) /* RSCAN_FROM_RSCAN0RMID46 */
-#define RSCAN_FROM_RSCAN0RMID47 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID47) /* RSCAN_FROM_RSCAN0RMID47 */
-#define RSCAN_FROM_RSCAN0RMID48 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID48) /* RSCAN_FROM_RSCAN0RMID48 */
-#define RSCAN_FROM_RSCAN0RMID49 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID49) /* RSCAN_FROM_RSCAN0RMID49 */
-#define RSCAN_FROM_RSCAN0RMID50 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID50) /* RSCAN_FROM_RSCAN0RMID50 */
-#define RSCAN_FROM_RSCAN0RMID51 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID51) /* RSCAN_FROM_RSCAN0RMID51 */
-#define RSCAN_FROM_RSCAN0RMID52 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID52) /* RSCAN_FROM_RSCAN0RMID52 */
-#define RSCAN_FROM_RSCAN0RMID53 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID53) /* RSCAN_FROM_RSCAN0RMID53 */
-#define RSCAN_FROM_RSCAN0RMID54 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID54) /* RSCAN_FROM_RSCAN0RMID54 */
-#define RSCAN_FROM_RSCAN0RMID55 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID55) /* RSCAN_FROM_RSCAN0RMID55 */
-#define RSCAN_FROM_RSCAN0RMID56 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID56) /* RSCAN_FROM_RSCAN0RMID56 */
-#define RSCAN_FROM_RSCAN0RMID57 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID57) /* RSCAN_FROM_RSCAN0RMID57 */
-#define RSCAN_FROM_RSCAN0RMID58 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID58) /* RSCAN_FROM_RSCAN0RMID58 */
-#define RSCAN_FROM_RSCAN0RMID59 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID59) /* RSCAN_FROM_RSCAN0RMID59 */
-#define RSCAN_FROM_RSCAN0RMID60 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID60) /* RSCAN_FROM_RSCAN0RMID60 */
-#define RSCAN_FROM_RSCAN0RMID61 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID61) /* RSCAN_FROM_RSCAN0RMID61 */
-#define RSCAN_FROM_RSCAN0RMID62 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID62) /* RSCAN_FROM_RSCAN0RMID62 */
-#define RSCAN_FROM_RSCAN0RMID63 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID63) /* RSCAN_FROM_RSCAN0RMID63 */
-#define RSCAN_FROM_RSCAN0RMID64 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID64) /* RSCAN_FROM_RSCAN0RMID64 */
-#define RSCAN_FROM_RSCAN0RMID65 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID65) /* RSCAN_FROM_RSCAN0RMID65 */
-#define RSCAN_FROM_RSCAN0RMID66 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID66) /* RSCAN_FROM_RSCAN0RMID66 */
-#define RSCAN_FROM_RSCAN0RMID67 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID67) /* RSCAN_FROM_RSCAN0RMID67 */
-#define RSCAN_FROM_RSCAN0RMID68 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID68) /* RSCAN_FROM_RSCAN0RMID68 */
-#define RSCAN_FROM_RSCAN0RMID69 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID69) /* RSCAN_FROM_RSCAN0RMID69 */
-#define RSCAN_FROM_RSCAN0RMID70 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID70) /* RSCAN_FROM_RSCAN0RMID70 */
-#define RSCAN_FROM_RSCAN0RMID71 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID71) /* RSCAN_FROM_RSCAN0RMID71 */
-#define RSCAN_FROM_RSCAN0RMID72 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID72) /* RSCAN_FROM_RSCAN0RMID72 */
-#define RSCAN_FROM_RSCAN0RMID73 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID73) /* RSCAN_FROM_RSCAN0RMID73 */
-#define RSCAN_FROM_RSCAN0RMID74 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID74) /* RSCAN_FROM_RSCAN0RMID74 */
-#define RSCAN_FROM_RSCAN0RMID75 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID75) /* RSCAN_FROM_RSCAN0RMID75 */
-#define RSCAN_FROM_RSCAN0RMID76 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID76) /* RSCAN_FROM_RSCAN0RMID76 */
-#define RSCAN_FROM_RSCAN0RMID77 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID77) /* RSCAN_FROM_RSCAN0RMID77 */
-#define RSCAN_FROM_RSCAN0RMID78 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID78) /* RSCAN_FROM_RSCAN0RMID78 */
-#define RSCAN_FROM_RSCAN0RMID79 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID79) /* RSCAN_FROM_RSCAN0RMID79 */
-#define RSCAN_FROM_RSCAN0RMID80 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID80) /* RSCAN_FROM_RSCAN0RMID80 */
-#define RSCAN_FROM_RSCAN0RMID81 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID81) /* RSCAN_FROM_RSCAN0RMID81 */
-#define RSCAN_FROM_RSCAN0RMID82 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID82) /* RSCAN_FROM_RSCAN0RMID82 */
-#define RSCAN_FROM_RSCAN0RMID83 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID83) /* RSCAN_FROM_RSCAN0RMID83 */
-#define RSCAN_FROM_RSCAN0RMID84 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID84) /* RSCAN_FROM_RSCAN0RMID84 */
-#define RSCAN_FROM_RSCAN0RMID85 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID85) /* RSCAN_FROM_RSCAN0RMID85 */
-#define RSCAN_FROM_RSCAN0RMID86 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID86) /* RSCAN_FROM_RSCAN0RMID86 */
-#define RSCAN_FROM_RSCAN0RMID87 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID87) /* RSCAN_FROM_RSCAN0RMID87 */
-#define RSCAN_FROM_RSCAN0RMID88 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID88) /* RSCAN_FROM_RSCAN0RMID88 */
-#define RSCAN_FROM_RSCAN0RMID89 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID89) /* RSCAN_FROM_RSCAN0RMID89 */
-#define RSCAN_FROM_RSCAN0RMID90 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID90) /* RSCAN_FROM_RSCAN0RMID90 */
-#define RSCAN_FROM_RSCAN0RMID91 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID91) /* RSCAN_FROM_RSCAN0RMID91 */
-#define RSCAN_FROM_RSCAN0RMID92 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID92) /* RSCAN_FROM_RSCAN0RMID92 */
-#define RSCAN_FROM_RSCAN0RMID93 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID93) /* RSCAN_FROM_RSCAN0RMID93 */
-#define RSCAN_FROM_RSCAN0RMID94 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID94) /* RSCAN_FROM_RSCAN0RMID94 */
-#define RSCAN_FROM_RSCAN0RMID95 (*(volatile struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID95) /* RSCAN_FROM_RSCAN0RMID95 */
+    &RSCAN_FROM_RSCAN0RMID72, &RSCAN_FROM_RSCAN0RMID73, &RSCAN_FROM_RSCAN0RMID74, &RSCAN_FROM_RSCAN0RMID75, &RSCAN_FROM_RSCAN0RMID76, &RSCAN_FROM_RSCAN0RMID77, &RSCAN_FROM_RSCAN0RMID78, &RSCAN_FROM_RSCAN0RMID79 \
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
+#define RSCAN_FROM_RSCAN0RMID0 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID0) /* RSCAN_FROM_RSCAN0RMID0 */
+#define RSCAN_FROM_RSCAN0RMID1 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID1) /* RSCAN_FROM_RSCAN0RMID1 */
+#define RSCAN_FROM_RSCAN0RMID2 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID2) /* RSCAN_FROM_RSCAN0RMID2 */
+#define RSCAN_FROM_RSCAN0RMID3 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID3) /* RSCAN_FROM_RSCAN0RMID3 */
+#define RSCAN_FROM_RSCAN0RMID4 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID4) /* RSCAN_FROM_RSCAN0RMID4 */
+#define RSCAN_FROM_RSCAN0RMID5 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID5) /* RSCAN_FROM_RSCAN0RMID5 */
+#define RSCAN_FROM_RSCAN0RMID6 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID6) /* RSCAN_FROM_RSCAN0RMID6 */
+#define RSCAN_FROM_RSCAN0RMID7 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID7) /* RSCAN_FROM_RSCAN0RMID7 */
+#define RSCAN_FROM_RSCAN0RMID8 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID8) /* RSCAN_FROM_RSCAN0RMID8 */
+#define RSCAN_FROM_RSCAN0RMID9 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID9) /* RSCAN_FROM_RSCAN0RMID9 */
+#define RSCAN_FROM_RSCAN0RMID10 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID10) /* RSCAN_FROM_RSCAN0RMID10 */
+#define RSCAN_FROM_RSCAN0RMID11 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID11) /* RSCAN_FROM_RSCAN0RMID11 */
+#define RSCAN_FROM_RSCAN0RMID12 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID12) /* RSCAN_FROM_RSCAN0RMID12 */
+#define RSCAN_FROM_RSCAN0RMID13 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID13) /* RSCAN_FROM_RSCAN0RMID13 */
+#define RSCAN_FROM_RSCAN0RMID14 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID14) /* RSCAN_FROM_RSCAN0RMID14 */
+#define RSCAN_FROM_RSCAN0RMID15 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID15) /* RSCAN_FROM_RSCAN0RMID15 */
+#define RSCAN_FROM_RSCAN0RMID16 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID16) /* RSCAN_FROM_RSCAN0RMID16 */
+#define RSCAN_FROM_RSCAN0RMID17 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID17) /* RSCAN_FROM_RSCAN0RMID17 */
+#define RSCAN_FROM_RSCAN0RMID18 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID18) /* RSCAN_FROM_RSCAN0RMID18 */
+#define RSCAN_FROM_RSCAN0RMID19 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID19) /* RSCAN_FROM_RSCAN0RMID19 */
+#define RSCAN_FROM_RSCAN0RMID20 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID20) /* RSCAN_FROM_RSCAN0RMID20 */
+#define RSCAN_FROM_RSCAN0RMID21 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID21) /* RSCAN_FROM_RSCAN0RMID21 */
+#define RSCAN_FROM_RSCAN0RMID22 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID22) /* RSCAN_FROM_RSCAN0RMID22 */
+#define RSCAN_FROM_RSCAN0RMID23 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID23) /* RSCAN_FROM_RSCAN0RMID23 */
+#define RSCAN_FROM_RSCAN0RMID24 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID24) /* RSCAN_FROM_RSCAN0RMID24 */
+#define RSCAN_FROM_RSCAN0RMID25 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID25) /* RSCAN_FROM_RSCAN0RMID25 */
+#define RSCAN_FROM_RSCAN0RMID26 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID26) /* RSCAN_FROM_RSCAN0RMID26 */
+#define RSCAN_FROM_RSCAN0RMID27 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID27) /* RSCAN_FROM_RSCAN0RMID27 */
+#define RSCAN_FROM_RSCAN0RMID28 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID28) /* RSCAN_FROM_RSCAN0RMID28 */
+#define RSCAN_FROM_RSCAN0RMID29 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID29) /* RSCAN_FROM_RSCAN0RMID29 */
+#define RSCAN_FROM_RSCAN0RMID30 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID30) /* RSCAN_FROM_RSCAN0RMID30 */
+#define RSCAN_FROM_RSCAN0RMID31 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID31) /* RSCAN_FROM_RSCAN0RMID31 */
+#define RSCAN_FROM_RSCAN0RMID32 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID32) /* RSCAN_FROM_RSCAN0RMID32 */
+#define RSCAN_FROM_RSCAN0RMID33 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID33) /* RSCAN_FROM_RSCAN0RMID33 */
+#define RSCAN_FROM_RSCAN0RMID34 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID34) /* RSCAN_FROM_RSCAN0RMID34 */
+#define RSCAN_FROM_RSCAN0RMID35 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID35) /* RSCAN_FROM_RSCAN0RMID35 */
+#define RSCAN_FROM_RSCAN0RMID36 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID36) /* RSCAN_FROM_RSCAN0RMID36 */
+#define RSCAN_FROM_RSCAN0RMID37 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID37) /* RSCAN_FROM_RSCAN0RMID37 */
+#define RSCAN_FROM_RSCAN0RMID38 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID38) /* RSCAN_FROM_RSCAN0RMID38 */
+#define RSCAN_FROM_RSCAN0RMID39 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID39) /* RSCAN_FROM_RSCAN0RMID39 */
+#define RSCAN_FROM_RSCAN0RMID40 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID40) /* RSCAN_FROM_RSCAN0RMID40 */
+#define RSCAN_FROM_RSCAN0RMID41 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID41) /* RSCAN_FROM_RSCAN0RMID41 */
+#define RSCAN_FROM_RSCAN0RMID42 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID42) /* RSCAN_FROM_RSCAN0RMID42 */
+#define RSCAN_FROM_RSCAN0RMID43 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID43) /* RSCAN_FROM_RSCAN0RMID43 */
+#define RSCAN_FROM_RSCAN0RMID44 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID44) /* RSCAN_FROM_RSCAN0RMID44 */
+#define RSCAN_FROM_RSCAN0RMID45 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID45) /* RSCAN_FROM_RSCAN0RMID45 */
+#define RSCAN_FROM_RSCAN0RMID46 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID46) /* RSCAN_FROM_RSCAN0RMID46 */
+#define RSCAN_FROM_RSCAN0RMID47 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID47) /* RSCAN_FROM_RSCAN0RMID47 */
+#define RSCAN_FROM_RSCAN0RMID48 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID48) /* RSCAN_FROM_RSCAN0RMID48 */
+#define RSCAN_FROM_RSCAN0RMID49 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID49) /* RSCAN_FROM_RSCAN0RMID49 */
+#define RSCAN_FROM_RSCAN0RMID50 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID50) /* RSCAN_FROM_RSCAN0RMID50 */
+#define RSCAN_FROM_RSCAN0RMID51 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID51) /* RSCAN_FROM_RSCAN0RMID51 */
+#define RSCAN_FROM_RSCAN0RMID52 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID52) /* RSCAN_FROM_RSCAN0RMID52 */
+#define RSCAN_FROM_RSCAN0RMID53 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID53) /* RSCAN_FROM_RSCAN0RMID53 */
+#define RSCAN_FROM_RSCAN0RMID54 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID54) /* RSCAN_FROM_RSCAN0RMID54 */
+#define RSCAN_FROM_RSCAN0RMID55 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID55) /* RSCAN_FROM_RSCAN0RMID55 */
+#define RSCAN_FROM_RSCAN0RMID56 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID56) /* RSCAN_FROM_RSCAN0RMID56 */
+#define RSCAN_FROM_RSCAN0RMID57 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID57) /* RSCAN_FROM_RSCAN0RMID57 */
+#define RSCAN_FROM_RSCAN0RMID58 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID58) /* RSCAN_FROM_RSCAN0RMID58 */
+#define RSCAN_FROM_RSCAN0RMID59 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID59) /* RSCAN_FROM_RSCAN0RMID59 */
+#define RSCAN_FROM_RSCAN0RMID60 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID60) /* RSCAN_FROM_RSCAN0RMID60 */
+#define RSCAN_FROM_RSCAN0RMID61 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID61) /* RSCAN_FROM_RSCAN0RMID61 */
+#define RSCAN_FROM_RSCAN0RMID62 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID62) /* RSCAN_FROM_RSCAN0RMID62 */
+#define RSCAN_FROM_RSCAN0RMID63 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID63) /* RSCAN_FROM_RSCAN0RMID63 */
+#define RSCAN_FROM_RSCAN0RMID64 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID64) /* RSCAN_FROM_RSCAN0RMID64 */
+#define RSCAN_FROM_RSCAN0RMID65 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID65) /* RSCAN_FROM_RSCAN0RMID65 */
+#define RSCAN_FROM_RSCAN0RMID66 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID66) /* RSCAN_FROM_RSCAN0RMID66 */
+#define RSCAN_FROM_RSCAN0RMID67 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID67) /* RSCAN_FROM_RSCAN0RMID67 */
+#define RSCAN_FROM_RSCAN0RMID68 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID68) /* RSCAN_FROM_RSCAN0RMID68 */
+#define RSCAN_FROM_RSCAN0RMID69 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID69) /* RSCAN_FROM_RSCAN0RMID69 */
+#define RSCAN_FROM_RSCAN0RMID70 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID70) /* RSCAN_FROM_RSCAN0RMID70 */
+#define RSCAN_FROM_RSCAN0RMID71 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID71) /* RSCAN_FROM_RSCAN0RMID71 */
+#define RSCAN_FROM_RSCAN0RMID72 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID72) /* RSCAN_FROM_RSCAN0RMID72 */
+#define RSCAN_FROM_RSCAN0RMID73 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID73) /* RSCAN_FROM_RSCAN0RMID73 */
+#define RSCAN_FROM_RSCAN0RMID74 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID74) /* RSCAN_FROM_RSCAN0RMID74 */
+#define RSCAN_FROM_RSCAN0RMID75 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID75) /* RSCAN_FROM_RSCAN0RMID75 */
+#define RSCAN_FROM_RSCAN0RMID76 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID76) /* RSCAN_FROM_RSCAN0RMID76 */
+#define RSCAN_FROM_RSCAN0RMID77 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID77) /* RSCAN_FROM_RSCAN0RMID77 */
+#define RSCAN_FROM_RSCAN0RMID78 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID78) /* RSCAN_FROM_RSCAN0RMID78 */
+#define RSCAN_FROM_RSCAN0RMID79 (*(struct st_rscan_from_rscan0rmidp *)&RSCAN0.RMID79) /* RSCAN_FROM_RSCAN0RMID79 */
 
 
 /* Channnel array defines of RSCAN_FROM_RSCAN0GAFLIDj */
 /*(Sample) value = RSCAN_FROM_RSCAN0GAFLIDj[ channel ]->GAFLIDj.UINT32; */
 #define RSCAN_FROM_RSCAN0GAFLIDj_COUNT  16
 #define RSCAN_FROM_RSCAN0GAFLIDj_ADDRESS_LIST \
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
     &RSCAN_FROM_RSCAN0GAFLID0, &RSCAN_FROM_RSCAN0GAFLID1, &RSCAN_FROM_RSCAN0GAFLID2, &RSCAN_FROM_RSCAN0GAFLID3, &RSCAN_FROM_RSCAN0GAFLID4, &RSCAN_FROM_RSCAN0GAFLID5, &RSCAN_FROM_RSCAN0GAFLID6, &RSCAN_FROM_RSCAN0GAFLID7, \
-    &RSCAN_FROM_RSCAN0GAFLID8, &RSCAN_FROM_RSCAN0GAFLID9, &RSCAN_FROM_RSCAN0GAFLID10, &RSCAN_FROM_RSCAN0GAFLID11, &RSCAN_FROM_RSCAN0GAFLID12, &RSCAN_FROM_RSCAN0GAFLID13, &RSCAN_FROM_RSCAN0GAFLID14, &RSCAN_FROM_RSCAN0GAFLID15
-#define RSCAN_FROM_RSCAN0GAFLID0 (*(volatile struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID0) /* RSCAN_FROM_RSCAN0GAFLID0 */
-#define RSCAN_FROM_RSCAN0GAFLID1 (*(volatile struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID1) /* RSCAN_FROM_RSCAN0GAFLID1 */
-#define RSCAN_FROM_RSCAN0GAFLID2 (*(volatile struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID2) /* RSCAN_FROM_RSCAN0GAFLID2 */
-#define RSCAN_FROM_RSCAN0GAFLID3 (*(volatile struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID3) /* RSCAN_FROM_RSCAN0GAFLID3 */
-#define RSCAN_FROM_RSCAN0GAFLID4 (*(volatile struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID4) /* RSCAN_FROM_RSCAN0GAFLID4 */
-#define RSCAN_FROM_RSCAN0GAFLID5 (*(volatile struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID5) /* RSCAN_FROM_RSCAN0GAFLID5 */
-#define RSCAN_FROM_RSCAN0GAFLID6 (*(volatile struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID6) /* RSCAN_FROM_RSCAN0GAFLID6 */
-#define RSCAN_FROM_RSCAN0GAFLID7 (*(volatile struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID7) /* RSCAN_FROM_RSCAN0GAFLID7 */
-#define RSCAN_FROM_RSCAN0GAFLID8 (*(volatile struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID8) /* RSCAN_FROM_RSCAN0GAFLID8 */
-#define RSCAN_FROM_RSCAN0GAFLID9 (*(volatile struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID9) /* RSCAN_FROM_RSCAN0GAFLID9 */
-#define RSCAN_FROM_RSCAN0GAFLID10 (*(volatile struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID10) /* RSCAN_FROM_RSCAN0GAFLID10 */
-#define RSCAN_FROM_RSCAN0GAFLID11 (*(volatile struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID11) /* RSCAN_FROM_RSCAN0GAFLID11 */
-#define RSCAN_FROM_RSCAN0GAFLID12 (*(volatile struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID12) /* RSCAN_FROM_RSCAN0GAFLID12 */
-#define RSCAN_FROM_RSCAN0GAFLID13 (*(volatile struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID13) /* RSCAN_FROM_RSCAN0GAFLID13 */
-#define RSCAN_FROM_RSCAN0GAFLID14 (*(volatile struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID14) /* RSCAN_FROM_RSCAN0GAFLID14 */
-#define RSCAN_FROM_RSCAN0GAFLID15 (*(volatile struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID15) /* RSCAN_FROM_RSCAN0GAFLID15 */
+    &RSCAN_FROM_RSCAN0GAFLID8, &RSCAN_FROM_RSCAN0GAFLID9, &RSCAN_FROM_RSCAN0GAFLID10, &RSCAN_FROM_RSCAN0GAFLID11, &RSCAN_FROM_RSCAN0GAFLID12, &RSCAN_FROM_RSCAN0GAFLID13, &RSCAN_FROM_RSCAN0GAFLID14, &RSCAN_FROM_RSCAN0GAFLID15 \
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
+#define RSCAN_FROM_RSCAN0GAFLID0 (*(struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID0) /* RSCAN_FROM_RSCAN0GAFLID0 */
+#define RSCAN_FROM_RSCAN0GAFLID1 (*(struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID1) /* RSCAN_FROM_RSCAN0GAFLID1 */
+#define RSCAN_FROM_RSCAN0GAFLID2 (*(struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID2) /* RSCAN_FROM_RSCAN0GAFLID2 */
+#define RSCAN_FROM_RSCAN0GAFLID3 (*(struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID3) /* RSCAN_FROM_RSCAN0GAFLID3 */
+#define RSCAN_FROM_RSCAN0GAFLID4 (*(struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID4) /* RSCAN_FROM_RSCAN0GAFLID4 */
+#define RSCAN_FROM_RSCAN0GAFLID5 (*(struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID5) /* RSCAN_FROM_RSCAN0GAFLID5 */
+#define RSCAN_FROM_RSCAN0GAFLID6 (*(struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID6) /* RSCAN_FROM_RSCAN0GAFLID6 */
+#define RSCAN_FROM_RSCAN0GAFLID7 (*(struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID7) /* RSCAN_FROM_RSCAN0GAFLID7 */
+#define RSCAN_FROM_RSCAN0GAFLID8 (*(struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID8) /* RSCAN_FROM_RSCAN0GAFLID8 */
+#define RSCAN_FROM_RSCAN0GAFLID9 (*(struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID9) /* RSCAN_FROM_RSCAN0GAFLID9 */
+#define RSCAN_FROM_RSCAN0GAFLID10 (*(struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID10) /* RSCAN_FROM_RSCAN0GAFLID10 */
+#define RSCAN_FROM_RSCAN0GAFLID11 (*(struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID11) /* RSCAN_FROM_RSCAN0GAFLID11 */
+#define RSCAN_FROM_RSCAN0GAFLID12 (*(struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID12) /* RSCAN_FROM_RSCAN0GAFLID12 */
+#define RSCAN_FROM_RSCAN0GAFLID13 (*(struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID13) /* RSCAN_FROM_RSCAN0GAFLID13 */
+#define RSCAN_FROM_RSCAN0GAFLID14 (*(struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID14) /* RSCAN_FROM_RSCAN0GAFLID14 */
+#define RSCAN_FROM_RSCAN0GAFLID15 (*(struct st_rscan_from_rscan0gaflidj *)&RSCAN0.GAFLID15) /* RSCAN_FROM_RSCAN0GAFLID15 */
 
 
 /* Channnel array defines of RSCAN_FROM_RSCAN0CnCFG */
 /*(Sample) value = RSCAN_FROM_RSCAN0CnCFG[ channel ]->CnCFG.UINT32; */
-#define RSCAN_FROM_RSCAN0CnCFG_COUNT  6
+#define RSCAN_FROM_RSCAN0CnCFG_COUNT  5
 #define RSCAN_FROM_RSCAN0CnCFG_ADDRESS_LIST \
-    &RSCAN_FROM_RSCAN0C0CFG, &RSCAN_FROM_RSCAN0C1CFG, &RSCAN_FROM_RSCAN0C2CFG, &RSCAN_FROM_RSCAN0C3CFG, &RSCAN_FROM_RSCAN0C4CFG, &RSCAN_FROM_RSCAN0C5CFG
-#define RSCAN_FROM_RSCAN0C0CFG (*(volatile struct st_rscan_from_rscan0cncfg *)&RSCAN0.C0CFG) /* RSCAN_FROM_RSCAN0C0CFG */
-#define RSCAN_FROM_RSCAN0C1CFG (*(volatile struct st_rscan_from_rscan0cncfg *)&RSCAN0.C1CFG) /* RSCAN_FROM_RSCAN0C1CFG */
-#define RSCAN_FROM_RSCAN0C2CFG (*(volatile struct st_rscan_from_rscan0cncfg *)&RSCAN0.C2CFG) /* RSCAN_FROM_RSCAN0C2CFG */
-#define RSCAN_FROM_RSCAN0C3CFG (*(volatile struct st_rscan_from_rscan0cncfg *)&RSCAN0.C3CFG) /* RSCAN_FROM_RSCAN0C3CFG */
-#define RSCAN_FROM_RSCAN0C4CFG (*(volatile struct st_rscan_from_rscan0cncfg *)&RSCAN0.C4CFG) /* RSCAN_FROM_RSCAN0C4CFG */
-#define RSCAN_FROM_RSCAN0C5CFG (*(volatile struct st_rscan_from_rscan0cncfg *)&RSCAN0.C5CFG) /* RSCAN_FROM_RSCAN0C5CFG */
+{   /* ->MISRA 11.3 */ /* ->SEC R2.7.1 */ \
+    &RSCAN_FROM_RSCAN0C0CFG, &RSCAN_FROM_RSCAN0C1CFG, &RSCAN_FROM_RSCAN0C2CFG, &RSCAN_FROM_RSCAN0C3CFG, &RSCAN_FROM_RSCAN0C4CFG \
+}   /* <-MISRA 11.3 */ /* <-SEC R2.7.1 */ /* { } is for MISRA 19.4 */
+#define RSCAN_FROM_RSCAN0C0CFG (*(struct st_rscan_from_rscan0cncfg *)&RSCAN0.C0CFG) /* RSCAN_FROM_RSCAN0C0CFG */
+#define RSCAN_FROM_RSCAN0C1CFG (*(struct st_rscan_from_rscan0cncfg *)&RSCAN0.C1CFG) /* RSCAN_FROM_RSCAN0C1CFG */
+#define RSCAN_FROM_RSCAN0C2CFG (*(struct st_rscan_from_rscan0cncfg *)&RSCAN0.C2CFG) /* RSCAN_FROM_RSCAN0C2CFG */
+#define RSCAN_FROM_RSCAN0C3CFG (*(struct st_rscan_from_rscan0cncfg *)&RSCAN0.C3CFG) /* RSCAN_FROM_RSCAN0C3CFG */
+#define RSCAN_FROM_RSCAN0C4CFG (*(struct st_rscan_from_rscan0cncfg *)&RSCAN0.C4CFG) /* RSCAN_FROM_RSCAN0C4CFG */
 
 /* End of channnel array defines of RSCAN0 */
 
@@ -2707,34 +2314,6 @@ struct st_rscan_from_rscan0cfidm
 #define RSCAN0C4ERFLH RSCAN0.C4ERFL.UINT16[H]
 #define RSCAN0C4ERFLHL RSCAN0.C4ERFL.UINT8[HL]
 #define RSCAN0C4ERFLHH RSCAN0.C4ERFL.UINT8[HH]
-#define RSCAN0C5CFG RSCAN0.C5CFG.UINT32
-#define RSCAN0C5CFGL RSCAN0.C5CFG.UINT16[L]
-#define RSCAN0C5CFGLL RSCAN0.C5CFG.UINT8[LL]
-#define RSCAN0C5CFGLH RSCAN0.C5CFG.UINT8[LH]
-#define RSCAN0C5CFGH RSCAN0.C5CFG.UINT16[H]
-#define RSCAN0C5CFGHL RSCAN0.C5CFG.UINT8[HL]
-#define RSCAN0C5CFGHH RSCAN0.C5CFG.UINT8[HH]
-#define RSCAN0C5CTR RSCAN0.C5CTR.UINT32
-#define RSCAN0C5CTRL RSCAN0.C5CTR.UINT16[L]
-#define RSCAN0C5CTRLL RSCAN0.C5CTR.UINT8[LL]
-#define RSCAN0C5CTRLH RSCAN0.C5CTR.UINT8[LH]
-#define RSCAN0C5CTRH RSCAN0.C5CTR.UINT16[H]
-#define RSCAN0C5CTRHL RSCAN0.C5CTR.UINT8[HL]
-#define RSCAN0C5CTRHH RSCAN0.C5CTR.UINT8[HH]
-#define RSCAN0C5STS RSCAN0.C5STS.UINT32
-#define RSCAN0C5STSL RSCAN0.C5STS.UINT16[L]
-#define RSCAN0C5STSLL RSCAN0.C5STS.UINT8[LL]
-#define RSCAN0C5STSLH RSCAN0.C5STS.UINT8[LH]
-#define RSCAN0C5STSH RSCAN0.C5STS.UINT16[H]
-#define RSCAN0C5STSHL RSCAN0.C5STS.UINT8[HL]
-#define RSCAN0C5STSHH RSCAN0.C5STS.UINT8[HH]
-#define RSCAN0C5ERFL RSCAN0.C5ERFL.UINT32
-#define RSCAN0C5ERFLL RSCAN0.C5ERFL.UINT16[L]
-#define RSCAN0C5ERFLLL RSCAN0.C5ERFL.UINT8[LL]
-#define RSCAN0C5ERFLLH RSCAN0.C5ERFL.UINT8[LH]
-#define RSCAN0C5ERFLH RSCAN0.C5ERFL.UINT16[H]
-#define RSCAN0C5ERFLHL RSCAN0.C5ERFL.UINT8[HL]
-#define RSCAN0C5ERFLHH RSCAN0.C5ERFL.UINT8[HH]
 #define RSCAN0GCFG RSCAN0.GCFG.UINT32
 #define RSCAN0GCFGL RSCAN0.GCFG.UINT16[L]
 #define RSCAN0GCFGLL RSCAN0.GCFG.UINT8[LL]
@@ -3088,27 +2667,6 @@ struct st_rscan_from_rscan0cfidm
 #define RSCAN0CFCC14H RSCAN0.CFCC14.UINT16[H]
 #define RSCAN0CFCC14HL RSCAN0.CFCC14.UINT8[HL]
 #define RSCAN0CFCC14HH RSCAN0.CFCC14.UINT8[HH]
-#define RSCAN0CFCC15 RSCAN0.CFCC15.UINT32
-#define RSCAN0CFCC15L RSCAN0.CFCC15.UINT16[L]
-#define RSCAN0CFCC15LL RSCAN0.CFCC15.UINT8[LL]
-#define RSCAN0CFCC15LH RSCAN0.CFCC15.UINT8[LH]
-#define RSCAN0CFCC15H RSCAN0.CFCC15.UINT16[H]
-#define RSCAN0CFCC15HL RSCAN0.CFCC15.UINT8[HL]
-#define RSCAN0CFCC15HH RSCAN0.CFCC15.UINT8[HH]
-#define RSCAN0CFCC16 RSCAN0.CFCC16.UINT32
-#define RSCAN0CFCC16L RSCAN0.CFCC16.UINT16[L]
-#define RSCAN0CFCC16LL RSCAN0.CFCC16.UINT8[LL]
-#define RSCAN0CFCC16LH RSCAN0.CFCC16.UINT8[LH]
-#define RSCAN0CFCC16H RSCAN0.CFCC16.UINT16[H]
-#define RSCAN0CFCC16HL RSCAN0.CFCC16.UINT8[HL]
-#define RSCAN0CFCC16HH RSCAN0.CFCC16.UINT8[HH]
-#define RSCAN0CFCC17 RSCAN0.CFCC17.UINT32
-#define RSCAN0CFCC17L RSCAN0.CFCC17.UINT16[L]
-#define RSCAN0CFCC17LL RSCAN0.CFCC17.UINT8[LL]
-#define RSCAN0CFCC17LH RSCAN0.CFCC17.UINT8[LH]
-#define RSCAN0CFCC17H RSCAN0.CFCC17.UINT16[H]
-#define RSCAN0CFCC17HL RSCAN0.CFCC17.UINT8[HL]
-#define RSCAN0CFCC17HH RSCAN0.CFCC17.UINT8[HH]
 #define RSCAN0CFSTS0 RSCAN0.CFSTS0.UINT32
 #define RSCAN0CFSTS0L RSCAN0.CFSTS0.UINT16[L]
 #define RSCAN0CFSTS0LL RSCAN0.CFSTS0.UINT8[LL]
@@ -3214,27 +2772,6 @@ struct st_rscan_from_rscan0cfidm
 #define RSCAN0CFSTS14H RSCAN0.CFSTS14.UINT16[H]
 #define RSCAN0CFSTS14HL RSCAN0.CFSTS14.UINT8[HL]
 #define RSCAN0CFSTS14HH RSCAN0.CFSTS14.UINT8[HH]
-#define RSCAN0CFSTS15 RSCAN0.CFSTS15.UINT32
-#define RSCAN0CFSTS15L RSCAN0.CFSTS15.UINT16[L]
-#define RSCAN0CFSTS15LL RSCAN0.CFSTS15.UINT8[LL]
-#define RSCAN0CFSTS15LH RSCAN0.CFSTS15.UINT8[LH]
-#define RSCAN0CFSTS15H RSCAN0.CFSTS15.UINT16[H]
-#define RSCAN0CFSTS15HL RSCAN0.CFSTS15.UINT8[HL]
-#define RSCAN0CFSTS15HH RSCAN0.CFSTS15.UINT8[HH]
-#define RSCAN0CFSTS16 RSCAN0.CFSTS16.UINT32
-#define RSCAN0CFSTS16L RSCAN0.CFSTS16.UINT16[L]
-#define RSCAN0CFSTS16LL RSCAN0.CFSTS16.UINT8[LL]
-#define RSCAN0CFSTS16LH RSCAN0.CFSTS16.UINT8[LH]
-#define RSCAN0CFSTS16H RSCAN0.CFSTS16.UINT16[H]
-#define RSCAN0CFSTS16HL RSCAN0.CFSTS16.UINT8[HL]
-#define RSCAN0CFSTS16HH RSCAN0.CFSTS16.UINT8[HH]
-#define RSCAN0CFSTS17 RSCAN0.CFSTS17.UINT32
-#define RSCAN0CFSTS17L RSCAN0.CFSTS17.UINT16[L]
-#define RSCAN0CFSTS17LL RSCAN0.CFSTS17.UINT8[LL]
-#define RSCAN0CFSTS17LH RSCAN0.CFSTS17.UINT8[LH]
-#define RSCAN0CFSTS17H RSCAN0.CFSTS17.UINT16[H]
-#define RSCAN0CFSTS17HL RSCAN0.CFSTS17.UINT8[HL]
-#define RSCAN0CFSTS17HH RSCAN0.CFSTS17.UINT8[HH]
 #define RSCAN0CFPCTR0 RSCAN0.CFPCTR0.UINT32
 #define RSCAN0CFPCTR0L RSCAN0.CFPCTR0.UINT16[L]
 #define RSCAN0CFPCTR0LL RSCAN0.CFPCTR0.UINT8[LL]
@@ -3340,27 +2877,6 @@ struct st_rscan_from_rscan0cfidm
 #define RSCAN0CFPCTR14H RSCAN0.CFPCTR14.UINT16[H]
 #define RSCAN0CFPCTR14HL RSCAN0.CFPCTR14.UINT8[HL]
 #define RSCAN0CFPCTR14HH RSCAN0.CFPCTR14.UINT8[HH]
-#define RSCAN0CFPCTR15 RSCAN0.CFPCTR15.UINT32
-#define RSCAN0CFPCTR15L RSCAN0.CFPCTR15.UINT16[L]
-#define RSCAN0CFPCTR15LL RSCAN0.CFPCTR15.UINT8[LL]
-#define RSCAN0CFPCTR15LH RSCAN0.CFPCTR15.UINT8[LH]
-#define RSCAN0CFPCTR15H RSCAN0.CFPCTR15.UINT16[H]
-#define RSCAN0CFPCTR15HL RSCAN0.CFPCTR15.UINT8[HL]
-#define RSCAN0CFPCTR15HH RSCAN0.CFPCTR15.UINT8[HH]
-#define RSCAN0CFPCTR16 RSCAN0.CFPCTR16.UINT32
-#define RSCAN0CFPCTR16L RSCAN0.CFPCTR16.UINT16[L]
-#define RSCAN0CFPCTR16LL RSCAN0.CFPCTR16.UINT8[LL]
-#define RSCAN0CFPCTR16LH RSCAN0.CFPCTR16.UINT8[LH]
-#define RSCAN0CFPCTR16H RSCAN0.CFPCTR16.UINT16[H]
-#define RSCAN0CFPCTR16HL RSCAN0.CFPCTR16.UINT8[HL]
-#define RSCAN0CFPCTR16HH RSCAN0.CFPCTR16.UINT8[HH]
-#define RSCAN0CFPCTR17 RSCAN0.CFPCTR17.UINT32
-#define RSCAN0CFPCTR17L RSCAN0.CFPCTR17.UINT16[L]
-#define RSCAN0CFPCTR17LL RSCAN0.CFPCTR17.UINT8[LL]
-#define RSCAN0CFPCTR17LH RSCAN0.CFPCTR17.UINT8[LH]
-#define RSCAN0CFPCTR17H RSCAN0.CFPCTR17.UINT16[H]
-#define RSCAN0CFPCTR17HL RSCAN0.CFPCTR17.UINT8[HL]
-#define RSCAN0CFPCTR17HH RSCAN0.CFPCTR17.UINT8[HH]
 #define RSCAN0FESTS RSCAN0.FESTS.UINT32
 #define RSCAN0FESTSL RSCAN0.FESTS.UINT16[L]
 #define RSCAN0FESTSLL RSCAN0.FESTS.UINT8[LL]
@@ -3483,22 +2999,6 @@ struct st_rscan_from_rscan0cfidm
 #define RSCAN0TMC77 RSCAN0.TMC77
 #define RSCAN0TMC78 RSCAN0.TMC78
 #define RSCAN0TMC79 RSCAN0.TMC79
-#define RSCAN0TMC80 RSCAN0.TMC80
-#define RSCAN0TMC81 RSCAN0.TMC81
-#define RSCAN0TMC82 RSCAN0.TMC82
-#define RSCAN0TMC83 RSCAN0.TMC83
-#define RSCAN0TMC84 RSCAN0.TMC84
-#define RSCAN0TMC85 RSCAN0.TMC85
-#define RSCAN0TMC86 RSCAN0.TMC86
-#define RSCAN0TMC87 RSCAN0.TMC87
-#define RSCAN0TMC88 RSCAN0.TMC88
-#define RSCAN0TMC89 RSCAN0.TMC89
-#define RSCAN0TMC90 RSCAN0.TMC90
-#define RSCAN0TMC91 RSCAN0.TMC91
-#define RSCAN0TMC92 RSCAN0.TMC92
-#define RSCAN0TMC93 RSCAN0.TMC93
-#define RSCAN0TMC94 RSCAN0.TMC94
-#define RSCAN0TMC95 RSCAN0.TMC95
 #define RSCAN0TMSTS0 RSCAN0.TMSTS0
 #define RSCAN0TMSTS1 RSCAN0.TMSTS1
 #define RSCAN0TMSTS2 RSCAN0.TMSTS2
@@ -3579,22 +3079,6 @@ struct st_rscan_from_rscan0cfidm
 #define RSCAN0TMSTS77 RSCAN0.TMSTS77
 #define RSCAN0TMSTS78 RSCAN0.TMSTS78
 #define RSCAN0TMSTS79 RSCAN0.TMSTS79
-#define RSCAN0TMSTS80 RSCAN0.TMSTS80
-#define RSCAN0TMSTS81 RSCAN0.TMSTS81
-#define RSCAN0TMSTS82 RSCAN0.TMSTS82
-#define RSCAN0TMSTS83 RSCAN0.TMSTS83
-#define RSCAN0TMSTS84 RSCAN0.TMSTS84
-#define RSCAN0TMSTS85 RSCAN0.TMSTS85
-#define RSCAN0TMSTS86 RSCAN0.TMSTS86
-#define RSCAN0TMSTS87 RSCAN0.TMSTS87
-#define RSCAN0TMSTS88 RSCAN0.TMSTS88
-#define RSCAN0TMSTS89 RSCAN0.TMSTS89
-#define RSCAN0TMSTS90 RSCAN0.TMSTS90
-#define RSCAN0TMSTS91 RSCAN0.TMSTS91
-#define RSCAN0TMSTS92 RSCAN0.TMSTS92
-#define RSCAN0TMSTS93 RSCAN0.TMSTS93
-#define RSCAN0TMSTS94 RSCAN0.TMSTS94
-#define RSCAN0TMSTS95 RSCAN0.TMSTS95
 #define RSCAN0TMTRSTS0 RSCAN0.TMTRSTS0.UINT32
 #define RSCAN0TMTRSTS0L RSCAN0.TMTRSTS0.UINT16[L]
 #define RSCAN0TMTRSTS0LL RSCAN0.TMTRSTS0.UINT8[LL]
@@ -3735,13 +3219,6 @@ struct st_rscan_from_rscan0cfidm
 #define RSCAN0TXQCC4H RSCAN0.TXQCC4.UINT16[H]
 #define RSCAN0TXQCC4HL RSCAN0.TXQCC4.UINT8[HL]
 #define RSCAN0TXQCC4HH RSCAN0.TXQCC4.UINT8[HH]
-#define RSCAN0TXQCC5 RSCAN0.TXQCC5.UINT32
-#define RSCAN0TXQCC5L RSCAN0.TXQCC5.UINT16[L]
-#define RSCAN0TXQCC5LL RSCAN0.TXQCC5.UINT8[LL]
-#define RSCAN0TXQCC5LH RSCAN0.TXQCC5.UINT8[LH]
-#define RSCAN0TXQCC5H RSCAN0.TXQCC5.UINT16[H]
-#define RSCAN0TXQCC5HL RSCAN0.TXQCC5.UINT8[HL]
-#define RSCAN0TXQCC5HH RSCAN0.TXQCC5.UINT8[HH]
 #define RSCAN0TXQSTS0 RSCAN0.TXQSTS0.UINT32
 #define RSCAN0TXQSTS0L RSCAN0.TXQSTS0.UINT16[L]
 #define RSCAN0TXQSTS0LL RSCAN0.TXQSTS0.UINT8[LL]
@@ -3777,13 +3254,6 @@ struct st_rscan_from_rscan0cfidm
 #define RSCAN0TXQSTS4H RSCAN0.TXQSTS4.UINT16[H]
 #define RSCAN0TXQSTS4HL RSCAN0.TXQSTS4.UINT8[HL]
 #define RSCAN0TXQSTS4HH RSCAN0.TXQSTS4.UINT8[HH]
-#define RSCAN0TXQSTS5 RSCAN0.TXQSTS5.UINT32
-#define RSCAN0TXQSTS5L RSCAN0.TXQSTS5.UINT16[L]
-#define RSCAN0TXQSTS5LL RSCAN0.TXQSTS5.UINT8[LL]
-#define RSCAN0TXQSTS5LH RSCAN0.TXQSTS5.UINT8[LH]
-#define RSCAN0TXQSTS5H RSCAN0.TXQSTS5.UINT16[H]
-#define RSCAN0TXQSTS5HL RSCAN0.TXQSTS5.UINT8[HL]
-#define RSCAN0TXQSTS5HH RSCAN0.TXQSTS5.UINT8[HH]
 #define RSCAN0TXQPCTR0 RSCAN0.TXQPCTR0.UINT32
 #define RSCAN0TXQPCTR0L RSCAN0.TXQPCTR0.UINT16[L]
 #define RSCAN0TXQPCTR0LL RSCAN0.TXQPCTR0.UINT8[LL]
@@ -3819,13 +3289,6 @@ struct st_rscan_from_rscan0cfidm
 #define RSCAN0TXQPCTR4H RSCAN0.TXQPCTR4.UINT16[H]
 #define RSCAN0TXQPCTR4HL RSCAN0.TXQPCTR4.UINT8[HL]
 #define RSCAN0TXQPCTR4HH RSCAN0.TXQPCTR4.UINT8[HH]
-#define RSCAN0TXQPCTR5 RSCAN0.TXQPCTR5.UINT32
-#define RSCAN0TXQPCTR5L RSCAN0.TXQPCTR5.UINT16[L]
-#define RSCAN0TXQPCTR5LL RSCAN0.TXQPCTR5.UINT8[LL]
-#define RSCAN0TXQPCTR5LH RSCAN0.TXQPCTR5.UINT8[LH]
-#define RSCAN0TXQPCTR5H RSCAN0.TXQPCTR5.UINT16[H]
-#define RSCAN0TXQPCTR5HL RSCAN0.TXQPCTR5.UINT8[HL]
-#define RSCAN0TXQPCTR5HH RSCAN0.TXQPCTR5.UINT8[HH]
 #define RSCAN0THLCC0 RSCAN0.THLCC0.UINT32
 #define RSCAN0THLCC0L RSCAN0.THLCC0.UINT16[L]
 #define RSCAN0THLCC0LL RSCAN0.THLCC0.UINT8[LL]
@@ -3861,13 +3324,6 @@ struct st_rscan_from_rscan0cfidm
 #define RSCAN0THLCC4H RSCAN0.THLCC4.UINT16[H]
 #define RSCAN0THLCC4HL RSCAN0.THLCC4.UINT8[HL]
 #define RSCAN0THLCC4HH RSCAN0.THLCC4.UINT8[HH]
-#define RSCAN0THLCC5 RSCAN0.THLCC5.UINT32
-#define RSCAN0THLCC5L RSCAN0.THLCC5.UINT16[L]
-#define RSCAN0THLCC5LL RSCAN0.THLCC5.UINT8[LL]
-#define RSCAN0THLCC5LH RSCAN0.THLCC5.UINT8[LH]
-#define RSCAN0THLCC5H RSCAN0.THLCC5.UINT16[H]
-#define RSCAN0THLCC5HL RSCAN0.THLCC5.UINT8[HL]
-#define RSCAN0THLCC5HH RSCAN0.THLCC5.UINT8[HH]
 #define RSCAN0THLSTS0 RSCAN0.THLSTS0.UINT32
 #define RSCAN0THLSTS0L RSCAN0.THLSTS0.UINT16[L]
 #define RSCAN0THLSTS0LL RSCAN0.THLSTS0.UINT8[LL]
@@ -3903,13 +3359,6 @@ struct st_rscan_from_rscan0cfidm
 #define RSCAN0THLSTS4H RSCAN0.THLSTS4.UINT16[H]
 #define RSCAN0THLSTS4HL RSCAN0.THLSTS4.UINT8[HL]
 #define RSCAN0THLSTS4HH RSCAN0.THLSTS4.UINT8[HH]
-#define RSCAN0THLSTS5 RSCAN0.THLSTS5.UINT32
-#define RSCAN0THLSTS5L RSCAN0.THLSTS5.UINT16[L]
-#define RSCAN0THLSTS5LL RSCAN0.THLSTS5.UINT8[LL]
-#define RSCAN0THLSTS5LH RSCAN0.THLSTS5.UINT8[LH]
-#define RSCAN0THLSTS5H RSCAN0.THLSTS5.UINT16[H]
-#define RSCAN0THLSTS5HL RSCAN0.THLSTS5.UINT8[HL]
-#define RSCAN0THLSTS5HH RSCAN0.THLSTS5.UINT8[HH]
 #define RSCAN0THLPCTR0 RSCAN0.THLPCTR0.UINT32
 #define RSCAN0THLPCTR0L RSCAN0.THLPCTR0.UINT16[L]
 #define RSCAN0THLPCTR0LL RSCAN0.THLPCTR0.UINT8[LL]
@@ -3945,13 +3394,6 @@ struct st_rscan_from_rscan0cfidm
 #define RSCAN0THLPCTR4H RSCAN0.THLPCTR4.UINT16[H]
 #define RSCAN0THLPCTR4HL RSCAN0.THLPCTR4.UINT8[HL]
 #define RSCAN0THLPCTR4HH RSCAN0.THLPCTR4.UINT8[HH]
-#define RSCAN0THLPCTR5 RSCAN0.THLPCTR5.UINT32
-#define RSCAN0THLPCTR5L RSCAN0.THLPCTR5.UINT16[L]
-#define RSCAN0THLPCTR5LL RSCAN0.THLPCTR5.UINT8[LL]
-#define RSCAN0THLPCTR5LH RSCAN0.THLPCTR5.UINT8[LH]
-#define RSCAN0THLPCTR5H RSCAN0.THLPCTR5.UINT16[H]
-#define RSCAN0THLPCTR5HL RSCAN0.THLPCTR5.UINT8[HL]
-#define RSCAN0THLPCTR5HH RSCAN0.THLPCTR5.UINT8[HH]
 #define RSCAN0GTINTSTS0 RSCAN0.GTINTSTS0.UINT32
 #define RSCAN0GTINTSTS0L RSCAN0.GTINTSTS0.UINT16[L]
 #define RSCAN0GTINTSTS0LL RSCAN0.GTINTSTS0.UINT8[LL]
@@ -6671,454 +6113,6 @@ struct st_rscan_from_rscan0cfidm
 #define RSCAN0RMDF179H RSCAN0.RMDF179.UINT16[H]
 #define RSCAN0RMDF179HL RSCAN0.RMDF179.UINT8[HL]
 #define RSCAN0RMDF179HH RSCAN0.RMDF179.UINT8[HH]
-#define RSCAN0RMID80 RSCAN0.RMID80.UINT32
-#define RSCAN0RMID80L RSCAN0.RMID80.UINT16[L]
-#define RSCAN0RMID80LL RSCAN0.RMID80.UINT8[LL]
-#define RSCAN0RMID80LH RSCAN0.RMID80.UINT8[LH]
-#define RSCAN0RMID80H RSCAN0.RMID80.UINT16[H]
-#define RSCAN0RMID80HL RSCAN0.RMID80.UINT8[HL]
-#define RSCAN0RMID80HH RSCAN0.RMID80.UINT8[HH]
-#define RSCAN0RMPTR80 RSCAN0.RMPTR80.UINT32
-#define RSCAN0RMPTR80L RSCAN0.RMPTR80.UINT16[L]
-#define RSCAN0RMPTR80LL RSCAN0.RMPTR80.UINT8[LL]
-#define RSCAN0RMPTR80LH RSCAN0.RMPTR80.UINT8[LH]
-#define RSCAN0RMPTR80H RSCAN0.RMPTR80.UINT16[H]
-#define RSCAN0RMPTR80HL RSCAN0.RMPTR80.UINT8[HL]
-#define RSCAN0RMPTR80HH RSCAN0.RMPTR80.UINT8[HH]
-#define RSCAN0RMDF080 RSCAN0.RMDF080.UINT32
-#define RSCAN0RMDF080L RSCAN0.RMDF080.UINT16[L]
-#define RSCAN0RMDF080LL RSCAN0.RMDF080.UINT8[LL]
-#define RSCAN0RMDF080LH RSCAN0.RMDF080.UINT8[LH]
-#define RSCAN0RMDF080H RSCAN0.RMDF080.UINT16[H]
-#define RSCAN0RMDF080HL RSCAN0.RMDF080.UINT8[HL]
-#define RSCAN0RMDF080HH RSCAN0.RMDF080.UINT8[HH]
-#define RSCAN0RMDF180 RSCAN0.RMDF180.UINT32
-#define RSCAN0RMDF180L RSCAN0.RMDF180.UINT16[L]
-#define RSCAN0RMDF180LL RSCAN0.RMDF180.UINT8[LL]
-#define RSCAN0RMDF180LH RSCAN0.RMDF180.UINT8[LH]
-#define RSCAN0RMDF180H RSCAN0.RMDF180.UINT16[H]
-#define RSCAN0RMDF180HL RSCAN0.RMDF180.UINT8[HL]
-#define RSCAN0RMDF180HH RSCAN0.RMDF180.UINT8[HH]
-#define RSCAN0RMID81 RSCAN0.RMID81.UINT32
-#define RSCAN0RMID81L RSCAN0.RMID81.UINT16[L]
-#define RSCAN0RMID81LL RSCAN0.RMID81.UINT8[LL]
-#define RSCAN0RMID81LH RSCAN0.RMID81.UINT8[LH]
-#define RSCAN0RMID81H RSCAN0.RMID81.UINT16[H]
-#define RSCAN0RMID81HL RSCAN0.RMID81.UINT8[HL]
-#define RSCAN0RMID81HH RSCAN0.RMID81.UINT8[HH]
-#define RSCAN0RMPTR81 RSCAN0.RMPTR81.UINT32
-#define RSCAN0RMPTR81L RSCAN0.RMPTR81.UINT16[L]
-#define RSCAN0RMPTR81LL RSCAN0.RMPTR81.UINT8[LL]
-#define RSCAN0RMPTR81LH RSCAN0.RMPTR81.UINT8[LH]
-#define RSCAN0RMPTR81H RSCAN0.RMPTR81.UINT16[H]
-#define RSCAN0RMPTR81HL RSCAN0.RMPTR81.UINT8[HL]
-#define RSCAN0RMPTR81HH RSCAN0.RMPTR81.UINT8[HH]
-#define RSCAN0RMDF081 RSCAN0.RMDF081.UINT32
-#define RSCAN0RMDF081L RSCAN0.RMDF081.UINT16[L]
-#define RSCAN0RMDF081LL RSCAN0.RMDF081.UINT8[LL]
-#define RSCAN0RMDF081LH RSCAN0.RMDF081.UINT8[LH]
-#define RSCAN0RMDF081H RSCAN0.RMDF081.UINT16[H]
-#define RSCAN0RMDF081HL RSCAN0.RMDF081.UINT8[HL]
-#define RSCAN0RMDF081HH RSCAN0.RMDF081.UINT8[HH]
-#define RSCAN0RMDF181 RSCAN0.RMDF181.UINT32
-#define RSCAN0RMDF181L RSCAN0.RMDF181.UINT16[L]
-#define RSCAN0RMDF181LL RSCAN0.RMDF181.UINT8[LL]
-#define RSCAN0RMDF181LH RSCAN0.RMDF181.UINT8[LH]
-#define RSCAN0RMDF181H RSCAN0.RMDF181.UINT16[H]
-#define RSCAN0RMDF181HL RSCAN0.RMDF181.UINT8[HL]
-#define RSCAN0RMDF181HH RSCAN0.RMDF181.UINT8[HH]
-#define RSCAN0RMID82 RSCAN0.RMID82.UINT32
-#define RSCAN0RMID82L RSCAN0.RMID82.UINT16[L]
-#define RSCAN0RMID82LL RSCAN0.RMID82.UINT8[LL]
-#define RSCAN0RMID82LH RSCAN0.RMID82.UINT8[LH]
-#define RSCAN0RMID82H RSCAN0.RMID82.UINT16[H]
-#define RSCAN0RMID82HL RSCAN0.RMID82.UINT8[HL]
-#define RSCAN0RMID82HH RSCAN0.RMID82.UINT8[HH]
-#define RSCAN0RMPTR82 RSCAN0.RMPTR82.UINT32
-#define RSCAN0RMPTR82L RSCAN0.RMPTR82.UINT16[L]
-#define RSCAN0RMPTR82LL RSCAN0.RMPTR82.UINT8[LL]
-#define RSCAN0RMPTR82LH RSCAN0.RMPTR82.UINT8[LH]
-#define RSCAN0RMPTR82H RSCAN0.RMPTR82.UINT16[H]
-#define RSCAN0RMPTR82HL RSCAN0.RMPTR82.UINT8[HL]
-#define RSCAN0RMPTR82HH RSCAN0.RMPTR82.UINT8[HH]
-#define RSCAN0RMDF082 RSCAN0.RMDF082.UINT32
-#define RSCAN0RMDF082L RSCAN0.RMDF082.UINT16[L]
-#define RSCAN0RMDF082LL RSCAN0.RMDF082.UINT8[LL]
-#define RSCAN0RMDF082LH RSCAN0.RMDF082.UINT8[LH]
-#define RSCAN0RMDF082H RSCAN0.RMDF082.UINT16[H]
-#define RSCAN0RMDF082HL RSCAN0.RMDF082.UINT8[HL]
-#define RSCAN0RMDF082HH RSCAN0.RMDF082.UINT8[HH]
-#define RSCAN0RMDF182 RSCAN0.RMDF182.UINT32
-#define RSCAN0RMDF182L RSCAN0.RMDF182.UINT16[L]
-#define RSCAN0RMDF182LL RSCAN0.RMDF182.UINT8[LL]
-#define RSCAN0RMDF182LH RSCAN0.RMDF182.UINT8[LH]
-#define RSCAN0RMDF182H RSCAN0.RMDF182.UINT16[H]
-#define RSCAN0RMDF182HL RSCAN0.RMDF182.UINT8[HL]
-#define RSCAN0RMDF182HH RSCAN0.RMDF182.UINT8[HH]
-#define RSCAN0RMID83 RSCAN0.RMID83.UINT32
-#define RSCAN0RMID83L RSCAN0.RMID83.UINT16[L]
-#define RSCAN0RMID83LL RSCAN0.RMID83.UINT8[LL]
-#define RSCAN0RMID83LH RSCAN0.RMID83.UINT8[LH]
-#define RSCAN0RMID83H RSCAN0.RMID83.UINT16[H]
-#define RSCAN0RMID83HL RSCAN0.RMID83.UINT8[HL]
-#define RSCAN0RMID83HH RSCAN0.RMID83.UINT8[HH]
-#define RSCAN0RMPTR83 RSCAN0.RMPTR83.UINT32
-#define RSCAN0RMPTR83L RSCAN0.RMPTR83.UINT16[L]
-#define RSCAN0RMPTR83LL RSCAN0.RMPTR83.UINT8[LL]
-#define RSCAN0RMPTR83LH RSCAN0.RMPTR83.UINT8[LH]
-#define RSCAN0RMPTR83H RSCAN0.RMPTR83.UINT16[H]
-#define RSCAN0RMPTR83HL RSCAN0.RMPTR83.UINT8[HL]
-#define RSCAN0RMPTR83HH RSCAN0.RMPTR83.UINT8[HH]
-#define RSCAN0RMDF083 RSCAN0.RMDF083.UINT32
-#define RSCAN0RMDF083L RSCAN0.RMDF083.UINT16[L]
-#define RSCAN0RMDF083LL RSCAN0.RMDF083.UINT8[LL]
-#define RSCAN0RMDF083LH RSCAN0.RMDF083.UINT8[LH]
-#define RSCAN0RMDF083H RSCAN0.RMDF083.UINT16[H]
-#define RSCAN0RMDF083HL RSCAN0.RMDF083.UINT8[HL]
-#define RSCAN0RMDF083HH RSCAN0.RMDF083.UINT8[HH]
-#define RSCAN0RMDF183 RSCAN0.RMDF183.UINT32
-#define RSCAN0RMDF183L RSCAN0.RMDF183.UINT16[L]
-#define RSCAN0RMDF183LL RSCAN0.RMDF183.UINT8[LL]
-#define RSCAN0RMDF183LH RSCAN0.RMDF183.UINT8[LH]
-#define RSCAN0RMDF183H RSCAN0.RMDF183.UINT16[H]
-#define RSCAN0RMDF183HL RSCAN0.RMDF183.UINT8[HL]
-#define RSCAN0RMDF183HH RSCAN0.RMDF183.UINT8[HH]
-#define RSCAN0RMID84 RSCAN0.RMID84.UINT32
-#define RSCAN0RMID84L RSCAN0.RMID84.UINT16[L]
-#define RSCAN0RMID84LL RSCAN0.RMID84.UINT8[LL]
-#define RSCAN0RMID84LH RSCAN0.RMID84.UINT8[LH]
-#define RSCAN0RMID84H RSCAN0.RMID84.UINT16[H]
-#define RSCAN0RMID84HL RSCAN0.RMID84.UINT8[HL]
-#define RSCAN0RMID84HH RSCAN0.RMID84.UINT8[HH]
-#define RSCAN0RMPTR84 RSCAN0.RMPTR84.UINT32
-#define RSCAN0RMPTR84L RSCAN0.RMPTR84.UINT16[L]
-#define RSCAN0RMPTR84LL RSCAN0.RMPTR84.UINT8[LL]
-#define RSCAN0RMPTR84LH RSCAN0.RMPTR84.UINT8[LH]
-#define RSCAN0RMPTR84H RSCAN0.RMPTR84.UINT16[H]
-#define RSCAN0RMPTR84HL RSCAN0.RMPTR84.UINT8[HL]
-#define RSCAN0RMPTR84HH RSCAN0.RMPTR84.UINT8[HH]
-#define RSCAN0RMDF084 RSCAN0.RMDF084.UINT32
-#define RSCAN0RMDF084L RSCAN0.RMDF084.UINT16[L]
-#define RSCAN0RMDF084LL RSCAN0.RMDF084.UINT8[LL]
-#define RSCAN0RMDF084LH RSCAN0.RMDF084.UINT8[LH]
-#define RSCAN0RMDF084H RSCAN0.RMDF084.UINT16[H]
-#define RSCAN0RMDF084HL RSCAN0.RMDF084.UINT8[HL]
-#define RSCAN0RMDF084HH RSCAN0.RMDF084.UINT8[HH]
-#define RSCAN0RMDF184 RSCAN0.RMDF184.UINT32
-#define RSCAN0RMDF184L RSCAN0.RMDF184.UINT16[L]
-#define RSCAN0RMDF184LL RSCAN0.RMDF184.UINT8[LL]
-#define RSCAN0RMDF184LH RSCAN0.RMDF184.UINT8[LH]
-#define RSCAN0RMDF184H RSCAN0.RMDF184.UINT16[H]
-#define RSCAN0RMDF184HL RSCAN0.RMDF184.UINT8[HL]
-#define RSCAN0RMDF184HH RSCAN0.RMDF184.UINT8[HH]
-#define RSCAN0RMID85 RSCAN0.RMID85.UINT32
-#define RSCAN0RMID85L RSCAN0.RMID85.UINT16[L]
-#define RSCAN0RMID85LL RSCAN0.RMID85.UINT8[LL]
-#define RSCAN0RMID85LH RSCAN0.RMID85.UINT8[LH]
-#define RSCAN0RMID85H RSCAN0.RMID85.UINT16[H]
-#define RSCAN0RMID85HL RSCAN0.RMID85.UINT8[HL]
-#define RSCAN0RMID85HH RSCAN0.RMID85.UINT8[HH]
-#define RSCAN0RMPTR85 RSCAN0.RMPTR85.UINT32
-#define RSCAN0RMPTR85L RSCAN0.RMPTR85.UINT16[L]
-#define RSCAN0RMPTR85LL RSCAN0.RMPTR85.UINT8[LL]
-#define RSCAN0RMPTR85LH RSCAN0.RMPTR85.UINT8[LH]
-#define RSCAN0RMPTR85H RSCAN0.RMPTR85.UINT16[H]
-#define RSCAN0RMPTR85HL RSCAN0.RMPTR85.UINT8[HL]
-#define RSCAN0RMPTR85HH RSCAN0.RMPTR85.UINT8[HH]
-#define RSCAN0RMDF085 RSCAN0.RMDF085.UINT32
-#define RSCAN0RMDF085L RSCAN0.RMDF085.UINT16[L]
-#define RSCAN0RMDF085LL RSCAN0.RMDF085.UINT8[LL]
-#define RSCAN0RMDF085LH RSCAN0.RMDF085.UINT8[LH]
-#define RSCAN0RMDF085H RSCAN0.RMDF085.UINT16[H]
-#define RSCAN0RMDF085HL RSCAN0.RMDF085.UINT8[HL]
-#define RSCAN0RMDF085HH RSCAN0.RMDF085.UINT8[HH]
-#define RSCAN0RMDF185 RSCAN0.RMDF185.UINT32
-#define RSCAN0RMDF185L RSCAN0.RMDF185.UINT16[L]
-#define RSCAN0RMDF185LL RSCAN0.RMDF185.UINT8[LL]
-#define RSCAN0RMDF185LH RSCAN0.RMDF185.UINT8[LH]
-#define RSCAN0RMDF185H RSCAN0.RMDF185.UINT16[H]
-#define RSCAN0RMDF185HL RSCAN0.RMDF185.UINT8[HL]
-#define RSCAN0RMDF185HH RSCAN0.RMDF185.UINT8[HH]
-#define RSCAN0RMID86 RSCAN0.RMID86.UINT32
-#define RSCAN0RMID86L RSCAN0.RMID86.UINT16[L]
-#define RSCAN0RMID86LL RSCAN0.RMID86.UINT8[LL]
-#define RSCAN0RMID86LH RSCAN0.RMID86.UINT8[LH]
-#define RSCAN0RMID86H RSCAN0.RMID86.UINT16[H]
-#define RSCAN0RMID86HL RSCAN0.RMID86.UINT8[HL]
-#define RSCAN0RMID86HH RSCAN0.RMID86.UINT8[HH]
-#define RSCAN0RMPTR86 RSCAN0.RMPTR86.UINT32
-#define RSCAN0RMPTR86L RSCAN0.RMPTR86.UINT16[L]
-#define RSCAN0RMPTR86LL RSCAN0.RMPTR86.UINT8[LL]
-#define RSCAN0RMPTR86LH RSCAN0.RMPTR86.UINT8[LH]
-#define RSCAN0RMPTR86H RSCAN0.RMPTR86.UINT16[H]
-#define RSCAN0RMPTR86HL RSCAN0.RMPTR86.UINT8[HL]
-#define RSCAN0RMPTR86HH RSCAN0.RMPTR86.UINT8[HH]
-#define RSCAN0RMDF086 RSCAN0.RMDF086.UINT32
-#define RSCAN0RMDF086L RSCAN0.RMDF086.UINT16[L]
-#define RSCAN0RMDF086LL RSCAN0.RMDF086.UINT8[LL]
-#define RSCAN0RMDF086LH RSCAN0.RMDF086.UINT8[LH]
-#define RSCAN0RMDF086H RSCAN0.RMDF086.UINT16[H]
-#define RSCAN0RMDF086HL RSCAN0.RMDF086.UINT8[HL]
-#define RSCAN0RMDF086HH RSCAN0.RMDF086.UINT8[HH]
-#define RSCAN0RMDF186 RSCAN0.RMDF186.UINT32
-#define RSCAN0RMDF186L RSCAN0.RMDF186.UINT16[L]
-#define RSCAN0RMDF186LL RSCAN0.RMDF186.UINT8[LL]
-#define RSCAN0RMDF186LH RSCAN0.RMDF186.UINT8[LH]
-#define RSCAN0RMDF186H RSCAN0.RMDF186.UINT16[H]
-#define RSCAN0RMDF186HL RSCAN0.RMDF186.UINT8[HL]
-#define RSCAN0RMDF186HH RSCAN0.RMDF186.UINT8[HH]
-#define RSCAN0RMID87 RSCAN0.RMID87.UINT32
-#define RSCAN0RMID87L RSCAN0.RMID87.UINT16[L]
-#define RSCAN0RMID87LL RSCAN0.RMID87.UINT8[LL]
-#define RSCAN0RMID87LH RSCAN0.RMID87.UINT8[LH]
-#define RSCAN0RMID87H RSCAN0.RMID87.UINT16[H]
-#define RSCAN0RMID87HL RSCAN0.RMID87.UINT8[HL]
-#define RSCAN0RMID87HH RSCAN0.RMID87.UINT8[HH]
-#define RSCAN0RMPTR87 RSCAN0.RMPTR87.UINT32
-#define RSCAN0RMPTR87L RSCAN0.RMPTR87.UINT16[L]
-#define RSCAN0RMPTR87LL RSCAN0.RMPTR87.UINT8[LL]
-#define RSCAN0RMPTR87LH RSCAN0.RMPTR87.UINT8[LH]
-#define RSCAN0RMPTR87H RSCAN0.RMPTR87.UINT16[H]
-#define RSCAN0RMPTR87HL RSCAN0.RMPTR87.UINT8[HL]
-#define RSCAN0RMPTR87HH RSCAN0.RMPTR87.UINT8[HH]
-#define RSCAN0RMDF087 RSCAN0.RMDF087.UINT32
-#define RSCAN0RMDF087L RSCAN0.RMDF087.UINT16[L]
-#define RSCAN0RMDF087LL RSCAN0.RMDF087.UINT8[LL]
-#define RSCAN0RMDF087LH RSCAN0.RMDF087.UINT8[LH]
-#define RSCAN0RMDF087H RSCAN0.RMDF087.UINT16[H]
-#define RSCAN0RMDF087HL RSCAN0.RMDF087.UINT8[HL]
-#define RSCAN0RMDF087HH RSCAN0.RMDF087.UINT8[HH]
-#define RSCAN0RMDF187 RSCAN0.RMDF187.UINT32
-#define RSCAN0RMDF187L RSCAN0.RMDF187.UINT16[L]
-#define RSCAN0RMDF187LL RSCAN0.RMDF187.UINT8[LL]
-#define RSCAN0RMDF187LH RSCAN0.RMDF187.UINT8[LH]
-#define RSCAN0RMDF187H RSCAN0.RMDF187.UINT16[H]
-#define RSCAN0RMDF187HL RSCAN0.RMDF187.UINT8[HL]
-#define RSCAN0RMDF187HH RSCAN0.RMDF187.UINT8[HH]
-#define RSCAN0RMID88 RSCAN0.RMID88.UINT32
-#define RSCAN0RMID88L RSCAN0.RMID88.UINT16[L]
-#define RSCAN0RMID88LL RSCAN0.RMID88.UINT8[LL]
-#define RSCAN0RMID88LH RSCAN0.RMID88.UINT8[LH]
-#define RSCAN0RMID88H RSCAN0.RMID88.UINT16[H]
-#define RSCAN0RMID88HL RSCAN0.RMID88.UINT8[HL]
-#define RSCAN0RMID88HH RSCAN0.RMID88.UINT8[HH]
-#define RSCAN0RMPTR88 RSCAN0.RMPTR88.UINT32
-#define RSCAN0RMPTR88L RSCAN0.RMPTR88.UINT16[L]
-#define RSCAN0RMPTR88LL RSCAN0.RMPTR88.UINT8[LL]
-#define RSCAN0RMPTR88LH RSCAN0.RMPTR88.UINT8[LH]
-#define RSCAN0RMPTR88H RSCAN0.RMPTR88.UINT16[H]
-#define RSCAN0RMPTR88HL RSCAN0.RMPTR88.UINT8[HL]
-#define RSCAN0RMPTR88HH RSCAN0.RMPTR88.UINT8[HH]
-#define RSCAN0RMDF088 RSCAN0.RMDF088.UINT32
-#define RSCAN0RMDF088L RSCAN0.RMDF088.UINT16[L]
-#define RSCAN0RMDF088LL RSCAN0.RMDF088.UINT8[LL]
-#define RSCAN0RMDF088LH RSCAN0.RMDF088.UINT8[LH]
-#define RSCAN0RMDF088H RSCAN0.RMDF088.UINT16[H]
-#define RSCAN0RMDF088HL RSCAN0.RMDF088.UINT8[HL]
-#define RSCAN0RMDF088HH RSCAN0.RMDF088.UINT8[HH]
-#define RSCAN0RMDF188 RSCAN0.RMDF188.UINT32
-#define RSCAN0RMDF188L RSCAN0.RMDF188.UINT16[L]
-#define RSCAN0RMDF188LL RSCAN0.RMDF188.UINT8[LL]
-#define RSCAN0RMDF188LH RSCAN0.RMDF188.UINT8[LH]
-#define RSCAN0RMDF188H RSCAN0.RMDF188.UINT16[H]
-#define RSCAN0RMDF188HL RSCAN0.RMDF188.UINT8[HL]
-#define RSCAN0RMDF188HH RSCAN0.RMDF188.UINT8[HH]
-#define RSCAN0RMID89 RSCAN0.RMID89.UINT32
-#define RSCAN0RMID89L RSCAN0.RMID89.UINT16[L]
-#define RSCAN0RMID89LL RSCAN0.RMID89.UINT8[LL]
-#define RSCAN0RMID89LH RSCAN0.RMID89.UINT8[LH]
-#define RSCAN0RMID89H RSCAN0.RMID89.UINT16[H]
-#define RSCAN0RMID89HL RSCAN0.RMID89.UINT8[HL]
-#define RSCAN0RMID89HH RSCAN0.RMID89.UINT8[HH]
-#define RSCAN0RMPTR89 RSCAN0.RMPTR89.UINT32
-#define RSCAN0RMPTR89L RSCAN0.RMPTR89.UINT16[L]
-#define RSCAN0RMPTR89LL RSCAN0.RMPTR89.UINT8[LL]
-#define RSCAN0RMPTR89LH RSCAN0.RMPTR89.UINT8[LH]
-#define RSCAN0RMPTR89H RSCAN0.RMPTR89.UINT16[H]
-#define RSCAN0RMPTR89HL RSCAN0.RMPTR89.UINT8[HL]
-#define RSCAN0RMPTR89HH RSCAN0.RMPTR89.UINT8[HH]
-#define RSCAN0RMDF089 RSCAN0.RMDF089.UINT32
-#define RSCAN0RMDF089L RSCAN0.RMDF089.UINT16[L]
-#define RSCAN0RMDF089LL RSCAN0.RMDF089.UINT8[LL]
-#define RSCAN0RMDF089LH RSCAN0.RMDF089.UINT8[LH]
-#define RSCAN0RMDF089H RSCAN0.RMDF089.UINT16[H]
-#define RSCAN0RMDF089HL RSCAN0.RMDF089.UINT8[HL]
-#define RSCAN0RMDF089HH RSCAN0.RMDF089.UINT8[HH]
-#define RSCAN0RMDF189 RSCAN0.RMDF189.UINT32
-#define RSCAN0RMDF189L RSCAN0.RMDF189.UINT16[L]
-#define RSCAN0RMDF189LL RSCAN0.RMDF189.UINT8[LL]
-#define RSCAN0RMDF189LH RSCAN0.RMDF189.UINT8[LH]
-#define RSCAN0RMDF189H RSCAN0.RMDF189.UINT16[H]
-#define RSCAN0RMDF189HL RSCAN0.RMDF189.UINT8[HL]
-#define RSCAN0RMDF189HH RSCAN0.RMDF189.UINT8[HH]
-#define RSCAN0RMID90 RSCAN0.RMID90.UINT32
-#define RSCAN0RMID90L RSCAN0.RMID90.UINT16[L]
-#define RSCAN0RMID90LL RSCAN0.RMID90.UINT8[LL]
-#define RSCAN0RMID90LH RSCAN0.RMID90.UINT8[LH]
-#define RSCAN0RMID90H RSCAN0.RMID90.UINT16[H]
-#define RSCAN0RMID90HL RSCAN0.RMID90.UINT8[HL]
-#define RSCAN0RMID90HH RSCAN0.RMID90.UINT8[HH]
-#define RSCAN0RMPTR90 RSCAN0.RMPTR90.UINT32
-#define RSCAN0RMPTR90L RSCAN0.RMPTR90.UINT16[L]
-#define RSCAN0RMPTR90LL RSCAN0.RMPTR90.UINT8[LL]
-#define RSCAN0RMPTR90LH RSCAN0.RMPTR90.UINT8[LH]
-#define RSCAN0RMPTR90H RSCAN0.RMPTR90.UINT16[H]
-#define RSCAN0RMPTR90HL RSCAN0.RMPTR90.UINT8[HL]
-#define RSCAN0RMPTR90HH RSCAN0.RMPTR90.UINT8[HH]
-#define RSCAN0RMDF090 RSCAN0.RMDF090.UINT32
-#define RSCAN0RMDF090L RSCAN0.RMDF090.UINT16[L]
-#define RSCAN0RMDF090LL RSCAN0.RMDF090.UINT8[LL]
-#define RSCAN0RMDF090LH RSCAN0.RMDF090.UINT8[LH]
-#define RSCAN0RMDF090H RSCAN0.RMDF090.UINT16[H]
-#define RSCAN0RMDF090HL RSCAN0.RMDF090.UINT8[HL]
-#define RSCAN0RMDF090HH RSCAN0.RMDF090.UINT8[HH]
-#define RSCAN0RMDF190 RSCAN0.RMDF190.UINT32
-#define RSCAN0RMDF190L RSCAN0.RMDF190.UINT16[L]
-#define RSCAN0RMDF190LL RSCAN0.RMDF190.UINT8[LL]
-#define RSCAN0RMDF190LH RSCAN0.RMDF190.UINT8[LH]
-#define RSCAN0RMDF190H RSCAN0.RMDF190.UINT16[H]
-#define RSCAN0RMDF190HL RSCAN0.RMDF190.UINT8[HL]
-#define RSCAN0RMDF190HH RSCAN0.RMDF190.UINT8[HH]
-#define RSCAN0RMID91 RSCAN0.RMID91.UINT32
-#define RSCAN0RMID91L RSCAN0.RMID91.UINT16[L]
-#define RSCAN0RMID91LL RSCAN0.RMID91.UINT8[LL]
-#define RSCAN0RMID91LH RSCAN0.RMID91.UINT8[LH]
-#define RSCAN0RMID91H RSCAN0.RMID91.UINT16[H]
-#define RSCAN0RMID91HL RSCAN0.RMID91.UINT8[HL]
-#define RSCAN0RMID91HH RSCAN0.RMID91.UINT8[HH]
-#define RSCAN0RMPTR91 RSCAN0.RMPTR91.UINT32
-#define RSCAN0RMPTR91L RSCAN0.RMPTR91.UINT16[L]
-#define RSCAN0RMPTR91LL RSCAN0.RMPTR91.UINT8[LL]
-#define RSCAN0RMPTR91LH RSCAN0.RMPTR91.UINT8[LH]
-#define RSCAN0RMPTR91H RSCAN0.RMPTR91.UINT16[H]
-#define RSCAN0RMPTR91HL RSCAN0.RMPTR91.UINT8[HL]
-#define RSCAN0RMPTR91HH RSCAN0.RMPTR91.UINT8[HH]
-#define RSCAN0RMDF091 RSCAN0.RMDF091.UINT32
-#define RSCAN0RMDF091L RSCAN0.RMDF091.UINT16[L]
-#define RSCAN0RMDF091LL RSCAN0.RMDF091.UINT8[LL]
-#define RSCAN0RMDF091LH RSCAN0.RMDF091.UINT8[LH]
-#define RSCAN0RMDF091H RSCAN0.RMDF091.UINT16[H]
-#define RSCAN0RMDF091HL RSCAN0.RMDF091.UINT8[HL]
-#define RSCAN0RMDF091HH RSCAN0.RMDF091.UINT8[HH]
-#define RSCAN0RMDF191 RSCAN0.RMDF191.UINT32
-#define RSCAN0RMDF191L RSCAN0.RMDF191.UINT16[L]
-#define RSCAN0RMDF191LL RSCAN0.RMDF191.UINT8[LL]
-#define RSCAN0RMDF191LH RSCAN0.RMDF191.UINT8[LH]
-#define RSCAN0RMDF191H RSCAN0.RMDF191.UINT16[H]
-#define RSCAN0RMDF191HL RSCAN0.RMDF191.UINT8[HL]
-#define RSCAN0RMDF191HH RSCAN0.RMDF191.UINT8[HH]
-#define RSCAN0RMID92 RSCAN0.RMID92.UINT32
-#define RSCAN0RMID92L RSCAN0.RMID92.UINT16[L]
-#define RSCAN0RMID92LL RSCAN0.RMID92.UINT8[LL]
-#define RSCAN0RMID92LH RSCAN0.RMID92.UINT8[LH]
-#define RSCAN0RMID92H RSCAN0.RMID92.UINT16[H]
-#define RSCAN0RMID92HL RSCAN0.RMID92.UINT8[HL]
-#define RSCAN0RMID92HH RSCAN0.RMID92.UINT8[HH]
-#define RSCAN0RMPTR92 RSCAN0.RMPTR92.UINT32
-#define RSCAN0RMPTR92L RSCAN0.RMPTR92.UINT16[L]
-#define RSCAN0RMPTR92LL RSCAN0.RMPTR92.UINT8[LL]
-#define RSCAN0RMPTR92LH RSCAN0.RMPTR92.UINT8[LH]
-#define RSCAN0RMPTR92H RSCAN0.RMPTR92.UINT16[H]
-#define RSCAN0RMPTR92HL RSCAN0.RMPTR92.UINT8[HL]
-#define RSCAN0RMPTR92HH RSCAN0.RMPTR92.UINT8[HH]
-#define RSCAN0RMDF092 RSCAN0.RMDF092.UINT32
-#define RSCAN0RMDF092L RSCAN0.RMDF092.UINT16[L]
-#define RSCAN0RMDF092LL RSCAN0.RMDF092.UINT8[LL]
-#define RSCAN0RMDF092LH RSCAN0.RMDF092.UINT8[LH]
-#define RSCAN0RMDF092H RSCAN0.RMDF092.UINT16[H]
-#define RSCAN0RMDF092HL RSCAN0.RMDF092.UINT8[HL]
-#define RSCAN0RMDF092HH RSCAN0.RMDF092.UINT8[HH]
-#define RSCAN0RMDF192 RSCAN0.RMDF192.UINT32
-#define RSCAN0RMDF192L RSCAN0.RMDF192.UINT16[L]
-#define RSCAN0RMDF192LL RSCAN0.RMDF192.UINT8[LL]
-#define RSCAN0RMDF192LH RSCAN0.RMDF192.UINT8[LH]
-#define RSCAN0RMDF192H RSCAN0.RMDF192.UINT16[H]
-#define RSCAN0RMDF192HL RSCAN0.RMDF192.UINT8[HL]
-#define RSCAN0RMDF192HH RSCAN0.RMDF192.UINT8[HH]
-#define RSCAN0RMID93 RSCAN0.RMID93.UINT32
-#define RSCAN0RMID93L RSCAN0.RMID93.UINT16[L]
-#define RSCAN0RMID93LL RSCAN0.RMID93.UINT8[LL]
-#define RSCAN0RMID93LH RSCAN0.RMID93.UINT8[LH]
-#define RSCAN0RMID93H RSCAN0.RMID93.UINT16[H]
-#define RSCAN0RMID93HL RSCAN0.RMID93.UINT8[HL]
-#define RSCAN0RMID93HH RSCAN0.RMID93.UINT8[HH]
-#define RSCAN0RMPTR93 RSCAN0.RMPTR93.UINT32
-#define RSCAN0RMPTR93L RSCAN0.RMPTR93.UINT16[L]
-#define RSCAN0RMPTR93LL RSCAN0.RMPTR93.UINT8[LL]
-#define RSCAN0RMPTR93LH RSCAN0.RMPTR93.UINT8[LH]
-#define RSCAN0RMPTR93H RSCAN0.RMPTR93.UINT16[H]
-#define RSCAN0RMPTR93HL RSCAN0.RMPTR93.UINT8[HL]
-#define RSCAN0RMPTR93HH RSCAN0.RMPTR93.UINT8[HH]
-#define RSCAN0RMDF093 RSCAN0.RMDF093.UINT32
-#define RSCAN0RMDF093L RSCAN0.RMDF093.UINT16[L]
-#define RSCAN0RMDF093LL RSCAN0.RMDF093.UINT8[LL]
-#define RSCAN0RMDF093LH RSCAN0.RMDF093.UINT8[LH]
-#define RSCAN0RMDF093H RSCAN0.RMDF093.UINT16[H]
-#define RSCAN0RMDF093HL RSCAN0.RMDF093.UINT8[HL]
-#define RSCAN0RMDF093HH RSCAN0.RMDF093.UINT8[HH]
-#define RSCAN0RMDF193 RSCAN0.RMDF193.UINT32
-#define RSCAN0RMDF193L RSCAN0.RMDF193.UINT16[L]
-#define RSCAN0RMDF193LL RSCAN0.RMDF193.UINT8[LL]
-#define RSCAN0RMDF193LH RSCAN0.RMDF193.UINT8[LH]
-#define RSCAN0RMDF193H RSCAN0.RMDF193.UINT16[H]
-#define RSCAN0RMDF193HL RSCAN0.RMDF193.UINT8[HL]
-#define RSCAN0RMDF193HH RSCAN0.RMDF193.UINT8[HH]
-#define RSCAN0RMID94 RSCAN0.RMID94.UINT32
-#define RSCAN0RMID94L RSCAN0.RMID94.UINT16[L]
-#define RSCAN0RMID94LL RSCAN0.RMID94.UINT8[LL]
-#define RSCAN0RMID94LH RSCAN0.RMID94.UINT8[LH]
-#define RSCAN0RMID94H RSCAN0.RMID94.UINT16[H]
-#define RSCAN0RMID94HL RSCAN0.RMID94.UINT8[HL]
-#define RSCAN0RMID94HH RSCAN0.RMID94.UINT8[HH]
-#define RSCAN0RMPTR94 RSCAN0.RMPTR94.UINT32
-#define RSCAN0RMPTR94L RSCAN0.RMPTR94.UINT16[L]
-#define RSCAN0RMPTR94LL RSCAN0.RMPTR94.UINT8[LL]
-#define RSCAN0RMPTR94LH RSCAN0.RMPTR94.UINT8[LH]
-#define RSCAN0RMPTR94H RSCAN0.RMPTR94.UINT16[H]
-#define RSCAN0RMPTR94HL RSCAN0.RMPTR94.UINT8[HL]
-#define RSCAN0RMPTR94HH RSCAN0.RMPTR94.UINT8[HH]
-#define RSCAN0RMDF094 RSCAN0.RMDF094.UINT32
-#define RSCAN0RMDF094L RSCAN0.RMDF094.UINT16[L]
-#define RSCAN0RMDF094LL RSCAN0.RMDF094.UINT8[LL]
-#define RSCAN0RMDF094LH RSCAN0.RMDF094.UINT8[LH]
-#define RSCAN0RMDF094H RSCAN0.RMDF094.UINT16[H]
-#define RSCAN0RMDF094HL RSCAN0.RMDF094.UINT8[HL]
-#define RSCAN0RMDF094HH RSCAN0.RMDF094.UINT8[HH]
-#define RSCAN0RMDF194 RSCAN0.RMDF194.UINT32
-#define RSCAN0RMDF194L RSCAN0.RMDF194.UINT16[L]
-#define RSCAN0RMDF194LL RSCAN0.RMDF194.UINT8[LL]
-#define RSCAN0RMDF194LH RSCAN0.RMDF194.UINT8[LH]
-#define RSCAN0RMDF194H RSCAN0.RMDF194.UINT16[H]
-#define RSCAN0RMDF194HL RSCAN0.RMDF194.UINT8[HL]
-#define RSCAN0RMDF194HH RSCAN0.RMDF194.UINT8[HH]
-#define RSCAN0RMID95 RSCAN0.RMID95.UINT32
-#define RSCAN0RMID95L RSCAN0.RMID95.UINT16[L]
-#define RSCAN0RMID95LL RSCAN0.RMID95.UINT8[LL]
-#define RSCAN0RMID95LH RSCAN0.RMID95.UINT8[LH]
-#define RSCAN0RMID95H RSCAN0.RMID95.UINT16[H]
-#define RSCAN0RMID95HL RSCAN0.RMID95.UINT8[HL]
-#define RSCAN0RMID95HH RSCAN0.RMID95.UINT8[HH]
-#define RSCAN0RMPTR95 RSCAN0.RMPTR95.UINT32
-#define RSCAN0RMPTR95L RSCAN0.RMPTR95.UINT16[L]
-#define RSCAN0RMPTR95LL RSCAN0.RMPTR95.UINT8[LL]
-#define RSCAN0RMPTR95LH RSCAN0.RMPTR95.UINT8[LH]
-#define RSCAN0RMPTR95H RSCAN0.RMPTR95.UINT16[H]
-#define RSCAN0RMPTR95HL RSCAN0.RMPTR95.UINT8[HL]
-#define RSCAN0RMPTR95HH RSCAN0.RMPTR95.UINT8[HH]
-#define RSCAN0RMDF095 RSCAN0.RMDF095.UINT32
-#define RSCAN0RMDF095L RSCAN0.RMDF095.UINT16[L]
-#define RSCAN0RMDF095LL RSCAN0.RMDF095.UINT8[LL]
-#define RSCAN0RMDF095LH RSCAN0.RMDF095.UINT8[LH]
-#define RSCAN0RMDF095H RSCAN0.RMDF095.UINT16[H]
-#define RSCAN0RMDF095HL RSCAN0.RMDF095.UINT8[HL]
-#define RSCAN0RMDF095HH RSCAN0.RMDF095.UINT8[HH]
-#define RSCAN0RMDF195 RSCAN0.RMDF195.UINT32
-#define RSCAN0RMDF195L RSCAN0.RMDF195.UINT16[L]
-#define RSCAN0RMDF195LL RSCAN0.RMDF195.UINT8[LL]
-#define RSCAN0RMDF195LH RSCAN0.RMDF195.UINT8[LH]
-#define RSCAN0RMDF195H RSCAN0.RMDF195.UINT16[H]
-#define RSCAN0RMDF195HL RSCAN0.RMDF195.UINT8[HL]
-#define RSCAN0RMDF195HH RSCAN0.RMDF195.UINT8[HH]
 #define RSCAN0RFID0 RSCAN0.RFID0.UINT32
 #define RSCAN0RFID0L RSCAN0.RFID0.UINT16[L]
 #define RSCAN0RFID0LL RSCAN0.RFID0.UINT8[LL]
@@ -7763,90 +6757,6 @@ struct st_rscan_from_rscan0cfidm
 #define RSCAN0CFDF114H RSCAN0.CFDF114.UINT16[H]
 #define RSCAN0CFDF114HL RSCAN0.CFDF114.UINT8[HL]
 #define RSCAN0CFDF114HH RSCAN0.CFDF114.UINT8[HH]
-#define RSCAN0CFID15 RSCAN0.CFID15.UINT32
-#define RSCAN0CFID15L RSCAN0.CFID15.UINT16[L]
-#define RSCAN0CFID15LL RSCAN0.CFID15.UINT8[LL]
-#define RSCAN0CFID15LH RSCAN0.CFID15.UINT8[LH]
-#define RSCAN0CFID15H RSCAN0.CFID15.UINT16[H]
-#define RSCAN0CFID15HL RSCAN0.CFID15.UINT8[HL]
-#define RSCAN0CFID15HH RSCAN0.CFID15.UINT8[HH]
-#define RSCAN0CFPTR15 RSCAN0.CFPTR15.UINT32
-#define RSCAN0CFPTR15L RSCAN0.CFPTR15.UINT16[L]
-#define RSCAN0CFPTR15LL RSCAN0.CFPTR15.UINT8[LL]
-#define RSCAN0CFPTR15LH RSCAN0.CFPTR15.UINT8[LH]
-#define RSCAN0CFPTR15H RSCAN0.CFPTR15.UINT16[H]
-#define RSCAN0CFPTR15HL RSCAN0.CFPTR15.UINT8[HL]
-#define RSCAN0CFPTR15HH RSCAN0.CFPTR15.UINT8[HH]
-#define RSCAN0CFDF015 RSCAN0.CFDF015.UINT32
-#define RSCAN0CFDF015L RSCAN0.CFDF015.UINT16[L]
-#define RSCAN0CFDF015LL RSCAN0.CFDF015.UINT8[LL]
-#define RSCAN0CFDF015LH RSCAN0.CFDF015.UINT8[LH]
-#define RSCAN0CFDF015H RSCAN0.CFDF015.UINT16[H]
-#define RSCAN0CFDF015HL RSCAN0.CFDF015.UINT8[HL]
-#define RSCAN0CFDF015HH RSCAN0.CFDF015.UINT8[HH]
-#define RSCAN0CFDF115 RSCAN0.CFDF115.UINT32
-#define RSCAN0CFDF115L RSCAN0.CFDF115.UINT16[L]
-#define RSCAN0CFDF115LL RSCAN0.CFDF115.UINT8[LL]
-#define RSCAN0CFDF115LH RSCAN0.CFDF115.UINT8[LH]
-#define RSCAN0CFDF115H RSCAN0.CFDF115.UINT16[H]
-#define RSCAN0CFDF115HL RSCAN0.CFDF115.UINT8[HL]
-#define RSCAN0CFDF115HH RSCAN0.CFDF115.UINT8[HH]
-#define RSCAN0CFID16 RSCAN0.CFID16.UINT32
-#define RSCAN0CFID16L RSCAN0.CFID16.UINT16[L]
-#define RSCAN0CFID16LL RSCAN0.CFID16.UINT8[LL]
-#define RSCAN0CFID16LH RSCAN0.CFID16.UINT8[LH]
-#define RSCAN0CFID16H RSCAN0.CFID16.UINT16[H]
-#define RSCAN0CFID16HL RSCAN0.CFID16.UINT8[HL]
-#define RSCAN0CFID16HH RSCAN0.CFID16.UINT8[HH]
-#define RSCAN0CFPTR16 RSCAN0.CFPTR16.UINT32
-#define RSCAN0CFPTR16L RSCAN0.CFPTR16.UINT16[L]
-#define RSCAN0CFPTR16LL RSCAN0.CFPTR16.UINT8[LL]
-#define RSCAN0CFPTR16LH RSCAN0.CFPTR16.UINT8[LH]
-#define RSCAN0CFPTR16H RSCAN0.CFPTR16.UINT16[H]
-#define RSCAN0CFPTR16HL RSCAN0.CFPTR16.UINT8[HL]
-#define RSCAN0CFPTR16HH RSCAN0.CFPTR16.UINT8[HH]
-#define RSCAN0CFDF016 RSCAN0.CFDF016.UINT32
-#define RSCAN0CFDF016L RSCAN0.CFDF016.UINT16[L]
-#define RSCAN0CFDF016LL RSCAN0.CFDF016.UINT8[LL]
-#define RSCAN0CFDF016LH RSCAN0.CFDF016.UINT8[LH]
-#define RSCAN0CFDF016H RSCAN0.CFDF016.UINT16[H]
-#define RSCAN0CFDF016HL RSCAN0.CFDF016.UINT8[HL]
-#define RSCAN0CFDF016HH RSCAN0.CFDF016.UINT8[HH]
-#define RSCAN0CFDF116 RSCAN0.CFDF116.UINT32
-#define RSCAN0CFDF116L RSCAN0.CFDF116.UINT16[L]
-#define RSCAN0CFDF116LL RSCAN0.CFDF116.UINT8[LL]
-#define RSCAN0CFDF116LH RSCAN0.CFDF116.UINT8[LH]
-#define RSCAN0CFDF116H RSCAN0.CFDF116.UINT16[H]
-#define RSCAN0CFDF116HL RSCAN0.CFDF116.UINT8[HL]
-#define RSCAN0CFDF116HH RSCAN0.CFDF116.UINT8[HH]
-#define RSCAN0CFID17 RSCAN0.CFID17.UINT32
-#define RSCAN0CFID17L RSCAN0.CFID17.UINT16[L]
-#define RSCAN0CFID17LL RSCAN0.CFID17.UINT8[LL]
-#define RSCAN0CFID17LH RSCAN0.CFID17.UINT8[LH]
-#define RSCAN0CFID17H RSCAN0.CFID17.UINT16[H]
-#define RSCAN0CFID17HL RSCAN0.CFID17.UINT8[HL]
-#define RSCAN0CFID17HH RSCAN0.CFID17.UINT8[HH]
-#define RSCAN0CFPTR17 RSCAN0.CFPTR17.UINT32
-#define RSCAN0CFPTR17L RSCAN0.CFPTR17.UINT16[L]
-#define RSCAN0CFPTR17LL RSCAN0.CFPTR17.UINT8[LL]
-#define RSCAN0CFPTR17LH RSCAN0.CFPTR17.UINT8[LH]
-#define RSCAN0CFPTR17H RSCAN0.CFPTR17.UINT16[H]
-#define RSCAN0CFPTR17HL RSCAN0.CFPTR17.UINT8[HL]
-#define RSCAN0CFPTR17HH RSCAN0.CFPTR17.UINT8[HH]
-#define RSCAN0CFDF017 RSCAN0.CFDF017.UINT32
-#define RSCAN0CFDF017L RSCAN0.CFDF017.UINT16[L]
-#define RSCAN0CFDF017LL RSCAN0.CFDF017.UINT8[LL]
-#define RSCAN0CFDF017LH RSCAN0.CFDF017.UINT8[LH]
-#define RSCAN0CFDF017H RSCAN0.CFDF017.UINT16[H]
-#define RSCAN0CFDF017HL RSCAN0.CFDF017.UINT8[HL]
-#define RSCAN0CFDF017HH RSCAN0.CFDF017.UINT8[HH]
-#define RSCAN0CFDF117 RSCAN0.CFDF117.UINT32
-#define RSCAN0CFDF117L RSCAN0.CFDF117.UINT16[L]
-#define RSCAN0CFDF117LL RSCAN0.CFDF117.UINT8[LL]
-#define RSCAN0CFDF117LH RSCAN0.CFDF117.UINT8[LH]
-#define RSCAN0CFDF117H RSCAN0.CFDF117.UINT16[H]
-#define RSCAN0CFDF117HL RSCAN0.CFDF117.UINT8[HL]
-#define RSCAN0CFDF117HH RSCAN0.CFDF117.UINT8[HH]
 #define RSCAN0TMID0 RSCAN0.TMID0.UINT32
 #define RSCAN0TMID0L RSCAN0.TMID0.UINT16[L]
 #define RSCAN0TMID0LL RSCAN0.TMID0.UINT8[LL]
@@ -10087,454 +8997,6 @@ struct st_rscan_from_rscan0cfidm
 #define RSCAN0TMDF179H RSCAN0.TMDF179.UINT16[H]
 #define RSCAN0TMDF179HL RSCAN0.TMDF179.UINT8[HL]
 #define RSCAN0TMDF179HH RSCAN0.TMDF179.UINT8[HH]
-#define RSCAN0TMID80 RSCAN0.TMID80.UINT32
-#define RSCAN0TMID80L RSCAN0.TMID80.UINT16[L]
-#define RSCAN0TMID80LL RSCAN0.TMID80.UINT8[LL]
-#define RSCAN0TMID80LH RSCAN0.TMID80.UINT8[LH]
-#define RSCAN0TMID80H RSCAN0.TMID80.UINT16[H]
-#define RSCAN0TMID80HL RSCAN0.TMID80.UINT8[HL]
-#define RSCAN0TMID80HH RSCAN0.TMID80.UINT8[HH]
-#define RSCAN0TMPTR80 RSCAN0.TMPTR80.UINT32
-#define RSCAN0TMPTR80L RSCAN0.TMPTR80.UINT16[L]
-#define RSCAN0TMPTR80LL RSCAN0.TMPTR80.UINT8[LL]
-#define RSCAN0TMPTR80LH RSCAN0.TMPTR80.UINT8[LH]
-#define RSCAN0TMPTR80H RSCAN0.TMPTR80.UINT16[H]
-#define RSCAN0TMPTR80HL RSCAN0.TMPTR80.UINT8[HL]
-#define RSCAN0TMPTR80HH RSCAN0.TMPTR80.UINT8[HH]
-#define RSCAN0TMDF080 RSCAN0.TMDF080.UINT32
-#define RSCAN0TMDF080L RSCAN0.TMDF080.UINT16[L]
-#define RSCAN0TMDF080LL RSCAN0.TMDF080.UINT8[LL]
-#define RSCAN0TMDF080LH RSCAN0.TMDF080.UINT8[LH]
-#define RSCAN0TMDF080H RSCAN0.TMDF080.UINT16[H]
-#define RSCAN0TMDF080HL RSCAN0.TMDF080.UINT8[HL]
-#define RSCAN0TMDF080HH RSCAN0.TMDF080.UINT8[HH]
-#define RSCAN0TMDF180 RSCAN0.TMDF180.UINT32
-#define RSCAN0TMDF180L RSCAN0.TMDF180.UINT16[L]
-#define RSCAN0TMDF180LL RSCAN0.TMDF180.UINT8[LL]
-#define RSCAN0TMDF180LH RSCAN0.TMDF180.UINT8[LH]
-#define RSCAN0TMDF180H RSCAN0.TMDF180.UINT16[H]
-#define RSCAN0TMDF180HL RSCAN0.TMDF180.UINT8[HL]
-#define RSCAN0TMDF180HH RSCAN0.TMDF180.UINT8[HH]
-#define RSCAN0TMID81 RSCAN0.TMID81.UINT32
-#define RSCAN0TMID81L RSCAN0.TMID81.UINT16[L]
-#define RSCAN0TMID81LL RSCAN0.TMID81.UINT8[LL]
-#define RSCAN0TMID81LH RSCAN0.TMID81.UINT8[LH]
-#define RSCAN0TMID81H RSCAN0.TMID81.UINT16[H]
-#define RSCAN0TMID81HL RSCAN0.TMID81.UINT8[HL]
-#define RSCAN0TMID81HH RSCAN0.TMID81.UINT8[HH]
-#define RSCAN0TMPTR81 RSCAN0.TMPTR81.UINT32
-#define RSCAN0TMPTR81L RSCAN0.TMPTR81.UINT16[L]
-#define RSCAN0TMPTR81LL RSCAN0.TMPTR81.UINT8[LL]
-#define RSCAN0TMPTR81LH RSCAN0.TMPTR81.UINT8[LH]
-#define RSCAN0TMPTR81H RSCAN0.TMPTR81.UINT16[H]
-#define RSCAN0TMPTR81HL RSCAN0.TMPTR81.UINT8[HL]
-#define RSCAN0TMPTR81HH RSCAN0.TMPTR81.UINT8[HH]
-#define RSCAN0TMDF081 RSCAN0.TMDF081.UINT32
-#define RSCAN0TMDF081L RSCAN0.TMDF081.UINT16[L]
-#define RSCAN0TMDF081LL RSCAN0.TMDF081.UINT8[LL]
-#define RSCAN0TMDF081LH RSCAN0.TMDF081.UINT8[LH]
-#define RSCAN0TMDF081H RSCAN0.TMDF081.UINT16[H]
-#define RSCAN0TMDF081HL RSCAN0.TMDF081.UINT8[HL]
-#define RSCAN0TMDF081HH RSCAN0.TMDF081.UINT8[HH]
-#define RSCAN0TMDF181 RSCAN0.TMDF181.UINT32
-#define RSCAN0TMDF181L RSCAN0.TMDF181.UINT16[L]
-#define RSCAN0TMDF181LL RSCAN0.TMDF181.UINT8[LL]
-#define RSCAN0TMDF181LH RSCAN0.TMDF181.UINT8[LH]
-#define RSCAN0TMDF181H RSCAN0.TMDF181.UINT16[H]
-#define RSCAN0TMDF181HL RSCAN0.TMDF181.UINT8[HL]
-#define RSCAN0TMDF181HH RSCAN0.TMDF181.UINT8[HH]
-#define RSCAN0TMID82 RSCAN0.TMID82.UINT32
-#define RSCAN0TMID82L RSCAN0.TMID82.UINT16[L]
-#define RSCAN0TMID82LL RSCAN0.TMID82.UINT8[LL]
-#define RSCAN0TMID82LH RSCAN0.TMID82.UINT8[LH]
-#define RSCAN0TMID82H RSCAN0.TMID82.UINT16[H]
-#define RSCAN0TMID82HL RSCAN0.TMID82.UINT8[HL]
-#define RSCAN0TMID82HH RSCAN0.TMID82.UINT8[HH]
-#define RSCAN0TMPTR82 RSCAN0.TMPTR82.UINT32
-#define RSCAN0TMPTR82L RSCAN0.TMPTR82.UINT16[L]
-#define RSCAN0TMPTR82LL RSCAN0.TMPTR82.UINT8[LL]
-#define RSCAN0TMPTR82LH RSCAN0.TMPTR82.UINT8[LH]
-#define RSCAN0TMPTR82H RSCAN0.TMPTR82.UINT16[H]
-#define RSCAN0TMPTR82HL RSCAN0.TMPTR82.UINT8[HL]
-#define RSCAN0TMPTR82HH RSCAN0.TMPTR82.UINT8[HH]
-#define RSCAN0TMDF082 RSCAN0.TMDF082.UINT32
-#define RSCAN0TMDF082L RSCAN0.TMDF082.UINT16[L]
-#define RSCAN0TMDF082LL RSCAN0.TMDF082.UINT8[LL]
-#define RSCAN0TMDF082LH RSCAN0.TMDF082.UINT8[LH]
-#define RSCAN0TMDF082H RSCAN0.TMDF082.UINT16[H]
-#define RSCAN0TMDF082HL RSCAN0.TMDF082.UINT8[HL]
-#define RSCAN0TMDF082HH RSCAN0.TMDF082.UINT8[HH]
-#define RSCAN0TMDF182 RSCAN0.TMDF182.UINT32
-#define RSCAN0TMDF182L RSCAN0.TMDF182.UINT16[L]
-#define RSCAN0TMDF182LL RSCAN0.TMDF182.UINT8[LL]
-#define RSCAN0TMDF182LH RSCAN0.TMDF182.UINT8[LH]
-#define RSCAN0TMDF182H RSCAN0.TMDF182.UINT16[H]
-#define RSCAN0TMDF182HL RSCAN0.TMDF182.UINT8[HL]
-#define RSCAN0TMDF182HH RSCAN0.TMDF182.UINT8[HH]
-#define RSCAN0TMID83 RSCAN0.TMID83.UINT32
-#define RSCAN0TMID83L RSCAN0.TMID83.UINT16[L]
-#define RSCAN0TMID83LL RSCAN0.TMID83.UINT8[LL]
-#define RSCAN0TMID83LH RSCAN0.TMID83.UINT8[LH]
-#define RSCAN0TMID83H RSCAN0.TMID83.UINT16[H]
-#define RSCAN0TMID83HL RSCAN0.TMID83.UINT8[HL]
-#define RSCAN0TMID83HH RSCAN0.TMID83.UINT8[HH]
-#define RSCAN0TMPTR83 RSCAN0.TMPTR83.UINT32
-#define RSCAN0TMPTR83L RSCAN0.TMPTR83.UINT16[L]
-#define RSCAN0TMPTR83LL RSCAN0.TMPTR83.UINT8[LL]
-#define RSCAN0TMPTR83LH RSCAN0.TMPTR83.UINT8[LH]
-#define RSCAN0TMPTR83H RSCAN0.TMPTR83.UINT16[H]
-#define RSCAN0TMPTR83HL RSCAN0.TMPTR83.UINT8[HL]
-#define RSCAN0TMPTR83HH RSCAN0.TMPTR83.UINT8[HH]
-#define RSCAN0TMDF083 RSCAN0.TMDF083.UINT32
-#define RSCAN0TMDF083L RSCAN0.TMDF083.UINT16[L]
-#define RSCAN0TMDF083LL RSCAN0.TMDF083.UINT8[LL]
-#define RSCAN0TMDF083LH RSCAN0.TMDF083.UINT8[LH]
-#define RSCAN0TMDF083H RSCAN0.TMDF083.UINT16[H]
-#define RSCAN0TMDF083HL RSCAN0.TMDF083.UINT8[HL]
-#define RSCAN0TMDF083HH RSCAN0.TMDF083.UINT8[HH]
-#define RSCAN0TMDF183 RSCAN0.TMDF183.UINT32
-#define RSCAN0TMDF183L RSCAN0.TMDF183.UINT16[L]
-#define RSCAN0TMDF183LL RSCAN0.TMDF183.UINT8[LL]
-#define RSCAN0TMDF183LH RSCAN0.TMDF183.UINT8[LH]
-#define RSCAN0TMDF183H RSCAN0.TMDF183.UINT16[H]
-#define RSCAN0TMDF183HL RSCAN0.TMDF183.UINT8[HL]
-#define RSCAN0TMDF183HH RSCAN0.TMDF183.UINT8[HH]
-#define RSCAN0TMID84 RSCAN0.TMID84.UINT32
-#define RSCAN0TMID84L RSCAN0.TMID84.UINT16[L]
-#define RSCAN0TMID84LL RSCAN0.TMID84.UINT8[LL]
-#define RSCAN0TMID84LH RSCAN0.TMID84.UINT8[LH]
-#define RSCAN0TMID84H RSCAN0.TMID84.UINT16[H]
-#define RSCAN0TMID84HL RSCAN0.TMID84.UINT8[HL]
-#define RSCAN0TMID84HH RSCAN0.TMID84.UINT8[HH]
-#define RSCAN0TMPTR84 RSCAN0.TMPTR84.UINT32
-#define RSCAN0TMPTR84L RSCAN0.TMPTR84.UINT16[L]
-#define RSCAN0TMPTR84LL RSCAN0.TMPTR84.UINT8[LL]
-#define RSCAN0TMPTR84LH RSCAN0.TMPTR84.UINT8[LH]
-#define RSCAN0TMPTR84H RSCAN0.TMPTR84.UINT16[H]
-#define RSCAN0TMPTR84HL RSCAN0.TMPTR84.UINT8[HL]
-#define RSCAN0TMPTR84HH RSCAN0.TMPTR84.UINT8[HH]
-#define RSCAN0TMDF084 RSCAN0.TMDF084.UINT32
-#define RSCAN0TMDF084L RSCAN0.TMDF084.UINT16[L]
-#define RSCAN0TMDF084LL RSCAN0.TMDF084.UINT8[LL]
-#define RSCAN0TMDF084LH RSCAN0.TMDF084.UINT8[LH]
-#define RSCAN0TMDF084H RSCAN0.TMDF084.UINT16[H]
-#define RSCAN0TMDF084HL RSCAN0.TMDF084.UINT8[HL]
-#define RSCAN0TMDF084HH RSCAN0.TMDF084.UINT8[HH]
-#define RSCAN0TMDF184 RSCAN0.TMDF184.UINT32
-#define RSCAN0TMDF184L RSCAN0.TMDF184.UINT16[L]
-#define RSCAN0TMDF184LL RSCAN0.TMDF184.UINT8[LL]
-#define RSCAN0TMDF184LH RSCAN0.TMDF184.UINT8[LH]
-#define RSCAN0TMDF184H RSCAN0.TMDF184.UINT16[H]
-#define RSCAN0TMDF184HL RSCAN0.TMDF184.UINT8[HL]
-#define RSCAN0TMDF184HH RSCAN0.TMDF184.UINT8[HH]
-#define RSCAN0TMID85 RSCAN0.TMID85.UINT32
-#define RSCAN0TMID85L RSCAN0.TMID85.UINT16[L]
-#define RSCAN0TMID85LL RSCAN0.TMID85.UINT8[LL]
-#define RSCAN0TMID85LH RSCAN0.TMID85.UINT8[LH]
-#define RSCAN0TMID85H RSCAN0.TMID85.UINT16[H]
-#define RSCAN0TMID85HL RSCAN0.TMID85.UINT8[HL]
-#define RSCAN0TMID85HH RSCAN0.TMID85.UINT8[HH]
-#define RSCAN0TMPTR85 RSCAN0.TMPTR85.UINT32
-#define RSCAN0TMPTR85L RSCAN0.TMPTR85.UINT16[L]
-#define RSCAN0TMPTR85LL RSCAN0.TMPTR85.UINT8[LL]
-#define RSCAN0TMPTR85LH RSCAN0.TMPTR85.UINT8[LH]
-#define RSCAN0TMPTR85H RSCAN0.TMPTR85.UINT16[H]
-#define RSCAN0TMPTR85HL RSCAN0.TMPTR85.UINT8[HL]
-#define RSCAN0TMPTR85HH RSCAN0.TMPTR85.UINT8[HH]
-#define RSCAN0TMDF085 RSCAN0.TMDF085.UINT32
-#define RSCAN0TMDF085L RSCAN0.TMDF085.UINT16[L]
-#define RSCAN0TMDF085LL RSCAN0.TMDF085.UINT8[LL]
-#define RSCAN0TMDF085LH RSCAN0.TMDF085.UINT8[LH]
-#define RSCAN0TMDF085H RSCAN0.TMDF085.UINT16[H]
-#define RSCAN0TMDF085HL RSCAN0.TMDF085.UINT8[HL]
-#define RSCAN0TMDF085HH RSCAN0.TMDF085.UINT8[HH]
-#define RSCAN0TMDF185 RSCAN0.TMDF185.UINT32
-#define RSCAN0TMDF185L RSCAN0.TMDF185.UINT16[L]
-#define RSCAN0TMDF185LL RSCAN0.TMDF185.UINT8[LL]
-#define RSCAN0TMDF185LH RSCAN0.TMDF185.UINT8[LH]
-#define RSCAN0TMDF185H RSCAN0.TMDF185.UINT16[H]
-#define RSCAN0TMDF185HL RSCAN0.TMDF185.UINT8[HL]
-#define RSCAN0TMDF185HH RSCAN0.TMDF185.UINT8[HH]
-#define RSCAN0TMID86 RSCAN0.TMID86.UINT32
-#define RSCAN0TMID86L RSCAN0.TMID86.UINT16[L]
-#define RSCAN0TMID86LL RSCAN0.TMID86.UINT8[LL]
-#define RSCAN0TMID86LH RSCAN0.TMID86.UINT8[LH]
-#define RSCAN0TMID86H RSCAN0.TMID86.UINT16[H]
-#define RSCAN0TMID86HL RSCAN0.TMID86.UINT8[HL]
-#define RSCAN0TMID86HH RSCAN0.TMID86.UINT8[HH]
-#define RSCAN0TMPTR86 RSCAN0.TMPTR86.UINT32
-#define RSCAN0TMPTR86L RSCAN0.TMPTR86.UINT16[L]
-#define RSCAN0TMPTR86LL RSCAN0.TMPTR86.UINT8[LL]
-#define RSCAN0TMPTR86LH RSCAN0.TMPTR86.UINT8[LH]
-#define RSCAN0TMPTR86H RSCAN0.TMPTR86.UINT16[H]
-#define RSCAN0TMPTR86HL RSCAN0.TMPTR86.UINT8[HL]
-#define RSCAN0TMPTR86HH RSCAN0.TMPTR86.UINT8[HH]
-#define RSCAN0TMDF086 RSCAN0.TMDF086.UINT32
-#define RSCAN0TMDF086L RSCAN0.TMDF086.UINT16[L]
-#define RSCAN0TMDF086LL RSCAN0.TMDF086.UINT8[LL]
-#define RSCAN0TMDF086LH RSCAN0.TMDF086.UINT8[LH]
-#define RSCAN0TMDF086H RSCAN0.TMDF086.UINT16[H]
-#define RSCAN0TMDF086HL RSCAN0.TMDF086.UINT8[HL]
-#define RSCAN0TMDF086HH RSCAN0.TMDF086.UINT8[HH]
-#define RSCAN0TMDF186 RSCAN0.TMDF186.UINT32
-#define RSCAN0TMDF186L RSCAN0.TMDF186.UINT16[L]
-#define RSCAN0TMDF186LL RSCAN0.TMDF186.UINT8[LL]
-#define RSCAN0TMDF186LH RSCAN0.TMDF186.UINT8[LH]
-#define RSCAN0TMDF186H RSCAN0.TMDF186.UINT16[H]
-#define RSCAN0TMDF186HL RSCAN0.TMDF186.UINT8[HL]
-#define RSCAN0TMDF186HH RSCAN0.TMDF186.UINT8[HH]
-#define RSCAN0TMID87 RSCAN0.TMID87.UINT32
-#define RSCAN0TMID87L RSCAN0.TMID87.UINT16[L]
-#define RSCAN0TMID87LL RSCAN0.TMID87.UINT8[LL]
-#define RSCAN0TMID87LH RSCAN0.TMID87.UINT8[LH]
-#define RSCAN0TMID87H RSCAN0.TMID87.UINT16[H]
-#define RSCAN0TMID87HL RSCAN0.TMID87.UINT8[HL]
-#define RSCAN0TMID87HH RSCAN0.TMID87.UINT8[HH]
-#define RSCAN0TMPTR87 RSCAN0.TMPTR87.UINT32
-#define RSCAN0TMPTR87L RSCAN0.TMPTR87.UINT16[L]
-#define RSCAN0TMPTR87LL RSCAN0.TMPTR87.UINT8[LL]
-#define RSCAN0TMPTR87LH RSCAN0.TMPTR87.UINT8[LH]
-#define RSCAN0TMPTR87H RSCAN0.TMPTR87.UINT16[H]
-#define RSCAN0TMPTR87HL RSCAN0.TMPTR87.UINT8[HL]
-#define RSCAN0TMPTR87HH RSCAN0.TMPTR87.UINT8[HH]
-#define RSCAN0TMDF087 RSCAN0.TMDF087.UINT32
-#define RSCAN0TMDF087L RSCAN0.TMDF087.UINT16[L]
-#define RSCAN0TMDF087LL RSCAN0.TMDF087.UINT8[LL]
-#define RSCAN0TMDF087LH RSCAN0.TMDF087.UINT8[LH]
-#define RSCAN0TMDF087H RSCAN0.TMDF087.UINT16[H]
-#define RSCAN0TMDF087HL RSCAN0.TMDF087.UINT8[HL]
-#define RSCAN0TMDF087HH RSCAN0.TMDF087.UINT8[HH]
-#define RSCAN0TMDF187 RSCAN0.TMDF187.UINT32
-#define RSCAN0TMDF187L RSCAN0.TMDF187.UINT16[L]
-#define RSCAN0TMDF187LL RSCAN0.TMDF187.UINT8[LL]
-#define RSCAN0TMDF187LH RSCAN0.TMDF187.UINT8[LH]
-#define RSCAN0TMDF187H RSCAN0.TMDF187.UINT16[H]
-#define RSCAN0TMDF187HL RSCAN0.TMDF187.UINT8[HL]
-#define RSCAN0TMDF187HH RSCAN0.TMDF187.UINT8[HH]
-#define RSCAN0TMID88 RSCAN0.TMID88.UINT32
-#define RSCAN0TMID88L RSCAN0.TMID88.UINT16[L]
-#define RSCAN0TMID88LL RSCAN0.TMID88.UINT8[LL]
-#define RSCAN0TMID88LH RSCAN0.TMID88.UINT8[LH]
-#define RSCAN0TMID88H RSCAN0.TMID88.UINT16[H]
-#define RSCAN0TMID88HL RSCAN0.TMID88.UINT8[HL]
-#define RSCAN0TMID88HH RSCAN0.TMID88.UINT8[HH]
-#define RSCAN0TMPTR88 RSCAN0.TMPTR88.UINT32
-#define RSCAN0TMPTR88L RSCAN0.TMPTR88.UINT16[L]
-#define RSCAN0TMPTR88LL RSCAN0.TMPTR88.UINT8[LL]
-#define RSCAN0TMPTR88LH RSCAN0.TMPTR88.UINT8[LH]
-#define RSCAN0TMPTR88H RSCAN0.TMPTR88.UINT16[H]
-#define RSCAN0TMPTR88HL RSCAN0.TMPTR88.UINT8[HL]
-#define RSCAN0TMPTR88HH RSCAN0.TMPTR88.UINT8[HH]
-#define RSCAN0TMDF088 RSCAN0.TMDF088.UINT32
-#define RSCAN0TMDF088L RSCAN0.TMDF088.UINT16[L]
-#define RSCAN0TMDF088LL RSCAN0.TMDF088.UINT8[LL]
-#define RSCAN0TMDF088LH RSCAN0.TMDF088.UINT8[LH]
-#define RSCAN0TMDF088H RSCAN0.TMDF088.UINT16[H]
-#define RSCAN0TMDF088HL RSCAN0.TMDF088.UINT8[HL]
-#define RSCAN0TMDF088HH RSCAN0.TMDF088.UINT8[HH]
-#define RSCAN0TMDF188 RSCAN0.TMDF188.UINT32
-#define RSCAN0TMDF188L RSCAN0.TMDF188.UINT16[L]
-#define RSCAN0TMDF188LL RSCAN0.TMDF188.UINT8[LL]
-#define RSCAN0TMDF188LH RSCAN0.TMDF188.UINT8[LH]
-#define RSCAN0TMDF188H RSCAN0.TMDF188.UINT16[H]
-#define RSCAN0TMDF188HL RSCAN0.TMDF188.UINT8[HL]
-#define RSCAN0TMDF188HH RSCAN0.TMDF188.UINT8[HH]
-#define RSCAN0TMID89 RSCAN0.TMID89.UINT32
-#define RSCAN0TMID89L RSCAN0.TMID89.UINT16[L]
-#define RSCAN0TMID89LL RSCAN0.TMID89.UINT8[LL]
-#define RSCAN0TMID89LH RSCAN0.TMID89.UINT8[LH]
-#define RSCAN0TMID89H RSCAN0.TMID89.UINT16[H]
-#define RSCAN0TMID89HL RSCAN0.TMID89.UINT8[HL]
-#define RSCAN0TMID89HH RSCAN0.TMID89.UINT8[HH]
-#define RSCAN0TMPTR89 RSCAN0.TMPTR89.UINT32
-#define RSCAN0TMPTR89L RSCAN0.TMPTR89.UINT16[L]
-#define RSCAN0TMPTR89LL RSCAN0.TMPTR89.UINT8[LL]
-#define RSCAN0TMPTR89LH RSCAN0.TMPTR89.UINT8[LH]
-#define RSCAN0TMPTR89H RSCAN0.TMPTR89.UINT16[H]
-#define RSCAN0TMPTR89HL RSCAN0.TMPTR89.UINT8[HL]
-#define RSCAN0TMPTR89HH RSCAN0.TMPTR89.UINT8[HH]
-#define RSCAN0TMDF089 RSCAN0.TMDF089.UINT32
-#define RSCAN0TMDF089L RSCAN0.TMDF089.UINT16[L]
-#define RSCAN0TMDF089LL RSCAN0.TMDF089.UINT8[LL]
-#define RSCAN0TMDF089LH RSCAN0.TMDF089.UINT8[LH]
-#define RSCAN0TMDF089H RSCAN0.TMDF089.UINT16[H]
-#define RSCAN0TMDF089HL RSCAN0.TMDF089.UINT8[HL]
-#define RSCAN0TMDF089HH RSCAN0.TMDF089.UINT8[HH]
-#define RSCAN0TMDF189 RSCAN0.TMDF189.UINT32
-#define RSCAN0TMDF189L RSCAN0.TMDF189.UINT16[L]
-#define RSCAN0TMDF189LL RSCAN0.TMDF189.UINT8[LL]
-#define RSCAN0TMDF189LH RSCAN0.TMDF189.UINT8[LH]
-#define RSCAN0TMDF189H RSCAN0.TMDF189.UINT16[H]
-#define RSCAN0TMDF189HL RSCAN0.TMDF189.UINT8[HL]
-#define RSCAN0TMDF189HH RSCAN0.TMDF189.UINT8[HH]
-#define RSCAN0TMID90 RSCAN0.TMID90.UINT32
-#define RSCAN0TMID90L RSCAN0.TMID90.UINT16[L]
-#define RSCAN0TMID90LL RSCAN0.TMID90.UINT8[LL]
-#define RSCAN0TMID90LH RSCAN0.TMID90.UINT8[LH]
-#define RSCAN0TMID90H RSCAN0.TMID90.UINT16[H]
-#define RSCAN0TMID90HL RSCAN0.TMID90.UINT8[HL]
-#define RSCAN0TMID90HH RSCAN0.TMID90.UINT8[HH]
-#define RSCAN0TMPTR90 RSCAN0.TMPTR90.UINT32
-#define RSCAN0TMPTR90L RSCAN0.TMPTR90.UINT16[L]
-#define RSCAN0TMPTR90LL RSCAN0.TMPTR90.UINT8[LL]
-#define RSCAN0TMPTR90LH RSCAN0.TMPTR90.UINT8[LH]
-#define RSCAN0TMPTR90H RSCAN0.TMPTR90.UINT16[H]
-#define RSCAN0TMPTR90HL RSCAN0.TMPTR90.UINT8[HL]
-#define RSCAN0TMPTR90HH RSCAN0.TMPTR90.UINT8[HH]
-#define RSCAN0TMDF090 RSCAN0.TMDF090.UINT32
-#define RSCAN0TMDF090L RSCAN0.TMDF090.UINT16[L]
-#define RSCAN0TMDF090LL RSCAN0.TMDF090.UINT8[LL]
-#define RSCAN0TMDF090LH RSCAN0.TMDF090.UINT8[LH]
-#define RSCAN0TMDF090H RSCAN0.TMDF090.UINT16[H]
-#define RSCAN0TMDF090HL RSCAN0.TMDF090.UINT8[HL]
-#define RSCAN0TMDF090HH RSCAN0.TMDF090.UINT8[HH]
-#define RSCAN0TMDF190 RSCAN0.TMDF190.UINT32
-#define RSCAN0TMDF190L RSCAN0.TMDF190.UINT16[L]
-#define RSCAN0TMDF190LL RSCAN0.TMDF190.UINT8[LL]
-#define RSCAN0TMDF190LH RSCAN0.TMDF190.UINT8[LH]
-#define RSCAN0TMDF190H RSCAN0.TMDF190.UINT16[H]
-#define RSCAN0TMDF190HL RSCAN0.TMDF190.UINT8[HL]
-#define RSCAN0TMDF190HH RSCAN0.TMDF190.UINT8[HH]
-#define RSCAN0TMID91 RSCAN0.TMID91.UINT32
-#define RSCAN0TMID91L RSCAN0.TMID91.UINT16[L]
-#define RSCAN0TMID91LL RSCAN0.TMID91.UINT8[LL]
-#define RSCAN0TMID91LH RSCAN0.TMID91.UINT8[LH]
-#define RSCAN0TMID91H RSCAN0.TMID91.UINT16[H]
-#define RSCAN0TMID91HL RSCAN0.TMID91.UINT8[HL]
-#define RSCAN0TMID91HH RSCAN0.TMID91.UINT8[HH]
-#define RSCAN0TMPTR91 RSCAN0.TMPTR91.UINT32
-#define RSCAN0TMPTR91L RSCAN0.TMPTR91.UINT16[L]
-#define RSCAN0TMPTR91LL RSCAN0.TMPTR91.UINT8[LL]
-#define RSCAN0TMPTR91LH RSCAN0.TMPTR91.UINT8[LH]
-#define RSCAN0TMPTR91H RSCAN0.TMPTR91.UINT16[H]
-#define RSCAN0TMPTR91HL RSCAN0.TMPTR91.UINT8[HL]
-#define RSCAN0TMPTR91HH RSCAN0.TMPTR91.UINT8[HH]
-#define RSCAN0TMDF091 RSCAN0.TMDF091.UINT32
-#define RSCAN0TMDF091L RSCAN0.TMDF091.UINT16[L]
-#define RSCAN0TMDF091LL RSCAN0.TMDF091.UINT8[LL]
-#define RSCAN0TMDF091LH RSCAN0.TMDF091.UINT8[LH]
-#define RSCAN0TMDF091H RSCAN0.TMDF091.UINT16[H]
-#define RSCAN0TMDF091HL RSCAN0.TMDF091.UINT8[HL]
-#define RSCAN0TMDF091HH RSCAN0.TMDF091.UINT8[HH]
-#define RSCAN0TMDF191 RSCAN0.TMDF191.UINT32
-#define RSCAN0TMDF191L RSCAN0.TMDF191.UINT16[L]
-#define RSCAN0TMDF191LL RSCAN0.TMDF191.UINT8[LL]
-#define RSCAN0TMDF191LH RSCAN0.TMDF191.UINT8[LH]
-#define RSCAN0TMDF191H RSCAN0.TMDF191.UINT16[H]
-#define RSCAN0TMDF191HL RSCAN0.TMDF191.UINT8[HL]
-#define RSCAN0TMDF191HH RSCAN0.TMDF191.UINT8[HH]
-#define RSCAN0TMID92 RSCAN0.TMID92.UINT32
-#define RSCAN0TMID92L RSCAN0.TMID92.UINT16[L]
-#define RSCAN0TMID92LL RSCAN0.TMID92.UINT8[LL]
-#define RSCAN0TMID92LH RSCAN0.TMID92.UINT8[LH]
-#define RSCAN0TMID92H RSCAN0.TMID92.UINT16[H]
-#define RSCAN0TMID92HL RSCAN0.TMID92.UINT8[HL]
-#define RSCAN0TMID92HH RSCAN0.TMID92.UINT8[HH]
-#define RSCAN0TMPTR92 RSCAN0.TMPTR92.UINT32
-#define RSCAN0TMPTR92L RSCAN0.TMPTR92.UINT16[L]
-#define RSCAN0TMPTR92LL RSCAN0.TMPTR92.UINT8[LL]
-#define RSCAN0TMPTR92LH RSCAN0.TMPTR92.UINT8[LH]
-#define RSCAN0TMPTR92H RSCAN0.TMPTR92.UINT16[H]
-#define RSCAN0TMPTR92HL RSCAN0.TMPTR92.UINT8[HL]
-#define RSCAN0TMPTR92HH RSCAN0.TMPTR92.UINT8[HH]
-#define RSCAN0TMDF092 RSCAN0.TMDF092.UINT32
-#define RSCAN0TMDF092L RSCAN0.TMDF092.UINT16[L]
-#define RSCAN0TMDF092LL RSCAN0.TMDF092.UINT8[LL]
-#define RSCAN0TMDF092LH RSCAN0.TMDF092.UINT8[LH]
-#define RSCAN0TMDF092H RSCAN0.TMDF092.UINT16[H]
-#define RSCAN0TMDF092HL RSCAN0.TMDF092.UINT8[HL]
-#define RSCAN0TMDF092HH RSCAN0.TMDF092.UINT8[HH]
-#define RSCAN0TMDF192 RSCAN0.TMDF192.UINT32
-#define RSCAN0TMDF192L RSCAN0.TMDF192.UINT16[L]
-#define RSCAN0TMDF192LL RSCAN0.TMDF192.UINT8[LL]
-#define RSCAN0TMDF192LH RSCAN0.TMDF192.UINT8[LH]
-#define RSCAN0TMDF192H RSCAN0.TMDF192.UINT16[H]
-#define RSCAN0TMDF192HL RSCAN0.TMDF192.UINT8[HL]
-#define RSCAN0TMDF192HH RSCAN0.TMDF192.UINT8[HH]
-#define RSCAN0TMID93 RSCAN0.TMID93.UINT32
-#define RSCAN0TMID93L RSCAN0.TMID93.UINT16[L]
-#define RSCAN0TMID93LL RSCAN0.TMID93.UINT8[LL]
-#define RSCAN0TMID93LH RSCAN0.TMID93.UINT8[LH]
-#define RSCAN0TMID93H RSCAN0.TMID93.UINT16[H]
-#define RSCAN0TMID93HL RSCAN0.TMID93.UINT8[HL]
-#define RSCAN0TMID93HH RSCAN0.TMID93.UINT8[HH]
-#define RSCAN0TMPTR93 RSCAN0.TMPTR93.UINT32
-#define RSCAN0TMPTR93L RSCAN0.TMPTR93.UINT16[L]
-#define RSCAN0TMPTR93LL RSCAN0.TMPTR93.UINT8[LL]
-#define RSCAN0TMPTR93LH RSCAN0.TMPTR93.UINT8[LH]
-#define RSCAN0TMPTR93H RSCAN0.TMPTR93.UINT16[H]
-#define RSCAN0TMPTR93HL RSCAN0.TMPTR93.UINT8[HL]
-#define RSCAN0TMPTR93HH RSCAN0.TMPTR93.UINT8[HH]
-#define RSCAN0TMDF093 RSCAN0.TMDF093.UINT32
-#define RSCAN0TMDF093L RSCAN0.TMDF093.UINT16[L]
-#define RSCAN0TMDF093LL RSCAN0.TMDF093.UINT8[LL]
-#define RSCAN0TMDF093LH RSCAN0.TMDF093.UINT8[LH]
-#define RSCAN0TMDF093H RSCAN0.TMDF093.UINT16[H]
-#define RSCAN0TMDF093HL RSCAN0.TMDF093.UINT8[HL]
-#define RSCAN0TMDF093HH RSCAN0.TMDF093.UINT8[HH]
-#define RSCAN0TMDF193 RSCAN0.TMDF193.UINT32
-#define RSCAN0TMDF193L RSCAN0.TMDF193.UINT16[L]
-#define RSCAN0TMDF193LL RSCAN0.TMDF193.UINT8[LL]
-#define RSCAN0TMDF193LH RSCAN0.TMDF193.UINT8[LH]
-#define RSCAN0TMDF193H RSCAN0.TMDF193.UINT16[H]
-#define RSCAN0TMDF193HL RSCAN0.TMDF193.UINT8[HL]
-#define RSCAN0TMDF193HH RSCAN0.TMDF193.UINT8[HH]
-#define RSCAN0TMID94 RSCAN0.TMID94.UINT32
-#define RSCAN0TMID94L RSCAN0.TMID94.UINT16[L]
-#define RSCAN0TMID94LL RSCAN0.TMID94.UINT8[LL]
-#define RSCAN0TMID94LH RSCAN0.TMID94.UINT8[LH]
-#define RSCAN0TMID94H RSCAN0.TMID94.UINT16[H]
-#define RSCAN0TMID94HL RSCAN0.TMID94.UINT8[HL]
-#define RSCAN0TMID94HH RSCAN0.TMID94.UINT8[HH]
-#define RSCAN0TMPTR94 RSCAN0.TMPTR94.UINT32
-#define RSCAN0TMPTR94L RSCAN0.TMPTR94.UINT16[L]
-#define RSCAN0TMPTR94LL RSCAN0.TMPTR94.UINT8[LL]
-#define RSCAN0TMPTR94LH RSCAN0.TMPTR94.UINT8[LH]
-#define RSCAN0TMPTR94H RSCAN0.TMPTR94.UINT16[H]
-#define RSCAN0TMPTR94HL RSCAN0.TMPTR94.UINT8[HL]
-#define RSCAN0TMPTR94HH RSCAN0.TMPTR94.UINT8[HH]
-#define RSCAN0TMDF094 RSCAN0.TMDF094.UINT32
-#define RSCAN0TMDF094L RSCAN0.TMDF094.UINT16[L]
-#define RSCAN0TMDF094LL RSCAN0.TMDF094.UINT8[LL]
-#define RSCAN0TMDF094LH RSCAN0.TMDF094.UINT8[LH]
-#define RSCAN0TMDF094H RSCAN0.TMDF094.UINT16[H]
-#define RSCAN0TMDF094HL RSCAN0.TMDF094.UINT8[HL]
-#define RSCAN0TMDF094HH RSCAN0.TMDF094.UINT8[HH]
-#define RSCAN0TMDF194 RSCAN0.TMDF194.UINT32
-#define RSCAN0TMDF194L RSCAN0.TMDF194.UINT16[L]
-#define RSCAN0TMDF194LL RSCAN0.TMDF194.UINT8[LL]
-#define RSCAN0TMDF194LH RSCAN0.TMDF194.UINT8[LH]
-#define RSCAN0TMDF194H RSCAN0.TMDF194.UINT16[H]
-#define RSCAN0TMDF194HL RSCAN0.TMDF194.UINT8[HL]
-#define RSCAN0TMDF194HH RSCAN0.TMDF194.UINT8[HH]
-#define RSCAN0TMID95 RSCAN0.TMID95.UINT32
-#define RSCAN0TMID95L RSCAN0.TMID95.UINT16[L]
-#define RSCAN0TMID95LL RSCAN0.TMID95.UINT8[LL]
-#define RSCAN0TMID95LH RSCAN0.TMID95.UINT8[LH]
-#define RSCAN0TMID95H RSCAN0.TMID95.UINT16[H]
-#define RSCAN0TMID95HL RSCAN0.TMID95.UINT8[HL]
-#define RSCAN0TMID95HH RSCAN0.TMID95.UINT8[HH]
-#define RSCAN0TMPTR95 RSCAN0.TMPTR95.UINT32
-#define RSCAN0TMPTR95L RSCAN0.TMPTR95.UINT16[L]
-#define RSCAN0TMPTR95LL RSCAN0.TMPTR95.UINT8[LL]
-#define RSCAN0TMPTR95LH RSCAN0.TMPTR95.UINT8[LH]
-#define RSCAN0TMPTR95H RSCAN0.TMPTR95.UINT16[H]
-#define RSCAN0TMPTR95HL RSCAN0.TMPTR95.UINT8[HL]
-#define RSCAN0TMPTR95HH RSCAN0.TMPTR95.UINT8[HH]
-#define RSCAN0TMDF095 RSCAN0.TMDF095.UINT32
-#define RSCAN0TMDF095L RSCAN0.TMDF095.UINT16[L]
-#define RSCAN0TMDF095LL RSCAN0.TMDF095.UINT8[LL]
-#define RSCAN0TMDF095LH RSCAN0.TMDF095.UINT8[LH]
-#define RSCAN0TMDF095H RSCAN0.TMDF095.UINT16[H]
-#define RSCAN0TMDF095HL RSCAN0.TMDF095.UINT8[HL]
-#define RSCAN0TMDF095HH RSCAN0.TMDF095.UINT8[HH]
-#define RSCAN0TMDF195 RSCAN0.TMDF195.UINT32
-#define RSCAN0TMDF195L RSCAN0.TMDF195.UINT16[L]
-#define RSCAN0TMDF195LL RSCAN0.TMDF195.UINT8[LL]
-#define RSCAN0TMDF195LH RSCAN0.TMDF195.UINT8[LH]
-#define RSCAN0TMDF195H RSCAN0.TMDF195.UINT16[H]
-#define RSCAN0TMDF195HL RSCAN0.TMDF195.UINT8[HL]
-#define RSCAN0TMDF195HH RSCAN0.TMDF195.UINT8[HH]
 #define RSCAN0THLACC0 RSCAN0.THLACC0.UINT32
 #define RSCAN0THLACC0L RSCAN0.THLACC0.UINT16[L]
 #define RSCAN0THLACC0LL RSCAN0.THLACC0.UINT8[LL]
@@ -10570,459 +9032,7 @@ struct st_rscan_from_rscan0cfidm
 #define RSCAN0THLACC4H RSCAN0.THLACC4.UINT16[H]
 #define RSCAN0THLACC4HL RSCAN0.THLACC4.UINT8[HL]
 #define RSCAN0THLACC4HH RSCAN0.THLACC4.UINT8[HH]
-#define RSCAN0THLACC5 RSCAN0.THLACC5.UINT32
-#define RSCAN0THLACC5L RSCAN0.THLACC5.UINT16[L]
-#define RSCAN0THLACC5LL RSCAN0.THLACC5.UINT8[LL]
-#define RSCAN0THLACC5LH RSCAN0.THLACC5.UINT8[LH]
-#define RSCAN0THLACC5H RSCAN0.THLACC5.UINT16[H]
-#define RSCAN0THLACC5HL RSCAN0.THLACC5.UINT8[HL]
-#define RSCAN0THLACC5HH RSCAN0.THLACC5.UINT8[HH]
-#define RSCAN0RPGACC0 RSCAN0.RPGACC0.UINT32
-#define RSCAN0RPGACC0L RSCAN0.RPGACC0.UINT16[L]
-#define RSCAN0RPGACC0LL RSCAN0.RPGACC0.UINT8[LL]
-#define RSCAN0RPGACC0LH RSCAN0.RPGACC0.UINT8[LH]
-#define RSCAN0RPGACC0H RSCAN0.RPGACC0.UINT16[H]
-#define RSCAN0RPGACC0HL RSCAN0.RPGACC0.UINT8[HL]
-#define RSCAN0RPGACC0HH RSCAN0.RPGACC0.UINT8[HH]
-#define RSCAN0RPGACC1 RSCAN0.RPGACC1.UINT32
-#define RSCAN0RPGACC1L RSCAN0.RPGACC1.UINT16[L]
-#define RSCAN0RPGACC1LL RSCAN0.RPGACC1.UINT8[LL]
-#define RSCAN0RPGACC1LH RSCAN0.RPGACC1.UINT8[LH]
-#define RSCAN0RPGACC1H RSCAN0.RPGACC1.UINT16[H]
-#define RSCAN0RPGACC1HL RSCAN0.RPGACC1.UINT8[HL]
-#define RSCAN0RPGACC1HH RSCAN0.RPGACC1.UINT8[HH]
-#define RSCAN0RPGACC2 RSCAN0.RPGACC2.UINT32
-#define RSCAN0RPGACC2L RSCAN0.RPGACC2.UINT16[L]
-#define RSCAN0RPGACC2LL RSCAN0.RPGACC2.UINT8[LL]
-#define RSCAN0RPGACC2LH RSCAN0.RPGACC2.UINT8[LH]
-#define RSCAN0RPGACC2H RSCAN0.RPGACC2.UINT16[H]
-#define RSCAN0RPGACC2HL RSCAN0.RPGACC2.UINT8[HL]
-#define RSCAN0RPGACC2HH RSCAN0.RPGACC2.UINT8[HH]
-#define RSCAN0RPGACC3 RSCAN0.RPGACC3.UINT32
-#define RSCAN0RPGACC3L RSCAN0.RPGACC3.UINT16[L]
-#define RSCAN0RPGACC3LL RSCAN0.RPGACC3.UINT8[LL]
-#define RSCAN0RPGACC3LH RSCAN0.RPGACC3.UINT8[LH]
-#define RSCAN0RPGACC3H RSCAN0.RPGACC3.UINT16[H]
-#define RSCAN0RPGACC3HL RSCAN0.RPGACC3.UINT8[HL]
-#define RSCAN0RPGACC3HH RSCAN0.RPGACC3.UINT8[HH]
-#define RSCAN0RPGACC4 RSCAN0.RPGACC4.UINT32
-#define RSCAN0RPGACC4L RSCAN0.RPGACC4.UINT16[L]
-#define RSCAN0RPGACC4LL RSCAN0.RPGACC4.UINT8[LL]
-#define RSCAN0RPGACC4LH RSCAN0.RPGACC4.UINT8[LH]
-#define RSCAN0RPGACC4H RSCAN0.RPGACC4.UINT16[H]
-#define RSCAN0RPGACC4HL RSCAN0.RPGACC4.UINT8[HL]
-#define RSCAN0RPGACC4HH RSCAN0.RPGACC4.UINT8[HH]
-#define RSCAN0RPGACC5 RSCAN0.RPGACC5.UINT32
-#define RSCAN0RPGACC5L RSCAN0.RPGACC5.UINT16[L]
-#define RSCAN0RPGACC5LL RSCAN0.RPGACC5.UINT8[LL]
-#define RSCAN0RPGACC5LH RSCAN0.RPGACC5.UINT8[LH]
-#define RSCAN0RPGACC5H RSCAN0.RPGACC5.UINT16[H]
-#define RSCAN0RPGACC5HL RSCAN0.RPGACC5.UINT8[HL]
-#define RSCAN0RPGACC5HH RSCAN0.RPGACC5.UINT8[HH]
-#define RSCAN0RPGACC6 RSCAN0.RPGACC6.UINT32
-#define RSCAN0RPGACC6L RSCAN0.RPGACC6.UINT16[L]
-#define RSCAN0RPGACC6LL RSCAN0.RPGACC6.UINT8[LL]
-#define RSCAN0RPGACC6LH RSCAN0.RPGACC6.UINT8[LH]
-#define RSCAN0RPGACC6H RSCAN0.RPGACC6.UINT16[H]
-#define RSCAN0RPGACC6HL RSCAN0.RPGACC6.UINT8[HL]
-#define RSCAN0RPGACC6HH RSCAN0.RPGACC6.UINT8[HH]
-#define RSCAN0RPGACC7 RSCAN0.RPGACC7.UINT32
-#define RSCAN0RPGACC7L RSCAN0.RPGACC7.UINT16[L]
-#define RSCAN0RPGACC7LL RSCAN0.RPGACC7.UINT8[LL]
-#define RSCAN0RPGACC7LH RSCAN0.RPGACC7.UINT8[LH]
-#define RSCAN0RPGACC7H RSCAN0.RPGACC7.UINT16[H]
-#define RSCAN0RPGACC7HL RSCAN0.RPGACC7.UINT8[HL]
-#define RSCAN0RPGACC7HH RSCAN0.RPGACC7.UINT8[HH]
-#define RSCAN0RPGACC8 RSCAN0.RPGACC8.UINT32
-#define RSCAN0RPGACC8L RSCAN0.RPGACC8.UINT16[L]
-#define RSCAN0RPGACC8LL RSCAN0.RPGACC8.UINT8[LL]
-#define RSCAN0RPGACC8LH RSCAN0.RPGACC8.UINT8[LH]
-#define RSCAN0RPGACC8H RSCAN0.RPGACC8.UINT16[H]
-#define RSCAN0RPGACC8HL RSCAN0.RPGACC8.UINT8[HL]
-#define RSCAN0RPGACC8HH RSCAN0.RPGACC8.UINT8[HH]
-#define RSCAN0RPGACC9 RSCAN0.RPGACC9.UINT32
-#define RSCAN0RPGACC9L RSCAN0.RPGACC9.UINT16[L]
-#define RSCAN0RPGACC9LL RSCAN0.RPGACC9.UINT8[LL]
-#define RSCAN0RPGACC9LH RSCAN0.RPGACC9.UINT8[LH]
-#define RSCAN0RPGACC9H RSCAN0.RPGACC9.UINT16[H]
-#define RSCAN0RPGACC9HL RSCAN0.RPGACC9.UINT8[HL]
-#define RSCAN0RPGACC9HH RSCAN0.RPGACC9.UINT8[HH]
-#define RSCAN0RPGACC10 RSCAN0.RPGACC10.UINT32
-#define RSCAN0RPGACC10L RSCAN0.RPGACC10.UINT16[L]
-#define RSCAN0RPGACC10LL RSCAN0.RPGACC10.UINT8[LL]
-#define RSCAN0RPGACC10LH RSCAN0.RPGACC10.UINT8[LH]
-#define RSCAN0RPGACC10H RSCAN0.RPGACC10.UINT16[H]
-#define RSCAN0RPGACC10HL RSCAN0.RPGACC10.UINT8[HL]
-#define RSCAN0RPGACC10HH RSCAN0.RPGACC10.UINT8[HH]
-#define RSCAN0RPGACC11 RSCAN0.RPGACC11.UINT32
-#define RSCAN0RPGACC11L RSCAN0.RPGACC11.UINT16[L]
-#define RSCAN0RPGACC11LL RSCAN0.RPGACC11.UINT8[LL]
-#define RSCAN0RPGACC11LH RSCAN0.RPGACC11.UINT8[LH]
-#define RSCAN0RPGACC11H RSCAN0.RPGACC11.UINT16[H]
-#define RSCAN0RPGACC11HL RSCAN0.RPGACC11.UINT8[HL]
-#define RSCAN0RPGACC11HH RSCAN0.RPGACC11.UINT8[HH]
-#define RSCAN0RPGACC12 RSCAN0.RPGACC12.UINT32
-#define RSCAN0RPGACC12L RSCAN0.RPGACC12.UINT16[L]
-#define RSCAN0RPGACC12LL RSCAN0.RPGACC12.UINT8[LL]
-#define RSCAN0RPGACC12LH RSCAN0.RPGACC12.UINT8[LH]
-#define RSCAN0RPGACC12H RSCAN0.RPGACC12.UINT16[H]
-#define RSCAN0RPGACC12HL RSCAN0.RPGACC12.UINT8[HL]
-#define RSCAN0RPGACC12HH RSCAN0.RPGACC12.UINT8[HH]
-#define RSCAN0RPGACC13 RSCAN0.RPGACC13.UINT32
-#define RSCAN0RPGACC13L RSCAN0.RPGACC13.UINT16[L]
-#define RSCAN0RPGACC13LL RSCAN0.RPGACC13.UINT8[LL]
-#define RSCAN0RPGACC13LH RSCAN0.RPGACC13.UINT8[LH]
-#define RSCAN0RPGACC13H RSCAN0.RPGACC13.UINT16[H]
-#define RSCAN0RPGACC13HL RSCAN0.RPGACC13.UINT8[HL]
-#define RSCAN0RPGACC13HH RSCAN0.RPGACC13.UINT8[HH]
-#define RSCAN0RPGACC14 RSCAN0.RPGACC14.UINT32
-#define RSCAN0RPGACC14L RSCAN0.RPGACC14.UINT16[L]
-#define RSCAN0RPGACC14LL RSCAN0.RPGACC14.UINT8[LL]
-#define RSCAN0RPGACC14LH RSCAN0.RPGACC14.UINT8[LH]
-#define RSCAN0RPGACC14H RSCAN0.RPGACC14.UINT16[H]
-#define RSCAN0RPGACC14HL RSCAN0.RPGACC14.UINT8[HL]
-#define RSCAN0RPGACC14HH RSCAN0.RPGACC14.UINT8[HH]
-#define RSCAN0RPGACC15 RSCAN0.RPGACC15.UINT32
-#define RSCAN0RPGACC15L RSCAN0.RPGACC15.UINT16[L]
-#define RSCAN0RPGACC15LL RSCAN0.RPGACC15.UINT8[LL]
-#define RSCAN0RPGACC15LH RSCAN0.RPGACC15.UINT8[LH]
-#define RSCAN0RPGACC15H RSCAN0.RPGACC15.UINT16[H]
-#define RSCAN0RPGACC15HL RSCAN0.RPGACC15.UINT8[HL]
-#define RSCAN0RPGACC15HH RSCAN0.RPGACC15.UINT8[HH]
-#define RSCAN0RPGACC16 RSCAN0.RPGACC16.UINT32
-#define RSCAN0RPGACC16L RSCAN0.RPGACC16.UINT16[L]
-#define RSCAN0RPGACC16LL RSCAN0.RPGACC16.UINT8[LL]
-#define RSCAN0RPGACC16LH RSCAN0.RPGACC16.UINT8[LH]
-#define RSCAN0RPGACC16H RSCAN0.RPGACC16.UINT16[H]
-#define RSCAN0RPGACC16HL RSCAN0.RPGACC16.UINT8[HL]
-#define RSCAN0RPGACC16HH RSCAN0.RPGACC16.UINT8[HH]
-#define RSCAN0RPGACC17 RSCAN0.RPGACC17.UINT32
-#define RSCAN0RPGACC17L RSCAN0.RPGACC17.UINT16[L]
-#define RSCAN0RPGACC17LL RSCAN0.RPGACC17.UINT8[LL]
-#define RSCAN0RPGACC17LH RSCAN0.RPGACC17.UINT8[LH]
-#define RSCAN0RPGACC17H RSCAN0.RPGACC17.UINT16[H]
-#define RSCAN0RPGACC17HL RSCAN0.RPGACC17.UINT8[HL]
-#define RSCAN0RPGACC17HH RSCAN0.RPGACC17.UINT8[HH]
-#define RSCAN0RPGACC18 RSCAN0.RPGACC18.UINT32
-#define RSCAN0RPGACC18L RSCAN0.RPGACC18.UINT16[L]
-#define RSCAN0RPGACC18LL RSCAN0.RPGACC18.UINT8[LL]
-#define RSCAN0RPGACC18LH RSCAN0.RPGACC18.UINT8[LH]
-#define RSCAN0RPGACC18H RSCAN0.RPGACC18.UINT16[H]
-#define RSCAN0RPGACC18HL RSCAN0.RPGACC18.UINT8[HL]
-#define RSCAN0RPGACC18HH RSCAN0.RPGACC18.UINT8[HH]
-#define RSCAN0RPGACC19 RSCAN0.RPGACC19.UINT32
-#define RSCAN0RPGACC19L RSCAN0.RPGACC19.UINT16[L]
-#define RSCAN0RPGACC19LL RSCAN0.RPGACC19.UINT8[LL]
-#define RSCAN0RPGACC19LH RSCAN0.RPGACC19.UINT8[LH]
-#define RSCAN0RPGACC19H RSCAN0.RPGACC19.UINT16[H]
-#define RSCAN0RPGACC19HL RSCAN0.RPGACC19.UINT8[HL]
-#define RSCAN0RPGACC19HH RSCAN0.RPGACC19.UINT8[HH]
-#define RSCAN0RPGACC20 RSCAN0.RPGACC20.UINT32
-#define RSCAN0RPGACC20L RSCAN0.RPGACC20.UINT16[L]
-#define RSCAN0RPGACC20LL RSCAN0.RPGACC20.UINT8[LL]
-#define RSCAN0RPGACC20LH RSCAN0.RPGACC20.UINT8[LH]
-#define RSCAN0RPGACC20H RSCAN0.RPGACC20.UINT16[H]
-#define RSCAN0RPGACC20HL RSCAN0.RPGACC20.UINT8[HL]
-#define RSCAN0RPGACC20HH RSCAN0.RPGACC20.UINT8[HH]
-#define RSCAN0RPGACC21 RSCAN0.RPGACC21.UINT32
-#define RSCAN0RPGACC21L RSCAN0.RPGACC21.UINT16[L]
-#define RSCAN0RPGACC21LL RSCAN0.RPGACC21.UINT8[LL]
-#define RSCAN0RPGACC21LH RSCAN0.RPGACC21.UINT8[LH]
-#define RSCAN0RPGACC21H RSCAN0.RPGACC21.UINT16[H]
-#define RSCAN0RPGACC21HL RSCAN0.RPGACC21.UINT8[HL]
-#define RSCAN0RPGACC21HH RSCAN0.RPGACC21.UINT8[HH]
-#define RSCAN0RPGACC22 RSCAN0.RPGACC22.UINT32
-#define RSCAN0RPGACC22L RSCAN0.RPGACC22.UINT16[L]
-#define RSCAN0RPGACC22LL RSCAN0.RPGACC22.UINT8[LL]
-#define RSCAN0RPGACC22LH RSCAN0.RPGACC22.UINT8[LH]
-#define RSCAN0RPGACC22H RSCAN0.RPGACC22.UINT16[H]
-#define RSCAN0RPGACC22HL RSCAN0.RPGACC22.UINT8[HL]
-#define RSCAN0RPGACC22HH RSCAN0.RPGACC22.UINT8[HH]
-#define RSCAN0RPGACC23 RSCAN0.RPGACC23.UINT32
-#define RSCAN0RPGACC23L RSCAN0.RPGACC23.UINT16[L]
-#define RSCAN0RPGACC23LL RSCAN0.RPGACC23.UINT8[LL]
-#define RSCAN0RPGACC23LH RSCAN0.RPGACC23.UINT8[LH]
-#define RSCAN0RPGACC23H RSCAN0.RPGACC23.UINT16[H]
-#define RSCAN0RPGACC23HL RSCAN0.RPGACC23.UINT8[HL]
-#define RSCAN0RPGACC23HH RSCAN0.RPGACC23.UINT8[HH]
-#define RSCAN0RPGACC24 RSCAN0.RPGACC24.UINT32
-#define RSCAN0RPGACC24L RSCAN0.RPGACC24.UINT16[L]
-#define RSCAN0RPGACC24LL RSCAN0.RPGACC24.UINT8[LL]
-#define RSCAN0RPGACC24LH RSCAN0.RPGACC24.UINT8[LH]
-#define RSCAN0RPGACC24H RSCAN0.RPGACC24.UINT16[H]
-#define RSCAN0RPGACC24HL RSCAN0.RPGACC24.UINT8[HL]
-#define RSCAN0RPGACC24HH RSCAN0.RPGACC24.UINT8[HH]
-#define RSCAN0RPGACC25 RSCAN0.RPGACC25.UINT32
-#define RSCAN0RPGACC25L RSCAN0.RPGACC25.UINT16[L]
-#define RSCAN0RPGACC25LL RSCAN0.RPGACC25.UINT8[LL]
-#define RSCAN0RPGACC25LH RSCAN0.RPGACC25.UINT8[LH]
-#define RSCAN0RPGACC25H RSCAN0.RPGACC25.UINT16[H]
-#define RSCAN0RPGACC25HL RSCAN0.RPGACC25.UINT8[HL]
-#define RSCAN0RPGACC25HH RSCAN0.RPGACC25.UINT8[HH]
-#define RSCAN0RPGACC26 RSCAN0.RPGACC26.UINT32
-#define RSCAN0RPGACC26L RSCAN0.RPGACC26.UINT16[L]
-#define RSCAN0RPGACC26LL RSCAN0.RPGACC26.UINT8[LL]
-#define RSCAN0RPGACC26LH RSCAN0.RPGACC26.UINT8[LH]
-#define RSCAN0RPGACC26H RSCAN0.RPGACC26.UINT16[H]
-#define RSCAN0RPGACC26HL RSCAN0.RPGACC26.UINT8[HL]
-#define RSCAN0RPGACC26HH RSCAN0.RPGACC26.UINT8[HH]
-#define RSCAN0RPGACC27 RSCAN0.RPGACC27.UINT32
-#define RSCAN0RPGACC27L RSCAN0.RPGACC27.UINT16[L]
-#define RSCAN0RPGACC27LL RSCAN0.RPGACC27.UINT8[LL]
-#define RSCAN0RPGACC27LH RSCAN0.RPGACC27.UINT8[LH]
-#define RSCAN0RPGACC27H RSCAN0.RPGACC27.UINT16[H]
-#define RSCAN0RPGACC27HL RSCAN0.RPGACC27.UINT8[HL]
-#define RSCAN0RPGACC27HH RSCAN0.RPGACC27.UINT8[HH]
-#define RSCAN0RPGACC28 RSCAN0.RPGACC28.UINT32
-#define RSCAN0RPGACC28L RSCAN0.RPGACC28.UINT16[L]
-#define RSCAN0RPGACC28LL RSCAN0.RPGACC28.UINT8[LL]
-#define RSCAN0RPGACC28LH RSCAN0.RPGACC28.UINT8[LH]
-#define RSCAN0RPGACC28H RSCAN0.RPGACC28.UINT16[H]
-#define RSCAN0RPGACC28HL RSCAN0.RPGACC28.UINT8[HL]
-#define RSCAN0RPGACC28HH RSCAN0.RPGACC28.UINT8[HH]
-#define RSCAN0RPGACC29 RSCAN0.RPGACC29.UINT32
-#define RSCAN0RPGACC29L RSCAN0.RPGACC29.UINT16[L]
-#define RSCAN0RPGACC29LL RSCAN0.RPGACC29.UINT8[LL]
-#define RSCAN0RPGACC29LH RSCAN0.RPGACC29.UINT8[LH]
-#define RSCAN0RPGACC29H RSCAN0.RPGACC29.UINT16[H]
-#define RSCAN0RPGACC29HL RSCAN0.RPGACC29.UINT8[HL]
-#define RSCAN0RPGACC29HH RSCAN0.RPGACC29.UINT8[HH]
-#define RSCAN0RPGACC30 RSCAN0.RPGACC30.UINT32
-#define RSCAN0RPGACC30L RSCAN0.RPGACC30.UINT16[L]
-#define RSCAN0RPGACC30LL RSCAN0.RPGACC30.UINT8[LL]
-#define RSCAN0RPGACC30LH RSCAN0.RPGACC30.UINT8[LH]
-#define RSCAN0RPGACC30H RSCAN0.RPGACC30.UINT16[H]
-#define RSCAN0RPGACC30HL RSCAN0.RPGACC30.UINT8[HL]
-#define RSCAN0RPGACC30HH RSCAN0.RPGACC30.UINT8[HH]
-#define RSCAN0RPGACC31 RSCAN0.RPGACC31.UINT32
-#define RSCAN0RPGACC31L RSCAN0.RPGACC31.UINT16[L]
-#define RSCAN0RPGACC31LL RSCAN0.RPGACC31.UINT8[LL]
-#define RSCAN0RPGACC31LH RSCAN0.RPGACC31.UINT8[LH]
-#define RSCAN0RPGACC31H RSCAN0.RPGACC31.UINT16[H]
-#define RSCAN0RPGACC31HL RSCAN0.RPGACC31.UINT8[HL]
-#define RSCAN0RPGACC31HH RSCAN0.RPGACC31.UINT8[HH]
-#define RSCAN0RPGACC32 RSCAN0.RPGACC32.UINT32
-#define RSCAN0RPGACC32L RSCAN0.RPGACC32.UINT16[L]
-#define RSCAN0RPGACC32LL RSCAN0.RPGACC32.UINT8[LL]
-#define RSCAN0RPGACC32LH RSCAN0.RPGACC32.UINT8[LH]
-#define RSCAN0RPGACC32H RSCAN0.RPGACC32.UINT16[H]
-#define RSCAN0RPGACC32HL RSCAN0.RPGACC32.UINT8[HL]
-#define RSCAN0RPGACC32HH RSCAN0.RPGACC32.UINT8[HH]
-#define RSCAN0RPGACC33 RSCAN0.RPGACC33.UINT32
-#define RSCAN0RPGACC33L RSCAN0.RPGACC33.UINT16[L]
-#define RSCAN0RPGACC33LL RSCAN0.RPGACC33.UINT8[LL]
-#define RSCAN0RPGACC33LH RSCAN0.RPGACC33.UINT8[LH]
-#define RSCAN0RPGACC33H RSCAN0.RPGACC33.UINT16[H]
-#define RSCAN0RPGACC33HL RSCAN0.RPGACC33.UINT8[HL]
-#define RSCAN0RPGACC33HH RSCAN0.RPGACC33.UINT8[HH]
-#define RSCAN0RPGACC34 RSCAN0.RPGACC34.UINT32
-#define RSCAN0RPGACC34L RSCAN0.RPGACC34.UINT16[L]
-#define RSCAN0RPGACC34LL RSCAN0.RPGACC34.UINT8[LL]
-#define RSCAN0RPGACC34LH RSCAN0.RPGACC34.UINT8[LH]
-#define RSCAN0RPGACC34H RSCAN0.RPGACC34.UINT16[H]
-#define RSCAN0RPGACC34HL RSCAN0.RPGACC34.UINT8[HL]
-#define RSCAN0RPGACC34HH RSCAN0.RPGACC34.UINT8[HH]
-#define RSCAN0RPGACC35 RSCAN0.RPGACC35.UINT32
-#define RSCAN0RPGACC35L RSCAN0.RPGACC35.UINT16[L]
-#define RSCAN0RPGACC35LL RSCAN0.RPGACC35.UINT8[LL]
-#define RSCAN0RPGACC35LH RSCAN0.RPGACC35.UINT8[LH]
-#define RSCAN0RPGACC35H RSCAN0.RPGACC35.UINT16[H]
-#define RSCAN0RPGACC35HL RSCAN0.RPGACC35.UINT8[HL]
-#define RSCAN0RPGACC35HH RSCAN0.RPGACC35.UINT8[HH]
-#define RSCAN0RPGACC36 RSCAN0.RPGACC36.UINT32
-#define RSCAN0RPGACC36L RSCAN0.RPGACC36.UINT16[L]
-#define RSCAN0RPGACC36LL RSCAN0.RPGACC36.UINT8[LL]
-#define RSCAN0RPGACC36LH RSCAN0.RPGACC36.UINT8[LH]
-#define RSCAN0RPGACC36H RSCAN0.RPGACC36.UINT16[H]
-#define RSCAN0RPGACC36HL RSCAN0.RPGACC36.UINT8[HL]
-#define RSCAN0RPGACC36HH RSCAN0.RPGACC36.UINT8[HH]
-#define RSCAN0RPGACC37 RSCAN0.RPGACC37.UINT32
-#define RSCAN0RPGACC37L RSCAN0.RPGACC37.UINT16[L]
-#define RSCAN0RPGACC37LL RSCAN0.RPGACC37.UINT8[LL]
-#define RSCAN0RPGACC37LH RSCAN0.RPGACC37.UINT8[LH]
-#define RSCAN0RPGACC37H RSCAN0.RPGACC37.UINT16[H]
-#define RSCAN0RPGACC37HL RSCAN0.RPGACC37.UINT8[HL]
-#define RSCAN0RPGACC37HH RSCAN0.RPGACC37.UINT8[HH]
-#define RSCAN0RPGACC38 RSCAN0.RPGACC38.UINT32
-#define RSCAN0RPGACC38L RSCAN0.RPGACC38.UINT16[L]
-#define RSCAN0RPGACC38LL RSCAN0.RPGACC38.UINT8[LL]
-#define RSCAN0RPGACC38LH RSCAN0.RPGACC38.UINT8[LH]
-#define RSCAN0RPGACC38H RSCAN0.RPGACC38.UINT16[H]
-#define RSCAN0RPGACC38HL RSCAN0.RPGACC38.UINT8[HL]
-#define RSCAN0RPGACC38HH RSCAN0.RPGACC38.UINT8[HH]
-#define RSCAN0RPGACC39 RSCAN0.RPGACC39.UINT32
-#define RSCAN0RPGACC39L RSCAN0.RPGACC39.UINT16[L]
-#define RSCAN0RPGACC39LL RSCAN0.RPGACC39.UINT8[LL]
-#define RSCAN0RPGACC39LH RSCAN0.RPGACC39.UINT8[LH]
-#define RSCAN0RPGACC39H RSCAN0.RPGACC39.UINT16[H]
-#define RSCAN0RPGACC39HL RSCAN0.RPGACC39.UINT8[HL]
-#define RSCAN0RPGACC39HH RSCAN0.RPGACC39.UINT8[HH]
-#define RSCAN0RPGACC40 RSCAN0.RPGACC40.UINT32
-#define RSCAN0RPGACC40L RSCAN0.RPGACC40.UINT16[L]
-#define RSCAN0RPGACC40LL RSCAN0.RPGACC40.UINT8[LL]
-#define RSCAN0RPGACC40LH RSCAN0.RPGACC40.UINT8[LH]
-#define RSCAN0RPGACC40H RSCAN0.RPGACC40.UINT16[H]
-#define RSCAN0RPGACC40HL RSCAN0.RPGACC40.UINT8[HL]
-#define RSCAN0RPGACC40HH RSCAN0.RPGACC40.UINT8[HH]
-#define RSCAN0RPGACC41 RSCAN0.RPGACC41.UINT32
-#define RSCAN0RPGACC41L RSCAN0.RPGACC41.UINT16[L]
-#define RSCAN0RPGACC41LL RSCAN0.RPGACC41.UINT8[LL]
-#define RSCAN0RPGACC41LH RSCAN0.RPGACC41.UINT8[LH]
-#define RSCAN0RPGACC41H RSCAN0.RPGACC41.UINT16[H]
-#define RSCAN0RPGACC41HL RSCAN0.RPGACC41.UINT8[HL]
-#define RSCAN0RPGACC41HH RSCAN0.RPGACC41.UINT8[HH]
-#define RSCAN0RPGACC42 RSCAN0.RPGACC42.UINT32
-#define RSCAN0RPGACC42L RSCAN0.RPGACC42.UINT16[L]
-#define RSCAN0RPGACC42LL RSCAN0.RPGACC42.UINT8[LL]
-#define RSCAN0RPGACC42LH RSCAN0.RPGACC42.UINT8[LH]
-#define RSCAN0RPGACC42H RSCAN0.RPGACC42.UINT16[H]
-#define RSCAN0RPGACC42HL RSCAN0.RPGACC42.UINT8[HL]
-#define RSCAN0RPGACC42HH RSCAN0.RPGACC42.UINT8[HH]
-#define RSCAN0RPGACC43 RSCAN0.RPGACC43.UINT32
-#define RSCAN0RPGACC43L RSCAN0.RPGACC43.UINT16[L]
-#define RSCAN0RPGACC43LL RSCAN0.RPGACC43.UINT8[LL]
-#define RSCAN0RPGACC43LH RSCAN0.RPGACC43.UINT8[LH]
-#define RSCAN0RPGACC43H RSCAN0.RPGACC43.UINT16[H]
-#define RSCAN0RPGACC43HL RSCAN0.RPGACC43.UINT8[HL]
-#define RSCAN0RPGACC43HH RSCAN0.RPGACC43.UINT8[HH]
-#define RSCAN0RPGACC44 RSCAN0.RPGACC44.UINT32
-#define RSCAN0RPGACC44L RSCAN0.RPGACC44.UINT16[L]
-#define RSCAN0RPGACC44LL RSCAN0.RPGACC44.UINT8[LL]
-#define RSCAN0RPGACC44LH RSCAN0.RPGACC44.UINT8[LH]
-#define RSCAN0RPGACC44H RSCAN0.RPGACC44.UINT16[H]
-#define RSCAN0RPGACC44HL RSCAN0.RPGACC44.UINT8[HL]
-#define RSCAN0RPGACC44HH RSCAN0.RPGACC44.UINT8[HH]
-#define RSCAN0RPGACC45 RSCAN0.RPGACC45.UINT32
-#define RSCAN0RPGACC45L RSCAN0.RPGACC45.UINT16[L]
-#define RSCAN0RPGACC45LL RSCAN0.RPGACC45.UINT8[LL]
-#define RSCAN0RPGACC45LH RSCAN0.RPGACC45.UINT8[LH]
-#define RSCAN0RPGACC45H RSCAN0.RPGACC45.UINT16[H]
-#define RSCAN0RPGACC45HL RSCAN0.RPGACC45.UINT8[HL]
-#define RSCAN0RPGACC45HH RSCAN0.RPGACC45.UINT8[HH]
-#define RSCAN0RPGACC46 RSCAN0.RPGACC46.UINT32
-#define RSCAN0RPGACC46L RSCAN0.RPGACC46.UINT16[L]
-#define RSCAN0RPGACC46LL RSCAN0.RPGACC46.UINT8[LL]
-#define RSCAN0RPGACC46LH RSCAN0.RPGACC46.UINT8[LH]
-#define RSCAN0RPGACC46H RSCAN0.RPGACC46.UINT16[H]
-#define RSCAN0RPGACC46HL RSCAN0.RPGACC46.UINT8[HL]
-#define RSCAN0RPGACC46HH RSCAN0.RPGACC46.UINT8[HH]
-#define RSCAN0RPGACC47 RSCAN0.RPGACC47.UINT32
-#define RSCAN0RPGACC47L RSCAN0.RPGACC47.UINT16[L]
-#define RSCAN0RPGACC47LL RSCAN0.RPGACC47.UINT8[LL]
-#define RSCAN0RPGACC47LH RSCAN0.RPGACC47.UINT8[LH]
-#define RSCAN0RPGACC47H RSCAN0.RPGACC47.UINT16[H]
-#define RSCAN0RPGACC47HL RSCAN0.RPGACC47.UINT8[HL]
-#define RSCAN0RPGACC47HH RSCAN0.RPGACC47.UINT8[HH]
-#define RSCAN0RPGACC48 RSCAN0.RPGACC48.UINT32
-#define RSCAN0RPGACC48L RSCAN0.RPGACC48.UINT16[L]
-#define RSCAN0RPGACC48LL RSCAN0.RPGACC48.UINT8[LL]
-#define RSCAN0RPGACC48LH RSCAN0.RPGACC48.UINT8[LH]
-#define RSCAN0RPGACC48H RSCAN0.RPGACC48.UINT16[H]
-#define RSCAN0RPGACC48HL RSCAN0.RPGACC48.UINT8[HL]
-#define RSCAN0RPGACC48HH RSCAN0.RPGACC48.UINT8[HH]
-#define RSCAN0RPGACC49 RSCAN0.RPGACC49.UINT32
-#define RSCAN0RPGACC49L RSCAN0.RPGACC49.UINT16[L]
-#define RSCAN0RPGACC49LL RSCAN0.RPGACC49.UINT8[LL]
-#define RSCAN0RPGACC49LH RSCAN0.RPGACC49.UINT8[LH]
-#define RSCAN0RPGACC49H RSCAN0.RPGACC49.UINT16[H]
-#define RSCAN0RPGACC49HL RSCAN0.RPGACC49.UINT8[HL]
-#define RSCAN0RPGACC49HH RSCAN0.RPGACC49.UINT8[HH]
-#define RSCAN0RPGACC50 RSCAN0.RPGACC50.UINT32
-#define RSCAN0RPGACC50L RSCAN0.RPGACC50.UINT16[L]
-#define RSCAN0RPGACC50LL RSCAN0.RPGACC50.UINT8[LL]
-#define RSCAN0RPGACC50LH RSCAN0.RPGACC50.UINT8[LH]
-#define RSCAN0RPGACC50H RSCAN0.RPGACC50.UINT16[H]
-#define RSCAN0RPGACC50HL RSCAN0.RPGACC50.UINT8[HL]
-#define RSCAN0RPGACC50HH RSCAN0.RPGACC50.UINT8[HH]
-#define RSCAN0RPGACC51 RSCAN0.RPGACC51.UINT32
-#define RSCAN0RPGACC51L RSCAN0.RPGACC51.UINT16[L]
-#define RSCAN0RPGACC51LL RSCAN0.RPGACC51.UINT8[LL]
-#define RSCAN0RPGACC51LH RSCAN0.RPGACC51.UINT8[LH]
-#define RSCAN0RPGACC51H RSCAN0.RPGACC51.UINT16[H]
-#define RSCAN0RPGACC51HL RSCAN0.RPGACC51.UINT8[HL]
-#define RSCAN0RPGACC51HH RSCAN0.RPGACC51.UINT8[HH]
-#define RSCAN0RPGACC52 RSCAN0.RPGACC52.UINT32
-#define RSCAN0RPGACC52L RSCAN0.RPGACC52.UINT16[L]
-#define RSCAN0RPGACC52LL RSCAN0.RPGACC52.UINT8[LL]
-#define RSCAN0RPGACC52LH RSCAN0.RPGACC52.UINT8[LH]
-#define RSCAN0RPGACC52H RSCAN0.RPGACC52.UINT16[H]
-#define RSCAN0RPGACC52HL RSCAN0.RPGACC52.UINT8[HL]
-#define RSCAN0RPGACC52HH RSCAN0.RPGACC52.UINT8[HH]
-#define RSCAN0RPGACC53 RSCAN0.RPGACC53.UINT32
-#define RSCAN0RPGACC53L RSCAN0.RPGACC53.UINT16[L]
-#define RSCAN0RPGACC53LL RSCAN0.RPGACC53.UINT8[LL]
-#define RSCAN0RPGACC53LH RSCAN0.RPGACC53.UINT8[LH]
-#define RSCAN0RPGACC53H RSCAN0.RPGACC53.UINT16[H]
-#define RSCAN0RPGACC53HL RSCAN0.RPGACC53.UINT8[HL]
-#define RSCAN0RPGACC53HH RSCAN0.RPGACC53.UINT8[HH]
-#define RSCAN0RPGACC54 RSCAN0.RPGACC54.UINT32
-#define RSCAN0RPGACC54L RSCAN0.RPGACC54.UINT16[L]
-#define RSCAN0RPGACC54LL RSCAN0.RPGACC54.UINT8[LL]
-#define RSCAN0RPGACC54LH RSCAN0.RPGACC54.UINT8[LH]
-#define RSCAN0RPGACC54H RSCAN0.RPGACC54.UINT16[H]
-#define RSCAN0RPGACC54HL RSCAN0.RPGACC54.UINT8[HL]
-#define RSCAN0RPGACC54HH RSCAN0.RPGACC54.UINT8[HH]
-#define RSCAN0RPGACC55 RSCAN0.RPGACC55.UINT32
-#define RSCAN0RPGACC55L RSCAN0.RPGACC55.UINT16[L]
-#define RSCAN0RPGACC55LL RSCAN0.RPGACC55.UINT8[LL]
-#define RSCAN0RPGACC55LH RSCAN0.RPGACC55.UINT8[LH]
-#define RSCAN0RPGACC55H RSCAN0.RPGACC55.UINT16[H]
-#define RSCAN0RPGACC55HL RSCAN0.RPGACC55.UINT8[HL]
-#define RSCAN0RPGACC55HH RSCAN0.RPGACC55.UINT8[HH]
-#define RSCAN0RPGACC56 RSCAN0.RPGACC56.UINT32
-#define RSCAN0RPGACC56L RSCAN0.RPGACC56.UINT16[L]
-#define RSCAN0RPGACC56LL RSCAN0.RPGACC56.UINT8[LL]
-#define RSCAN0RPGACC56LH RSCAN0.RPGACC56.UINT8[LH]
-#define RSCAN0RPGACC56H RSCAN0.RPGACC56.UINT16[H]
-#define RSCAN0RPGACC56HL RSCAN0.RPGACC56.UINT8[HL]
-#define RSCAN0RPGACC56HH RSCAN0.RPGACC56.UINT8[HH]
-#define RSCAN0RPGACC57 RSCAN0.RPGACC57.UINT32
-#define RSCAN0RPGACC57L RSCAN0.RPGACC57.UINT16[L]
-#define RSCAN0RPGACC57LL RSCAN0.RPGACC57.UINT8[LL]
-#define RSCAN0RPGACC57LH RSCAN0.RPGACC57.UINT8[LH]
-#define RSCAN0RPGACC57H RSCAN0.RPGACC57.UINT16[H]
-#define RSCAN0RPGACC57HL RSCAN0.RPGACC57.UINT8[HL]
-#define RSCAN0RPGACC57HH RSCAN0.RPGACC57.UINT8[HH]
-#define RSCAN0RPGACC58 RSCAN0.RPGACC58.UINT32
-#define RSCAN0RPGACC58L RSCAN0.RPGACC58.UINT16[L]
-#define RSCAN0RPGACC58LL RSCAN0.RPGACC58.UINT8[LL]
-#define RSCAN0RPGACC58LH RSCAN0.RPGACC58.UINT8[LH]
-#define RSCAN0RPGACC58H RSCAN0.RPGACC58.UINT16[H]
-#define RSCAN0RPGACC58HL RSCAN0.RPGACC58.UINT8[HL]
-#define RSCAN0RPGACC58HH RSCAN0.RPGACC58.UINT8[HH]
-#define RSCAN0RPGACC59 RSCAN0.RPGACC59.UINT32
-#define RSCAN0RPGACC59L RSCAN0.RPGACC59.UINT16[L]
-#define RSCAN0RPGACC59LL RSCAN0.RPGACC59.UINT8[LL]
-#define RSCAN0RPGACC59LH RSCAN0.RPGACC59.UINT8[LH]
-#define RSCAN0RPGACC59H RSCAN0.RPGACC59.UINT16[H]
-#define RSCAN0RPGACC59HL RSCAN0.RPGACC59.UINT8[HL]
-#define RSCAN0RPGACC59HH RSCAN0.RPGACC59.UINT8[HH]
-#define RSCAN0RPGACC60 RSCAN0.RPGACC60.UINT32
-#define RSCAN0RPGACC60L RSCAN0.RPGACC60.UINT16[L]
-#define RSCAN0RPGACC60LL RSCAN0.RPGACC60.UINT8[LL]
-#define RSCAN0RPGACC60LH RSCAN0.RPGACC60.UINT8[LH]
-#define RSCAN0RPGACC60H RSCAN0.RPGACC60.UINT16[H]
-#define RSCAN0RPGACC60HL RSCAN0.RPGACC60.UINT8[HL]
-#define RSCAN0RPGACC60HH RSCAN0.RPGACC60.UINT8[HH]
-#define RSCAN0RPGACC61 RSCAN0.RPGACC61.UINT32
-#define RSCAN0RPGACC61L RSCAN0.RPGACC61.UINT16[L]
-#define RSCAN0RPGACC61LL RSCAN0.RPGACC61.UINT8[LL]
-#define RSCAN0RPGACC61LH RSCAN0.RPGACC61.UINT8[LH]
-#define RSCAN0RPGACC61H RSCAN0.RPGACC61.UINT16[H]
-#define RSCAN0RPGACC61HL RSCAN0.RPGACC61.UINT8[HL]
-#define RSCAN0RPGACC61HH RSCAN0.RPGACC61.UINT8[HH]
-#define RSCAN0RPGACC62 RSCAN0.RPGACC62.UINT32
-#define RSCAN0RPGACC62L RSCAN0.RPGACC62.UINT16[L]
-#define RSCAN0RPGACC62LL RSCAN0.RPGACC62.UINT8[LL]
-#define RSCAN0RPGACC62LH RSCAN0.RPGACC62.UINT8[LH]
-#define RSCAN0RPGACC62H RSCAN0.RPGACC62.UINT16[H]
-#define RSCAN0RPGACC62HL RSCAN0.RPGACC62.UINT8[HL]
-#define RSCAN0RPGACC62HH RSCAN0.RPGACC62.UINT8[HH]
-#define RSCAN0RPGACC63 RSCAN0.RPGACC63.UINT32
-#define RSCAN0RPGACC63L RSCAN0.RPGACC63.UINT16[L]
-#define RSCAN0RPGACC63LL RSCAN0.RPGACC63.UINT8[LL]
-#define RSCAN0RPGACC63LH RSCAN0.RPGACC63.UINT8[LH]
-#define RSCAN0RPGACC63H RSCAN0.RPGACC63.UINT16[H]
-#define RSCAN0RPGACC63HL RSCAN0.RPGACC63.UINT8[HL]
-#define RSCAN0RPGACC63HH RSCAN0.RPGACC63.UINT8[HH]
+/* <-SEC M1.10.1 */
+/* <-QAC 0857 */
+/* <-QAC 0639 */
 #endif

@@ -17,54 +17,54 @@
 * and to discontinue the availability of this software. By using this software,
 * you agree to the additional terms and conditions found by accessing the
 * following link:
-* http://www.renesas.com/disclaimer
-*
-*******************************************************************************/
-/*******************************************************************************
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* http://www.renesas.com/disclaimer*
+* Copyright (C) 2013-2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
 * File Name : adc_iodefine.h
-* Description : Definition of I/O Register (V0.50j)
+* $Rev: 819 $
+* $Date:: 2014-04-18 17:03:54 +0900#$
+* Description : Definition of I/O Register (V1.00a)
 ******************************************************************************/
 #ifndef ADC_IODEFINE_H
 #define ADC_IODEFINE_H
+/* ->SEC M1.10.1 : Not magic number */
 
 struct st_adc
 {                                                          /* ADC              */
-    uint16_t       ADDRA;                                  /*  ADDRA           */
-    uint16_t       ADDRB;                                  /*  ADDRB           */
-    uint16_t       ADDRC;                                  /*  ADDRC           */
-    uint16_t       ADDRD;                                  /*  ADDRD           */
-    uint16_t       ADDRE;                                  /*  ADDRE           */
-    uint16_t       ADDRF;                                  /*  ADDRF           */
-    uint16_t       ADDRG;                                  /*  ADDRG           */
-    uint16_t       ADDRH;                                  /*  ADDRH           */
-    uint8_t        dummy32[16];                            /*                  */
-    uint16_t       MPHA;                                   /*  MPHA            */
-    uint16_t       MPLA;                                   /*  MPLA            */
-    uint16_t       MPHB;                                   /*  MPHB            */
-    uint16_t       MPLB;                                   /*  MPLB            */
-    uint16_t       MPHC;                                   /*  MPHC            */
-    uint16_t       MPLC;                                   /*  MPLC            */
-    uint16_t       MPHD;                                   /*  MPHD            */
-    uint16_t       MPLD;                                   /*  MPLD            */
-    uint16_t       MPHE;                                   /*  MPHE            */
-    uint16_t       MPLE;                                   /*  MPLE            */
-    uint16_t       MPHF;                                   /*  MPHF            */
-    uint16_t       MPLF;                                   /*  MPLF            */
-    uint16_t       MPHG;                                   /*  MPHG            */
-    uint16_t       MPLG;                                   /*  MPLG            */
-    uint16_t       MPHH;                                   /*  MPHH            */
-    uint16_t       MPLH;                                   /*  MPLH            */
-    uint8_t        dummy33[32];                            /*                  */
-    uint16_t       SR;                                     /*  SR              */
-    uint16_t       MPER;                                   /*  MPER            */
-    uint16_t       MPSR;                                   /*  MPSR            */
+    volatile uint16_t ADDRA;                                  /*  ADDRA           */
+    volatile uint16_t ADDRB;                                  /*  ADDRB           */
+    volatile uint16_t ADDRC;                                  /*  ADDRC           */
+    volatile uint16_t ADDRD;                                  /*  ADDRD           */
+    volatile uint16_t ADDRE;                                  /*  ADDRE           */
+    volatile uint16_t ADDRF;                                  /*  ADDRF           */
+    volatile uint16_t ADDRG;                                  /*  ADDRG           */
+    volatile uint16_t ADDRH;                                  /*  ADDRH           */
+    volatile uint8_t   dummy32[16];                            /*                  */
+    volatile uint16_t ADCMPHA;                                /*  ADCMPHA         */
+    volatile uint16_t ADCMPLA;                                /*  ADCMPLA         */
+    volatile uint16_t ADCMPHB;                                /*  ADCMPHB         */
+    volatile uint16_t ADCMPLB;                                /*  ADCMPLB         */
+    volatile uint16_t ADCMPHC;                                /*  ADCMPHC         */
+    volatile uint16_t ADCMPLC;                                /*  ADCMPLC         */
+    volatile uint16_t ADCMPHD;                                /*  ADCMPHD         */
+    volatile uint16_t ADCMPLD;                                /*  ADCMPLD         */
+    volatile uint16_t ADCMPHE;                                /*  ADCMPHE         */
+    volatile uint16_t ADCMPLE;                                /*  ADCMPLE         */
+    volatile uint16_t ADCMPHF;                                /*  ADCMPHF         */
+    volatile uint16_t ADCMPLF;                                /*  ADCMPLF         */
+    volatile uint16_t ADCMPHG;                                /*  ADCMPHG         */
+    volatile uint16_t ADCMPLG;                                /*  ADCMPLG         */
+    volatile uint16_t ADCMPHH;                                /*  ADCMPHH         */
+    volatile uint16_t ADCMPLH;                                /*  ADCMPLH         */
+    volatile uint8_t   dummy33[32];                            /*                  */
+    volatile uint16_t ADCSR;                                  /*  ADCSR           */
+    volatile uint16_t ADCMPER;                                /*  ADCMPER         */
+    volatile uint16_t ADCMPSR;                                /*  ADCMPSR         */
 };
 
 
-#define ADC     (*(volatile struct st_adc     *)0xE8005800uL) /* ADC */
+#define ADC     (*(struct st_adc     *)0xE8005800uL) /* ADC */
 
 
 #define ADCADDRA ADC.ADDRA
@@ -75,23 +75,24 @@ struct st_adc
 #define ADCADDRF ADC.ADDRF
 #define ADCADDRG ADC.ADDRG
 #define ADCADDRH ADC.ADDRH
-#define ADCMPHA ADC.MPHA
-#define ADCMPLA ADC.MPLA
-#define ADCMPHB ADC.MPHB
-#define ADCMPLB ADC.MPLB
-#define ADCMPHC ADC.MPHC
-#define ADCMPLC ADC.MPLC
-#define ADCMPHD ADC.MPHD
-#define ADCMPLD ADC.MPLD
-#define ADCMPHE ADC.MPHE
-#define ADCMPLE ADC.MPLE
-#define ADCMPHF ADC.MPHF
-#define ADCMPLF ADC.MPLF
-#define ADCMPHG ADC.MPHG
-#define ADCMPLG ADC.MPLG
-#define ADCMPHH ADC.MPHH
-#define ADCMPLH ADC.MPLH
-#define ADCSR ADC.SR
-#define ADCMPER ADC.MPER
-#define ADCMPSR ADC.MPSR
+#define ADCADCMPHA ADC.ADCMPHA
+#define ADCADCMPLA ADC.ADCMPLA
+#define ADCADCMPHB ADC.ADCMPHB
+#define ADCADCMPLB ADC.ADCMPLB
+#define ADCADCMPHC ADC.ADCMPHC
+#define ADCADCMPLC ADC.ADCMPLC
+#define ADCADCMPHD ADC.ADCMPHD
+#define ADCADCMPLD ADC.ADCMPLD
+#define ADCADCMPHE ADC.ADCMPHE
+#define ADCADCMPLE ADC.ADCMPLE
+#define ADCADCMPHF ADC.ADCMPHF
+#define ADCADCMPLF ADC.ADCMPLF
+#define ADCADCMPHG ADC.ADCMPHG
+#define ADCADCMPLG ADC.ADCMPLG
+#define ADCADCMPHH ADC.ADCMPHH
+#define ADCADCMPLH ADC.ADCMPLH
+#define ADCADCSR ADC.ADCSR
+#define ADCADCMPER ADC.ADCMPER
+#define ADCADCMPSR ADC.ADCMPSR
+/* <-SEC M1.10.1 */
 #endif
