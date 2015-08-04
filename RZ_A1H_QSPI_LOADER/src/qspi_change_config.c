@@ -104,7 +104,7 @@ static externalAddressTransfer_t quadIoRead4b = {
 
 static externalAddressTransfer_t quadRead4b = {
 
-	.addressBitSize = ADDRESS_4BIT,
+	.addressBitSize = ADDRESS_1BIT,
 	.addressEnable = ADDRESS_32_BITS,
 	.command = QUAD_READ_4B,
 	.commandBitSize = COMMAND_1BIT,
@@ -134,6 +134,38 @@ static externalAddressTransfer_t quadRead4b = {
 	.optionalDataRateMode = OPTIONAL_DATA_SDR_TYPE
 };
 
+static externalAddressTransfer_t fastRead4b = {
+
+	.addressBitSize = ADDRESS_1BIT,
+	.addressEnable = ADDRESS_32_BITS,
+	.command = FAST_READ_4B,
+	.commandBitSize = COMMAND_1BIT,
+	.commandEnable = COMMAND_ENABLED,
+
+	.dummyCycleBitSize = DUMMY_4BIT,
+	.dummyCycleEnable = DUMMY_CYCLE_ENABLED,
+	.dummyCycles = DUMMY_8CYCLE,
+	.extValidRange  = BITS_24,
+	.extendedUpperAddress = 0x0,
+
+	.optionalCommand = DUMMY_COMMAND,
+	.optionalCommandBitSize = OPTIONAL_COMMAND_1BIT,
+	.optionalCommandEnable = OPTIONAL_COMMAND_DISABLED,
+
+	.optionalData.UINT32 = 0x0,
+	.optionalDataBitSize = OPTIONAL_DATA_4BIT,
+	.optionalDataEnable = OPTIONAL_DATA_DISABLED,
+
+	.readBurstLenght = BURST_LEN_1,
+	.burstMode = READ_BURST_ON,
+	.readDataBitSize = READ_DATA_1BIT,
+	.sslNegateAfterBurst = SSL_NEGATE_AFTER_BURST,
+
+	.addressRateMode = ADDRESS_SDR_TYPE,
+	.dataReadRateMode = DATA_READ_SDR_TYPE,
+	.optionalDataRateMode = OPTIONAL_DATA_SDR_TYPE
+};
+
 static spiConfig_t spiMode_33Mhz = {
 
 	    // QSPI HARDWARE defines if single or dual chip
@@ -144,9 +176,9 @@ static spiConfig_t spiMode_33Mhz = {
 		.slaveSelectPolarity = ACTIVE_LOW,
 		.clockPolarity = IDLE_LOW,
 
-		.nextAccessDelay =  NA_DELAY_8,
-		.ssNegateDelay = SS_NEGATE_DELAY_8DOT5,
-		.clockDelay = CLOCK_DELAY_8,
+		.nextAccessDelay =  NA_DELAY_1,
+		.ssNegateDelay = SS_NEGATE_DELAY_1DOT5,
+		.clockDelay = CLOCK_DELAY_1,
 
 		.dataSwap = BYTE_SWAP,
 
@@ -163,6 +195,38 @@ static spiConfig_t spiMode_33Mhz = {
 		.divisionRatio = DIV_RATIO_4,
 		.outputShift = SHIFT_ON_EVEN_EDGE,
 		.inputLatch = LATCH_ON_ODD_EDGE
+
+};
+
+static spiConfig_t spiMode_66Mhz = {
+
+	    // QSPI HARDWARE defines if single or dual chip
+	    .dataBusSize = QSPI_HARDWARE,
+
+		// configure the SPI mode controller registers
+		.operatingMode = SPI,
+		.slaveSelectPolarity = ACTIVE_LOW,
+		.clockPolarity = IDLE_LOW,
+
+		.nextAccessDelay =  NA_DELAY_1,
+		.ssNegateDelay = SS_NEGATE_DELAY_1DOT5,
+		.clockDelay = CLOCK_DELAY_1,
+
+		.dataSwap = BYTE_SWAP,
+
+		.idleValue_30_31_2bitMode = IDLE_HI_Z,
+		.idleValue_20_21_2bitMode = IDLE_HI_Z,
+		.idleValue_00_01_1bitInput = IDLE_HI_Z,
+		.idleValue_00_01 = IDLE_HI_Z,
+		.idleValue_10_11 = IDLE_HI_Z,
+		.idleValue_20_21 = IDLE_HI_Z,
+		.idleValue_30_31 = IDLE_HI_Z,
+
+		// TODO: need to confirm why the odd setting works
+		// should be shift on even, latch on odd (working at 33 MHz, div.ratio 4)
+		.divisionRatio = DIV_RATIO_2,
+		.outputShift = SHIFT_ON_EVEN_EDGE,
+		.inputLatch = LATCH_ON_EVEN_EDGE
 
 };
 
@@ -183,7 +247,6 @@ void qspi_change_config_and_start_application(void)
     fPtr applicationEntry = (fPtr) DEF_USER_PROGRAM_SRC;
 
     spiConfiguration = &spiMode_33Mhz;
-    extAddressTransfer = &quadRead4b;
 
     qspiExternalAddressForceIdleAndWait();
 
@@ -327,7 +390,7 @@ void qspi_change_config_and_start_application(void)
     test_readBytes(spiConfiguration.dataBusSize);
 #endif
 
-#if 1
+#if 0
     test_readSignature(spiConfiguration->dataBusSize);
 #endif
 
@@ -335,8 +398,11 @@ void qspi_change_config_and_start_application(void)
 
     // configure the specific registers for external address mode
     // does not yet switch the mode
+    extAddressTransfer = &quadIoRead4b;
+    extAddressTransfer->optionalData.UINT8[3] = 0x00;
     qspiConfigureExternalAddressTransfer(extAddressTransfer);
 
+    spiConfiguration = &spiMode_66Mhz;
     // change the controller configuration before reading the signature
 	// has to be done here since the application is programmed in single or dual mode
     // and the signature is also stored in the same mode
