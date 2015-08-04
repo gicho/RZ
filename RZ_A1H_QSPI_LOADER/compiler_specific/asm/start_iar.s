@@ -34,23 +34,43 @@
 * History       : DD.MM.YYYY Version Description
 *               : 24.06.2013 1.01 added comments on directives
 *******************************************************************************/
-    .text
-    .code 32
-    .global QSPI_BL_vector_table
 
-QSPI_BL_vector_table:
+    MODULE RESET_HANDLER_MOD
+    SECTION RESET_HANDLER:CODE:ROOT(4)
+    ARM
+    
+    EXTERN  QSPI_BL_reset_handler
+    EXTERN  QSPI_BL_undefined_handler
+    EXTERN  QSPI_BL_svc_handler
+    EXTERN  QSPI_BL_prefetch_handler
+    EXTERN  QSPI_BL_abort_handler
+    EXTERN  QSPI_BL_reserved_handler
+    EXTERN  QSPI_BL_irq_handler
+    EXTERN  QSPI_BL_fiq_handler   
 
-    LDR pc, =QSPI_BL_reset_handler
-    LDR pc, =QSPI_BL_undefined_handler
-    LDR pc, =QSPI_BL_svc_handler
-    LDR pc, =QSPI_BL_prefetch_handler
-    LDR pc, =QSPI_BL_abort_handler
-    LDR pc, =QSPI_BL_reserved_handler
-    LDR pc, =QSPI_BL_irq_handler
-    LDR pc, =QSPI_BL_fiq_handler
+        LDR     PC,Reset_Addr           ; Reset
+        LDR     PC,Undefined_Addr       ; Undefined instructions
+        LDR     PC,SVC_Addr             ; Software interrupt (SWI/SVC)
+        LDR     PC,Prefetch_Addr        ; Prefetch abort
+        LDR     PC,Abort_Addr           ; Data abort
+        LDR     PC,Reserved_Addr        ; RESERVED
+        LDR     PC,IRQ_Addr             ; IRQ
+        LDR     PC,FIQ_Addr             ; FIQ
 
-    .align 4
-    .end
+        DATA
+
+Reset_Addr:     DCD   QSPI_BL_reset_handler
+Undefined_Addr: DCD   QSPI_BL_undefined_handler
+SVC_Addr:       DCD   QSPI_BL_svc_handler
+Prefetch_Addr:  DCD   QSPI_BL_prefetch_handler
+Abort_Addr:     DCD   QSPI_BL_abort_handler
+Reserved_Addr:  DCD   QSPI_BL_reserved_handler 
+IRQ_Addr:       DCD   QSPI_BL_irq_handler
+FIQ_Addr:       DCD   QSPI_BL_fiq_handler
+
+        END 
+
+
 
     
 

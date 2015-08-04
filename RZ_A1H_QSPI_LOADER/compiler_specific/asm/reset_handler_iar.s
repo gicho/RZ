@@ -35,35 +35,48 @@
 * History       : DD.MM.YYYY Version Description
 *               : 03.03.2014 1.00
 ******************************************************************************/
-    .global QSPI_BL_reset_handler
-    .global QSPI_BL_undefined_handler
-    .global QSPI_BL_svc_handler
-    .global QSPI_BL_prefetch_handler
-    .global QSPI_BL_abort_handler
-    .global QSPI_BL_reserved_handler
-    .global QSPI_BL_irq_handler
-    .global QSPI_BL_fiq_handler
 
-    .text
+    NAME RESET_HANDLER_S
+    SECTION RESET_HANDLER:CODE(4)
+    ARM
+    
+    PUBLIC QSPI_BL_reset_handler
+    PUBLIC QSPI_BL_undefined_handler
+    PUBLIC QSPI_BL_svc_handler
+    PUBLIC QSPI_BL_prefetch_handler
+    PUBLIC QSPI_BL_abort_handler
+    PUBLIC QSPI_BL_reserved_handler
+    PUBLIC QSPI_BL_irq_handler
+    PUBLIC QSPI_BL_fiq_handler
+    
+    IMPORT QSPI_BL_vector_table
+    IMPORT PowerON_Reset
+    IMPORT __svc_stack_end__
+    IMPORT __irq_stack_end__
+    IMPORT __fiq_stack_end__
+    IMPORT __abt_stack_end__
+    IMPORT __program_stack_end__
     
 /* Standard definitions of mode bits and interrupt flags in PSRs */
-    .equ    USR_MODE , 0x10
-    .equ    FIQ_MODE , 0x11
-    .equ    IRQ_MODE , 0x12
-    .equ    SVC_MODE , 0x13
-    .equ    ABT_MODE , 0x17
-    .equ    UND_MODE , 0x1b
-    .equ    SYS_MODE , 0x1f
+USR_MODE EQU 0x10
+FIQ_MODE EQU 0x11
+IRQ_MODE EQU 0x12
+SVC_MODE EQU 0x13
+ABT_MODE EQU 0x17
+UND_MODE EQU 0x1b
+SYS_MODE EQU 0x1f
     
-    .equ    THUMB_BIT, 0x20  /* CPSR/SPSR Thumb bit */
+THUMB_BIT EQU 0x20  /* CPSR/SPSR Thumb bit */
+
 
 /* Standard definitions of CPSR bits */
-    .equ    V_BIT , 0x2000
-    .equ    I_BIT , 0x1000
-    .equ    Z_BIT , 0x800
-    .equ    C_BIT , 0x4
-    .equ    A_BIT , 0x2
-    .equ    M_BIT , 0x1
+V_BIT EQU 0x2000
+I_BIT EQU 0x1000
+Z_BIT EQU 0x800
+C_BIT EQU 0x4
+A_BIT EQU 0x2
+M_BIT EQU 0x1
+
 
 /* ========================================================================= */
 /* Entry point for the Reset handler */
@@ -168,9 +181,9 @@ goToSleep:
 */
 set_standby_mode_en:
 
-    .equ    STBY_MODE_EN      , 0x1
-    .equ    DYNCLK_GATING_DIS , 0x0
-    .equ    PWR_CTRL_BITS     , (STBY_MODE_EN | DYNCLK_GATING_DIS)
+STBY_MODE_EN        EQU 0x1
+DYNCLK_GATING_DIS   EQU 0x0
+PWR_CTRL_BITS       EQU (STBY_MODE_EN | DYNCLK_GATING_DIS)
 
     LDR  r0, =0x3FFFFF80
     LDR  r1, =PWR_CTRL_BITS
@@ -188,13 +201,13 @@ set_standby_mode_en:
 */
 set_frqcr_reg:
 
-    .equ    CPUSTS_REG	, 0xFCFE0018
-    .equ    ISBUSY_BIT  , 0x10
-    .equ    CKOEN2_BIT , (0x1 << 14)
-    .equ    CKOEN_BITS , (0x1 << 12)
-    .equ    IFC_BITS   , (0x0 << 8)
-    .equ    CONST_BITS , (0x35)
-    .equ    FRQCR      , (CKOEN2_BIT | CKOEN_BITS | IFC_BITS | CONST_BITS)
+CPUSTS_REG  EQU 0xFCFE0018
+ISBUSY_BIT  EQU 0x10
+CKOEN2_BIT  EQU (0x1 << 14)
+CKOEN_BITS  EQU (0x1 << 12)
+IFC_BITS    EQU (0x0 << 8)
+CONST_BITS  EQU (0x35)
+FRQCR EQU (CKOEN2_BIT | CKOEN_BITS | IFC_BITS | CONST_BITS)
 
     LDR  r0, =0xFCFE0010
     LDR  r1, =FRQCR
@@ -220,7 +233,7 @@ frqcr_wait:
 */
 set_frqcr2_reg:
 
-    .equ    GFC_BITS , 0x1
+GFC_BITS EQU 0x1
 
     LDR  r0, =0xFCFE0014
     LDR  r1, =GFC_BITS
@@ -300,9 +313,8 @@ QSPI_BL_irq_handler:
 QSPI_BL_fiq_handler:
     B    QSPI_BL_fiq_handler
 
-
-.end
-
+          END
+          
      
 
 
