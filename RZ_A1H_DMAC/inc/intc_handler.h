@@ -48,7 +48,7 @@ Macro definitions
 /*******************************************************************************
 Functions Prototypes
 *******************************************************************************/
-void INITIALIZATION_CODE R_INTC_Init(void);
+void R_INTC_Init(void);
 
 /* INTC_HANDLER_H */
 #endif

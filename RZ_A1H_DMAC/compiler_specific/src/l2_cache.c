@@ -27,8 +27,7 @@
 #include "l2_cache.h"
 #include "l2_cache_pl310.h"
 
-
-#define min(x, y) ({ x < y ? x : y; })
+#define min(a, b) (((a) < (b)) ? (a) : (b))
 
 #define L2CacheController 0x3FFFF000
 #define CACHE_LINE_SIZE	32
@@ -99,7 +98,9 @@ void L2CacheInvalidate(void)
 
 void L2CacheInvalidateRange(unsigned long start, unsigned long end)
 {
-	if (start & (CACHE_LINE_SIZE - 1)) {
+	unsigned long blk_end;
+        
+        if (start & (CACHE_LINE_SIZE - 1)) {
 		start &= (unsigned long)~(CACHE_LINE_SIZE - 1);
 		L2CacheFlushLine(start);
 		start += CACHE_LINE_SIZE;
@@ -111,7 +112,7 @@ void L2CacheInvalidateRange(unsigned long start, unsigned long end)
 	}
 
 	while (start < end) {
-		unsigned long blk_end = start + min(end - start, 4096UL);
+		blk_end = start + min(end - start, 4096UL);
 
 		while (start < blk_end) {
 			L2CacheInvalidateLine(start);

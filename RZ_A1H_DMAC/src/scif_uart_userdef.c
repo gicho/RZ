@@ -39,6 +39,9 @@ Includes   <System Includes> , "Project Includes"
 ********************************************************************************/
 /* Standard I/O definitions header */
 #include <stdio.h>
+/* Interchangeable compiler specific header */
+#include "compiler_settings.h"
+
 #include "r_typedefs.h"
 /* Device Driver common header */
 #include "dev_drv.h"

@@ -20,39 +20,25 @@
 * http://www.renesas.com/disclaimer
 *
 * Copyright (C) 2014 Renesas Electronics Corporation. All rights reserved.
-******************************************************************************/
-/******************************************************************************
-* File Name     : sio_char.h
+*******************************************************************************/
+/*******************************************************************************
+* File Name     : start.S
 * Device(s)     : RZ/A1H (R7S721001)
 * Tool-Chain    : GNUARM-RZv13.01-EABI
 * H/W Platform  : RSK+RZA1H CPU Board
-* Description   : Sample Program - Terminal I/O header file
+* Description   : application signature
 ******************************************************************************/
 /*******************************************************************************
 * History       : DD.MM.YYYY Version Description
 *               : 18.06.2013 1.00
-*               : 21.03.2014 2.00
+*                 21.03.2014 2.00
 *******************************************************************************/
+    NAME APPLICATION_SIGNATURE_S
+    SECTION APPLICATION_SIGNATURE:DATA(4)
+    ARM
 
-/* Multiple inclusion prevention macro */
-#ifndef SIO_CHAR_H
-#define SIO_CHAR_H
+application_signature:
+    DC8 "0123456789ABCDEF"
 
-/******************************************************************************
-Includes   <System Includes> , "Project Includes"
-******************************************************************************/
+    END
 
-/******************************************************************************
-Functions Prototypes
-******************************************************************************/
-int32_t SioWrite(int32_t file_no, const char * buffer, uint32_t writing_b);
-int32_t SioRead(int32_t file_no, char * buffer, uint32_t reading_b);
-
-void   IoInitScif2(void);
-char   IoGetchar(void);
-void   IoPutchar(char buffer);
-
-/* SIO_CHAR_H */
-#endif  
-
-/* End of File */

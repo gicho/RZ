@@ -37,6 +37,9 @@
 /*******************************************************************************
 Includes   <System Includes> , "Project Includes"
 *******************************************************************************/
+/* Interchangeable compiler specific header */
+#include "compiler_settings.h"
+
 /* Default  type definition header */
 #include "r_typedefs.h"
 /* INTC Driver Header */
@@ -44,9 +47,7 @@ Includes   <System Includes> , "Project Includes"
 /* I/O Register root header */
 #include "iodefine.h"
 /* INTC system header */
-#include "intc_handler.h"
-/* Interchangeable compiler specific header */
-#include "compiler_settings.h"
+//#include "intc_handler.h"
 
 /*******************************************************************************
 * Function Name: INTC_Handler_Interrupt

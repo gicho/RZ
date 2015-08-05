@@ -571,12 +571,11 @@ Variable Externs
 /******************************************************************************
 Functions Prototypes
 ******************************************************************************/
-#include "intc_handler.h"
 
 /* ==== API functions ==== */
 int32_t R_INTC_RegistIntFunc(uint16_t int_id, void (* func)(uint32_t int_sense));
 
-void INITIALIZATION_CODE R_INTC_Init(void);
+INITIALIZATION_CODE void R_INTC_Init(void);
 
 int32_t R_INTC_Enable(uint16_t int_id);
 int32_t R_INTC_Disable(uint16_t int_id);

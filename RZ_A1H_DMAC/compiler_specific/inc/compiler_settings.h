@@ -41,7 +41,32 @@
 /******************************************************************************
 Macro definitions
 ******************************************************************************/
-#define INITIALIZATION_CODE   __attribute__((section (".hardware_init")))
+#ifdef __ICCARM__
+
+#include "intrinsics.h"
+
+#define SOFT_DELAY	__no_operation()
+#define EXEC_RAM        __ramfunc
+
+#define INITIALIZATION_CODE _Pragma("location=\".hardware_init\"") 
+#define DMA_RAM_BUFFER _Pragma("location=\".DMA_BUFFER_IRAM\"")
+#define DMA_RAM_CACHED_BUFFER _Pragma("location=\".DMA_BUFFER_CACHED_IRAM\"")
+#define DMA_SDRAM_BUFFER _Pragma("location=\".DMA_BUFFER_SDRAM\"")
+#define DMA_SDRAM_CACHED_BUFFER _Pragma("location=\".DMA_BUFFER_CACHED_SDRAM\"")
+
+#define VRAM_SECTION  _Pragma("location=\".display_buffer_section\"")
+
+#define IMAGE_DATA_BUF _Pragma("location=\".IMAGE_DATA\"")
+
+#endif
+
+
+#ifdef __GNUC__
+
+#define SOFT_DELAY __asm__("nop")
+#define EXEC_RAM 
+
+#define INITIALIZATION_CODE __attribute__((section (".hardware_init")))  
 
 #define DMA_RAM_BUFFER __attribute__ ((section (".DMA_BUFFER_IRAM")))
 #define DMA_RAM_CACHED_BUFFER __attribute__ ((section (".DMA_BUFFER_CACHED_IRAM")))
@@ -52,13 +77,20 @@ Macro definitions
 // #define BSS_SDRAM_SECTION   __attribute__ ((section (".BSS_DMAC_SAMPLE_SDRAM")))
 #define VRAM_SECTION  __attribute__ ((section (".display_buffer_section")))
 
+#define IMAGE_DATA_BUF _Pragma("location=\".IMAGE_DATA\"")
+
+#endif
+
+
 /******************************************************************************
 Variable External definitions and Function External definitions
 ******************************************************************************/
+
 extern void __enable_irq(void);
 extern void __disable_irq(void);
 extern void __enable_fiq(void);
 extern void __disable_fiq(void);
+
 
 /******************************************************************************
 Functions Prototypes

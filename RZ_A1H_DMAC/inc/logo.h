@@ -39,7 +39,7 @@
 #define LOGO_H
 
 /* Declare the image data section */
-extern uint8_t __attribute__ ((section (".IMAGE_DATA"))) RGB888_LOGO[];
+IMAGE_DATA_BUF extern uint8_t RGB888_LOGO[];
 
 /* LOGO_H */
 #endif

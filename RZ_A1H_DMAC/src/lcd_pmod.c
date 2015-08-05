@@ -40,6 +40,8 @@
 *******************************************************************************/
 /* Includes assembly level definitions */
 #include <string.h>
+#include "compiler_settings.h"
+
 /* Default  type definition header */
 #include "r_typedefs.h"
 /* I/O Register root header */
@@ -354,7 +356,7 @@ void DisplayDelay (uint32_t const units)
     /* Decrement the counter and wait */
     while (counter--)
     {
-        __asm__("nop");
+        SOFT_DELAY;
     }
 }
 /*******************************************************************************

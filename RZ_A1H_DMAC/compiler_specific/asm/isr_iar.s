@@ -20,39 +20,54 @@
 * http://www.renesas.com/disclaimer
 *
 * Copyright (C) 2014 Renesas Electronics Corporation. All rights reserved.
-******************************************************************************/
-/******************************************************************************
-* File Name     : sio_char.h
+*******************************************************************************/
+/*******************************************************************************
+* File Name     : isr.S
 * Device(s)     : RZ/A1H (R7S721001)
 * Tool-Chain    : GNUARM-RZv13.01-EABI
 * H/W Platform  : RSK+RZA1H CPU Board
-* Description   : Sample Program - Terminal I/O header file
-******************************************************************************/
+* Description   : Wrapper functions for interrupt enable/disable
+*                 Erapper for ira & fiq interrupts
+*******************************************************************************/
 /*******************************************************************************
 * History       : DD.MM.YYYY Version Description
 *               : 18.06.2013 1.00
 *               : 21.03.2014 2.00
 *******************************************************************************/
 
-/* Multiple inclusion prevention macro */
-#ifndef SIO_CHAR_H
-#define SIO_CHAR_H
+    .text
+    .code 32
+    .global __enable_irq
+    .global __disable_irq
+    .global __enable_fiq
+    .global __disable_fiq
 
-/******************************************************************************
-Includes   <System Includes> , "Project Includes"
-******************************************************************************/
+    .func   __enable_irq
+__enable_irq:
+    CPSIE   i
+    ISB
+    BX        lr
+    .endfunc
 
-/******************************************************************************
-Functions Prototypes
-******************************************************************************/
-int32_t SioWrite(int32_t file_no, const char * buffer, uint32_t writing_b);
-int32_t SioRead(int32_t file_no, char * buffer, uint32_t reading_b);
+    .func   __disable_irq
+__disable_irq:
+    CPSID   i
+    ISB
+    BX        lr
+    .endfunc
 
-void   IoInitScif2(void);
-char   IoGetchar(void);
-void   IoPutchar(char buffer);
+    .func   __enable_fiq
+__enable_fiq:
+    CPSIE   f
+    ISB
+    BX        lr
+    .endfunc
 
-/* SIO_CHAR_H */
-#endif  
-
-/* End of File */
+    .func   __disable_fiq
+__disable_fiq:
+    CPSID   f
+    ISB
+    BX        lr
+    .endfunc
+    .end
+    .align 4

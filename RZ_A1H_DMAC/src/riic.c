@@ -39,6 +39,9 @@ Includes   <System Includes> , "Project Includes"
 ******************************************************************************/
 #include <stdint.h>
 
+/* Interchangeable compiler specific header */
+#include "compiler_settings.h"
+
 /* Default  type definition header */
 
 #include "r_typedefs.h"

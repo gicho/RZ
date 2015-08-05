@@ -37,6 +37,8 @@
 /*******************************************************************************
 Includes   <System Includes> , "Project Includes"
 ********************************************************************************/
+/* Interchangeable compiler specific header */
+#include "compiler_settings.h"
 /* type definitions */
 #include "r_typedefs.h"
 /* Device Driver common header */

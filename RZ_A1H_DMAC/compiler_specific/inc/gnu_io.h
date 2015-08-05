@@ -58,8 +58,8 @@ Variable Externs
 Functions Prototypes
 ******************************************************************************/
 
-extern int32_t SioWrite(int32_t file_no, const char_t * buffer, uint32_t writing_b);
-extern int32_t SioRead(int32_t file_no, char_t * buffer, uint32_t reading_b);
+extern int32_t SioWrite(int32_t file_no, const char * buffer, uint32_t writing_b);
+extern int32_t SioRead(int32_t file_no, char * buffer, uint32_t reading_b);
 extern void PutString(char *pString);
 
 

@@ -119,7 +119,8 @@ goToSleep:
 
     /* Write value back to CP15 SCR */
     MCR  p15, 0, r0, c1, c0, 0
-
+	ISB
+	
 	MOV  r0,#0
 /* ========================================================================= */
 /* Invalidate instruction cache						     */

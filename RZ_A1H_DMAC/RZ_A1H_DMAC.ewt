@@ -3,7 +3,7 @@
 <project>
   <fileVersion>2</fileVersion>
   <configuration>
-    <name>Debug</name>
+    <name>Debug-from-RAM</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -1049,11 +1049,11 @@
     </settings>
   </configuration>
   <configuration>
-    <name>Release</name>
+    <name>Debug-DUAL-QSPI</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
-    <debug>0</debug>
+    <debug>1</debug>
     <settings>
       <name>C-STAT</name>
       <archiveVersion>1</archiveVersion>
@@ -2022,7 +2022,7 @@
       <data>
         <version>2</version>
         <wantNonLocal>1</wantNonLocal>
-        <debug>0</debug>
+        <debug>1</debug>
         <option>
           <name>GenRtcDebugHeap</name>
           <state>0</state>
@@ -2098,28 +2098,394 @@
     <name>compiler_specific</name>
     <group>
       <name>asm</name>
+      <file>
+        <name>$PROJ_DIR$\compiler_specific\asm\access_iar.s</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\compiler_specific\asm\application_signature_iar.s</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\compiler_specific\asm\cmain_iar.s</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\compiler_specific\asm\init_ttb_iar.s</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\compiler_specific\asm\irqfiq_handler_iar.s</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\compiler_specific\asm\l1_cache_iar.s</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\compiler_specific\asm\l1_cache_init_iar.s</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\compiler_specific\asm\reset_handler_iar.s</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\compiler_specific\asm\start_iar.s</name>
+      </file>
     </group>
     <group>
       <name>inc</name>
+      <file>
+        <name>$PROJ_DIR$\compiler_specific\inc\assembler_macros.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\compiler_specific\inc\compiler_settings.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\compiler_specific\inc\gnu_io.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\compiler_specific\inc\l1_cache.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\compiler_specific\inc\l2_cache.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\compiler_specific\inc\l2_cache_pl310.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\compiler_specific\inc\resetprg.h</name>
+      </file>
     </group>
     <group>
       <name>src</name>
+      <file>
+        <name>$PROJ_DIR$\compiler_specific\src\copy_section_to_ram.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\compiler_specific\src\gnu_io.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\compiler_specific\src\l2_cache.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\compiler_specific\src\l2_cache_pl310.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\compiler_specific\src\low_level_init_iar.c</name>
+      </file>
     </group>
+    <file>
+      <name>$PROJ_DIR$\compiler_specific\IAR-QSPI-APP.icf</name>
+    </file>
   </group>
   <group>
     <name>inc</name>
     <group>
       <name>iobitmasks</name>
+      <file>
+        <name>$PROJ_DIR$\inc\iobitmasks\adc_iobitmask.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iobitmasks\bsc_iobitmask.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iobitmasks\cpg_iobitmask.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iobitmasks\dmac_iobitmask.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iobitmasks\gpio_iobitmask.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iobitmasks\intc_iobitmask.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iobitmasks\mtu2_iobitmask.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iobitmasks\ostm_iobitmask.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iobitmasks\riic_iobitmask.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iobitmasks\rspi_iobitmask.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iobitmasks\scif_iobitmask.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iobitmasks\spibsc_iobitmask.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iobitmasks\usb_iobitmask.h</name>
+      </file>
     </group>
     <group>
       <name>iodefines</name>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\adc_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\bsc_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\ceu_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\cpg_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\disc_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\dmac_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\dvdec_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\ether_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\flctl_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\gpio_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\ieb_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\inb_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\intc_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\irda_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\jcu_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\l2c_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\lin_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\lvds_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\mlb_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\mmc_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\mtu2_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\ostm_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\pfc_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\pfv_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\pwm_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\riic_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\romdec_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\rscan0_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\rspi_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\rtc_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\scif_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\scim_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\scux_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\sdg_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\spdif_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\spibsc_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\ssif_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\usb20_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\vdc5_iodefine.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\inc\iodefines\wdt_iodefine.h</name>
+      </file>
     </group>
+    <file>
+      <name>$PROJ_DIR$\inc\ascii.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\inc\bsc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\inc\bsc_userdef.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\inc\dev_drv.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\inc\devdrv_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\inc\devdrv_intc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\inc\devdrv_riic.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\inc\devdrv_scif_uart.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\inc\iodefine.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\inc\lcd_pmod.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\inc\logo.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\inc\main.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\inc\peripheral_early_init.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\inc\r_typedefs.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\inc\rspi.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\inc\rza_io_regrw.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\inc\sample_adc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\inc\sample_led.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\inc\sample_riic_rza1h_rsk.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\inc\sio_char.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\inc\stb_init.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\inc\switches.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\inc\typedefine.h</name>
+    </file>
   </group>
   <group>
     <name>scripts</name>
   </group>
   <group>
     <name>src</name>
+    <file>
+      <name>$PROJ_DIR$\src\ascii.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\src\bsc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\src\bsc_userdef.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\src\intc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\src\intc_handler.c</name>
+      <configuration>
+        <name>Debug-DUAL-QSPI</name>
+      </configuration>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\src\intc_userdef.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\src\lcd_pmod.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\src\logo.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\src\main.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\src\peripheral_early_init.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\src\riic.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\src\riic_userdef.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\src\rspi.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\src\rspi_user.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\src\rza_io_regrw.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\src\sample_led.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\src\sample_riic_rza1h_rsk.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\src\scif_uart.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\src\scif_uart_userdef.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\src\sio_char.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\src\siorw.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\src\stb_init.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\src\switches.c</name>
+    </file>
   </group>
 </project>
 

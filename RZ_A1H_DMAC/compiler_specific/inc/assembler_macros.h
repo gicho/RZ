@@ -8,6 +8,8 @@
 #ifndef ASSEMBLER_MACROS_H_
 #define ASSEMBLER_MACROS_H_
 
+#ifdef __GNUC__
+
 #ifdef __ASSEMBLY__
 
 	.equiv DMA_FROM_DEVICE,1
@@ -15,7 +17,7 @@
 
 #else
 
-	#define DMA_FROM_DEVICE 1
+        #define DMA_FROM_DEVICE (1)
 	#define DMA_TO_DEVICE 	2
 
 #endif
@@ -24,4 +26,13 @@
 #define dsb() __asm__ __volatile__ ("dsb" : : : "memory")
 #define dmb() __asm__ __volatile__ ("dmb" : : : "memory")
 
+#endif
+      
+#ifdef __ICCARM__
+
+        #define DMA_FROM_DEVICE 1
+	#define DMA_TO_DEVICE 	2
+
+#endif
+          
 #endif /* ASSEMBLER_MACROS_H_ */

@@ -38,6 +38,8 @@
 Includes   <System Includes> , "Project Includes"
 *******************************************************************************/
 #include <stdint.h>
+/* Interchangeable compiler specific header */
+#include "compiler_settings.h"
 
 /* definition of I/O register */
 #include "iodefine.h"

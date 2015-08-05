@@ -39,7 +39,7 @@ Includes   <System Includes> , "Project Includes"
 *******************************************************************************/
 
 #include <stdint.h>
-
+#include "compiler_settings.h"
 #include "r_typedefs.h"
 /* I/O register definitions */
 #include "iodefine.h"
@@ -385,7 +385,7 @@ static void switch_debounce_delay (void)
 	/* Wait for the the 10ms period to expire */
 	while (0x01 != (MTU2.TSR_4 & 0x01))
     {
-    	__asm__("nop");
+    	SOFT_DELAY;
     }
 
 	/* Reload the period */

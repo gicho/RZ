@@ -40,6 +40,7 @@
 Includes   <System Includes> , "Project Includes"
 ******************************************************************************/
 #include <stdio.h>
+#include "compiler_settings.h"
 #include "r_typedefs.h"                   /* Default  type definition header */
 #include "dev_drv.h"                          /* Device Driver common header */
 #include "devdrv_scif_uart.h"                          /* UART Driver header */

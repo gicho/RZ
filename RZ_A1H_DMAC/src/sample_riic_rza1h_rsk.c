@@ -50,6 +50,9 @@ Includes   <System Includes> , "Project Includes"
 #include <stdio.h>
 #include <string.h>
 
+/* Interchangeable compiler specific header */
+#include "compiler_settings.h"
+
 /* Default  type definition header */
 #include "r_typedefs.h"
 /* I/O Register root header */
@@ -580,7 +583,7 @@ int32_t Sample_RIIC_ScanPort(uint32_t channel)
 {
     uint8_t  buf[32];
     uint8_t  dummy_data = 0u;
-    uint8_t  addr;
+    uint16_t  addr;
 
     /*  Argument check  */
     if (channel >= RIIC_CH_TOTAL)

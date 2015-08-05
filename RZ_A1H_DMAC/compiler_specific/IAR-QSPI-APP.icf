@@ -190,12 +190,12 @@ define region SDRAM_MIRROR_region = mem:[from SDRAM_MIRROR_start to SDRAM_MIRROR
 /* Size of block is 0x40000, first two blocks are reserved to the BL */
 /* Defined length accounts for the split between the BL and the application located @ 18080000 */
 /* Needs to match #define DEF_USER_PROGRAM_SRC 0x18080000 in qspi_setup.h, set at (ORIGIN + LENGTH) */	
-define symbol QSPI_FLASH_start = 0x18000000;
-define symbol QSPI_FLASH_end   = 0x1807FFFF;
+define symbol QSPI_FLASH_start = 0x18080000;
+define symbol QSPI_FLASH_end   = 0x1BFFFFFF;
 define region QSPI_FLASH_region = mem:[from QSPI_FLASH_start to QSPI_FLASH_end];	
 
 define symbol QSPI_FLASH_MIRROR_start = 0x58000000;
-define symbol QSPI_FLASH_MIRROR_end   = 0x5807FFFF;
+define symbol QSPI_FLASH_MIRROR_end   = 0x5BFFFFFF;
 define region QSPI_FLASH_MIRROR_region = mem:[from QSPI_FLASH_MIRROR_start to QSPI_FLASH_MIRROR_end];
 
 
@@ -213,7 +213,7 @@ define block MMU_TABLE with alignment = 0x4000, size = 0x8000 { section MMU_TT }
 
 /* data and bss are initialized manually */
 define block RAM_DATA { section .data };
-define block RAM_DATA_IN_ROM { section .data_init };
+// define block RAM_DATA_IN_ROM { section .data_init };
 define block RAM_BSS { section .bss };
 
 /* .textrw are functions which are specified to run from RAM (__ramfunc) */
@@ -222,19 +222,38 @@ define block RAM_CODE_IN_ROM { section .textrw_init };
 
 do not initialize  { section .noinit };
 do not initialize  { section MMU_TT };
+do not initialize  { 
+section .DMA_BUFFER_IRAM ,
+section .DMA_BUFFER_SDRAM,
+section .DMA_BUFFER_CACHED_IRAM, 
+section .DMA_BUFFER_CACHED_SDRAM
+};
+
+initialize by copy { readwrite, section .textrw };
+
+
+/*
 initialize manually { section .data };
 initialize manually { section .bss };
 initialize manually { section .textrw };
+*/
 
-/* Vector table located in QSPI */
+/* Default vector table located in QSPI */
 place in QSPI_FLASH_region { first readonly section .intvec };
+
+/* Runtime vector table re-located in RAM */
+place in RAM0L_region { first section RAM_IRQ_VECTOR_TABLE };
+
+place at address mem:(QSPI_FLASH_start+0x40) { section APPLICATION_SIGNATURE };
 
 /* Locate constants and rest of non-ram code in QSPI */
 place in QSPI_FLASH_region { readonly }; 
 
 /* RAM code and .data initializers go in QSPI */
 place in QSPI_FLASH_region { block RAM_CODE_IN_ROM }; 
-place in QSPI_FLASH_region { block RAM_DATA_IN_ROM }; 
+//place in QSPI_FLASH_region { block RAM_DATA_IN_ROM }; 
+
+
 
 /* everything else in RAM */
 place in RAM0L_region { block RAM_CODE };
@@ -250,7 +269,12 @@ place in RAM0L_region { block HEAP };
   block FIQ_STACK,
   block UND_STACK,
   block ABT_STACK }; 
-  
+
+place in RAM1L_MIRROR_region { section .DMA_BUFFER_IRAM };
+place in SDRAM_MIRROR_region { section .DMA_BUFFER_SDRAM };
+place in RAM1U_region { section .DMA_BUFFER_CACHED_IRAM }; 
+place in SDRAM_region { section .DMA_BUFFER_CACHED_SDRAM };
+
 /* END OF FILE */  
 
 

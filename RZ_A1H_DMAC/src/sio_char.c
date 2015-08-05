@@ -37,6 +37,9 @@
 /******************************************************************************
 Includes   <System Includes> , "Project Includes"
 ******************************************************************************/
+/* Interchangeable compiler specific header */
+#include "compiler_settings.h"
+
 #include "r_typedefs.h"
 #include "dev_drv.h"
 /* INTC Driver Header */
@@ -119,9 +122,9 @@ void IoInitScif2(void)
 * Arguments    : none
 * Return Value : Character to receive (Byte).
 ******************************************************************************/
-char_t IoGetchar(void)
+char IoGetchar(void)
 {
-    char_t data;
+    char data;
 
     /* Confirming receive error(ER,BRK,FER,PER) */
     if (SCIF2.SCFSR & 0x09Cu)
@@ -170,7 +173,7 @@ char_t IoGetchar(void)
 * Arguments    : char_t buffer : character to output
 * Return Value : None
 ******************************************************************************/
-void IoPutchar(char_t buffer)
+void IoPutchar(char buffer)
 {
     /* Check if it is possible to transmit (TDFE flag) */
     while (0 == RZA_IO_RegRead_16(&SCIF2.SCFSR, SCIF2_SCFSR_TDFE_SHIFT, SCIF2_SCFSR_TDFE))

@@ -39,6 +39,10 @@ Includes   <System Includes> , "Project Includes"
 *******************************************************************************/
 /* System headers */
 #include <stdio.h>
+
+/* Interchangeable compiler specific header */
+#include "compiler_settings.h"
+
 /* Default  type definition header */
 #include "r_typedefs.h"
 /* Serial input/output header */
@@ -85,7 +89,7 @@ Private global variables and functions
 * Return Value : >=0 : Number of transmitting characters
 *              : -1  : File number error
 ******************************************************************************/
-int32_t SioWrite(int32_t file_no, const char_t * buffer, uint32_t writing_b)
+int32_t SioWrite(int32_t file_no, const char * buffer, uint32_t writing_b)
 {
     uint32_t offset;
 
@@ -131,10 +135,10 @@ int32_t SioWrite(int32_t file_no, const char_t * buffer, uint32_t writing_b)
 * Return Value : >0 : Number of receiving characters
 *              : -1 : File number, receiving data error
 ******************************************************************************/
-int32_t SioRead(int32_t file_no, char_t * buffer, uint32_t reading_b)
+int32_t SioRead(int32_t file_no, char * buffer, uint32_t reading_b)
 {
-    char_t         char_mem;
-    char_t         SP_char;
+    char         char_mem;
+    char         SP_char;
     uint32_t       offset;
     static int32_t sjis_flg = SIORW_FLAG_OFF;
 

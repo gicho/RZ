@@ -351,6 +351,8 @@ finished:
    .globl flush_cache
    .align 4
 
+flush_cache:
+
 	stmfd	sp!, {r4-r5, r7, r9-r11, lr}
 	bl	flush_dcache
 	mov	r0, #0

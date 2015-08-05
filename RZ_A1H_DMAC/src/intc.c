@@ -37,6 +37,9 @@
 /******************************************************************************
 Includes   <System Includes> , "Project Includes"
 ******************************************************************************/
+/* Interchangeable compiler specific header */
+#include "compiler_settings.h"
+
 /* Default  type definition header */
 #include "r_typedefs.h"
 /* Device driver header */
@@ -45,8 +48,7 @@ Includes   <System Includes> , "Project Includes"
 #include "iodefine.h"
 /* INTC Driver Header */
 #include "devdrv_intc.h"
-/* Interchangeable compiler specific header */
-#include "compiler_settings.h"
+
 
 
 /******************************************************************************

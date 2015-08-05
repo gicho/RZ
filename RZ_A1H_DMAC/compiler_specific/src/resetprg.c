@@ -35,6 +35,8 @@
 * History       : DD.MM.YYYY Version Description
 *               : 18.06.2013 1.00
 ******************************************************************************/
+/* Interchangeable compiler specific header */
+#include "compiler_settings.h"
 
 #include "r_typedefs.h"
 #include "devdrv_common.h"

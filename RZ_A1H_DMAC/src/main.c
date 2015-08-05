@@ -95,41 +95,41 @@ Macro definitions
 Private global variables and functions
 ******************************************************************************/
 /* Source Buffer : Place in On-Chip RAM (cache invalid area) */
-static uint8_t DMA_RAM_BUFFER dmac_src_data_ram[DMAC_BUFF_SIZE];
+DMA_RAM_BUFFER static uint8_t dmac_src_data_ram[DMAC_BUFF_SIZE];
 
 /* Destination Buffer : Place in On-Chip RAM (cache invalid area)*/
-static uint8_t DMA_RAM_BUFFER dmac_dst_data_ram[DMAC_BUFF_SIZE];
+DMA_RAM_BUFFER static uint8_t dmac_dst_data_ram[DMAC_BUFF_SIZE];
 
 /* Source Buffer : Place in On-Chip CACHED RAM */
-static uint8_t DMA_RAM_CACHED_BUFFER dmac_src_data_cachedram[DMAC_BUFF_SIZE];
+DMA_RAM_CACHED_BUFFER static uint8_t dmac_src_data_cachedram[DMAC_BUFF_SIZE];
 
 /* Destination Buffer : Place in On-Chip CACHED RAM */
-static uint8_t DMA_RAM_CACHED_BUFFER dmac_dst_data_cachedram[DMAC_BUFF_SIZE];
+DMA_RAM_CACHED_BUFFER static uint8_t dmac_dst_data_cachedram[DMAC_BUFF_SIZE];
 
 /* Source Buffer : Place in SDRAM (cache invalid area) */
-static uint8_t DMA_SDRAM_BUFFER dmac_src_data_sdram[DMAC_BUFF_SIZE];
+DMA_SDRAM_BUFFER static uint8_t dmac_src_data_sdram[DMAC_BUFF_SIZE];
 
 /* Destination Buffer : Place in SDRAM (cache invalid area)*/
-static uint8_t DMA_SDRAM_BUFFER dmac_dst_data_sdram[DMAC_BUFF_SIZE];
+DMA_SDRAM_BUFFER static uint8_t dmac_dst_data_sdram[DMAC_BUFF_SIZE];
 
 /* Source Buffer : Place in CACHED SDRAM */
-static uint8_t DMA_SDRAM_CACHED_BUFFER dmac_src_data_cachedsdram[DMAC_BUFF_SIZE];
+DMA_SDRAM_CACHED_BUFFER static uint8_t dmac_src_data_cachedsdram[DMAC_BUFF_SIZE];
 
 /* Destination Buffer : Place in CACHED SDRAM */
-static uint8_t DMA_SDRAM_CACHED_BUFFER dmac_dst_data_cachedsdram[DMAC_BUFF_SIZE];
+DMA_SDRAM_CACHED_BUFFER static uint8_t dmac_dst_data_cachedsdram[DMAC_BUFF_SIZE];
 
 
-bool_t dmac_ch3_trans_flg = false;
-bool_t dmac_ch0_trans_flg = false;
+bool dmac_ch3_trans_flg = false;
+bool dmac_ch0_trans_flg = false;
 
 #define L2_CACHED_SRC (0x1)
 #define L2_CACHED_DST (0x2)
 
 
-bool_t verify_data_set(uint8_t* buffer, uint8_t reference)
+bool verify_data_set(uint8_t* buffer, uint8_t reference)
 {
     uint32_t index = 0;
-    bool_t   ret = true;
+    bool   ret = true;
 
     for(index = 0; index < DMAC_BUFF_SIZE; index++)
     {
@@ -547,7 +547,7 @@ void touchLoop_L2(uint32_t paddress) {
 
 void dmac_uncached_uncached_extrequest(void)
 {
-    char str[16];
+    // char str[16];
     uint8_t *addressSrc, *addressDst;
 
     // dmac_src_data_sdram
@@ -582,11 +582,11 @@ void dmac_uncached_uncached(void)
     uint8_t *addressSrc, *addressDst;
 
     Display_LCD(3, (uint8_t *)" From uncached RAM");
-    sprintf(str, " ADDR 0x%08x",(uint)dmac_src_data_ram);
+    sprintf(str, " ADDR 0x%08x",(uint32_t)dmac_src_data_ram);
     Display_LCD(4, (uint8_t *)str);
 
     Display_LCD(6, (uint8_t *)" To uncached RAM");
-    sprintf(str, " ADDR 0x%08x",(uint)dmac_dst_data_ram);
+    sprintf(str, " ADDR 0x%08x",(uint32_t)dmac_dst_data_ram);
     Display_LCD(7, (uint8_t *)str);
 
     initialise_data(dmac_src_data_ram, BUFF_INIT_BYTE, DMAC_BUFF_SIZE);
@@ -631,11 +631,11 @@ void dmac_cached_uncached(void)
     uint8_t *addressSrc, *addressDst;
 
     Display_LCD(3, (uint8_t *)" From cached RAM");
-    sprintf(str, " ADDR 0x%08x",(uint)dmac_src_data_cachedram);
+    sprintf(str, " ADDR 0x%08x",(uint32_t)dmac_src_data_cachedram);
     Display_LCD(4, (uint8_t *)str);
 
     Display_LCD(6, (uint8_t *)" To uncached RAM");
-    sprintf(str, " ADDR 0x%08x",(uint)dmac_dst_data_ram);
+    sprintf(str, " ADDR 0x%08x",(uint32_t)dmac_dst_data_ram);
     Display_LCD(7, (uint8_t *)str);
 
     initialise_data(dmac_src_data_cachedram, BUFF_INIT_BYTE, DMAC_BUFF_SIZE);
@@ -686,11 +686,11 @@ void dmac_uncached_cached(void)
     uint8_t *addressSrc, *addressDst;
 
     Display_LCD(3, (uint8_t *)" From uncached RAM");
-    sprintf(str, " ADDR 0x%08x",(uint)dmac_src_data_ram);
+    sprintf(str, " ADDR 0x%08x",(uint32_t)dmac_src_data_ram);
     Display_LCD(4, (uint8_t *)str);
 
     Display_LCD(6, (uint8_t *)" To cached RAM");
-    sprintf(str, " ADDR 0x%08x",(uint)dmac_dst_data_cachedram);
+    sprintf(str, " ADDR 0x%08x",(uint32_t)dmac_dst_data_cachedram);
     Display_LCD(7, (uint8_t *)str);
 
     initialise_data(dmac_src_data_ram, BUFF_INIT_BYTE, DMAC_BUFF_SIZE);
@@ -739,11 +739,11 @@ void dmac_cached_cached(void)
     uint8_t *addressSrc, *addressDst;
 
     Display_LCD(3, (uint8_t *)" From cached RAM");
-    sprintf(str, " ADDR 0x%08x",(uint)dmac_src_data_cachedram);
+    sprintf(str, " ADDR 0x%08x",(uint32_t)dmac_src_data_cachedram);
     Display_LCD(4, (uint8_t *)str);
 
     Display_LCD(6, (uint8_t *)" To cached RAM");
-    sprintf(str, " ADDR 0x%08x",(uint)dmac_dst_data_cachedram);
+    sprintf(str, " ADDR 0x%08x",(uint32_t)dmac_dst_data_cachedram);
     Display_LCD(7, (uint8_t *)str);
 
     initialise_data(dmac_src_data_cachedram, BUFF_INIT_BYTE, DMAC_BUFF_SIZE);
@@ -809,11 +809,11 @@ void dmac_ram_uncached_sdram_uncached(void)
     uint8_t *addressSrc, *addressDst;
 
     Display_LCD(3, (uint8_t *)" From uncached RAM");
-    sprintf(str, " ADDR 0x%08x",(uint)dmac_src_data_ram);
+    sprintf(str, " ADDR 0x%08x",(uint32_t)dmac_src_data_ram);
     Display_LCD(4, (uint8_t *)str);
 
     Display_LCD(6, (uint8_t *)" To uncached SDRAM");
-    sprintf(str, " ADDR 0x%08x",(uint)dmac_dst_data_sdram);
+    sprintf(str, " ADDR 0x%08x",(uint32_t)dmac_dst_data_sdram);
     Display_LCD(7, (uint8_t *)str);
 
     initialise_data(dmac_src_data_ram, BUFF_INIT_BYTE, DMAC_BUFF_SIZE);
@@ -860,11 +860,11 @@ void dmac_ram_cached_sdram_uncached(void)
 	    uint8_t *addressSrc, *addressDst;
 
 	    Display_LCD(3, (uint8_t *)" From cached RAM");
-	    sprintf(str, " ADDR 0x%08x",(uint)dmac_src_data_cachedram);
+	    sprintf(str, " ADDR 0x%08x",(uint32_t)dmac_src_data_cachedram);
 	    Display_LCD(4, (uint8_t *)str);
 
 	    Display_LCD(6, (uint8_t *)" To uncached SDRAM");
-	    sprintf(str, " ADDR 0x%08x",(uint)dmac_dst_data_sdram);
+	    sprintf(str, " ADDR 0x%08x",(uint32_t)dmac_dst_data_sdram);
 	    Display_LCD(7, (uint8_t *)str);
 
 	    initialise_data(dmac_src_data_cachedram, BUFF_INIT_BYTE, DMAC_BUFF_SIZE);
@@ -915,11 +915,11 @@ void dmac_ram_uncached_sdram_cached(void)
     uint8_t *addressSrc, *addressDst;
 
     Display_LCD(3, (uint8_t *)" From uncached RAM");
-    sprintf(str, " ADDR 0x%08x",(uint)dmac_src_data_ram);
+    sprintf(str, " ADDR 0x%08x",(uint32_t)dmac_src_data_ram);
     Display_LCD(4, (uint8_t *)str);
 
     Display_LCD(6, (uint8_t *)" To cached SDRAM");
-    sprintf(str, " ADDR 0x%08x",(uint)dmac_dst_data_cachedsdram);
+    sprintf(str, " ADDR 0x%08x",(uint32_t)dmac_dst_data_cachedsdram);
     Display_LCD(7, (uint8_t *)str);
 
     initialise_data(dmac_src_data_ram, BUFF_INIT_BYTE, DMAC_BUFF_SIZE);
@@ -971,11 +971,11 @@ void dmac_ram_cached_sdram_cached(void)
     uint8_t *addressSrc, *addressDst;
 
     Display_LCD(3, (uint8_t *)" From cached RAM");
-    sprintf(str, " ADDR 0x%08x",(uint)dmac_src_data_cachedram);
+    sprintf(str, " ADDR 0x%08x",(uint32_t)dmac_src_data_cachedram);
     Display_LCD(4, (uint8_t *)str);
 
     Display_LCD(6, (uint8_t *)" To cached SDRAM");
-    sprintf(str, " ADDR 0x%08x",(uint)dmac_dst_data_cachedsdram);
+    sprintf(str, " ADDR 0x%08x",(uint32_t)dmac_dst_data_cachedsdram);
     Display_LCD(7, (uint8_t *)str);
 
     initialise_data(dmac_src_data_cachedram, BUFF_INIT_BYTE, DMAC_BUFF_SIZE);
@@ -1031,11 +1031,11 @@ void dmac_sdram_uncached_ram_uncached(void)
     uint8_t *addressSrc, *addressDst;
 
     Display_LCD(3, (uint8_t *)" From uncached SDRAM");
-    sprintf(str, " ADDR 0x%08x",(uint)dmac_src_data_sdram);
+    sprintf(str, " ADDR 0x%08x",(uint32_t)dmac_src_data_sdram);
     Display_LCD(4, (uint8_t *)str);
 
     Display_LCD(6, (uint8_t *)" To uncached RAM");
-    sprintf(str, " ADDR 0x%08x",(uint)dmac_dst_data_ram);
+    sprintf(str, " ADDR 0x%08x",(uint32_t)dmac_dst_data_ram);
     Display_LCD(7, (uint8_t *)str);
 
     initialise_data(dmac_src_data_sdram, BUFF_INIT_BYTE, DMAC_BUFF_SIZE);
@@ -1080,11 +1080,11 @@ void dmac_sdram_cached_ram_uncached(void)
     uint8_t *addressSrc, *addressDst;
 
     Display_LCD(3, (uint8_t *)" From cached SDRAM");
-    sprintf(str, " ADDR 0x%08x",(uint)dmac_src_data_cachedsdram);
+    sprintf(str, " ADDR 0x%08x",(uint32_t)dmac_src_data_cachedsdram);
     Display_LCD(4, (uint8_t *)str);
 
     Display_LCD(6, (uint8_t *)" To uncached RAM");
-    sprintf(str, " ADDR 0x%08x",(uint)dmac_dst_data_ram);
+    sprintf(str, " ADDR 0x%08x",(uint32_t)dmac_dst_data_ram);
     Display_LCD(7, (uint8_t *)str);
 
     initialise_data(dmac_src_data_cachedsdram, BUFF_INIT_BYTE, DMAC_BUFF_SIZE);
@@ -1137,11 +1137,11 @@ void dmac_sdram_uncached_ram_cached(void)
     uint8_t *addressSrc, *addressDst;
 
     Display_LCD(3, (uint8_t *)" From uncached SDRAM");
-    sprintf(str, " ADDR 0x%08x",(uint)dmac_src_data_sdram);
+    sprintf(str, " ADDR 0x%08x",(uint32_t)dmac_src_data_sdram);
     Display_LCD(4, (uint8_t *)str);
 
     Display_LCD(6, (uint8_t *)" To cached RAM");
-    sprintf(str, " ADDR 0x%08x",(uint)dmac_dst_data_cachedram);
+    sprintf(str, " ADDR 0x%08x",(uint32_t)dmac_dst_data_cachedram);
     Display_LCD(7, (uint8_t *)str);
 
     initialise_data(dmac_src_data_sdram, BUFF_INIT_BYTE, DMAC_BUFF_SIZE);
@@ -1190,11 +1190,11 @@ void dmac_sdram_cached_ram_cached(void)
     uint8_t *addressSrc, *addressDst;
 
     Display_LCD(3, (uint8_t *)" From cached SDRAM");
-    sprintf(str, " ADDR 0x%08x",(uint)dmac_src_data_cachedsdram);
+    sprintf(str, " ADDR 0x%08x",(uint32_t)dmac_src_data_cachedsdram);
     Display_LCD(4, (uint8_t *)str);
 
     Display_LCD(6, (uint8_t *)" To cached RAM");
-    sprintf(str, " ADDR 0x%08x",(uint)dmac_dst_data_cachedram);
+    sprintf(str, " ADDR 0x%08x",(uint32_t)dmac_dst_data_cachedram);
     Display_LCD(7, (uint8_t *)str);
 
     initialise_data(dmac_src_data_cachedsdram, BUFF_INIT_BYTE, DMAC_BUFF_SIZE);
@@ -1248,11 +1248,11 @@ void dmac_sdram_cached_sdram_cached(void)
     uint8_t *addressSrc, *addressDst;
 
     Display_LCD(3, (uint8_t *)" From cached SDRAM");
-    sprintf(str, " ADDR 0x%08x",(uint)dmac_src_data_cachedsdram);
+    sprintf(str, " ADDR 0x%08x",(uint32_t)dmac_src_data_cachedsdram);
     Display_LCD(4, (uint8_t *)str);
 
     Display_LCD(6, (uint8_t *)" To cached SDRAM");
-    sprintf(str, " ADDR 0x%08x",(uint)dmac_dst_data_cachedsdram);
+    sprintf(str, " ADDR 0x%08x",(uint32_t)dmac_dst_data_cachedsdram);
     Display_LCD(7, (uint8_t *)str);
 
     initialise_data(dmac_src_data_cachedsdram, BUFF_INIT_BYTE, DMAC_BUFF_SIZE);
@@ -1314,8 +1314,24 @@ void dmac_sdram_cached_sdram_cached(void)
 * Arguments    : none
 * Return Value : 0
 ******************************************************************************/
-int_t main(void)
+int main(void)
 {
+#ifdef __ICC_ARM__  
+  
+    VectorTableEntry = (uint32_t volatile *) __section_begin("RAM_IRQ_VECTOR_TABLE");
+    VbarSet(VectorTableEntry);  
+    
+#endif
+    
+    /* Initial setting of the level 1 cache */
+    L1CachesEnable();
+    L2CacheInit();
+
+    /* Enable interrupts */
+    __enable_irq();
+    __enable_fiq();  
+  
+  
     /* Initialise ri2c for rsk board */
     R_RIIC_rza1h_rsk_init();
 
@@ -1654,7 +1670,7 @@ int_t main(void)
     while(1)
     {
     	/* Program should not exit */
-		__asm__("nop");
+	SOFT_DELAY;
     }
 
     return 0;

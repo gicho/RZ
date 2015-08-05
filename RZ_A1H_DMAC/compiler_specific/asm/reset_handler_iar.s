@@ -19,55 +19,90 @@
 * following link:
 * http://www.renesas.com/disclaimer
 *
-* Copyright (C) 2014 Renesas Electronics Corporation. All rights reserved.
+*******************************************************************************/
+/*******************************************************************************
+* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /******************************************************************************
 * File Name     : reset_handler.S
-* Device(s)     : RZ/A1H (R7S721001)
+* Device(s)     : RZ/A1H RSK2+RZA1H
 * Tool-Chain    : GNUARM-RZv13.01-EABI
-* H/W Platform  : RSK+RZA1H CPU Board
+* H/W Platform  : RSK2+RZA1H CPU Board
 * Description   : Called by reset vector (start.S/mirrorstart.S)
 *               : As such its the startpoint for this software
 ******************************************************************************/
 /******************************************************************************
 * History       : DD.MM.YYYY Version Description
-*               : 18.06.2013 1.00
-*               : 21.03.2014 2.00
+*               : 03.03.2014 1.00
 ******************************************************************************/
 
-    .global APP_reset_handler
-    .global APP_undefined_handler
-    .global APP_svc_handler
-    .global APP_prefetch_handler
-    .global APP_abort_handler
-    .global APP_reserved_handler
-    .global APP_irq_handler
-    .global APP_fiq_handler
-    .global APP_dummy_handler
+    NAME RESET_HANDLER_S
+    SECTION RESET_HANDLER:CODE(4)
+    ARM
+    
+    PUBLIC APP_reset_handler
+    PUBLIC __iar_program_start
+    PUBLIC APP_undefined_handler
+    PUBLIC APP_svc_handler
+    PUBLIC APP_prefetch_handler
+    PUBLIC APP_abort_handler
+    PUBLIC APP_reserved_handler
+    PUBLIC APP_dummy_handler
+    
+    IMPORT APP_vector_table    
+    IMPORT __cmain
+    
+    IMPORT CSTACK$$Limit
+    IMPORT SVC_STACK$$Limit
+    IMPORT IRQ_STACK$$Limit
+    IMPORT FIQ_STACK$$Limit
+    IMPORT UND_STACK$$Limit
+    IMPORT ABT_STACK$$Limit
 
-    .text
+    IMPORT init_TTB
+    IMPORT neon_vfp_on
+    IMPORT enable_mmu
+
+__svc_stack_end__ 		EQU SVC_STACK$$Limit
+__irq_stack_end__ 		EQU IRQ_STACK$$Limit
+__fiq_stack_end__ 		EQU FIQ_STACK$$Limit
+__und_stack_end__ 		EQU UND_STACK$$Limit
+__abt_stack_end__ 		EQU ABT_STACK$$Limit
+__program_stack_end__ 	EQU  CSTACK$$Limit   
 
 /* Standard definitions of mode bits and interrupt flags in PSRs */
-    .equ    USR_MODE , 0x10
-    .equ    FIQ_MODE , 0x11
-    .equ    IRQ_MODE , 0x12
-    .equ    SVC_MODE , 0x13
-    .equ    ABT_MODE , 0x17
-    .equ    UND_MODE , 0x1b
-    .equ    SYS_MODE , 0x1f
-    .equ    Thum_bit , 0x20                           /* CPSR/SPSR Thumb bit */
+USR_MODE EQU 0x10
+FIQ_MODE EQU 0x11
+IRQ_MODE EQU 0x12
+SVC_MODE EQU 0x13
+ABT_MODE EQU 0x17
+UND_MODE EQU 0x1b
+SYS_MODE EQU 0x1f
+    
+THUMB_BIT EQU 0x20  /* CPSR/SPSR Thumb bit */
+
 
 /* Standard definitions of CPSR bits */
-    .equ    V_BIT , 0x2000
-    .equ    I_BIT , 0x1000
-    .equ    Z_BIT , 0x800
-    .equ    C_BIT , 0x4
-    .equ    A_BIT , 0x2
-    .equ    M_BIT , 0x1
+V_BIT EQU 0x2000
+I_BIT EQU 0x1000
+Z_BIT EQU 0x800
+C_BIT EQU 0x4
+A_BIT EQU 0x2
+M_BIT EQU 0x1
+
 
 /* ========================================================================= */
 /* Entry point for the Reset handler */
 /* ========================================================================= */
+//;******************************************************************************
+//; Function Name : reset_handler
+//; Description   : This function is the assembler function executed after reset
+//;               : cancellation. After initial setting for the stack pointer or
+//;               : the MMU and reset cancellation, executes initial setting for
+//;               : the minimum required peripheral functions. Calls the __main
+//;               : of the standard library function to execute the main function.
+//;******************************************************************************
+__iar_program_start:
 APP_reset_handler:
 
 /* ========================================================================= */
@@ -75,7 +110,7 @@ APP_reset_handler:
 /* Check core, if not core 0  put to sleep.                                  */
 /* ========================================================================= */
 /* not needed on single processor systems, removed from module */
-.if 0
+#if 0
         MRC     p15, 0, r0, c0, c0, 5	/* cp,  OP1,  Rd,  CRn, CRm,  OP2 */
         								/* read in R0 the value of the MPIDR register */
         ANDS    r0, r0, #3				/* bit[1:0] = CPU ID */
@@ -86,11 +121,10 @@ goToSleep:
         WFINE							/* if non zero, sleep */
         BNE     goToSleep
 
-.endif
-
+#endif
 
 /* ========================================================================= */
-/* Cache and MMU maintenance    											 */
+/* Cache and MMU maintenance    					     */
 /* ========================================================================= */
 /* Disable cache and MMU just to be sure */
 
@@ -113,10 +147,9 @@ goToSleep:
     /* Write value back to CP15 SCR */
     MCR  p15, 0, r0, c1, c0, 0
 
-
-	MOV  r0,#0
+    MOV  r0,#0
 /* ========================================================================= */
-/* Invalidate instruction cache												 */
+/* Invalidate instruction cache						     */
 /* ========================================================================= */
     MCR  p15, 0, r0, c7, c5, 0
 
@@ -133,7 +166,7 @@ goToSleep:
     ISB	/* Sync barrier */
 
 /* ========================================================================= */
-/* Clock Setting															 */
+/* Clock Setting							     */
 /* ========================================================================= */
 
 /* Set standby_mode_en of Power Control Register
@@ -144,15 +177,16 @@ goToSleep:
 */
 set_standby_mode_en:
 
-    .equ    STBY_MODE_EN      , (0x1)
-    .equ    DYNCLK_GATING_DIS , (0x0)
-    .equ    PWR_CTRL_BITS     , (STBY_MODE_EN | DYNCLK_GATING_DIS)
+STBY_MODE_EN        EQU 0x1
+DYNCLK_GATING_DIS   EQU 0x0
+PWR_CTRL_BITS       EQU (STBY_MODE_EN | DYNCLK_GATING_DIS)
 
     LDR  r0, =0x3FFFFF80
     LDR  r1, =PWR_CTRL_BITS
     STR  r1, [r0]
     ISB
     LDR  r0, [r0]
+
 
 /* program the frequency control register
  Bit[14] = 0 - clock output enable control (unstable = 0, fixed low = 1)
@@ -163,14 +197,13 @@ set_standby_mode_en:
 */
 set_frqcr_reg:
 
-	.equ   	CPUSTS_REG	, (0xFCFE0018)
-	.equ	ISBUSY_BIT  , (0x10)
-
-    .equ    CKOEN2_BIT , (0x1 << 14)
-    .equ    CKOEN_BITS , (0x1 << 12)
-    .equ    IFC_BITS   , (0x0 << 8)
-    .equ    CONST_BITS , (0x35)
-    .equ    FRQCR      , (CKOEN2_BIT | CKOEN_BITS | IFC_BITS | CONST_BITS)
+CPUSTS_REG  EQU 0xFCFE0018
+ISBUSY_BIT  EQU 0x10
+CKOEN2_BIT  EQU (0x1 << 14)
+CKOEN_BITS  EQU (0x1 << 12)
+IFC_BITS    EQU (0x0 << 8)
+CONST_BITS  EQU (0x35)
+FRQCR EQU (CKOEN2_BIT | CKOEN_BITS | IFC_BITS | CONST_BITS)
 
     LDR  r0, =0xFCFE0010
     LDR  r1, =FRQCR
@@ -185,6 +218,7 @@ frqcr_wait:
     ANDS r1, r1, #ISBUSY_BIT
     BNE  frqcr_wait
 
+
 /* BCLK is 1/3 = 133,33 MHz fixed ratio */
 /* P0CLK is 1/6 = 66,67 MHz fixed ratio */
 /* P1CLK is 1/12 = 33,33 MHz fixed ratio */
@@ -195,7 +229,7 @@ frqcr_wait:
 */
 set_frqcr2_reg:
 
-    .equ    GFC_BITS , (0x1)
+GFC_BITS EQU 0x1
 
     LDR  r0, =0xFCFE0014
     LDR  r1, =GFC_BITS
@@ -217,7 +251,7 @@ frqcr2_wait:
     LDRB r0, [r0]           /* dummy read 8 bits wide */
 
 /* ========================================================================= */
-/* Vector Table Setting															 */
+/* Vector Table Setting							     */
 /* ========================================================================= */
 /*
  After QSPI, eSD or eMMC boot mode the system is configured to use High address
@@ -228,14 +262,15 @@ frqcr2_wait:
  Here we use VBAR
 */
 
-	/* Now set Vbar to the Application vector table */
+/* Now set Vbar to the BL vector table instead of the ROM vector table  */
     LDR r0, = APP_vector_table
     MCR p15, 0, r0, c12, c0, 0
 
+	
 /* ========================================================================= */
-/*  Setting up Stack Areas defined in the linker script                      */
+/*  Setting up Stack Area	                                             */
 /* ========================================================================= */
-/* SVC Mode(Default)                                                         */
+/* Configure the supervisor mode just to be sure (default from QSPI boot)    */
     CPS  #SVC_MODE
     LDR  sp, =__svc_stack_end__
 
@@ -247,18 +282,17 @@ frqcr2_wait:
     CPS  #FIQ_MODE
     LDR  sp, =__fiq_stack_end__
 
-/* ABT_MODE                                                                  */
-    CPS  #ABT_MODE
-    LDR  sp, =__abt_stack_end__
-
 /* UND_MODE                                                                  */
     CPS  #UND_MODE
     LDR  sp, =__und_stack_end__
 
-/* SYS_MODE                                                                  */
+/* ABT_MODE                                                                  */
+    CPS  #ABT_MODE
+    LDR  sp, =__abt_stack_end__
+
+/* SYS_MODE, shares stack space and register set with user mode              */
     CPS  #SYS_MODE
     LDR  sp, =__program_stack_end__
-
 
 /* ========================================================================= */
 /* TTB initialize                                                            */
@@ -268,9 +302,9 @@ frqcr2_wait:
 /* ========================================================================= */
 /* Setup domain control register - Enable all domains to client mode         */
 /* ========================================================================= */
-	MRC  p15, 0, r0, c3, c0, 0     /* Read Domain Access Control Register    */
-	LDR  r0, =0x55555555    /* Initialize every domain entry to b01 (client) */
-	MCR  p15, 0, r0, c3, c0, 0       /* Write Domain Access Control Register */
+    MRC  p15, 0, r0, c3, c0, 0     /* Read Domain Access Control Register    */
+    LDR  r0, =0x55555555    /* Initialize every domain entry to b01 (client) */
+    MCR  p15, 0, r0, c3, c0, 0       /* Write Domain Access Control Register */
 
 /* ========================================================================= */
 /* Enable access to NEON/VFP by enabling access to Coprocessors 10 and 11.   */
@@ -291,16 +325,17 @@ frqcr2_wait:
 /* Enable MMU  - leaves caches off                                           */
 /* ========================================================================= */
     BL enable_mmu
-    
+	
 /* ========================================================================= */
 /* Branch to C library entry point                                           */
 /* ========================================================================= */
-    LDR  r12,=PowerON_Reset
-    BX   r12                              /* Branch to C library entry point */
+   FUNCALL __iar_program_start, __cmain
+   B __cmain
+    
 
 
 APP_reset_handler_end:
-	B APP_reset_handler_end
+    B    APP_reset_handler_end
 
 /* ========================================================================= */
 /* Other Handlers                                                            */
@@ -320,12 +355,11 @@ APP_abort_handler:
 APP_reserved_handler:
     B    APP_reserved_handler
 
-
 APP_dummy_handler:
-	B APP_dummy_handler
+    B    APP_dummy_handler
+    
+          END
+          
+     
 
-.end
-
-
-.end
 
