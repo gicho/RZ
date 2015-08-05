@@ -638,7 +638,7 @@
       <archiveVersion>1</archiveVersion>
       <data>
         <prebuild></prebuild>
-        <postbuild>cmd /c "copy $PROJ_DIR$\RZ_RSK_SerialFlash\Exe\RZ_RSK_SerialFlash.out $PROJ_DIR$\..\RZ_RSK_SerialFlash.out"</postbuild>
+        <postbuild>cmd /c "copy $PROJ_DIR$\RZ_RSK_SerialFlash\Exe\RZ_RSK_SerialFlash.out $PROJ_DIR$\..\flash_loader\RZ_RSK_SerialFlash.out"</postbuild>
       </data>
     </settings>
     <settings>

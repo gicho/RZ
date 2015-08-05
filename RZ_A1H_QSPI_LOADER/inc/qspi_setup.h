@@ -53,17 +53,11 @@ Macro definitions
 
 
 #ifdef SINGLE_QSPI_BOARD
-
-#define QSPI_HARDWARE	SINGLE_MEMORY
-#warning "Building for *SINGLE* QSPI Application"
-
+  #define QSPI_HARDWARE	SINGLE_MEMORY
 #endif
 
 #ifdef DUAL_QSPI_BOARD
-
-#define QSPI_HARDWARE	DUAL_MEMORY
-#warning "Building for *DUAL* QSPI Application"
-
+  #define QSPI_HARDWARE	DUAL_MEMORY
 #endif
 
 /* this defines where in flash the application is located, @0x18080000 */

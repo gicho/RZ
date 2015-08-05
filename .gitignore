@@ -12,3 +12,6 @@ settings
 Obj
 /RZ_A1H_QSPI_LOADER/.settings/Project_Generation_Prefrences.prefs
 /RZ_A1H_QSPI_LOADER/.settings/org.eclipse.cdt.managedbuilder.core.prefs
+*.dep
+Exe
+*.map

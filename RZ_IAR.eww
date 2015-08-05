@@ -2,9 +2,6 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\RZ_A1H_QSPI_LOADER\flash_loader\Flashloader_RZ_RSK_SerialFlash\Flashloader_RZ_RSK_SerialFlash.ewp</path>
-  </project>
-  <project>
     <path>$WS_DIR$\RZ_A1H_QSPI_LOADER\RZ_A1H_QSPI_LOADER.ewp</path>
   </project>
   <batchBuild/>
