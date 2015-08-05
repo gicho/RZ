@@ -35,6 +35,8 @@ Includes   <System Includes> , "Project Includes"
 // #include "spibsc.h"
 #include "rza_io_regrw.h"
 
+#include "compiler_settings.h"
+
 /******************************************************************************
 Typedef definitions
 ******************************************************************************/
@@ -43,11 +45,11 @@ Typedef definitions
 /******************************************************************************
 Macro definitions
 ******************************************************************************/
-void error_image(void);
+EXEC_RAM void error_image(void);
 
 char signature[] = "0123456789ABCDEF";
 
-int check_image(uint32_t location)
+EXEC_RAM int check_image(uint32_t location)
 {
     uint8_t p    = 0;
     uint16_t len = sizeof(signature);
@@ -84,7 +86,7 @@ int check_image(uint32_t location)
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void error_image(void)
+EXEC_RAM void error_image(void)
 {
 	uint32_t delay = 0x30000;
 	uint8_t state = 0;
@@ -100,7 +102,7 @@ void error_image(void)
     {
     	RZA_IO_RegWrite_16(&GPIO.P7,  state, GPIO_P7_P71_SHIFT,  GPIO_P7_P71);
 		while (--delay) {
-				__asm__("nop");
+                  SOFT_DELAY ;
 		}
 
 		delay = 0x30000;

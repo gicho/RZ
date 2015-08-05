@@ -30,6 +30,7 @@
 /******************************************************************************
 Includes   <System Includes> , "Project Includes"
 ******************************************************************************/
+#include "compiler_settings.h"
 #include "r_typedefs.h"
 #include "iodefine.h"
 #include "spibsc_iobitmask.h"
@@ -62,7 +63,7 @@ Exported global variables and functions (to be accessed by other files)
 Private global variables and functions
 ******************************************************************************/
 
-void qspiExternalAddressForceIdleAndWait(void) {
+EXEC_RAM void qspiExternalAddressForceIdleAndWait(void) {
 
     /* SPIBSC stop accessing the SPI in bus mode, set SSLN to negate access */
     SPIBSC0.DRCR |= EXTADDRESS_MODE_FORCE_IDLE;
@@ -73,7 +74,7 @@ void qspiExternalAddressForceIdleAndWait(void) {
     qspiControllerWaitForIdle();
 }
 
-void qspiConfigureExternalAddressTransfer(const externalAddressTransfer_t* externalAddressTransferConfig) {
+EXEC_RAM void qspiConfigureExternalAddressTransfer(const externalAddressTransfer_t* externalAddressTransferConfig) {
 
 
     RZA_IO_RegWrite_32(&SPIBSC0.DRENR, externalAddressTransferConfig->commandBitSize, SPIBSC_DRENR_CDB_SHIFT, SPIBSC_DRENR_CDB);
@@ -109,11 +110,9 @@ void qspiConfigureExternalAddressTransfer(const externalAddressTransfer_t* exter
 }
 
 
-void qspiExternalAddressFlushReadCache(void) {
+EXEC_RAM void qspiExternalAddressFlushReadCache(void) {
 
-    uint32_t dummyRead;
-
-    UNUSED_VARIABLE(dummyRead);
+    volatile uint32_t dummyRead;
 
     /* flush cache */
     SPIBSC0.DRCR |= (1u << 9);

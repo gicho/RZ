@@ -36,10 +36,11 @@
 *******************************************************************************/
 
     MODULE RESET_HANDLER_MOD
-    SECTION RESET_HANDLER:CODE:ROOT(4)
+    SECTION .intvec:CODE:ROOT(4)
     ARM
     
-    EXTERN  QSPI_BL_reset_handler
+    PUBLIC QSPI_BL_vector_table
+    EXTERN  __iar_program_start
     EXTERN  QSPI_BL_undefined_handler
     EXTERN  QSPI_BL_svc_handler
     EXTERN  QSPI_BL_prefetch_handler
@@ -47,6 +48,8 @@
     EXTERN  QSPI_BL_reserved_handler
     EXTERN  QSPI_BL_irq_handler
     EXTERN  QSPI_BL_fiq_handler   
+
+QSPI_BL_vector_table:
 
         LDR     PC,Reset_Addr           ; Reset
         LDR     PC,Undefined_Addr       ; Undefined instructions
@@ -59,7 +62,7 @@
 
         DATA
 
-Reset_Addr:     DCD   QSPI_BL_reset_handler
+Reset_Addr:     DCD   __iar_program_start
 Undefined_Addr: DCD   QSPI_BL_undefined_handler
 SVC_Addr:       DCD   QSPI_BL_svc_handler
 Prefetch_Addr:  DCD   QSPI_BL_prefetch_handler

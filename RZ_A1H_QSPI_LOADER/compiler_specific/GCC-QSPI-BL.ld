@@ -46,16 +46,16 @@ MEMORY
 	RETRAM0 (rwx)   : ORIGIN = 0x20000000, LENGTH = 0x00004000  /* Retention ram page 0 ( 16KB) H'20000000 to H'20003FFF */
 	RETRAM1 (rwx)   : ORIGIN = 0x20004000, LENGTH = 0x00004000  /* Retention ram page 1 ( 16KB) H'20004000 to H'20007FFF */
 	RETRAM2 (rwx)   : ORIGIN = 0x20008000, LENGTH = 0x00008000  /* Retention ram page 2 ( 32KB) H'20008000 to H'2000FFFF */
-	RETRAM3 (rwx)   : ORIGIN = 0x20010000, LENGTH = 0x00010000  /* Retention ram page 3 ( 64KB) H'20010000 to H'201FFFFF */
+	RETRAM3 (rwx)   : ORIGIN = 0x20010000, LENGTH = 0x00010000  /* Retention ram page 3 ( 64KB) H'20010000 to H'2001FFFF */
 	
 	RETRAM (rwx)	: ORIGIN = 0x20000000, LENGTH = 0x00020000	/* Complete range of retention RAM */
 	
 	/* Internal RAM memory map */
 	RAM0L (rwx)   : ORIGIN = 0x20020000, LENGTH = 0x000E0000  /* Page 0 Lower bank ( 896KB) H'20020000 to H'200FFFFF */
-	RAM1L (rwx)   : ORIGIN = 0x20100000, LENGTH = 0x00100000  /* Page 1 Upper bank (1024KB) H'20100000 to H'201FFFFF */
-	RAM2L (rwx)   : ORIGIN = 0x20200000, LENGTH = 0x00100000  /* Page 2 Upper bank (1024KB) H'20200000 to H'202FFFFF */
-	RAM3L (rwx)   : ORIGIN = 0x20300000, LENGTH = 0x00100000  /* Page 3 Upper bank (1024KB) H'20300000 to H'203FFFFF */
-	RAM4L (rwx)   : ORIGIN = 0x20400000, LENGTH = 0x00100000  /* Page 4 Upper bank (1024KB) H'20400000 to H'204FFFFF */
+	RAM1L (rwx)   : ORIGIN = 0x20100000, LENGTH = 0x00100000  /* Page 1 Lower bank (1024KB) H'20100000 to H'201FFFFF */
+	RAM2L (rwx)   : ORIGIN = 0x20200000, LENGTH = 0x00100000  /* Page 2 Lower bank (1024KB) H'20200000 to H'202FFFFF */
+	RAM3L (rwx)   : ORIGIN = 0x20300000, LENGTH = 0x00100000  /* Page 3 Lower bank (1024KB) H'20300000 to H'203FFFFF */
+	RAM4L (rwx)   : ORIGIN = 0x20400000, LENGTH = 0x00100000  /* Page 4 Lower bank (1024KB) H'20400000 to H'204FFFFF */
 	RAM0U (rwx)   : ORIGIN = 0x20500000, LENGTH = 0x00100000  /* Page 0 Upper bank (1024KB) H'20500000 to H'205FFFFF */
 	RAM1U (rwx)   : ORIGIN = 0x20600000, LENGTH = 0x00100000  /* Page 1 Upper bank (1024KB) H'20600000 to H'206FFFFF */
 	RAM2U (rwx)   : ORIGIN = 0x20700000, LENGTH = 0x00100000  /* Page 2 Upper bank (1024KB) H'20700000 to H'207FFFFF */
@@ -65,12 +65,12 @@ MEMORY
 	RAM0L_MIRROR (rwx)   : ORIGIN = 0x60020000, LENGTH = 0x000E0000  /* Page 0 Lower bank ( 896KB) H'60020000 to H'600FFFFF */
 	RAM0U_MIRROR (rwx)   : ORIGIN = 0x60100000, LENGTH = 0x00100000  /* Page 0 Upper bank (1024KB) H'60100000 to H'601FFFFF */
 	RAM1U_MIRROR (rwx)   : ORIGIN = 0x60200000, LENGTH = 0x00100000  /* Page 1 Upper bank (1024KB) H'60200000 to H'602FFFFF */
-	RAM1L_MIRROR (rwx)   : ORIGIN = 0x60300000, LENGTH = 0x00100000  /* Page 1 Upper bank (1024KB) H'60300000 to H'603FFFFF */
-	RAM2L_MIRROR (rwx)   : ORIGIN = 0x60400000, LENGTH = 0x00100000  /* Page 2 Upper bank (1024KB) H'60400000 to H'604FFFFF */
-	RAM2U_MIRROR (rwx)   : ORIGIN = 0x60500000, LENGTH = 0x00100000  /* Page 2 Upper bank (1024KB) H'60500000 to H'6050FFFF */
+	RAM1L_MIRROR (rwx)   : ORIGIN = 0x60300000, LENGTH = 0x00100000  /* Page 1 Lower bank (1024KB) H'60300000 to H'603FFFFF */
+	RAM2L_MIRROR (rwx)   : ORIGIN = 0x60400000, LENGTH = 0x00100000  /* Page 2 Lower bank (1024KB) H'60400000 to H'604FFFFF */
+	RAM2U_MIRROR (rwx)   : ORIGIN = 0x60500000, LENGTH = 0x00100000  /* Page 2 Upper bank (1024KB) H'60500000 to H'605FFFFF */
 	RAM3U_MIRROR (rwx)   : ORIGIN = 0x60600000, LENGTH = 0x00100000  /* Page 3 Upper bank (1024KB) H'60600000 to H'606FFFFF */
-	RAM3L_MIRROR (rwx)   : ORIGIN = 0x60700000, LENGTH = 0x00100000  /* Page 3 Upper bank (1024KB) H'60700000 to H'6070FFFF */
-	RAM4L_MIRROR (rwx)   : ORIGIN = 0x60800000, LENGTH = 0x00100000  /* Page 4 Upper bank (1024KB) H'60800000 to H'6080FFFF */
+	RAM3L_MIRROR (rwx)   : ORIGIN = 0x60700000, LENGTH = 0x00100000  /* Page 3 Lower bank (1024KB) H'60700000 to H'607FFFFF */
+	RAM4L_MIRROR (rwx)   : ORIGIN = 0x60800000, LENGTH = 0x00100000  /* Page 4 Lower bank (1024KB) H'60800000 to H'608FFFFF */
 	RAM4U_MIRROR (rwx)   : ORIGIN = 0x60900000, LENGTH = 0x00100000  /* Page 4 Upper bank (1024KB) H'60900000 to H'609FFFFF */
 	
 	SDRAM (rwx)   		: ORIGIN = 0x08000000, LENGTH = 0x02000000  /* SDRAM 32MB attached to CS2 H'08000000 to H'09FFFFFF */
@@ -93,12 +93,8 @@ IRQ_STACK_SIZE	      = 0x2000;      /* IRQ mode stack                     */
 FIQ_STACK_SIZE	      = 0x2000;      /* Fast IRQ mode stack                */
 SVC_STACK_SIZE	      = 0x2000;      /* SVC mode stack                     */
 ABT_STACK_SIZE	      = 0x2000;      /* Abort mode stack                   */
+UND_STACK_SIZE	      = 0x2000;      /* Undefined mode stack               */
 TTB_SIZE              = 0x8000;      /* Level-1 Translation Table for MMU  */
-
-QSPI_BOOT_ADDRESS     = 0x18000000;  /* QSPI Boot Location */
-QSPI_VECTOR_TABLE	  = 0x18000000;  /* Vector table in QSPI is located here */
-RAM_BASE              = 0x20020000;  /* The location for executable code (copied to RAM) */
-
 
 SECTIONS
 {
@@ -310,7 +306,22 @@ SECTIONS
 		PROVIDE(__abt_stack_end__ = .);
 		
 	} > RAM0U
-      
+
+	/* stacks need to be aligned to 8 bytes */
+	.und_stack_section (NOLOAD) : ALIGN(0x8)
+	{
+		__und_stack_start__ = .;
+		PROVIDE(__und_stack_start__ = .);
+		
+		.  += UND_STACK_SIZE;
+		
+		. = ALIGN(0x4);
+		
+		__und_stack_end__ = .;
+		PROVIDE(__und_stack_end__ = .);
+		
+	} > RAM0U
+	
 	/* stacks need to be aligned to 8 bytes */
 	.program_stack_section (NOLOAD) : ALIGN(0x8)
 	{

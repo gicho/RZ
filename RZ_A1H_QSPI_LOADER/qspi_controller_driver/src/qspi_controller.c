@@ -63,7 +63,7 @@ Private global variables and functions
 ******************************************************************************/
 
 
-void qspiControllerConfigure(spiConfig_t* spiConfig) {
+EXEC_RAM void qspiControllerConfigure(spiConfig_t* spiConfig) {
 
 
 	/* set mode SPI or external address space */
@@ -111,7 +111,7 @@ void qspiControllerConfigure(spiConfig_t* spiConfig) {
 
 }
 
-void qspiControllerWaitForIdle(void) {
+EXEC_RAM void qspiControllerWaitForIdle(void) {
 
     /* Wait for the final transfers to end (TEND=1) */
     while(!(SPIBSC0.CMNSR & TRANSFER_END));

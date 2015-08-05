@@ -30,6 +30,8 @@
 /******************************************************************************
 Includes   <System Includes> , "Project Includes"
 ******************************************************************************/
+#include "compiler_settings.h"
+
 #include "r_typedefs.h"
 #include "iodefine.h"
 // #include "spibsc.h"
@@ -51,8 +53,8 @@ Macro definitions
 /******************************************************************************
 Imported global variables and functions (from other files)
 ******************************************************************************/
-extern uint32_t check_image(uint32_t location);
-extern void error_image(void);
+extern EXEC_RAM uint32_t check_image(uint32_t location);
+extern EXEC_RAM void error_image(void);
 
 /******************************************************************************
 Exported global variables and functions (to be accessed by other files)
@@ -62,12 +64,16 @@ Exported global variables and functions (to be accessed by other files)
 /******************************************************************************
 Private global variables and functions
 ******************************************************************************/
-#if 0
-static void test_readBytes(dataBusSize_t busSize);
+
+#define SIGNATURE_TEST 1
+#define BYTEREAD_TEST 1
+
+#if BYTEREAD_TEST
+EXEC_RAM static void test_readBytes(dataBusSize_t busSize);
 #endif
 
-#if 1
-static void test_readSignature(dataBusSize_t busSize);
+#if SIGNATURE_TEST
+EXEC_RAM static void test_readSignature(dataBusSize_t busSize);
 #endif
 
 static externalAddressTransfer_t quadIoRead4b = {
@@ -84,7 +90,7 @@ static externalAddressTransfer_t quadIoRead4b = {
 	.extValidRange  = BITS_24,
 	.extendedUpperAddress = 0x0,
 
-	.optionalCommand = DUMMY_COMMAND,
+	.optionalCommand = DUMMY_OPT_COMMAND,
 	.optionalCommandBitSize = OPTIONAL_COMMAND_1BIT,
 	.optionalCommandEnable = OPTIONAL_COMMAND_DISABLED,
 
@@ -116,7 +122,7 @@ static externalAddressTransfer_t quadRead4b = {
 	.extValidRange  = BITS_24,
 	.extendedUpperAddress = 0x0,
 
-	.optionalCommand = DUMMY_COMMAND,
+	.optionalCommand = DUMMY_OPT_COMMAND,
 	.optionalCommandBitSize = OPTIONAL_COMMAND_1BIT,
 	.optionalCommandEnable = OPTIONAL_COMMAND_DISABLED,
 
@@ -148,7 +154,7 @@ static externalAddressTransfer_t fastRead4b = {
 	.extValidRange  = BITS_24,
 	.extendedUpperAddress = 0x0,
 
-	.optionalCommand = DUMMY_COMMAND,
+	.optionalCommand = DUMMY_OPT_COMMAND,
 	.optionalCommandBitSize = OPTIONAL_COMMAND_1BIT,
 	.optionalCommandEnable = OPTIONAL_COMMAND_DISABLED,
 
@@ -234,17 +240,19 @@ typedef void (*fPtr)(void);
 static spiConfig_t* spiConfiguration;
 static externalAddressTransfer_t* extAddressTransfer;
 
-void qspi_change_config_and_start_application(void)
+
+
+EXEC_RAM void qspi_change_config_and_start_application(void)
 {
-	flashStatusRegister1 statusReg1_device0, statusReg1_device1;
-	flashConfigRegister1 configReg1_device0, configReg1_device1;
-	flashStatusRegister2 statusReg2_device0, statusReg2_device1;
+    flashStatusRegister1 statusReg1_device0, statusReg1_device1;
+    flashConfigRegister1 configReg1_device0, configReg1_device1;
+    flashStatusRegister2 statusReg2_device0, statusReg2_device1;
 
     uint8_t bf_device0, bf_device1;
     deviceSignature signature0, signature1;
     uint32_t len;
 
-    fPtr applicationEntry = (fPtr) DEF_USER_PROGRAM_SRC;
+    volatile fPtr applicationEntry = (fPtr) DEF_USER_PROGRAM_SRC;
 
     spiConfiguration = &spiMode_33Mhz;
 
@@ -386,11 +394,11 @@ void qspi_change_config_and_start_application(void)
 	qspiReadConfigRegister(&configReg1_device0, &configReg1_device1, spiConfiguration->dataBusSize);
 	qspiReadStatusRegister1(&statusReg1_device0, &statusReg1_device1, spiConfiguration->dataBusSize);
 
-#if 0
-    test_readBytes(spiConfiguration.dataBusSize);
+#if BYTEREAD_TEST
+    test_readBytes(spiConfiguration->dataBusSize);
 #endif
 
-#if 0
+#if SIGNATURE_TEST
     test_readSignature(spiConfiguration->dataBusSize);
 #endif
 
@@ -428,21 +436,18 @@ void qspi_change_config_and_start_application(void)
     	error_image();
     }
 
-	// jump to the program application entry point
-	// does not return
+    // jump to the program application entry point
     (*applicationEntry)();
 
-    // UserProgJmp(DEF_USER_PROGRAM_SRC);
-
-	while(1); // just in case
+    while(1); // just in case
 }
 
 
-#if 1
+#if SIGNATURE_TEST
 
 #define SIGLENGHT 16
 // limited to 50 MHz on READ+4byte address
-static void test_readSignature(dataBusSize_t busSize) {
+EXEC_RAM static void test_readSignature(dataBusSize_t busSize) {
 
 	spiTransfer_t spiConfigRegTransfer;
 
@@ -454,8 +459,8 @@ static void test_readSignature(dataBusSize_t busSize) {
 	/* address  sent */
 	spiConfigRegTransfer.address.UINT32 = 0x0;
 	spiConfigRegTransfer.addressBitSize = ADDRESS_1BIT;
-	spiConfigRegTransfer.addressEnable = ADDRESS_32_BITS;
-	spiConfigRegTransfer.addressRateMode = ADDRESS_SDR_TYPE;
+	spiConfigRegTransfer.addressEnable = SPI_ADDRESS_32_BITS;
+	spiConfigRegTransfer.addressRateMode = SPI_ADDRESS_SDR_TYPE;
 
 	/* command on one bit */
 	spiConfigRegTransfer.command = READ_4B;
@@ -472,7 +477,7 @@ static void test_readSignature(dataBusSize_t busSize) {
 	spiConfigRegTransfer.dummyCycles = DUMMY_1CYCLE;
 
 	/* optional command disabled */
-	spiConfigRegTransfer.optionalCommand = DUMMY_COMMAND;
+	spiConfigRegTransfer.optionalCommand = DUMMY_OPTIONAL_COMMAND;
 	spiConfigRegTransfer.optionalCommandBitSize = OPTIONAL_COMMAND_1BIT;
 	spiConfigRegTransfer.optionalCommandEnable = OPTIONAL_COMMAND_DISABLED;
 
@@ -480,7 +485,7 @@ static void test_readSignature(dataBusSize_t busSize) {
 	spiConfigRegTransfer.optionalData.UINT32 = 0x0;
 	spiConfigRegTransfer.optionalDataBitSize = OPTIONAL_DATA_1BIT;
 	spiConfigRegTransfer.optionalDataEnable = OPTIONAL_DATA_DISABLED;
-	spiConfigRegTransfer.optionalDataRateMode = OPTIONAL_DATA_SDR_TYPE;
+	spiConfigRegTransfer.optionalDataRateMode = SPI_OPTIONAL_DATA_SDR_TYPE;
 
 	/* transfer data size */
 	spiConfigRegTransfer.transferDataBitSize = TRANSFER_DATA_1BIT;
@@ -530,7 +535,7 @@ static void test_readSignature(dataBusSize_t busSize) {
 		// any address must be divided by two to get the proper "offset" for addressing the flash
 		for(i=0; i<(SIGLENGHT/2); i++) {
 
-			spiConfigRegTransfer.address.UINT32 = (uint32_t) ((0x80040/2) + i);
+			spiConfigRegTransfer.address.UINT32 = (uint32_t) ((0x80040>>1) + i);
 			qspiConfigureSpiTransfer(&spiConfigRegTransfer, busSize);
 			qspiReadByte((uint8_t*)&data0[i], (uint8_t*)&data1[i], busSize);
 		}
@@ -539,7 +544,7 @@ static void test_readSignature(dataBusSize_t busSize) {
 
 		for(i=0; i<(SIGLENGHT/4); i++) {
 
-			spiConfigRegTransfer.address.UINT32 = (uint32_t) ((0x80040/2) + (i*2));
+			spiConfigRegTransfer.address.UINT32 = (uint32_t) ((0x80040>>1) + (i*2));
 			qspiConfigureSpiTransfer(&spiConfigRegTransfer, busSize);
 			qspiRead2Byte((uint16_t*)&data0[i*2], (uint16_t*)&data1[i*2], busSize);
 		}
@@ -548,7 +553,7 @@ static void test_readSignature(dataBusSize_t busSize) {
 
 		for(i=0; i<(SIGLENGHT/8); i++) {
 
-			spiConfigRegTransfer.address.UINT32 = (uint32_t) ((0x80040/2) + (i*4));
+			spiConfigRegTransfer.address.UINT32 = (uint32_t) ((0x80040>>1) + (i*4));
 			qspiConfigureSpiTransfer(&spiConfigRegTransfer, busSize);
 			qspiRead4Byte((uint32_t*)&data0[i*4], (uint32_t*)&data1[i*4], busSize);
 		}
@@ -560,10 +565,10 @@ static void test_readSignature(dataBusSize_t busSize) {
 #endif
 
 
-#if 0
+#if BYTEREAD_TEST
 
 #define NUM_BYTES 10
-static void test_readBytes(dataBusSize_t busSize) {
+EXEC_RAM static void test_readBytes(dataBusSize_t busSize) {
 
 	spiTransfer_t spiConfigRegTransfer;
 
@@ -575,8 +580,8 @@ static void test_readBytes(dataBusSize_t busSize) {
 	/* address  sent */
 	spiConfigRegTransfer.address.UINT32 = 0x0;
 	spiConfigRegTransfer.addressBitSize = ADDRESS_1BIT;
-	spiConfigRegTransfer.addressEnable = ADDRESS_32_BITS;
-	spiConfigRegTransfer.addressRateMode = ADDRESS_SDR_TYPE;
+	spiConfigRegTransfer.addressEnable = SPI_ADDRESS_32_BITS;
+	spiConfigRegTransfer.addressRateMode = SPI_ADDRESS_SDR_TYPE;
 
 	/* command on one bit */
 	spiConfigRegTransfer.command = READ_4B;
@@ -593,7 +598,7 @@ static void test_readBytes(dataBusSize_t busSize) {
 	spiConfigRegTransfer.dummyCycles = DUMMY_1CYCLE;
 
 	/* optional command disabled */
-	spiConfigRegTransfer.optionalCommand = DUMMY_COMMAND;
+	spiConfigRegTransfer.optionalCommand = DUMMY_OPTIONAL_COMMAND;
 	spiConfigRegTransfer.optionalCommandBitSize = OPTIONAL_COMMAND_1BIT;
 	spiConfigRegTransfer.optionalCommandEnable = OPTIONAL_COMMAND_DISABLED;
 
@@ -601,7 +606,7 @@ static void test_readBytes(dataBusSize_t busSize) {
 	spiConfigRegTransfer.optionalData.UINT32 = 0x0;
 	spiConfigRegTransfer.optionalDataBitSize = OPTIONAL_DATA_1BIT;
 	spiConfigRegTransfer.optionalDataEnable = OPTIONAL_DATA_DISABLED;
-	spiConfigRegTransfer.optionalDataRateMode = OPTIONAL_DATA_SDR_TYPE;
+	spiConfigRegTransfer.optionalDataRateMode = SPI_OPTIONAL_DATA_SDR_TYPE;
 
 	/* transfer data size */
 	spiConfigRegTransfer.transferDataBitSize = TRANSFER_DATA_1BIT;

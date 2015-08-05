@@ -257,7 +257,11 @@ frqcr2_wait:
     CPS  #FIQ_MODE
     LDR  sp, =__fiq_stack_end__
 
-/* ABT_MODE                                                                  */
+/* UND Mode                                                                  */
+    CPS  #UND_MODE
+    LDR  sp, =__und_stack_end__
+
+	/* ABT_MODE                                                                  */
     CPS  #ABT_MODE
     LDR  sp, =__abt_stack_end__
 

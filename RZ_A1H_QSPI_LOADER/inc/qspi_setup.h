@@ -55,12 +55,14 @@ Macro definitions
 #ifdef SINGLE_QSPI_BOARD
 
 #define QSPI_HARDWARE	SINGLE_MEMORY
+#warning "Building for *SINGLE* QSPI Application"
 
 #endif
 
 #ifdef DUAL_QSPI_BOARD
 
 #define QSPI_HARDWARE	DUAL_MEMORY
+#warning "Building for *DUAL* QSPI Application"
 
 #endif
 

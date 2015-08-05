@@ -41,6 +41,7 @@
     ARM
     
     PUBLIC QSPI_BL_reset_handler
+    PUBLIC __iar_program_start
     PUBLIC QSPI_BL_undefined_handler
     PUBLIC QSPI_BL_svc_handler
     PUBLIC QSPI_BL_prefetch_handler
@@ -51,12 +52,20 @@
     
     IMPORT QSPI_BL_vector_table
     IMPORT PowerON_Reset
-    IMPORT __svc_stack_end__
-    IMPORT __irq_stack_end__
-    IMPORT __fiq_stack_end__
-    IMPORT __abt_stack_end__
-    IMPORT __program_stack_end__
+    IMPORT CSTACK$$Limit
+    IMPORT SVC_STACK$$Limit
+    IMPORT IRQ_STACK$$Limit
+    IMPORT FIQ_STACK$$Limit
+    IMPORT UND_STACK$$Limit
+    IMPORT ABT_STACK$$Limit
     
+__svc_stack_end__ EQU SVC_STACK$$Limit
+__irq_stack_end__ EQU IRQ_STACK$$Limit
+__fiq_stack_end__ EQU FIQ_STACK$$Limit
+__und_stack_end__ EQU UND_STACK$$Limit
+__abt_stack_end__ EQU ABT_STACK$$Limit
+__program_stack_end__ EQU  CSTACK$$Limit   
+
 /* Standard definitions of mode bits and interrupt flags in PSRs */
 USR_MODE EQU 0x10
 FIQ_MODE EQU 0x11
@@ -89,6 +98,7 @@ M_BIT EQU 0x1
 //;               : the minimum required peripheral functions. Calls the __main
 //;               : of the standard library function to execute the main function.
 //;******************************************************************************
+__iar_program_start:
 QSPI_BL_reset_handler:
 
 /* ========================================================================= */
@@ -269,6 +279,10 @@ frqcr2_wait:
 /* FIQ Mode                                                                  */
     CPS  #FIQ_MODE
     LDR  sp, =__fiq_stack_end__
+
+/* UND_MODE                                                                  */
+    CPS  #UND_MODE
+    LDR  sp, =__und_stack_end__
 
 /* ABT_MODE                                                                  */
     CPS  #ABT_MODE

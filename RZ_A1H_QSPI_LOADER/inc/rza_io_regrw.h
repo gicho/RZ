@@ -32,6 +32,8 @@
 /******************************************************************************
 Includes   <System Includes> , "Project Includes"
 ******************************************************************************/
+#include "compiler_settings.h"
+
 /* ==== includes each bit mask header ==== */
 #include "iobitmasks/cpg_iobitmask.h"
 #include "iobitmasks/intc_iobitmask.h"
@@ -58,12 +60,12 @@ Variable Externs
 /******************************************************************************
 Functions Prototypes
 ******************************************************************************/
-void     RZA_IO_RegWrite_8 (volatile uint8_t  * ioreg, uint8_t  write_value, uint8_t  shift, uint8_t  mask);
-void     RZA_IO_RegWrite_16(volatile uint16_t * ioreg, uint16_t write_value, uint16_t shift, uint16_t mask);
-void     RZA_IO_RegWrite_32(volatile uint32_t * ioreg, uint32_t write_value, uint32_t shift, uint32_t mask);
-uint8_t  RZA_IO_RegRead_8  (volatile uint8_t  * ioreg, uint8_t  shift, uint8_t  mask);
-uint16_t RZA_IO_RegRead_16 (volatile uint16_t * ioreg, uint16_t shift, uint16_t mask);
-uint32_t RZA_IO_RegRead_32 (volatile uint32_t * ioreg, uint32_t shift, uint32_t mask);
+EXEC_RAM void     RZA_IO_RegWrite_8 (volatile uint8_t  * ioreg, uint8_t  write_value, uint8_t  shift, uint8_t  mask);
+EXEC_RAM void     RZA_IO_RegWrite_16(volatile uint16_t * ioreg, uint16_t write_value, uint16_t shift, uint16_t mask);
+EXEC_RAM void     RZA_IO_RegWrite_32(volatile uint32_t * ioreg, uint32_t write_value, uint32_t shift, uint32_t mask);
+EXEC_RAM uint8_t  RZA_IO_RegRead_8  (volatile uint8_t  * ioreg, uint8_t  shift, uint8_t  mask);
+EXEC_RAM uint16_t RZA_IO_RegRead_16 (volatile uint16_t * ioreg, uint16_t shift, uint16_t mask);
+EXEC_RAM uint32_t RZA_IO_RegRead_32 (volatile uint32_t * ioreg, uint32_t shift, uint32_t mask);
 
 
 #endif  /* RZA_IO_REGRW_H */

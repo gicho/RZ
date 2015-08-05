@@ -37,6 +37,7 @@
 /******************************************************************************
 Includes   <System Includes> , "Project Includes"
 ******************************************************************************/
+#include "compiler_settings.h"
 #include "r_typedefs.h"                   /* Default  type definition header */
 
 /******************************************************************************
@@ -77,7 +78,7 @@ Private global variables and functions
 *              :                          : (Target bit : "1")
 * Return Value : None
 ******************************************************************************/
-void RZA_IO_RegWrite_8(volatile uint8_t * ioreg,
+EXEC_RAM void RZA_IO_RegWrite_8(volatile uint8_t * ioreg,
 		               uint8_t write_value,
 		               uint8_t shift,
 		               uint8_t mask)
@@ -107,7 +108,7 @@ void RZA_IO_RegWrite_8(volatile uint8_t * ioreg,
 *              :                           : (Target bit : "1")
 * Return Value : None
 ******************************************************************************/
-void RZA_IO_RegWrite_16(volatile uint16_t * ioreg,
+EXEC_RAM void RZA_IO_RegWrite_16(volatile uint16_t * ioreg,
 		                uint16_t write_value,
 		                uint16_t shift,
 		                uint16_t mask)
@@ -137,7 +138,7 @@ void RZA_IO_RegWrite_16(volatile uint16_t * ioreg,
 *              :                           : (Target bit : "1")
 * Return Value : None
 ******************************************************************************/
-void RZA_IO_RegWrite_32(volatile uint32_t * ioreg,
+EXEC_RAM void RZA_IO_RegWrite_32(volatile uint32_t * ioreg,
 		                uint32_t write_value,
 		                const uint32_t shift,
 		                const uint32_t mask)
@@ -161,7 +162,7 @@ void RZA_IO_RegWrite_32(volatile uint32_t * ioreg,
 *              :                          : (Target bit: "1")
 * Return Value : uint8_t : Value of the obtained target bit
 ******************************************************************************/
-uint8_t RZA_IO_RegRead_8(volatile uint8_t * ioreg, uint8_t shift, uint8_t mask)
+EXEC_RAM uint8_t RZA_IO_RegRead_8(volatile uint8_t * ioreg, uint8_t shift, uint8_t mask)
 {
     uint8_t reg_value;
 
@@ -186,7 +187,7 @@ uint8_t RZA_IO_RegRead_8(volatile uint8_t * ioreg, uint8_t shift, uint8_t mask)
 *              :                           : (Target bit: "1")
 * Return Value : uint16_t : Value of the obtained target bit
 ******************************************************************************/
-uint16_t RZA_IO_RegRead_16(volatile uint16_t * ioreg, uint16_t shift, uint16_t mask)
+EXEC_RAM uint16_t RZA_IO_RegRead_16(volatile uint16_t * ioreg, uint16_t shift, uint16_t mask)
 {
     uint16_t reg_value;
 
@@ -211,7 +212,7 @@ uint16_t RZA_IO_RegRead_16(volatile uint16_t * ioreg, uint16_t shift, uint16_t m
 *              :                           : (Target bit: "1")
 * Return Value : uint32_t : Value of the obtained target bit
 ******************************************************************************/
-uint32_t RZA_IO_RegRead_32(volatile uint32_t * ioreg, uint32_t shift, uint32_t mask)
+EXEC_RAM uint32_t RZA_IO_RegRead_32(volatile uint32_t * ioreg, uint32_t shift, uint32_t mask)
 {
     uint32_t reg_value;
 

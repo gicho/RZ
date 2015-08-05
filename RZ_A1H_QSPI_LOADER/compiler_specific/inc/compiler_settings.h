@@ -17,51 +17,62 @@
 * and to discontinue the availability of this software. By using this software,
 * you agree to the additional terms and conditions found by accessing the
 * following link:
-* http://www.renesas.com/disclaimer*
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
+* http://www.renesas.com/disclaimer
+*
+* Copyright (C) 2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
-/*******************************************************************************
-* File Name : r_typedefs.h
-* Description : basic type definition
-******************************************************************************/
-#ifndef R_TYPEDEFS_H
-#define R_TYPEDEFS_H
-
 /******************************************************************************
-Includes <System Includes> , "Project Includes"
+* File Name     : compiler_settings.h
+* Device(s)     : RZ/A1H (R7S721001)
+* Tool-Chain    : GNUARM-RZv13.01-EABI
+* H/W Platform  : RSK+RZA1H CPU Board
+* Description   : Any compiler specific settings are stored here.
+*               : Variants of this file must be created for each compiler
 ******************************************************************************/
-#include <stdint.h>
+/******************************************************************************
+* History       : DD.MM.YYYY Version Description
+*               : 18.06.2013 1.00
+*               : 21.03.2014 2.00
+******************************************************************************/
+
+#ifndef COMPILER_SETTINGS_H
+#define COMPILER_SETTINGS_H
 
 /******************************************************************************
 Macro definitions
 ******************************************************************************/
-#if !defined(__bool_true_false_are_defined) && !defined(__cplusplus)
-#define false 0
-#define true  1
+#ifdef __ICCARM__
+
+#include "intrinsics.h"
+
+#define SOFT_DELAY	__no_operation()
+#define EXEC_RAM        __ramfunc
+
 #endif
 
-#define     UNUSED_PARAM(param)             (void)(param)
 
-#define     UNUSED_VARIABLE(param)          (void)(param)
+#ifdef __GNUC__
+
+#define SOFT_DELAY __asm__("nop")
+#define EXEC_RAM 
+
+#endif
+
 
 /******************************************************************************
-Typedef definitions
+Variable External definitions and Function External definitions
 ******************************************************************************/
-/*
-typedef char                char_t;
-typedef unsigned int        bool_t;
-typedef int                 int_t;
-typedef signed char         int8_t;
-typedef signed short        int16_t;
-typedef signed long         int32_t;
-typedef signed long long    int64_t;
-typedef unsigned char       uint8_t;
-typedef unsigned short      uint16_t;
-typedef unsigned long       uint32_t;
-typedef unsigned long long  uint64_t;
-typedef float               float32_t;
-typedef double              float64_t;
-typedef long double         float128_t;
-*/
-#endif /* R_TYPEDEFS_H */
 
+extern void __enable_irq(void);
+extern void __disable_irq(void);
+extern void __enable_fiq(void);
+extern void __disable_fiq(void);
+
+/******************************************************************************
+Functions Prototypes
+******************************************************************************/
+
+/* COMPILER_SETTINGS_H */
+#endif  
+
+/* End of File */

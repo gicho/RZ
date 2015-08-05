@@ -69,7 +69,7 @@ Private global variables and functions
 
 
 
-void qspiStartTransfer(void) {
+EXEC_RAM void qspiStartTransfer(void) {
 
     /* execute after setting SPNDL bit */
     RZA_IO_RegWrite_32(&SPIBSC0.SMCR, 1u, SPIBSC_SMCR_SPIE_SHIFT, SPIBSC_SMCR_SPIE);
@@ -77,7 +77,7 @@ void qspiStartTransfer(void) {
 }
 
 // this assumes the SFDE bit is set to '1' (byte swap)
-void qspiConfigureSpiTransfer(spiTransfer_t* transferConfig, dataBusSize_t busSize) {
+EXEC_RAM void qspiConfigureSpiTransfer(spiTransfer_t* transferConfig, dataBusSize_t busSize) {
 
     /* ---- Command ---- */
     RZA_IO_RegWrite_32(&SPIBSC0.SMENR, transferConfig->commandEnable, SPIBSC_SMENR_CDE_SHIFT, SPIBSC_SMENR_CDE);
@@ -192,7 +192,7 @@ void qspiConfigureSpiTransfer(spiTransfer_t* transferConfig, dataBusSize_t busSi
 
 }
 
-void qspiReadByte(uint8_t* dataDevice0, uint8_t* dataDevice1, dataBusSize_t busSize) {
+EXEC_RAM void qspiReadByte(uint8_t* dataDevice0, uint8_t* dataDevice1, dataBusSize_t busSize) {
 
 	uint16_t regValue;
 
@@ -216,7 +216,7 @@ void qspiReadByte(uint8_t* dataDevice0, uint8_t* dataDevice1, dataBusSize_t busS
 }
 
 // this assumes the SFDE bit is set to '1' (byte swap)
-void qspiRead2Byte(uint16_t* dataDevice0, uint16_t* dataDevice1, dataBusSize_t busSize) {
+EXEC_RAM void qspiRead2Byte(uint16_t* dataDevice0, uint16_t* dataDevice1, dataBusSize_t busSize) {
 
 	uint32_t regValue;
 
@@ -239,7 +239,7 @@ void qspiRead2Byte(uint16_t* dataDevice0, uint16_t* dataDevice1, dataBusSize_t b
 }
 
 // this assumes the SFDE bit is set to '1' (byte swap)
-void qspiRead4Byte(uint32_t* dataDevice0, uint32_t* dataDevice1, dataBusSize_t busSize) {
+EXEC_RAM void qspiRead4Byte(uint32_t* dataDevice0, uint32_t* dataDevice1, dataBusSize_t busSize) {
 
 	uint32_t regValueH;
 	uint32_t regValueL;
@@ -273,15 +273,15 @@ void qspiRead4Byte(uint32_t* dataDevice0, uint32_t* dataDevice1, dataBusSize_t b
 	};
 }
 
-void qspiSoftwareReset(dataBusSize_t busSize) {
+EXEC_RAM void qspiSoftwareReset(dataBusSize_t busSize) {
 
 	spiTransfer_t spiConfigRegTransfer;
 
 	/* address  sent */
 	spiConfigRegTransfer.address.UINT32 = 0x0;
 	spiConfigRegTransfer.addressBitSize = ADDRESS_1BIT;
-	spiConfigRegTransfer.addressEnable = ADDRESS_DISABLED;
-	spiConfigRegTransfer.addressRateMode = ADDRESS_SDR_TYPE;
+	spiConfigRegTransfer.addressEnable = SPI_ADDRESS_DISABLED;
+	spiConfigRegTransfer.addressRateMode = SPI_ADDRESS_SDR_TYPE;
 
 	/* command on one bit */
 	spiConfigRegTransfer.command = SOFTWARE_RESET;
@@ -298,7 +298,7 @@ void qspiSoftwareReset(dataBusSize_t busSize) {
 	spiConfigRegTransfer.dummyCycles = DUMMY_1CYCLE;
 
 	/* optional command disabled */
-	spiConfigRegTransfer.optionalCommand = DUMMY_COMMAND;
+	spiConfigRegTransfer.optionalCommand = DUMMY_OPTIONAL_COMMAND;
 	spiConfigRegTransfer.optionalCommandBitSize = OPTIONAL_COMMAND_1BIT;
 	spiConfigRegTransfer.optionalCommandEnable = OPTIONAL_COMMAND_DISABLED;
 
@@ -306,7 +306,7 @@ void qspiSoftwareReset(dataBusSize_t busSize) {
 	spiConfigRegTransfer.optionalData.UINT32 = 0x0;
 	spiConfigRegTransfer.optionalDataBitSize = OPTIONAL_DATA_1BIT;
 	spiConfigRegTransfer.optionalDataEnable = OPTIONAL_DATA_DISABLED;
-	spiConfigRegTransfer.optionalDataRateMode = OPTIONAL_DATA_SDR_TYPE;
+	spiConfigRegTransfer.optionalDataRateMode = SPI_OPTIONAL_DATA_SDR_TYPE;
 
 	/* transfer data size */
 	spiConfigRegTransfer.transferDataBitSize = TRANSFER_DATA_1BIT;
@@ -330,15 +330,15 @@ void qspiSoftwareReset(dataBusSize_t busSize) {
 
 
 
-void qspiWriteEnable(dataBusSize_t busSize) {
+EXEC_RAM void qspiWriteEnable(dataBusSize_t busSize) {
 
 	spiTransfer_t spiConfigRegTransfer;
 
 	/* address  sent */
 	spiConfigRegTransfer.address.UINT32 = 0x0;
 	spiConfigRegTransfer.addressBitSize = ADDRESS_1BIT;
-	spiConfigRegTransfer.addressEnable = ADDRESS_DISABLED;
-	spiConfigRegTransfer.addressRateMode = ADDRESS_SDR_TYPE;
+	spiConfigRegTransfer.addressEnable = SPI_ADDRESS_DISABLED;
+	spiConfigRegTransfer.addressRateMode = SPI_ADDRESS_SDR_TYPE;
 
 	/* command on one bit */
 	spiConfigRegTransfer.command = WRITE_ENABLE;
@@ -355,7 +355,7 @@ void qspiWriteEnable(dataBusSize_t busSize) {
 	spiConfigRegTransfer.dummyCycles = DUMMY_1CYCLE;
 
 	/* optional command disabled */
-	spiConfigRegTransfer.optionalCommand = DUMMY_COMMAND;
+	spiConfigRegTransfer.optionalCommand = DUMMY_OPTIONAL_COMMAND;
 	spiConfigRegTransfer.optionalCommandBitSize = OPTIONAL_COMMAND_1BIT;
 	spiConfigRegTransfer.optionalCommandEnable = OPTIONAL_COMMAND_DISABLED;
 
@@ -363,7 +363,7 @@ void qspiWriteEnable(dataBusSize_t busSize) {
 	spiConfigRegTransfer.optionalData.UINT32 = 0x0;
 	spiConfigRegTransfer.optionalDataBitSize = OPTIONAL_DATA_1BIT;
 	spiConfigRegTransfer.optionalDataEnable = OPTIONAL_DATA_DISABLED;
-	spiConfigRegTransfer.optionalDataRateMode = OPTIONAL_DATA_SDR_TYPE;
+	spiConfigRegTransfer.optionalDataRateMode = SPI_OPTIONAL_DATA_SDR_TYPE;
 
 	/* transfer data size */
 	spiConfigRegTransfer.transferDataBitSize = TRANSFER_DATA_1BIT;
@@ -384,15 +384,15 @@ void qspiWriteEnable(dataBusSize_t busSize) {
     qspiControllerWaitForIdle();
 }
 
-void qspiWriteDisable(dataBusSize_t busSize) {
+EXEC_RAM void qspiWriteDisable(dataBusSize_t busSize) {
 
 	spiTransfer_t spiConfigRegTransfer;
 
 	/* address  sent */
 	spiConfigRegTransfer.address.UINT32 = 0x0;
 	spiConfigRegTransfer.addressBitSize = ADDRESS_1BIT;
-	spiConfigRegTransfer.addressEnable = ADDRESS_DISABLED;
-	spiConfigRegTransfer.addressRateMode = ADDRESS_SDR_TYPE;
+	spiConfigRegTransfer.addressEnable = SPI_ADDRESS_DISABLED;
+	spiConfigRegTransfer.addressRateMode = SPI_ADDRESS_SDR_TYPE;
 
 	/* command on one bit */
 	spiConfigRegTransfer.command = WRITE_DISABLE;
@@ -409,7 +409,7 @@ void qspiWriteDisable(dataBusSize_t busSize) {
 	spiConfigRegTransfer.dummyCycles = DUMMY_1CYCLE;
 
 	/* optional command disabled */
-	spiConfigRegTransfer.optionalCommand = DUMMY_COMMAND;
+	spiConfigRegTransfer.optionalCommand = DUMMY_OPTIONAL_COMMAND;
 	spiConfigRegTransfer.optionalCommandBitSize = OPTIONAL_COMMAND_1BIT;
 	spiConfigRegTransfer.optionalCommandEnable = OPTIONAL_COMMAND_DISABLED;
 
@@ -417,7 +417,7 @@ void qspiWriteDisable(dataBusSize_t busSize) {
 	spiConfigRegTransfer.optionalData.UINT32 = 0x0;
 	spiConfigRegTransfer.optionalDataBitSize = OPTIONAL_DATA_1BIT;
 	spiConfigRegTransfer.optionalDataEnable = OPTIONAL_DATA_DISABLED;
-	spiConfigRegTransfer.optionalDataRateMode = OPTIONAL_DATA_SDR_TYPE;
+	spiConfigRegTransfer.optionalDataRateMode = SPI_OPTIONAL_DATA_SDR_TYPE;
 
 	/* transfer data size */
 	spiConfigRegTransfer.transferDataBitSize = TRANSFER_DATA_1BIT;
@@ -439,15 +439,15 @@ void qspiWriteDisable(dataBusSize_t busSize) {
 }
 
 
-void qspiClearStatusRegister(dataBusSize_t busSize) {
+EXEC_RAM void qspiClearStatusRegister(dataBusSize_t busSize) {
 
 	spiTransfer_t spiConfigRegTransfer;
 
 	/* address  sent */
 	spiConfigRegTransfer.address.UINT32 = 0x0;
 	spiConfigRegTransfer.addressBitSize = ADDRESS_1BIT;
-	spiConfigRegTransfer.addressEnable = ADDRESS_DISABLED;
-	spiConfigRegTransfer.addressRateMode = ADDRESS_SDR_TYPE;
+	spiConfigRegTransfer.addressEnable = SPI_ADDRESS_DISABLED;
+	spiConfigRegTransfer.addressRateMode = SPI_ADDRESS_SDR_TYPE;
 
 	/* command on one bit */
 	spiConfigRegTransfer.command = CLEAR_STATUS;
@@ -464,7 +464,7 @@ void qspiClearStatusRegister(dataBusSize_t busSize) {
 	spiConfigRegTransfer.dummyCycles = DUMMY_1CYCLE;
 
 	/* optional command disabled */
-	spiConfigRegTransfer.optionalCommand = DUMMY_COMMAND;
+	spiConfigRegTransfer.optionalCommand = DUMMY_OPTIONAL_COMMAND;
 	spiConfigRegTransfer.optionalCommandBitSize = OPTIONAL_COMMAND_1BIT;
 	spiConfigRegTransfer.optionalCommandEnable = OPTIONAL_COMMAND_DISABLED;
 
@@ -472,7 +472,7 @@ void qspiClearStatusRegister(dataBusSize_t busSize) {
 	spiConfigRegTransfer.optionalData.UINT32 = 0x0;
 	spiConfigRegTransfer.optionalDataBitSize = OPTIONAL_DATA_1BIT;
 	spiConfigRegTransfer.optionalDataEnable = OPTIONAL_DATA_DISABLED;
-	spiConfigRegTransfer.optionalDataRateMode = OPTIONAL_DATA_SDR_TYPE;
+	spiConfigRegTransfer.optionalDataRateMode = SPI_OPTIONAL_DATA_SDR_TYPE;
 
 	/* transfer data size */
 	spiConfigRegTransfer.transferDataBitSize = TRANSFER_DATA_1BIT;
@@ -495,15 +495,15 @@ void qspiClearStatusRegister(dataBusSize_t busSize) {
 }
 
 
-void qspiWriteStatusRegister(flashStatusRegister1 statusDevice0, flashStatusRegister1 statusDevice1, dataBusSize_t busSize) {
+EXEC_RAM void qspiWriteStatusRegister(flashStatusRegister1 statusDevice0, flashStatusRegister1 statusDevice1, dataBusSize_t busSize) {
 
 	spiTransfer_t spiConfigRegTransfer;
 
 	/* address  sent */
 	spiConfigRegTransfer.address.UINT32 = 0x0;
 	spiConfigRegTransfer.addressBitSize = ADDRESS_1BIT;
-	spiConfigRegTransfer.addressEnable = ADDRESS_DISABLED;
-	spiConfigRegTransfer.addressRateMode = ADDRESS_SDR_TYPE;
+	spiConfigRegTransfer.addressEnable = SPI_ADDRESS_DISABLED;
+	spiConfigRegTransfer.addressRateMode = SPI_ADDRESS_SDR_TYPE;
 
 	/* command on one bit */
 	spiConfigRegTransfer.command = WRITE_REGISTERS;
@@ -520,7 +520,7 @@ void qspiWriteStatusRegister(flashStatusRegister1 statusDevice0, flashStatusRegi
 	spiConfigRegTransfer.dummyCycles = DUMMY_1CYCLE;
 
 	/* optional command disabled */
-	spiConfigRegTransfer.optionalCommand = DUMMY_COMMAND;
+	spiConfigRegTransfer.optionalCommand = DUMMY_OPTIONAL_COMMAND;
 	spiConfigRegTransfer.optionalCommandBitSize = OPTIONAL_COMMAND_1BIT;
 	spiConfigRegTransfer.optionalCommandEnable = OPTIONAL_COMMAND_DISABLED;
 
@@ -528,7 +528,7 @@ void qspiWriteStatusRegister(flashStatusRegister1 statusDevice0, flashStatusRegi
 	spiConfigRegTransfer.optionalData.UINT32 = 0x0;
 	spiConfigRegTransfer.optionalDataBitSize = OPTIONAL_DATA_1BIT;
 	spiConfigRegTransfer.optionalDataEnable = OPTIONAL_DATA_DISABLED;
-	spiConfigRegTransfer.optionalDataRateMode = OPTIONAL_DATA_SDR_TYPE;
+	spiConfigRegTransfer.optionalDataRateMode = SPI_OPTIONAL_DATA_SDR_TYPE;
 
 	/* transfer data size */
 	spiConfigRegTransfer.transferDataBitSize = TRANSFER_DATA_1BIT;
@@ -560,15 +560,15 @@ void qspiWriteStatusRegister(flashStatusRegister1 statusDevice0, flashStatusRegi
     qspiControllerWaitForIdle();
 }
 
-void qspiWriteStatusConfigRegister(flashStatusRegister1 statusDevice0, flashConfigRegister1 configDevice0, flashStatusRegister1 statusDevice1, flashConfigRegister1 configDevice1, dataBusSize_t busSize) {
+EXEC_RAM void qspiWriteStatusConfigRegister(flashStatusRegister1 statusDevice0, flashConfigRegister1 configDevice0, flashStatusRegister1 statusDevice1, flashConfigRegister1 configDevice1, dataBusSize_t busSize) {
 
 	spiTransfer_t spiConfigRegTransfer;
 
 	/* address  sent */
 	spiConfigRegTransfer.address.UINT32 = 0x0;
 	spiConfigRegTransfer.addressBitSize = ADDRESS_1BIT;
-	spiConfigRegTransfer.addressEnable = ADDRESS_DISABLED;
-	spiConfigRegTransfer.addressRateMode = ADDRESS_SDR_TYPE;
+	spiConfigRegTransfer.addressEnable = SPI_ADDRESS_DISABLED;
+	spiConfigRegTransfer.addressRateMode = SPI_ADDRESS_SDR_TYPE;
 
 	/* command on one bit */
 	spiConfigRegTransfer.command = WRITE_REGISTERS;
@@ -585,7 +585,7 @@ void qspiWriteStatusConfigRegister(flashStatusRegister1 statusDevice0, flashConf
 	spiConfigRegTransfer.dummyCycles = DUMMY_1CYCLE;
 
 	/* optional command disabled */
-	spiConfigRegTransfer.optionalCommand = DUMMY_COMMAND;
+	spiConfigRegTransfer.optionalCommand = DUMMY_OPTIONAL_COMMAND;
 	spiConfigRegTransfer.optionalCommandBitSize = OPTIONAL_COMMAND_1BIT;
 	spiConfigRegTransfer.optionalCommandEnable = OPTIONAL_COMMAND_DISABLED;
 
@@ -593,7 +593,7 @@ void qspiWriteStatusConfigRegister(flashStatusRegister1 statusDevice0, flashConf
 	spiConfigRegTransfer.optionalData.UINT32 = 0x0;
 	spiConfigRegTransfer.optionalDataBitSize = OPTIONAL_DATA_1BIT;
 	spiConfigRegTransfer.optionalDataEnable = OPTIONAL_DATA_DISABLED;
-	spiConfigRegTransfer.optionalDataRateMode = OPTIONAL_DATA_SDR_TYPE;
+	spiConfigRegTransfer.optionalDataRateMode = SPI_OPTIONAL_DATA_SDR_TYPE;
 
 	/* transfer data size */
 	spiConfigRegTransfer.transferDataBitSize = TRANSFER_DATA_1BIT;
@@ -624,15 +624,15 @@ void qspiWriteStatusConfigRegister(flashStatusRegister1 statusDevice0, flashConf
 }
 
 
-void qspiReadStatusRegister1(flashStatusRegister1* dataDevice0, flashStatusRegister1* dataDevice1, dataBusSize_t busSize) {
+EXEC_RAM void qspiReadStatusRegister1(flashStatusRegister1* dataDevice0, flashStatusRegister1* dataDevice1, dataBusSize_t busSize) {
 
 	spiTransfer_t spiConfigRegTransfer;
 
 	/* address  sent */
 	spiConfigRegTransfer.address.UINT32 = 0x0;
 	spiConfigRegTransfer.addressBitSize = ADDRESS_1BIT;
-	spiConfigRegTransfer.addressEnable = ADDRESS_DISABLED;
-	spiConfigRegTransfer.addressRateMode = ADDRESS_SDR_TYPE;
+	spiConfigRegTransfer.addressEnable = SPI_ADDRESS_DISABLED;
+	spiConfigRegTransfer.addressRateMode = SPI_ADDRESS_SDR_TYPE;
 
 	/* command on one bit */
 	spiConfigRegTransfer.command = READ_STATUS_1;
@@ -649,7 +649,7 @@ void qspiReadStatusRegister1(flashStatusRegister1* dataDevice0, flashStatusRegis
 	spiConfigRegTransfer.dummyCycles = DUMMY_1CYCLE;
 
 	/* optional command disabled */
-	spiConfigRegTransfer.optionalCommand = DUMMY_COMMAND;
+	spiConfigRegTransfer.optionalCommand = DUMMY_OPTIONAL_COMMAND;
 	spiConfigRegTransfer.optionalCommandBitSize = OPTIONAL_COMMAND_1BIT;
 	spiConfigRegTransfer.optionalCommandEnable = OPTIONAL_COMMAND_DISABLED;
 
@@ -657,7 +657,7 @@ void qspiReadStatusRegister1(flashStatusRegister1* dataDevice0, flashStatusRegis
 	spiConfigRegTransfer.optionalData.UINT32 = 0x0;
 	spiConfigRegTransfer.optionalDataBitSize = OPTIONAL_DATA_1BIT;
 	spiConfigRegTransfer.optionalDataEnable = OPTIONAL_DATA_DISABLED;
-	spiConfigRegTransfer.optionalDataRateMode = OPTIONAL_DATA_SDR_TYPE;
+	spiConfigRegTransfer.optionalDataRateMode = SPI_OPTIONAL_DATA_SDR_TYPE;
 
 	/* transfer data size */
 	spiConfigRegTransfer.transferDataBitSize = TRANSFER_DATA_1BIT;
@@ -677,15 +677,15 @@ void qspiReadStatusRegister1(flashStatusRegister1* dataDevice0, flashStatusRegis
 
 }
 
-void qspiReadStatusRegister2(flashStatusRegister2* dataDevice0, flashStatusRegister2* dataDevice1, dataBusSize_t busSize) {
+EXEC_RAM void qspiReadStatusRegister2(flashStatusRegister2* dataDevice0, flashStatusRegister2* dataDevice1, dataBusSize_t busSize) {
 
 	spiTransfer_t spiConfigRegTransfer;
 
 	/* address  sent */
 	spiConfigRegTransfer.address.UINT32 = 0x0;
 	spiConfigRegTransfer.addressBitSize = ADDRESS_1BIT;
-	spiConfigRegTransfer.addressEnable = ADDRESS_DISABLED;
-	spiConfigRegTransfer.addressRateMode = ADDRESS_SDR_TYPE;
+	spiConfigRegTransfer.addressEnable = SPI_ADDRESS_DISABLED;
+	spiConfigRegTransfer.addressRateMode = SPI_ADDRESS_SDR_TYPE;
 
 	/* command on one bit */
 	spiConfigRegTransfer.command = READ_STATUS_2;
@@ -702,7 +702,7 @@ void qspiReadStatusRegister2(flashStatusRegister2* dataDevice0, flashStatusRegis
 	spiConfigRegTransfer.dummyCycles = DUMMY_1CYCLE;
 
 	/* optional command disabled */
-	spiConfigRegTransfer.optionalCommand = DUMMY_COMMAND;
+	spiConfigRegTransfer.optionalCommand = DUMMY_OPTIONAL_COMMAND;
 	spiConfigRegTransfer.optionalCommandBitSize = OPTIONAL_COMMAND_1BIT;
 	spiConfigRegTransfer.optionalCommandEnable = OPTIONAL_COMMAND_DISABLED;
 
@@ -710,7 +710,7 @@ void qspiReadStatusRegister2(flashStatusRegister2* dataDevice0, flashStatusRegis
 	spiConfigRegTransfer.optionalData.UINT32 = 0x0;
 	spiConfigRegTransfer.optionalDataBitSize = OPTIONAL_DATA_1BIT;
 	spiConfigRegTransfer.optionalDataEnable = OPTIONAL_DATA_DISABLED;
-	spiConfigRegTransfer.optionalDataRateMode = OPTIONAL_DATA_SDR_TYPE;
+	spiConfigRegTransfer.optionalDataRateMode = SPI_OPTIONAL_DATA_SDR_TYPE;
 
 	/* transfer data size */
 	spiConfigRegTransfer.transferDataBitSize = TRANSFER_DATA_1BIT;
@@ -730,15 +730,15 @@ void qspiReadStatusRegister2(flashStatusRegister2* dataDevice0, flashStatusRegis
 
 }
 
-void qspiReadElectronicManufacturerSignature(deviceSignature* signature0, deviceSignature* signature1, dataBusSize_t busSize) {
+EXEC_RAM void qspiReadElectronicManufacturerSignature(deviceSignature* signature0, deviceSignature* signature1, dataBusSize_t busSize) {
 
 	spiTransfer_t spiConfigRegTransfer;
 
 	/* address  sent */
 	spiConfigRegTransfer.address.UINT32 = 0x0;
 	spiConfigRegTransfer.addressBitSize = ADDRESS_1BIT;
-	spiConfigRegTransfer.addressEnable = ADDRESS_24_BITS;
-	spiConfigRegTransfer.addressRateMode = ADDRESS_SDR_TYPE;
+	spiConfigRegTransfer.addressEnable = SPI_ADDRESS_24_BITS;
+	spiConfigRegTransfer.addressRateMode = SPI_ADDRESS_SDR_TYPE;
 
 	/* command on one bit */
 	spiConfigRegTransfer.command = READ_EMS;
@@ -755,7 +755,7 @@ void qspiReadElectronicManufacturerSignature(deviceSignature* signature0, device
 	spiConfigRegTransfer.dummyCycles = DUMMY_1CYCLE;
 
 	/* optional command disabled */
-	spiConfigRegTransfer.optionalCommand = DUMMY_COMMAND;
+	spiConfigRegTransfer.optionalCommand = DUMMY_OPTIONAL_COMMAND;
 	spiConfigRegTransfer.optionalCommandBitSize = OPTIONAL_COMMAND_1BIT;
 	spiConfigRegTransfer.optionalCommandEnable = OPTIONAL_COMMAND_DISABLED;
 
@@ -763,7 +763,7 @@ void qspiReadElectronicManufacturerSignature(deviceSignature* signature0, device
 	spiConfigRegTransfer.optionalData.UINT32 = 0x0;
 	spiConfigRegTransfer.optionalDataBitSize = OPTIONAL_DATA_1BIT;
 	spiConfigRegTransfer.optionalDataEnable = OPTIONAL_DATA_DISABLED;
-	spiConfigRegTransfer.optionalDataRateMode = OPTIONAL_DATA_SDR_TYPE;
+	spiConfigRegTransfer.optionalDataRateMode = SPI_OPTIONAL_DATA_SDR_TYPE;
 
 	/* transfer data size */
 	spiConfigRegTransfer.transferDataBitSize = TRANSFER_DATA_1BIT;
@@ -783,15 +783,15 @@ void qspiReadElectronicManufacturerSignature(deviceSignature* signature0, device
 
 }
 
-void qspiReadConfigRegister(flashConfigRegister1* dataDevice0, flashConfigRegister1* dataDevice1, dataBusSize_t busSize) {
+EXEC_RAM void qspiReadConfigRegister(flashConfigRegister1* dataDevice0, flashConfigRegister1* dataDevice1, dataBusSize_t busSize) {
 
 	spiTransfer_t spiConfigRegTransfer;
 
 	/* address not sent */
 	spiConfigRegTransfer.address.UINT32 = 0x0;
 	spiConfigRegTransfer.addressBitSize = ADDRESS_1BIT;
-	spiConfigRegTransfer.addressEnable = ADDRESS_DISABLED;
-	spiConfigRegTransfer.addressRateMode = ADDRESS_SDR_TYPE;
+	spiConfigRegTransfer.addressEnable = SPI_ADDRESS_DISABLED;
+	spiConfigRegTransfer.addressRateMode = SPI_ADDRESS_SDR_TYPE;
 
 	/* command on one bit */
 	spiConfigRegTransfer.command = READ_CONFIG;
@@ -808,7 +808,7 @@ void qspiReadConfigRegister(flashConfigRegister1* dataDevice0, flashConfigRegist
 	spiConfigRegTransfer.dummyCycles = DUMMY_1CYCLE;
 
 	/* optional command disabled */
-	spiConfigRegTransfer.optionalCommand = DUMMY_COMMAND;
+	spiConfigRegTransfer.optionalCommand = DUMMY_OPTIONAL_COMMAND;
 	spiConfigRegTransfer.optionalCommandBitSize = OPTIONAL_COMMAND_1BIT;
 	spiConfigRegTransfer.optionalCommandEnable = OPTIONAL_COMMAND_DISABLED;
 
@@ -816,7 +816,7 @@ void qspiReadConfigRegister(flashConfigRegister1* dataDevice0, flashConfigRegist
 	spiConfigRegTransfer.optionalData.UINT32 = 0x0;
 	spiConfigRegTransfer.optionalDataBitSize = OPTIONAL_DATA_1BIT;
 	spiConfigRegTransfer.optionalDataEnable = OPTIONAL_DATA_DISABLED;
-	spiConfigRegTransfer.optionalDataRateMode = OPTIONAL_DATA_SDR_TYPE;
+	spiConfigRegTransfer.optionalDataRateMode = SPI_OPTIONAL_DATA_SDR_TYPE;
 
 	/* transfer data size */
 	spiConfigRegTransfer.transferDataBitSize = TRANSFER_DATA_1BIT;
@@ -836,15 +836,15 @@ void qspiReadConfigRegister(flashConfigRegister1* dataDevice0, flashConfigRegist
 }
 
 
-void qspiReadBankRegister(uint8_t* dataDevice0, uint8_t* dataDevice1, dataBusSize_t busSize) {
+EXEC_RAM void qspiReadBankRegister(uint8_t* dataDevice0, uint8_t* dataDevice1, dataBusSize_t busSize) {
 
 	spiTransfer_t spiConfigRegTransfer;
 
 	/* address  sent */
 	spiConfigRegTransfer.address.UINT32 = 0x0;
 	spiConfigRegTransfer.addressBitSize = ADDRESS_1BIT;
-	spiConfigRegTransfer.addressEnable = ADDRESS_DISABLED;
-	spiConfigRegTransfer.addressRateMode = ADDRESS_SDR_TYPE;
+	spiConfigRegTransfer.addressEnable = SPI_ADDRESS_DISABLED;
+	spiConfigRegTransfer.addressRateMode = SPI_ADDRESS_SDR_TYPE;
 
 	/* command on one bit */
 	spiConfigRegTransfer.command = READ_BANK;
@@ -861,7 +861,7 @@ void qspiReadBankRegister(uint8_t* dataDevice0, uint8_t* dataDevice1, dataBusSiz
 	spiConfigRegTransfer.dummyCycles = DUMMY_1CYCLE;
 
 	/* optional command disabled */
-	spiConfigRegTransfer.optionalCommand = DUMMY_COMMAND;
+	spiConfigRegTransfer.optionalCommand = DUMMY_OPTIONAL_COMMAND;
 	spiConfigRegTransfer.optionalCommandBitSize = OPTIONAL_COMMAND_1BIT;
 	spiConfigRegTransfer.optionalCommandEnable = OPTIONAL_COMMAND_DISABLED;
 
@@ -869,7 +869,7 @@ void qspiReadBankRegister(uint8_t* dataDevice0, uint8_t* dataDevice1, dataBusSiz
 	spiConfigRegTransfer.optionalData.UINT32 = 0x0;
 	spiConfigRegTransfer.optionalDataBitSize = OPTIONAL_DATA_1BIT;
 	spiConfigRegTransfer.optionalDataEnable = OPTIONAL_DATA_DISABLED;
-	spiConfigRegTransfer.optionalDataRateMode = OPTIONAL_DATA_SDR_TYPE;
+	spiConfigRegTransfer.optionalDataRateMode = SPI_OPTIONAL_DATA_SDR_TYPE;
 
 	/* transfer data size */
 	spiConfigRegTransfer.transferDataBitSize = TRANSFER_DATA_1BIT;
@@ -887,15 +887,15 @@ void qspiReadBankRegister(uint8_t* dataDevice0, uint8_t* dataDevice1, dataBusSiz
 	qspiReadByte(dataDevice0, dataDevice1, busSize);
 }
 
-void qspiWriteBankRegister(uint8_t bankDevice0, uint8_t bankDevice1, dataBusSize_t busSize) {
+EXEC_RAM void qspiWriteBankRegister(uint8_t bankDevice0, uint8_t bankDevice1, dataBusSize_t busSize) {
 
 	spiTransfer_t spiConfigRegTransfer;
 
 	/* address  sent */
 	spiConfigRegTransfer.address.UINT32 = 0x0;
 	spiConfigRegTransfer.addressBitSize = ADDRESS_1BIT;
-	spiConfigRegTransfer.addressEnable = ADDRESS_DISABLED;
-	spiConfigRegTransfer.addressRateMode = ADDRESS_SDR_TYPE;
+	spiConfigRegTransfer.addressEnable = SPI_ADDRESS_DISABLED;
+	spiConfigRegTransfer.addressRateMode = SPI_ADDRESS_SDR_TYPE;
 
 	/* command on one bit */
 	spiConfigRegTransfer.command = WRITE_BANK;
@@ -912,7 +912,7 @@ void qspiWriteBankRegister(uint8_t bankDevice0, uint8_t bankDevice1, dataBusSize
 	spiConfigRegTransfer.dummyCycles = DUMMY_1CYCLE;
 
 	/* optional command disabled */
-	spiConfigRegTransfer.optionalCommand = DUMMY_COMMAND;
+	spiConfigRegTransfer.optionalCommand = DUMMY_OPTIONAL_COMMAND;
 	spiConfigRegTransfer.optionalCommandBitSize = OPTIONAL_COMMAND_1BIT;
 	spiConfigRegTransfer.optionalCommandEnable = OPTIONAL_COMMAND_DISABLED;
 
@@ -920,7 +920,7 @@ void qspiWriteBankRegister(uint8_t bankDevice0, uint8_t bankDevice1, dataBusSize
 	spiConfigRegTransfer.optionalData.UINT32 = 0x0;
 	spiConfigRegTransfer.optionalDataBitSize = OPTIONAL_DATA_1BIT;
 	spiConfigRegTransfer.optionalDataEnable = OPTIONAL_DATA_DISABLED;
-	spiConfigRegTransfer.optionalDataRateMode = OPTIONAL_DATA_SDR_TYPE;
+	spiConfigRegTransfer.optionalDataRateMode = SPI_OPTIONAL_DATA_SDR_TYPE;
 
 	/* transfer data size */
 	spiConfigRegTransfer.transferDataBitSize = TRANSFER_DATA_1BIT;
@@ -959,7 +959,7 @@ void qspiWriteBankRegister(uint8_t bankDevice0, uint8_t bankDevice1, dataBusSize
 
 }
 
-void qspiReadIdentification(identification_t deviceId0, identification_t deviceId1, dataBusSize_t busSize) {
+EXEC_RAM void qspiReadIdentification(identification_t deviceId0, identification_t deviceId1, dataBusSize_t busSize) {
 
 	uint16_t tableLenght;
 	int8_t i;
@@ -969,8 +969,8 @@ void qspiReadIdentification(identification_t deviceId0, identification_t deviceI
 	/* address not sent */
 	spiConfigRegTransfer.address.UINT32 = 0x0;
 	spiConfigRegTransfer.addressBitSize = ADDRESS_1BIT;
-	spiConfigRegTransfer.addressEnable = ADDRESS_DISABLED;
-	spiConfigRegTransfer.addressRateMode = ADDRESS_SDR_TYPE;
+	spiConfigRegTransfer.addressEnable = SPI_ADDRESS_DISABLED;
+	spiConfigRegTransfer.addressRateMode = SPI_ADDRESS_SDR_TYPE;
 
 	/* command on one bit */
 	spiConfigRegTransfer.command = READ_CONFIG;
@@ -987,7 +987,7 @@ void qspiReadIdentification(identification_t deviceId0, identification_t deviceI
 	spiConfigRegTransfer.dummyCycles = DUMMY_1CYCLE;
 
 	/* optional command disabled */
-	spiConfigRegTransfer.optionalCommand = DUMMY_COMMAND;
+	spiConfigRegTransfer.optionalCommand = DUMMY_OPTIONAL_COMMAND;
 	spiConfigRegTransfer.optionalCommandBitSize = OPTIONAL_COMMAND_1BIT;
 	spiConfigRegTransfer.optionalCommandEnable = OPTIONAL_COMMAND_DISABLED;
 
@@ -995,7 +995,7 @@ void qspiReadIdentification(identification_t deviceId0, identification_t deviceI
 	spiConfigRegTransfer.optionalData.UINT32 = 0x0;
 	spiConfigRegTransfer.optionalDataBitSize = OPTIONAL_DATA_1BIT;
 	spiConfigRegTransfer.optionalDataEnable = OPTIONAL_DATA_DISABLED;
-	spiConfigRegTransfer.optionalDataRateMode = OPTIONAL_DATA_SDR_TYPE;
+	spiConfigRegTransfer.optionalDataRateMode = SPI_OPTIONAL_DATA_SDR_TYPE;
 
 	/* transfer data size */
 	spiConfigRegTransfer.transferDataBitSize = TRANSFER_DATA_1BIT;
@@ -1023,7 +1023,7 @@ void qspiReadIdentification(identification_t deviceId0, identification_t deviceI
 	table1+=4;
 
 	// read in stept of 4 bytes
-	for(i=0;i<(tableLenght/4);i++) {
+	for(i=0;i<(tableLenght<<2);i++) {
 
 		qspiRead4Byte((uint32_t*)table0, (uint32_t*)table1, busSize);
 		table0+=4;
@@ -1031,7 +1031,7 @@ void qspiReadIdentification(identification_t deviceId0, identification_t deviceI
 	};
 
 	// compute the reminder
-	i = (int8_t) (tableLenght - (tableLenght/4));
+	i = (int8_t) (tableLenght - (tableLenght<<2));
 
 	// read the reminder
 	for(;i>0;i--) {
