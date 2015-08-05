@@ -103,6 +103,7 @@ IRQ_STACK_SIZE	      = 0x2000;      /* IRQ mode stack                     */
 FIQ_STACK_SIZE	      = 0x2000;      /* Fast IRQ mode stack                */
 SVC_STACK_SIZE	      = 0x2000;      /* SVC mode stack                     */
 ABT_STACK_SIZE	      = 0x2000;      /* Abort mode stack                   */
+UND_STACK_SIZE	      = 0x2000;      /* Undefined mode stack               */
 TTB_SIZE              = 0x8000;      /* Level-1 Translation Table for MMU  */
 
 /* Vector table for QSPI application is located here */

@@ -3,7 +3,7 @@
 <project>
   <fileVersion>2</fileVersion>
   <configuration>
-    <name>Dual_QSPI_Debug</name>
+    <name>Debug</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -17,15 +17,15 @@
         <debug>1</debug>
         <option>
           <name>ExePath</name>
-          <state>Dual_QSPI_Debug\Exe</state>
+          <state>Debug\Exe</state>
         </option>
         <option>
           <name>ObjPath</name>
-          <state>Dual_QSPI_Debug\Obj</state>
+          <state>Debug\Obj</state>
         </option>
         <option>
           <name>ListPath</name>
-          <state>Dual_QSPI_Debug\List</state>
+          <state>Debug\List</state>
         </option>
         <option>
           <name>GEndianMode</name>
@@ -181,8 +181,7 @@
         <debug>1</debug>
         <option>
           <name>CCDefines</name>
-          <state>DUAL_QSPI_BOARD</state>
-          <state>DEBUG</state>
+          <state></state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -311,11 +310,7 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$\inc</state>
-          <state>$PROJ_DIR$\inc\iodefines</state>
-          <state>$PROJ_DIR$\inc\iobitmasks</state>
-          <state>$PROJ_DIR$\qspi_controller_driver\inc</state>
-          <state>$PROJ_DIR$\compiler_specific\inc</state>
+          <state></state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -611,7 +606,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>RZ_A1H_QSPI_LOADER.srec</state>
+          <state>RZ_A1H_DMAC.srec</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -666,7 +661,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>RZ_A1H_QSPI_LOADER.out</state>
+          <state>RZ_A1H_DMAC.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>
@@ -730,7 +725,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$\compiler_specific\IAR-QSPI-BL.icf</state>
+          <state>$PROJ_DIR$\compiler_specific\IAR-QSPI-APP.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -968,29 +963,29 @@
     </settings>
   </configuration>
   <configuration>
-    <name>Single_QSPI_Debug</name>
+    <name>Release</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
-    <debug>1</debug>
+    <debug>0</debug>
     <settings>
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
         <version>24</version>
         <wantNonLocal>1</wantNonLocal>
-        <debug>1</debug>
+        <debug>0</debug>
         <option>
           <name>ExePath</name>
-          <state>Single_QSPI_Debug\Exe</state>
+          <state>Release\Exe</state>
         </option>
         <option>
           <name>ObjPath</name>
-          <state>Single_QSPI_Debug\Obj</state>
+          <state>Release\Obj</state>
         </option>
         <option>
           <name>ListPath</name>
-          <state>Single_QSPI_Debug\List</state>
+          <state>Release\List</state>
         </option>
         <option>
           <name>GEndianMode</name>
@@ -1003,7 +998,7 @@
         </option>
         <option>
           <name>Input description</name>
-          <state>Automatic choice of formatter.</state>
+          <state></state>
         </option>
         <option>
           <name>Output variant</name>
@@ -1012,7 +1007,7 @@
         </option>
         <option>
           <name>Output description</name>
-          <state>Automatic choice of formatter.</state>
+          <state></state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -1020,7 +1015,7 @@
         </option>
         <option>
           <name>OGCoreOrChip</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>GRuntimeLibSelect</name>
@@ -1034,7 +1029,7 @@
         </option>
         <option>
           <name>RTDescription</name>
-          <state>Use the normal configuration of the C/C++ runtime library. No locale interface, C locale, no file descriptor support, no multibytes in printf and scanf, and no hex floats in strtod.</state>
+          <state></state>
         </option>
         <option>
           <name>OGProductVersion</name>
@@ -1042,7 +1037,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>7.40.3.8937</state>
+          <state></state>
         </option>
         <option>
           <name>GeneralEnableMisra</name>
@@ -1054,15 +1049,15 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>R7S721001	Renesas R7S721001</state>
+          <state></state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>GEndianModeBE</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>OGBufferedTerminalOutput</name>
@@ -1088,12 +1083,12 @@
         </option>
         <option>
           <name>RTConfigPath2</name>
-          <state>$TOOLKIT_DIR$\INC\c\DLib_Config_Normal.h</state>
+          <state></state>
         </option>
         <option>
           <name>GBECoreSlave</name>
           <version>22</version>
-          <state>52</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGUseCmsis</name>
@@ -1110,30 +1105,30 @@
         <option>
           <name>CoreVariant</name>
           <version>22</version>
-          <state>52</state>
+          <state>0</state>
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>R7S721001	Renesas R7S721001</state>
+          <state>-</state>
         </option>
         <option>
           <name>FPU2</name>
           <version>0</version>
-          <state>3</state>
+          <state>0</state>
         </option>
         <option>
           <name>NrRegs</name>
           <version>0</version>
-          <state>2</state>
+          <state>0</state>
         </option>
         <option>
           <name>NEON</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
           <version>22</version>
-          <state>52</state>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -1143,11 +1138,10 @@
       <data>
         <version>31</version>
         <wantNonLocal>1</wantNonLocal>
-        <debug>1</debug>
+        <debug>0</debug>
         <option>
           <name>CCDefines</name>
-          <state>SINGLE_QSPI_BOARD</state>
-          <state>DEBUG</state>
+          <state>NDEBUG</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1208,11 +1202,11 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>00000000</state>
+          <state>11111110</state>
         </option>
         <option>
           <name>CCDebugInfo</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IEndianMode</name>
@@ -1260,7 +1254,7 @@
         </option>
         <option>
           <name>OutputFile</name>
-          <state>$FILE_BNAME$.o</state>
+          <state></state>
         </option>
         <option>
           <name>CCLibConfigHeader</name>
@@ -1276,11 +1270,7 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$\inc</state>
-          <state>$PROJ_DIR$\inc\iodefines</state>
-          <state>$PROJ_DIR$\inc\iobitmasks</state>
-          <state>$PROJ_DIR$\qspi_controller_driver\inc</state>
-          <state>$PROJ_DIR$\compiler_specific\inc</state>
+          <state></state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1296,11 +1286,11 @@
         </option>
         <option>
           <name>IProcessorMode2</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -1309,7 +1299,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CompilerMisraRules98</name>
@@ -1398,7 +1388,7 @@
       <data>
         <version>9</version>
         <wantNonLocal>1</wantNonLocal>
-        <debug>1</debug>
+        <debug>0</debug>
         <option>
           <name>AObjPrefix</name>
           <state>1</state>
@@ -1438,7 +1428,7 @@
         </option>
         <option>
           <name>ADebug</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>AltRegisterNames</name>
@@ -1522,7 +1512,7 @@
         </option>
         <option>
           <name>AOutputFile</name>
-          <state>$FILE_BNAME$.o</state>
+          <state></state>
         </option>
         <option>
           <name>AMultibyteSupport</name>
@@ -1564,7 +1554,7 @@
       <data>
         <version>1</version>
         <wantNonLocal>1</wantNonLocal>
-        <debug>1</debug>
+        <debug>0</debug>
         <option>
           <name>OOCOutputFormat</name>
           <version>3</version>
@@ -1576,7 +1566,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>RZ_A1H_QSPI_LOADER.srec</state>
+          <state></state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -1616,7 +1606,7 @@
       <data>
         <version>16</version>
         <wantNonLocal>1</wantNonLocal>
-        <debug>1</debug>
+        <debug>0</debug>
         <option>
           <name>IlinkLibIOConfig</name>
           <state>1</state>
@@ -1631,7 +1621,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>RZ_A1H_QSPI_LOADER.out</state>
+          <state>###Unitialized###</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>
@@ -1667,7 +1657,7 @@
         </option>
         <option>
           <name>IlinkMapFile</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IlinkLogFile</name>
@@ -1691,11 +1681,11 @@
         </option>
         <option>
           <name>IlinkIcfOverride</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$\compiler_specific\IAR-QSPI-BL.icf</state>
+          <state>lnk0t.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -1755,7 +1745,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state>__iar_program_start</state>
+          <state></state>
         </option>
         <option>
           <name>DoFill</name>
@@ -1846,11 +1836,11 @@
         </option>
         <option>
           <name>IlinkOptInline</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkOptExceptionsAllow</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkOptExceptionsForce</name>
@@ -1906,7 +1896,7 @@
       <data>
         <version>0</version>
         <wantNonLocal>1</wantNonLocal>
-        <debug>1</debug>
+        <debug>0</debug>
         <option>
           <name>IarchiveInputs</name>
           <state></state>
@@ -1936,756 +1926,28 @@
     <name>compiler_specific</name>
     <group>
       <name>asm</name>
-      <file>
-        <name>$PROJ_DIR$\compiler_specific\asm\reset_handler_iar.s</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\compiler_specific\asm\start_iar.s</name>
-      </file>
     </group>
     <group>
       <name>inc</name>
-      <file>
-        <name>$PROJ_DIR$\compiler_specific\inc\compiler_settings.h</name>
-      </file>
     </group>
-    <file>
-      <name>$PROJ_DIR$\compiler_specific\IAR-QSPI-BL.icf</name>
-    </file>
+    <group>
+      <name>src</name>
+    </group>
   </group>
   <group>
     <name>inc</name>
     <group>
       <name>iobitmasks</name>
-      <file>
-        <name>$PROJ_DIR$\inc\iobitmasks\adc_iobitmask.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iobitmasks\bsc_iobitmask.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iobitmasks\cpg_iobitmask.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iobitmasks\dmac_iobitmask.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iobitmasks\gpio_iobitmask.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iobitmasks\intc_iobitmask.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iobitmasks\mtu2_iobitmask.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iobitmasks\ostm_iobitmask.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iobitmasks\riic_iobitmask.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iobitmasks\rspi_iobitmask.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iobitmasks\scif_iobitmask.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iobitmasks\spibsc_iobitmask.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iobitmasks\usb_iobitmask.h</name>
-      </file>
     </group>
     <group>
       <name>iodefines</name>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\adc_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\bsc_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\ceu_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\cpg_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\disc_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\dmac_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\dvdec_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\ether_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\flctl_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\gpio_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\ieb_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\inb_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\intc_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\irda_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\jcu_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\l2c_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\lin_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\lvds_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\mlb_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\mmc_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\mtu2_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\ostm_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\pfc_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\pfv_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\pwm_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\riic_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\romdec_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\rscan0_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\rspi_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\rtc_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\scif_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\scim_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\scux_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\sdg_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\spdif_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\spibsc_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\ssif_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\uahv_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\usb20_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\vdc5_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\wdt_iodefine.h</name>
-      </file>
     </group>
-    <file>
-      <name>$PROJ_DIR$\inc\iodefine.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\inc\qspi_setup.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\inc\r_typedefs.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\inc\rza_io_regrw.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\inc\typedefine.h</name>
-    </file>
   </group>
   <group>
-    <name>qspi_controller_driver</name>
-    <group>
-      <name>inc</name>
-      <file>
-        <name>$PROJ_DIR$\qspi_controller_driver\inc\flash_type_definitions.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\qspi_controller_driver\inc\qspi_controller.h</name>
-      </file>
-    </group>
-    <group>
-      <name>src</name>
-      <file>
-        <name>$PROJ_DIR$\qspi_controller_driver\src\external_address_mode.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\qspi_controller_driver\src\qspi_controller.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\qspi_controller_driver\src\spi_mode.c</name>
-      </file>
-    </group>
+    <name>scripts</name>
   </group>
   <group>
     <name>src</name>
-    <file>
-      <name>$PROJ_DIR$\src\check_image.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\src\copy_section_to_ram.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\src\qspi_change_config.c</name>
-      <configuration>
-        <name>Dual_QSPI_Debug</name>
-        <settings>
-          <name>ICCARM</name>
-          <data>
-            <version>31</version>
-            <wantNonLocal>0</wantNonLocal>
-            <debug>1</debug>
-            <option>
-              <name>CCDefines</name>
-              <state>DUAL_QSPI_BOARD</state>
-              <state>DEBUG</state>
-            </option>
-            <option>
-              <name>CCPreprocFile</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCPreprocComments</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCPreprocLine</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCListCFile</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCListCMnemonics</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCListCMessages</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCListAssFile</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCListAssSource</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCEnableRemarks</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCDiagSuppress</name>
-              <state></state>
-            </option>
-            <option>
-              <name>CCDiagRemark</name>
-              <state></state>
-            </option>
-            <option>
-              <name>CCDiagWarning</name>
-              <state></state>
-            </option>
-            <option>
-              <name>CCDiagError</name>
-              <state></state>
-            </option>
-            <option>
-              <name>CCObjPrefix</name>
-              <state>1</state>
-            </option>
-            <option>
-              <name>CCAllowList</name>
-              <version>1</version>
-              <state>00000000</state>
-            </option>
-            <option>
-              <name>CCDebugInfo</name>
-              <state>1</state>
-            </option>
-            <option>
-              <name>IEndianMode</name>
-              <state>1</state>
-            </option>
-            <option>
-              <name>IProcessor</name>
-              <state>1</state>
-            </option>
-            <option>
-              <name>IExtraOptionsCheck</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>IExtraOptions</name>
-              <state></state>
-            </option>
-            <option>
-              <name>CCLangConformance</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCSignedPlainChar</name>
-              <state>1</state>
-            </option>
-            <option>
-              <name>CCRequirePrototypes</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCMultibyteSupport</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCDiagWarnAreErr</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCCompilerRuntimeInfo</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>IFpuProcessor</name>
-              <state>1</state>
-            </option>
-            <option>
-              <name>OutputFile</name>
-              <state>$FILE_BNAME$.o</state>
-            </option>
-            <option>
-              <name>CCLibConfigHeader</name>
-              <state>1</state>
-            </option>
-            <option>
-              <name>PreInclude</name>
-              <state></state>
-            </option>
-            <option>
-              <name>CompilerMisraOverride</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCIncludePath2</name>
-              <state>$PROJ_DIR$\inc</state>
-              <state>$PROJ_DIR$\inc\iodefines</state>
-              <state>$PROJ_DIR$\inc\iobitmasks</state>
-              <state>$PROJ_DIR$\qspi_controller_driver\inc</state>
-              <state>$PROJ_DIR$\compiler_specific\inc</state>
-            </option>
-            <option>
-              <name>CCStdIncCheck</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCCodeSection</name>
-              <state>.text</state>
-            </option>
-            <option>
-              <name>IInterwork2</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>IProcessorMode2</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCOptLevel</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCOptStrategy</name>
-              <version>0</version>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCOptLevelSlave</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CompilerMisraRules98</name>
-              <version>0</version>
-              <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-            </option>
-            <option>
-              <name>CompilerMisraRules04</name>
-              <version>0</version>
-              <state>111101110010111111111000110111111111111111111111111110010111101111010101111111111111111111111111101111111011111001111011111011111111111111111</state>
-            </option>
-            <option>
-              <name>CCPosIndRopi</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCPosIndRwpi</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCPosIndNoDynInit</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>IccLang</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>IccCDialect</name>
-              <state>1</state>
-            </option>
-            <option>
-              <name>IccAllowVLA</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>IccCppDialect</name>
-              <state>1</state>
-            </option>
-            <option>
-              <name>IccExceptions</name>
-              <state>1</state>
-            </option>
-            <option>
-              <name>IccRTTI</name>
-              <state>1</state>
-            </option>
-            <option>
-              <name>IccStaticDestr</name>
-              <state>1</state>
-            </option>
-            <option>
-              <name>IccCppInlineSemantics</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>IccCmsis</name>
-              <state>1</state>
-            </option>
-            <option>
-              <name>IccFloatSemantics</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCOptimizationNoSizeConstraints</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCNoLiteralPool</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCOptStrategySlave</name>
-              <version>0</version>
-              <state>0</state>
-            </option>
-          </data>
-        </settings>
-      </configuration>
-      <configuration>
-        <name>Single_QSPI_Debug</name>
-        <settings>
-          <name>ICCARM</name>
-          <data>
-            <version>31</version>
-            <wantNonLocal>1</wantNonLocal>
-            <debug>1</debug>
-            <option>
-              <name>CCDefines</name>
-              <state>SINGLE_QSPI_BOARD</state>
-              <state>DEBUG</state>
-            </option>
-            <option>
-              <name>CCPreprocFile</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCPreprocComments</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCPreprocLine</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCListCFile</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCListCMnemonics</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCListCMessages</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCListAssFile</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCListAssSource</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCEnableRemarks</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCDiagSuppress</name>
-              <state></state>
-            </option>
-            <option>
-              <name>CCDiagRemark</name>
-              <state></state>
-            </option>
-            <option>
-              <name>CCDiagWarning</name>
-              <state></state>
-            </option>
-            <option>
-              <name>CCDiagError</name>
-              <state></state>
-            </option>
-            <option>
-              <name>CCObjPrefix</name>
-              <state>1</state>
-            </option>
-            <option>
-              <name>CCAllowList</name>
-              <version>1</version>
-              <state>00000000</state>
-            </option>
-            <option>
-              <name>CCDebugInfo</name>
-              <state>1</state>
-            </option>
-            <option>
-              <name>IEndianMode</name>
-              <state>1</state>
-            </option>
-            <option>
-              <name>IProcessor</name>
-              <state>1</state>
-            </option>
-            <option>
-              <name>IExtraOptionsCheck</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>IExtraOptions</name>
-              <state></state>
-            </option>
-            <option>
-              <name>CCLangConformance</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCSignedPlainChar</name>
-              <state>1</state>
-            </option>
-            <option>
-              <name>CCRequirePrototypes</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCMultibyteSupport</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCDiagWarnAreErr</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCCompilerRuntimeInfo</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>IFpuProcessor</name>
-              <state>1</state>
-            </option>
-            <option>
-              <name>OutputFile</name>
-              <state>$FILE_BNAME$.o</state>
-            </option>
-            <option>
-              <name>CCLibConfigHeader</name>
-              <state>1</state>
-            </option>
-            <option>
-              <name>PreInclude</name>
-              <state></state>
-            </option>
-            <option>
-              <name>CompilerMisraOverride</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCIncludePath2</name>
-              <state>$PROJ_DIR$\inc</state>
-              <state>$PROJ_DIR$\inc\iodefines</state>
-              <state>$PROJ_DIR$\inc\iobitmasks</state>
-              <state>$PROJ_DIR$\qspi_controller_driver\inc</state>
-              <state>$PROJ_DIR$\compiler_specific\inc</state>
-            </option>
-            <option>
-              <name>CCStdIncCheck</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCCodeSection</name>
-              <state>.text</state>
-            </option>
-            <option>
-              <name>IInterwork2</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>IProcessorMode2</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCOptLevel</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCOptStrategy</name>
-              <version>0</version>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCOptLevelSlave</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CompilerMisraRules98</name>
-              <version>0</version>
-              <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-            </option>
-            <option>
-              <name>CompilerMisraRules04</name>
-              <version>0</version>
-              <state>111101110010111111111000110111111111111111111111111110010111101111010101111111111111111111111111101111111011111001111011111011111111111111111</state>
-            </option>
-            <option>
-              <name>CCPosIndRopi</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCPosIndRwpi</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCPosIndNoDynInit</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>IccLang</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>IccCDialect</name>
-              <state>1</state>
-            </option>
-            <option>
-              <name>IccAllowVLA</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>IccCppDialect</name>
-              <state>1</state>
-            </option>
-            <option>
-              <name>IccExceptions</name>
-              <state>1</state>
-            </option>
-            <option>
-              <name>IccRTTI</name>
-              <state>1</state>
-            </option>
-            <option>
-              <name>IccStaticDestr</name>
-              <state>1</state>
-            </option>
-            <option>
-              <name>IccCppInlineSemantics</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>IccCmsis</name>
-              <state>1</state>
-            </option>
-            <option>
-              <name>IccFloatSemantics</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCOptimizationNoSizeConstraints</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCNoLiteralPool</name>
-              <state>0</state>
-            </option>
-            <option>
-              <name>CCOptStrategySlave</name>
-              <version>0</version>
-              <state>0</state>
-            </option>
-          </data>
-        </settings>
-      </configuration>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\src\resetprg.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\src\rza_io_regrw.c</name>
-    </file>
   </group>
 </project>
 

@@ -15,3 +15,5 @@ Obj
 *.dep
 Exe
 *.map
+.Debug_QSPIlinker
+.Debuglinker

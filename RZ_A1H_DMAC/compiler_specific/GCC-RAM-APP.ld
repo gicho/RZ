@@ -87,6 +87,7 @@ IRQ_STACK_SIZE	      = 0x2000;      /* IRQ mode stack                     */
 FIQ_STACK_SIZE	      = 0x2000;      /* Fast IRQ mode stack                */
 SVC_STACK_SIZE	      = 0x2000;      /* SVC mode stack                     */
 ABT_STACK_SIZE	      = 0x2000;      /* Abort mode stack                   */
+UND_STACK_SIZE	      = 0x2000;      /* Undefined mode stack               */
 TTB_SIZE              = 0x8000;      /* Level-1 Translation Table for MMU  */
 
 APP_VECTOR_TABLE	= 0x20020000; 	/* Vector table in RAM is located here */
@@ -365,6 +366,22 @@ SECTIONS
 		PROVIDE(__abt_stack_end__ = .);
 		
 	} > RAM0U
+
+	/* stacks need to be aligned to 8 bytes */
+	.und_stack_section (NOLOAD) : ALIGN(0x8)
+	{
+		__und_stack_start__ = .;
+		PROVIDE(__und_stack_start__ = .);
+		
+		.  += UND_STACK_SIZE;
+		
+		. = ALIGN(0x4);
+		
+		__und_stack_end__ = .;
+		PROVIDE(__und_stack_end__ = .);
+		
+	} > RAM0U
+
       
 	/* stacks need to be aligned to 8 bytes */
 	.program_stack_section (NOLOAD) : ALIGN(0x8)

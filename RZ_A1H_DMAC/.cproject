@@ -289,8 +289,17 @@
 							<tool id="com.renesas.cdt.rz.debug.win32.tool.objcopy.Id.1449884941" name="Objcopy" superClass="com.renesas.cdt.rz.debug.win32.tool.objcopy.Id"/>
 						</toolChain>
 					</folderInfo>
+					<fileInfo id="com.renesas.cdt.rz.debug.win32.configuration.Id.823825972.1016129555.2116615211" name="initsct.s" rcbsApplicability="disable" resourcePath="compiler_specific/asm/initsct.s" toolsToInvoke="com.renesas.cdt.rz.debug.win32.tool.assembler.Id.451190823.392560244">
+						<tool id="com.renesas.cdt.rz.debug.win32.tool.assembler.Id.451190823.392560244" name="Assembler" superClass="com.renesas.cdt.rz.debug.win32.tool.assembler.Id.451190823"/>
+						<tool customBuildStep="true" id="org.eclipse.cdt.managedbuilder.ui.rcbs.341785762" name="Resource Custom Build Step">
+							<inputType id="org.eclipse.cdt.managedbuilder.ui.rcbs.inputtype.776655142" name="Resource Custom Build Step Input Type">
+								<additionalInput kind="additionalinputdependency" paths=""/>
+							</inputType>
+							<outputType id="org.eclipse.cdt.managedbuilder.ui.rcbs.outputtype.1484730160" name="Resource Custom Build Step Output Type"/>
+						</tool>
+					</fileInfo>
 					<sourceEntries>
-						<entry excluding="compiler_specific/asm/initsct.S|compiler_specific/asm/proc-macros.S" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="compiler_specific/asm/initsct.s|compiler_specific/asm/initsct.S|compiler_specific/asm/proc-macros.S" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

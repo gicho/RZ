@@ -3,7 +3,7 @@
 <project>
   <fileVersion>2</fileVersion>
   <configuration>
-    <name>Dual_QSPI_Debug</name>
+    <name>Debug</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -1049,11 +1049,11 @@
     </settings>
   </configuration>
   <configuration>
-    <name>Single_QSPI_Debug</name>
+    <name>Release</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
-    <debug>1</debug>
+    <debug>0</debug>
     <settings>
       <name>C-STAT</name>
       <archiveVersion>1</archiveVersion>
@@ -2022,7 +2022,7 @@
       <data>
         <version>2</version>
         <wantNonLocal>1</wantNonLocal>
-        <debug>1</debug>
+        <debug>0</debug>
         <option>
           <name>GenRtcDebugHeap</name>
           <state>0</state>
@@ -2098,256 +2098,28 @@
     <name>compiler_specific</name>
     <group>
       <name>asm</name>
-      <file>
-        <name>$PROJ_DIR$\compiler_specific\asm\reset_handler_iar.s</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\compiler_specific\asm\start_iar.s</name>
-      </file>
     </group>
     <group>
       <name>inc</name>
-      <file>
-        <name>$PROJ_DIR$\compiler_specific\inc\compiler_settings.h</name>
-      </file>
     </group>
-    <file>
-      <name>$PROJ_DIR$\compiler_specific\IAR-QSPI-BL.icf</name>
-    </file>
+    <group>
+      <name>src</name>
+    </group>
   </group>
   <group>
     <name>inc</name>
     <group>
       <name>iobitmasks</name>
-      <file>
-        <name>$PROJ_DIR$\inc\iobitmasks\adc_iobitmask.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iobitmasks\bsc_iobitmask.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iobitmasks\cpg_iobitmask.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iobitmasks\dmac_iobitmask.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iobitmasks\gpio_iobitmask.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iobitmasks\intc_iobitmask.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iobitmasks\mtu2_iobitmask.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iobitmasks\ostm_iobitmask.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iobitmasks\riic_iobitmask.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iobitmasks\rspi_iobitmask.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iobitmasks\scif_iobitmask.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iobitmasks\spibsc_iobitmask.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iobitmasks\usb_iobitmask.h</name>
-      </file>
     </group>
     <group>
       <name>iodefines</name>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\adc_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\bsc_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\ceu_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\cpg_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\disc_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\dmac_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\dvdec_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\ether_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\flctl_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\gpio_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\ieb_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\inb_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\intc_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\irda_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\jcu_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\l2c_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\lin_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\lvds_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\mlb_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\mmc_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\mtu2_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\ostm_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\pfc_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\pfv_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\pwm_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\riic_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\romdec_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\rscan0_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\rspi_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\rtc_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\scif_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\scim_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\scux_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\sdg_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\spdif_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\spibsc_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\ssif_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\uahv_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\usb20_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\vdc5_iodefine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\inc\iodefines\wdt_iodefine.h</name>
-      </file>
     </group>
-    <file>
-      <name>$PROJ_DIR$\inc\iodefine.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\inc\qspi_setup.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\inc\r_typedefs.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\inc\rza_io_regrw.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\inc\typedefine.h</name>
-    </file>
   </group>
   <group>
-    <name>qspi_controller_driver</name>
-    <group>
-      <name>inc</name>
-      <file>
-        <name>$PROJ_DIR$\qspi_controller_driver\inc\flash_type_definitions.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\qspi_controller_driver\inc\qspi_controller.h</name>
-      </file>
-    </group>
-    <group>
-      <name>src</name>
-      <file>
-        <name>$PROJ_DIR$\qspi_controller_driver\src\external_address_mode.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\qspi_controller_driver\src\qspi_controller.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\qspi_controller_driver\src\spi_mode.c</name>
-      </file>
-    </group>
+    <name>scripts</name>
   </group>
   <group>
     <name>src</name>
-    <file>
-      <name>$PROJ_DIR$\src\check_image.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\src\copy_section_to_ram.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\src\qspi_change_config.c</name>
-      <configuration>
-        <name>Dual_QSPI_Debug</name>
-      </configuration>
-      <configuration>
-        <name>Single_QSPI_Debug</name>
-      </configuration>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\src\resetprg.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\src\rza_io_regrw.c</name>
-    </file>
   </group>
 </project>
 
