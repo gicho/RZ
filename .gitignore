@@ -1,3 +1,14 @@
 Debug
 *.bin
 /.metadata
+*.pbi
+*.cout
+*.xcl
+/RZ_A1H_QSPI_LOADER/flash_loader/Flashloader_RZ_RSK_SerialFlash/settings
+/RZ_A1H_QSPI_LOADER/flash_loader/Flashloader_RZ_RSK_SerialFlash/Flashloader_RZ_RSK_SerialFlash.dep
+/RZ_A1H_QSPI_LOADER/flash_loader/Flashloader_RZ_RSK_SerialFlash/Flashloader_RZ_RSK_SerialFlash.ewt
+*.browse
+settings
+Obj
+/RZ_A1H_QSPI_LOADER/.settings/Project_Generation_Prefrences.prefs
+/RZ_A1H_QSPI_LOADER/.settings/org.eclipse.cdt.managedbuilder.core.prefs
