@@ -27,6 +27,9 @@
 #include "assembler_macros.h"
 
 extern void L1CachesEnable(void);
+extern void flush_cache(void);
+extern void dcache_clean_all();
+
 
 /*******************************************************************************
  *	dma_buffer_issue(start,size,direction)

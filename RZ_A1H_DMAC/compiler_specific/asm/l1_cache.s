@@ -24,6 +24,70 @@
 
 #include "assembler_macros.h"
 
+
+/*******************************************************************************
+ *	flush_dcache()
+ *
+ *	Used to flush the complete data cache
+ *
+********************************************************************************/
+   .globl dcache_clean_all
+   .align 4
+
+dcache_clean_all:
+
+	dmb							@ ensure ordering with previous memory accesses
+	mrc	p15, 1, r0, c0, c0, 1	@ read clidr
+	ands	r3, r0, #0x7000000	@ extract loc from clidr
+	mov	r3, r3, lsr #23			@ left align loc bit field, cache level value
+	beq	finished_clean			@ if loc is 0, then no need to clean
+	mov	r10, #0					@ start clean at cache level 0
+
+loop1_clean:
+	add	r2, r10, r10, lsr #1	@ work out 3x current cache level
+	mov	r1, r0, lsr r2			@ bottom 3 bits are the cache type for this level
+	and	r1, r1, #7				@ mask of the bits for current cache only
+	cmp	r1, #2					@ see what cache we have at this level
+	blt	skip_clean  			@ skip if no cache, or just i-cache (2= data cache only, 3= separate i&d, 4= unified)
+
+	mcr	p15, 2, r10, c0, c0, 0	@ select current cache level in cssr, write CSSELR
+	isb							@ isb to sych the new CCSIDR
+	mrc	p15, 1, r1, c0, c0, 0	@ read the new CCSIDR
+
+	and	r2, r1, #7				@ extract the length of the cache lines
+	add	r2, r2, #4				@ add 4 for the line length offset (log2 16 bytes)
+	ldr	r4, =0x3ff
+	ands	r4, r4, r1, lsr #3	@ R4: find maximum number on the way size
+	clz	r5, r4					@ R5: find bit position of way size increment
+	mov	r9, r4					@ create working copy of max way size
+loop2_clean:
+	ldr	r7, =0x00007fff
+	ands	r7, r7, r1, lsr #13	@ R7: extract max number of the index size
+loop3_clean:
+    orr	r11, r10, r9, lsl r5	@ factor way and cache number into r11
+    orr	r11, r11, r7, lsl r2	@ factor index number into r11
+	mcr	p15, 0, r11, c7, c10, 2	@ DCCSW, clean by set/way
+	subs	r7, r7, #1			@ decrement the index
+	bge	loop3_clean
+	subs	r9, r9, #1			@ decrement the way
+	bge	loop2_clean
+skip_clean:
+	add	r10, r10, #2			@ increment cache number
+	cmp	r3, r10
+	bgt	loop1_clean
+	dsb
+finished_clean:
+	mov	r10, #0					@ switch back to cache level 0
+	mcr	p15, 2, r10, c0, c0, 0	@ select current cache level in cssr
+	dsb
+	isb
+	mov	pc, lr
+
+  	.type dcache_clean_invalidate_all , %function
+  	.align 4
+
+
+
 /*
  * dcache_line_size - get the minimum D-cache line size from the CTR register
  * on ARMv7.
@@ -367,7 +431,7 @@ flush_cache:
 /*******************************************************************************
  *	flush_lou_cache()
  *
- *	Used to flush the complete data cache up tp the level of unification
+ *	Used to flush the complete data cache up to the level of unification
  *  Invalidates the instruction cache to the point of unification
  *
 ********************************************************************************/

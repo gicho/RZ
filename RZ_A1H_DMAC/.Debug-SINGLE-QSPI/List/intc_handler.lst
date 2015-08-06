@@ -1,0 +1,247 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.40.3.8902/W32 for ARM        06/Aug/2015  16:43:11
+# Copyright 1999-2015 IAR Systems AB.
+#
+#    Cpu mode     =  arm
+#    Endian       =  little
+#    Source file  =  
+#        C:\work\projects\mysoftware\RZ\RZ_A1H_DMAC\src\intc_handler.c
+#    Command line =  
+#        C:\work\projects\mysoftware\RZ\RZ_A1H_DMAC\src\intc_handler.c -D DEBUG
+#        --preprocess=cl
+#        C:\work\projects\mysoftware\RZ\RZ_A1H_DMAC\.Debug-SINGLE-QSPI\List\
+#        -lC
+#        C:\work\projects\mysoftware\RZ\RZ_A1H_DMAC\.Debug-SINGLE-QSPI\List\
+#        -lA
+#        C:\work\projects\mysoftware\RZ\RZ_A1H_DMAC\.Debug-SINGLE-QSPI\List\ -o
+#        C:\work\projects\mysoftware\RZ\RZ_A1H_DMAC\.Debug-SINGLE-QSPI\Obj\
+#        --no_cse --no_unroll --no_inline --no_code_motion --no_tbaa
+#        --no_clustering --no_scheduling --debug --endian=little
+#        --cpu=Cortex-A9 -e --fpu=VFPv3 --dlib_config
+#        C:\work\dev\iar_arm7.2\arm\INC\c\DLib_Config_Normal.h -I
+#        C:\work\projects\mysoftware\RZ\RZ_A1H_DMAC\inc\ -I
+#        C:\work\projects\mysoftware\RZ\RZ_A1H_DMAC\inc\iodefines\ -I
+#        C:\work\projects\mysoftware\RZ\RZ_A1H_DMAC\inc\iobitmasks\ -I
+#        C:\work\projects\mysoftware\RZ\RZ_A1H_DMAC\qspi_controller_driver\inc\
+#        -I C:\work\projects\mysoftware\RZ\RZ_A1H_DMAC\compiler_specific\inc\
+#        --cpu_mode arm -On
+#    List file    =  
+#        C:\work\projects\mysoftware\RZ\RZ_A1H_DMAC\.Debug-SINGLE-QSPI\List\intc_handler.lst
+#    Object file  =  
+#        C:\work\projects\mysoftware\RZ\RZ_A1H_DMAC\.Debug-SINGLE-QSPI\Obj\intc_handler.o
+#
+###############################################################################
+
+C:\work\projects\mysoftware\RZ\RZ_A1H_DMAC\src\intc_handler.c
+      1          /*******************************************************************************
+      2          * DISCLAIMER
+      3          * This software is supplied by Renesas Electronics Corporation and is only
+      4          * intended for use with Renesas products. No other uses are authorized. This
+      5          * software is owned by Renesas Electronics Corporation and is protected under
+      6          * all applicable laws, including copyright laws.
+      7          * THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIES REGARDING
+      8          * THIS SOFTWARE, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING BUT NOT
+      9          * LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+     10          * AND NON-INFRINGEMENT. ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED.
+     11          * TO THE MAXIMUM EXTENT PERMITTED NOT PROHIBITED BY LAW, NEITHER RENESAS
+     12          * ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES SHALL BE LIABLE
+     13          * FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR
+     14          * ANY REASON RELATED TO THIS SOFTWARE, EVEN IF RENESAS OR ITS AFFILIATES HAVE
+     15          * BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+     16          * Renesas reserves the right, without notice, to make changes to this software
+     17          * and to discontinue the availability of this software. By using this software,
+     18          * you agree to the additional terms and conditions found by accessing the
+     19          * following link:
+     20          * http://www.renesas.com/disclaimer
+     21          *
+     22          * Copyright (C) 2014 Renesas Electronics Corporation. All rights reserved.
+     23          *******************************************************************************/
+     24          /*******************************************************************************
+     25          * File Name     : intc_handler.c
+     26          * Device(s)     : RZ/A1H (R7S721001)
+     27          * Tool-Chain    : GNUARM-RZv13.01-EABI
+     28          * H/W Platform  : RSK+RZA1H CPU Board
+     29          * Description   : Sample Program - Handler process
+     30          *******************************************************************************/
+     31          /*******************************************************************************
+     32          * History       : DD.MM.YYYY Version Description
+     33          *               : 18.06.2013 1.00
+     34          *               : 21.03.2014 2.00
+     35          *******************************************************************************/
+     36          
+     37          /*******************************************************************************
+     38          Includes   <System Includes> , "Project Includes"
+     39          *******************************************************************************/
+     40          /* Interchangeable compiler specific header */
+     41          #include "compiler_settings.h"
+     42          
+     43          /* Default  type definition header */
+     44          #include "r_typedefs.h"
+     45          /* INTC Driver Header */
+     46          #include "devdrv_intc.h"
+     47          /* I/O Register root header */
+     48          #include "iodefine.h"
+     49          /* INTC system header */
+     50          //#include "intc_handler.h"
+     51          
+     52          /*******************************************************************************
+     53          * Function Name: INTC_Handler_Interrupt
+     54          * Description  : This function is the INTC interrupt handler processing called 
+     55          *              : by the irq_handler. Executes the handler processing which 
+     56          *              : corresponds to the INTC interrupt source ID specified by the
+     57          *              : icciar by calling the Userdef_INTC_HandlerExe function. The
+     58          *              : IRQ multiple interrupts are enabled. The processing for
+     59          *              : unsupported interrupt ID is executed by calling
+     60          *              : Userdef_INTC_UndefId function.
+     61          *              : In the interrupt handler processing, when the int_sense shows 
+     62          *              : "INTC_LEVEL_SENSITIVE", clear the interrupt source because it
+     63          *              : means a level sense interrupt. 
+     64          *              : Stacks are restored by ASM with the top level to correspond
+     65          *              : to multiple interrupts
+     66          * Arguments    : uint32_t icciar : Interrupt ID (value of ICCIAR register)
+     67          * Return Value : none
+     68          *******************************************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+     69          void INTC_Handler_Interrupt(uint32_t icciar)
+     70          {
+   \                     INTC_Handler_Interrupt:
+   \   00000000   0xE92D43F8         PUSH     {R3-R9,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+     71              uint32_t mask;
+     72              uint32_t int_sense;
+     73              uint16_t int_id;
+     74              uint32_t volatile * addr;
+     75          
+     76              int_id = (uint16_t)(icciar & 0x000003FFuL); /* Obtain interrupt ID */
+   \   00000008   0xE1B00004         MOVS     R0,R4
+   \   0000000C   0xE1B00B00         LSLS     R0,R0,#+22
+   \   00000010   0xE1B00B20         LSRS     R0,R0,#+22
+   \   00000014   0xE1B07000         MOVS     R7,R0
+     77          
+     78              if (int_id >= INTC_ID_TOTAL)    /* In case of unsupported interrupt ID */
+   \   00000018   0xE1B00007         MOVS     R0,R7
+   \   0000001C   0xE6FF0070         UXTH     R0,R0
+   \   00000020   0xE300124B         MOVW     R1,#+587
+   \   00000024   0xE1500001         CMP      R0,R1
+   \   00000028   0xBA000002         BLT      ??INTC_Handler_Interrupt_0
+     79              {
+     80                  Userdef_INTC_UndefId(int_id);
+   \   0000002C   0xE1B00007         MOVS     R0,R7
+   \   00000030   0xE6FF0070         UXTH     R0,R0
+   \   00000034   0x........         BL       Userdef_INTC_UndefId
+     81              }
+     82          
+     83              /* ==== Interrupt handler call ==== */
+     84              __enable_irq();         /* IRQ interrupt enabled */
+   \                     ??INTC_Handler_Interrupt_0:
+   \   00000038   0xF1080080         CPSIE    I
+     85          
+     86              /* ICDICFRn has 16 sources in the 32 bits                                  */
+     87              /* The n can be calculated by int_id / 16                                  */
+     88              /* The upper 1 bit out of 2 bits for the bit field width is the target bit */
+     89              /* The target bit can be calculated by ((int_id % 16) * 2) + 1             */
+     90              addr = (volatile uint32_t *)&INTC.ICDICFR0;
+   \   0000003C   0x........         LDR      R0,??DataTable0  ;; 0xe8201c00
+   \   00000040   0xE1B08000         MOVS     R8,R0
+     91              mask = (uint32_t)(1 << (((int_id % 16) * 2) + 1));
+   \   00000044   0xE3A09001         MOV      R9,#+1
+   \   00000048   0xE1B00007         MOVS     R0,R7
+   \   0000004C   0xE6FF0070         UXTH     R0,R0
+   \   00000050   0xE3A01010         MOV      R1,#+16
+   \   00000054   0x........         BL       __aeabi_idivmod
+   \   00000058   0xE3A00002         MOV      R0,#+2
+   \   0000005C   0xE0110190         MULS     R1,R0,R1
+   \   00000060   0xE2910001         ADDS     R0,R1,#+1
+   \   00000064   0xE1B00019         LSLS     R0,R9,R0
+   \   00000068   0xE1B05000         MOVS     R5,R0
+     92              if (0 == (*(addr + (int_id / 16)) & mask))  /* In the case of level sense */
+   \   0000006C   0xE1B00007         MOVS     R0,R7
+   \   00000070   0xE6FF0070         UXTH     R0,R0
+   \   00000074   0xE3A01010         MOV      R1,#+16
+   \   00000078   0x........         BL       __aeabi_idiv
+   \   0000007C   0xE1B00100         LSLS     R0,R0,#+2
+   \   00000080   0xE7900008         LDR      R0,[R0, +R8]
+   \   00000084   0xE1150000         TST      R5,R0
+   \   00000088   0x1A000002         BNE      ??INTC_Handler_Interrupt_1
+     93              {
+     94                  int_sense = INTC_LEVEL_SENSITIVE;
+   \   0000008C   0xE3A00000         MOV      R0,#+0
+   \   00000090   0xE1B06000         MOVS     R6,R0
+   \   00000094   0xEA000001         B        ??INTC_Handler_Interrupt_2
+     95              }
+     96              else                                        /* In the case of edge trigger */
+     97              {
+     98                  int_sense = INTC_EDGE_TRIGGER;
+   \                     ??INTC_Handler_Interrupt_1:
+   \   00000098   0xE3A00001         MOV      R0,#+1
+   \   0000009C   0xE1B06000         MOVS     R6,R0
+     99              }
+    100          
+    101              Userdef_INTC_HandlerExe(int_id, int_sense);     /* Call interrupt handler */
+   \                     ??INTC_Handler_Interrupt_2:
+   \   000000A0   0xE1B01006         MOVS     R1,R6
+   \   000000A4   0xE1B00007         MOVS     R0,R7
+   \   000000A8   0xE6FF0070         UXTH     R0,R0
+   \   000000AC   0x........         BL       Userdef_INTC_HandlerExe
+    102          
+    103              __disable_irq();        /* IRQ interrupt disabled */
+   \   000000B0   0xF10C0080         CPSID    I
+    104          }
+   \   000000B4   0xE8BD83F1         POP      {R0,R4-R9,PC}    ;; return
+    105          
+    106          /*******************************************************************************
+    107          * Function Name: FiqHandler_Interrupt
+    108          * Description  : This function is the INTC interrupt handler processing called
+    109          *              : by the fiq_handler.
+    110          * Arguments    : none
+    111          * Return Value : none
+    112          *******************************************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+    113          void FiqHandler_Interrupt(void)
+    114          {
+   \                     FiqHandler_Interrupt:
+   \   00000000   0xE92D5000         PUSH     {R12,LR}
+    115              Userdef_FIQ_HandlerExe();
+   \   00000004   0x........         BL       Userdef_FIQ_HandlerExe
+    116          }
+   \   00000008   0xE8BD8001         POP      {R0,PC}          ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable0:
+   \   00000000   0xE8201C00         DC32     0xe8201c00
+    117          
+    118          
+    119          /* END of File */
+    120          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       8   FiqHandler_Interrupt
+         8   -> Userdef_FIQ_HandlerExe
+      32   INTC_Handler_Interrupt
+        32   -> Userdef_INTC_HandlerExe
+        32   -> Userdef_INTC_UndefId
+        32 __aeabi_idiv
+        32 __aeabi_idivmod
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable0
+      12  FiqHandler_Interrupt
+     184  INTC_Handler_Interrupt
+
+ 
+ 200 bytes in section .text
+ 
+ 200 bytes of CODE memory
+
+Errors: none
+Warnings: none

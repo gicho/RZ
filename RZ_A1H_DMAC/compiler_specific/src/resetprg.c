@@ -68,6 +68,7 @@ extern uint32_t __fast_code_start__;
 extern uint32_t __fast_code_end__;
 
 extern uint32_t __vector_table_ram_start__;
+extern uint32_t __vector_table_rom_start__;
 
 /* These are related to the rest of the code */
 extern uint32_t __data_rom_start__;
@@ -103,7 +104,8 @@ void PowerON_Reset (void)
 {
     uint32_t *ram_code_start,*ram_code_end;
 	uint32_t *rom_code_start;
-	uint32_t volatile * VectorTableEntry;
+	uint32_t volatile *VectorTableEntry;
+	uint32_t volatile *VectorTableEntry_ROM;
 	uint8_t  *src, *dst, *end;
 
 	/* data and bss are copied into initsct.S */
@@ -142,35 +144,38 @@ void PowerON_Reset (void)
 
 	/* copy vector table to ram */
 	VectorTableEntry = (uint32_t volatile *) &__vector_table_ram_start__;
+	VectorTableEntry_ROM = (uint32_t volatile *) &__vector_table_rom_start__;
 
-    /* setup the primary vector table in RAM */
-	*(VectorTableEntry++) = (LDR_PC_PC | 0x18);
-    *(VectorTableEntry++) = (LDR_PC_PC | 0x18);
-    *(VectorTableEntry++) = (LDR_PC_PC | 0x18);
-    *(VectorTableEntry++) = (LDR_PC_PC | 0x18);
-    *(VectorTableEntry++) = (LDR_PC_PC | 0x18);
-    *(VectorTableEntry++) = (LDR_PC_PC | 0x18);
-    *(VectorTableEntry++) = (LDR_PC_PC | 0x18);
-    *(VectorTableEntry++) = (LDR_PC_PC | 0x18);
+	// do this only if not debugging from RAM
+	if(VectorTableEntry != VectorTableEntry_ROM) {
 
-    /* setup the literal entries for the vector table in RAM */
-    *(VectorTableEntry++) = (uint32_t) &APP_reset_handler; 		/* this is in QSPI */
-    *(VectorTableEntry++) = (uint32_t) &APP_undefined_handler;  /* self loop could be coded as 0x04U */
-    *(VectorTableEntry++) = (uint32_t) &APP_svc_handler;		/* self loop could be coded as 0x08U */
-    *(VectorTableEntry++) = (uint32_t) &APP_prefetch_handler; 	/* self loop could be coded as 0x0CU */
-    *(VectorTableEntry++) = (uint32_t) &APP_abort_handler;		/* self loop could be coded as 0x10U */
-    *(VectorTableEntry++) = (uint32_t) &APP_reserved_handler;	/* self loop could be coded as 0x14U */
-    *(VectorTableEntry++) = (uint32_t) &APP_irq_handler;		/* IRQ and FIQ handler are located in RAM */
-    *(VectorTableEntry++) = (uint32_t) &APP_fiq_handler;
+		/* setup the primary vector table in RAM */
+		*(VectorTableEntry++) = (LDR_PC_PC | 0x18);
+		*(VectorTableEntry++) = (LDR_PC_PC | 0x18);
+		*(VectorTableEntry++) = (LDR_PC_PC | 0x18);
+		*(VectorTableEntry++) = (LDR_PC_PC | 0x18);
+		*(VectorTableEntry++) = (LDR_PC_PC | 0x18);
+		*(VectorTableEntry++) = (LDR_PC_PC | 0x18);
+		*(VectorTableEntry++) = (LDR_PC_PC | 0x18);
+		*(VectorTableEntry++) = (LDR_PC_PC | 0x18);
 
-	// set VBAR to the vector table in RAM
-	VbarSet((uint32_t) &__vector_table_ram_start__);
+		/* setup the literal entries for the vector table in RAM */
+		*(VectorTableEntry++) = (uint32_t) &APP_reset_handler; 		/* this is in QSPI */
+		*(VectorTableEntry++) = (uint32_t) &APP_undefined_handler;  /* self loop could be coded as 0x04U */
+		*(VectorTableEntry++) = (uint32_t) &APP_svc_handler;		/* self loop could be coded as 0x08U */
+		*(VectorTableEntry++) = (uint32_t) &APP_prefetch_handler; 	/* self loop could be coded as 0x0CU */
+		*(VectorTableEntry++) = (uint32_t) &APP_abort_handler;		/* self loop could be coded as 0x10U */
+		*(VectorTableEntry++) = (uint32_t) &APP_reserved_handler;	/* self loop could be coded as 0x14U */
+		*(VectorTableEntry++) = (uint32_t) &APP_irq_handler;		/* IRQ and FIQ handler are located in RAM */
+		*(VectorTableEntry++) = (uint32_t) &APP_fiq_handler;
+
+		// set VBAR to the vector table in RAM
+		VectorTableEntry = (uint32_t volatile *) &__vector_table_ram_start__;
+		VbarSet((uint32_t) VectorTableEntry);
+
+	};
 
 	/* Now start initializing the hardware */
-
-    /* ==== CPG setting ====*/
-    // configured in the reset handler
-	// CPG_Init();
 
 	// enable all module clocks
 	STB_Init();
@@ -217,10 +222,14 @@ void PowerON_Reset (void)
     /* INTC setting */
     R_INTC_Init();
 
-    /* Initial setting of the level 1 cache */
-    L1CachesEnable();
+    // invalidate all L2 and L1
+    L2CacheInvalidate();
+    flush_cache();
+    __isb();
 
+    /* Enable L1 and L2 */
     L2CacheInit();
+    L1CachesEnable();
 
     __enable_irq();
     __enable_fiq();

@@ -52,6 +52,7 @@ L1CachesEnable:
 	ORR  r0, r0, #(0x1 << 11)				/* Enable program flow prediction */
 	ORR  r0, r0, #(0x1 << 2)			    /* Enable D Cache */
 	MCR  p15, 0, r0, c1, c0, 0			    /* Write CP15 register 1 */
+	ISB
 
 /******************************************************************************/
 /* Enable D-side prefetch                                                     */
@@ -59,6 +60,7 @@ L1CachesEnable:
 	MRC  p15, 0, r0, c1, c0, 1			   /* Read Auxiliary Control Register */
 	ORR  r0, r0, #(0x1 << 2)			     /* Enable Dside prefetch */
 	MCR  p15, 0, r0, c1, c0, 1			/* Write Auxiliary Control Register */
+	ISB
 
 	BX   lr
 

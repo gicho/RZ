@@ -17,3 +17,4 @@ Exe
 *.map
 .Debug_QSPIlinker
 .Debuglinker
+*.trace

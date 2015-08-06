@@ -1304,7 +1304,13 @@ void dmac_sdram_cached_sdram_cached(void)
 
 
 
+uint32_t volatile init_test = 0xCAFECAFE;
+#ifdef __ICCARM__
 
+#pragma section="RAM_IRQ_VECTOR_TABLE"
+
+void VbarSet(uint32_t value);
+#endif
 
 /******************************************************************************
 * Function Name: main
@@ -1316,13 +1322,11 @@ void dmac_sdram_cached_sdram_cached(void)
 ******************************************************************************/
 int main(void)
 {
-#ifdef __ICC_ARM__  
+#ifdef __ICCARM__  
   
-    VectorTableEntry = (uint32_t volatile *) __section_begin("RAM_IRQ_VECTOR_TABLE");
+    volatile uint32_t VectorTableEntry = (uint32_t) __section_begin("RAM_IRQ_VECTOR_TABLE");
     VbarSet(VectorTableEntry);  
-    
-#endif
-    
+
     /* Initial setting of the level 1 cache */
     L1CachesEnable();
     L2CacheInit();
@@ -1330,7 +1334,8 @@ int main(void)
     /* Enable interrupts */
     __enable_irq();
     __enable_fiq();  
-  
+
+#endif
   
     /* Initialise ri2c for rsk board */
     R_RIIC_rza1h_rsk_init();

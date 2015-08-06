@@ -88,7 +88,7 @@ extern EXEC_RAM void copy_arm_code_section_to_ram(uint32_t* rom_start, uint32_t*
 *******************************************************************************/
 void PowerON_Reset (void)
 {
-    uint32_t *ram_code_start,*ram_code_end;
+        volatile uint32_t *ram_code_start,*ram_code_end;
 	uint32_t *rom_code_start;
 	uint8_t  *src, *dst, *end;
 

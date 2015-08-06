@@ -106,8 +106,15 @@ SECTIONS
 		__vector_table_rom_start__ = LOADADDR (.vector_table);
 		PROVIDE(__vector_table_rom_start__ = LOADADDR (.vector_table));
  
+ 		/* Vector table is not relocated but directly in RAM in this case */
+         __vector_table_ram_start__ = .;
+        PROVIDE(__vector_table_ram_start__ = .);  
+        
         *start.o(.text)                        
-		
+
+		__vector_table_ram_end__ = .;
+        PROVIDE(__vector_table_ram_end__ = .); 
+        		
 		/* the application signature follows directly the vector table in the example */
 		
 		*application_signature.o(.rodata)
@@ -116,7 +123,7 @@ SECTIONS
 		      
 	} > RAM0L 
 	
-    /* startup code is executed in place from QSPI since not needed afterwards */
+    /* startup code */
     .reset_section  :
     {
 		. = ALIGN(0x4);  
@@ -160,20 +167,6 @@ SECTIONS
 		      
 	} > RAM0L
 	
-	.hardware_init :
-	{
-		. = ALIGN(0x4);  
-	        
-	    __hardware_init_code_rom_start__ = .;
-        PROVIDE(__hardware_init_code_rom_start__ = .);
-	
-		__hardware_init_code_rom_end__ = __hardware_init_code_rom_start__ + SIZEOF(.hardware_init);
-        PROVIDE(__hardware_init_code_rom_end__ = __hardware_init_code_rom_start__ + SIZEOF(.hardware_init));
-
-		. = ALIGN(0x4);  
-		        
-	} > RAM0L
-	
 
     /* .ARM.exidx is sorted, so has to go in its own output section.  */ 
     .ARM.exidx : { 
@@ -187,30 +180,6 @@ SECTIONS
         __exidx_end = .;
              
     } >RAM0L 
-
-
-    /* Executes from RAM */	
-    /* Since it coincides with the */
-	.ram_vector_table : {
-        
-        /* this is the location in ram where the vector table for the application gets relocated */
-		/* the vector table must be aligned to 32-bytes */
-        . = ALIGN(0x20);
-        
-        __vector_table_ram_start__ = .;
-        PROVIDE(__vector_table_ram_start__ = .);  
-        
-        /* reserve space for the vector table (0x20) and the following related literal constants (0x20) */
-        . += 0x40;
-        
-		__vector_table_ram_end__ = .;
-        PROVIDE(__vector_table_ram_end__ = .);          
-        
-        /* Any following code must be aligned to a 4 byte boundary. */
-		/* Important since the code copy routine works on 4 bytes size for efficiency */
-        . = ALIGN(0x4);
-
-	}  > RAM0L  
 
 	.fast_code_section : 
 	{

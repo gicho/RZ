@@ -10,8 +10,7 @@
     <loader>$PROJ_DIR$\..\flash_loader\RZ_RSK_SerialFlash.flash</loader>
     <range>CODE 0x18080000 0x1bffffff</range>
     <rel_offset>0xe8000000</rel_offset>
-    <args>
---dualmem
+    <args>--dualmem
 --page
 0
    </args>

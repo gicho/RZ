@@ -34,11 +34,11 @@
 *                 21.03.2014 2.00
 *******************************************************************************/
     NAME APPLICATION_SIGNATURE_S
-    SECTION APPLICATION_SIGNATURE:DATA(4)
+    SECTION APPLICATION_SIGNATURE:CONST:ROOT(4)
     ARM
 
 application_signature:
-    DC8 "0123456789ABCDEF"
+    DC8 '0123456789ABCDEF',0
 
     END
 

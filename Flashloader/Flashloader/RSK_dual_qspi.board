@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<flash_board>
+  <pass>
+    <loader>$PROJ_DIR$\Flashloader\Flashloader_dual_SerialFlash.flash</loader>
+    <range>CODE 0x18080000 0x19ffffff</range>
+    <rel_offset>0xe8000000</rel_offset>
+    <args>--dualmem</args>
+  </pass>
+</flash_board>
+
+

@@ -17,15 +17,15 @@
         <debug>1</debug>
         <option>
           <name>ExePath</name>
-          <state>Dual_QSPI_Debug\Exe</state>
+          <state>.Dual_QSPI_Debug\Exe</state>
         </option>
         <option>
           <name>ObjPath</name>
-          <state>Dual_QSPI_Debug\Obj</state>
+          <state>.Dual_QSPI_Debug\Obj</state>
         </option>
         <option>
           <name>ListPath</name>
-          <state>Dual_QSPI_Debug\List</state>
+          <state>.Dual_QSPI_Debug\List</state>
         </option>
         <option>
           <name>GEndianMode</name>
@@ -982,15 +982,15 @@
         <debug>1</debug>
         <option>
           <name>ExePath</name>
-          <state>Single_QSPI_Debug\Exe</state>
+          <state>.Single_QSPI_Debug\Exe</state>
         </option>
         <option>
           <name>ObjPath</name>
-          <state>Single_QSPI_Debug\Obj</state>
+          <state>.Single_QSPI_Debug\Obj</state>
         </option>
         <option>
           <name>ListPath</name>
-          <state>Single_QSPI_Debug\List</state>
+          <state>.Single_QSPI_Debug\List</state>
         </option>
         <option>
           <name>GEndianMode</name>

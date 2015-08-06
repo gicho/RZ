@@ -63,6 +63,7 @@ Macro definitions
 
 #ifdef __GNUC__
 
+#define __isb() __asm__("isb")
 #define SOFT_DELAY __asm__("nop")
 #define EXEC_RAM 
 
