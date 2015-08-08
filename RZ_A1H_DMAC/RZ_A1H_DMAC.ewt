@@ -3205,6 +3205,9 @@
         <name>$PROJ_DIR$\compiler_specific\src\gnu_io.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\compiler_specific\src\l1_cache.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\compiler_specific\src\l2_cache.c</name>
       </file>
       <file>

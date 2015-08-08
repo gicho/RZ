@@ -39,14 +39,14 @@
 	.text
 	.code 32
 
-	.global L1CachesEnable
+	.global L1_CachesEnable_asm
 
-	.func L1CachesEnable
-L1CachesEnable:
+	.func L1_CachesEnable_asm
+L1_CachesEnable_asm:
 
-/******************************************************************************/
-/* Enable caches                                                              */
-/******************************************************************************/
+/******************************************************************************
+* Enable caches                                                              *
+******************************************************************************/
 	MRC  p15, 0, r0, c1, c0, 0			    /* Read CP15 register 1 */
 	ORR  r0, r0, #(0x1 << 12)			    /* Enable I Cache */
 	ORR  r0, r0, #(0x1 << 11)				/* Enable program flow prediction */
@@ -66,4 +66,6 @@ L1CachesEnable:
 
 	.endfunc
 	.align 4
+
 	.end
+

@@ -218,26 +218,19 @@ void PowerON_Reset (void)
 
 #endif
 
-
     /* INTC setting */
     R_INTC_Init();
 
     // invalidate all L2 and L1
     L2CacheInvalidate();
-    flush_cache();
-    __isb();
+    L1D_CacheInvalidate();
 
     /* Enable L1 and L2 */
     L2CacheInit();
-    L1CachesEnable();
+    L1_CachesEnable();
 
     __enable_irq();
     __enable_fiq();
-
-//    /* ==== Initialise Terminal ==== */
-//    /* SCIF 2ch */
-//    /* P1=66.67MHz CKS=0 SCBRR=17 Bit rate error=0.46% => Baud rate=115200bps */
-//    IoInitScif2();
 
     main();
 

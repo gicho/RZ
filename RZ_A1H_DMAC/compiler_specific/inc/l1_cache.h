@@ -24,11 +24,28 @@
 #ifndef _L1_CACHE_H_
 #define _L1_CACHE_H_
 
+#include <stdint.h>
 #include "assembler_macros.h"
 
-extern void L1CachesEnable(void);
-extern void flush_cache(void);
-extern void dcache_clean_all();
+extern void L1_CachesEnable(void);	/* enables all caches (I,D), branch prediction, D-Side prefetch */
+
+extern void L1_D_CacheDisable(void);
+extern void L1_D_CacheEnsable(void);
+
+extern void L1D_CacheInvalidate(void);
+extern void L1D_CacheClean(void);
+extern void L1D_CacheCleanAndInvalidate(void);
+
+extern void L1_I_CacheInvalidate(void);
+extern void L1_I_CacheDisable(void);
+extern void L1_I_CacheEnable(void);
+
+extern void L1D_PrefetchDisable(void);
+extern void L1D_PrefetchEnable(void);
+
+extern void L1_DisableBranchPrediction(void);
+extern void L1_EnableBranchPrediction(void);
+
 
 
 /*******************************************************************************
@@ -47,7 +64,7 @@ extern void dcache_clean_all();
  *	invalidate any old data still in L1 cache
  *
 ********************************************************************************/
-extern void dma_buffer_issue(uint32_t start, uint32_t size, uint32_t dir);
+extern void dma_buffer_issue(const uint32_t start, const uint32_t size, const uint32_t dir);
 
 
 /*******************************************************************************
@@ -67,7 +84,7 @@ extern void dma_buffer_issue(uint32_t start, uint32_t size, uint32_t dir);
  *	invalidate any old data still in L1 cache
  *
 ********************************************************************************/
-extern void dma_buffer_reclaim(uint32_t start, uint32_t size, uint32_t dir);
+extern void dma_buffer_reclaim(const uint32_t start, const uint32_t size, const uint32_t dir);
 
 #endif /* _L1_CACHE_H_ */
 

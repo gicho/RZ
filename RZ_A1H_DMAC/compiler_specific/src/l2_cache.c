@@ -27,12 +27,7 @@
 #include "l2_cache.h"
 #include "l2_cache_pl310.h"
 
-#define min(a, b) (((a) < (b)) ? (a) : (b))
 
-#define L2CacheController 0x3FFFF000
-#define CACHE_LINE_SIZE	32
-#define L2CacheWayMask ((1 << 8) - 1)
-#define L2CacheSize 0x20000l
 
 static inline void L2CacheSync(void)
 {
@@ -49,13 +44,13 @@ static inline void L2CacheInvalidateLine(unsigned long addr)
 	(*(volatile uint32_t *)(L2CacheController + L2CACHE_INV_LINE_PA_REG)) = addr;
 }
 
-static inline void L2CacheFlushLine(unsigned long addr)
+static inline void L2CacheCleanAndInvalidateLine(unsigned long addr)
 {
 	(*(volatile uint32_t *)(L2CacheController + L2CACHE_CLEAN_INV_LINE_PA_REG)) = addr;
 }
 
 
-void L2CacheFlush(void)
+void L2CacheCleanAndInvalidate(void)
 {
 	/* clean all ways */
 	__disable_irq();  	// added this to make sure there are no other tasks writing to the control registers
@@ -102,13 +97,13 @@ void L2CacheInvalidateRange(unsigned long start, unsigned long end)
         
         if (start & (CACHE_LINE_SIZE - 1)) {
 		start &= (unsigned long)~(CACHE_LINE_SIZE - 1);
-		L2CacheFlushLine(start);
+		L2CacheCleanAndInvalidateLine(start);
 		start += CACHE_LINE_SIZE;
 	}
 
 	if (end & (CACHE_LINE_SIZE - 1)) {
 		end &= (unsigned long)~(CACHE_LINE_SIZE - 1);
-		L2CacheFlushLine(end);
+		L2CacheCleanAndInvalidateLine(end);
 	}
 
 	while (start < end) {
@@ -141,10 +136,10 @@ void L2CacheCleanRange(unsigned long start, unsigned long end)
 	L2CacheSync();
 }
 
-void L2CacheFlushRange(unsigned long start, unsigned long end)
+void L2CacheCleanAndInvalidateRange(unsigned long start, unsigned long end)
 {
 	if ((end - start) >= L2CacheSize) {
-		L2CacheFlush();
+		L2CacheCleanAndInvalidate();
 		return;
 	}
 
@@ -153,7 +148,7 @@ void L2CacheFlushRange(unsigned long start, unsigned long end)
 		unsigned long blk_end = start + min(end - start, 4096UL);
 
 		while (start < blk_end) {
-			L2CacheFlushLine(start);
+			L2CacheCleanAndInvalidateLine(start);
 			start += CACHE_LINE_SIZE;
 		}
 
@@ -163,6 +158,6 @@ void L2CacheFlushRange(unsigned long start, unsigned long end)
 
 void L2CacheDisable(void)
 {
-	L2CacheFlush();
+	L2CacheCleanAndInvalidate();
 	(*(volatile uint32_t *) ( L2CacheController + L2CACHE_CTRL_REG)) = 0;
 }

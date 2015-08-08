@@ -39,7 +39,7 @@
     SECTION L1_CACHE_INIT:CODE(4)
     ARM
 
-    PUBLIC L1CachesEnable
+    PUBLIC L1_CachesEnable_asm
     PUBLIC
 
 /* Standard definitions of CPSR bits */
@@ -50,7 +50,7 @@ C_BIT EQU 0x4
 A_BIT EQU 0x2
 M_BIT EQU 0x1
 
-L1CachesEnable:
+L1_CachesEnable_asm:
 
 /******************************************************************************/
 /* Enable caches                                                              */

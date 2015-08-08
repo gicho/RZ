@@ -115,11 +115,18 @@
 #define L2CACHE_CTRL_EN				1
 #define L2CACHE_WAY_SIZE_SHIFT		3
 
+#define min(a, b) (((a) < (b)) ? (a) : (b))
+
+#define L2CacheController 0x3FFFF000
+#define CACHE_LINE_SIZE	32
+#define L2CacheWayMask ((1 << 8) - 1)
+#define L2CacheSize 0x20000l
+
 
 extern void L2CacheInit(void);
 
-void L2CacheFlush(void);
-void L2CacheFlushRange(unsigned long start, unsigned long end);
+void L2CacheCleanAndInvalidate(void);
+void L2CacheCleanAndInvalidateRange(unsigned long start, unsigned long end);
 
 void L2CacheClean(void);
 void L2CacheCleanRange(unsigned long start, unsigned long end);

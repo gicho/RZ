@@ -1328,7 +1328,7 @@ int main(void)
     VbarSet(VectorTableEntry);  
 
     /* Initial setting of the level 1 cache */
-    L1CachesEnable();
+    L1_CachesEnable();
     L2CacheInit();
 
     /* Enable interrupts */

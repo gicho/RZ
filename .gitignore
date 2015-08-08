@@ -18,3 +18,4 @@ Exe
 .Debug_QSPIlinker
 .Debuglinker
 *.trace
+*.lst
