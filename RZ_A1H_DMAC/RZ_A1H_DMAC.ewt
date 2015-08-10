@@ -3199,6 +3199,9 @@
     <group>
       <name>src</name>
       <file>
+        <name>$PROJ_DIR$\compiler_specific\src\access.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\compiler_specific\src\copy_section_to_ram.c</name>
       </file>
       <file>

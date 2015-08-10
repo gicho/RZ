@@ -310,7 +310,11 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state></state>
+          <state>$PROJ_DIR$\inc</state>
+          <state>$PROJ_DIR$\inc\iodefines</state>
+          <state>$PROJ_DIR$\inc\iobitmasks</state>
+          <state>$PROJ_DIR$\qspi_controller_driver\inc</state>
+          <state>$PROJ_DIR$\compiler_specific\inc</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -572,7 +576,7 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state></state>
+          <state>$PROJ_DIR$\compiler_specific\inc</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -2948,6 +2952,9 @@
     </group>
     <group>
       <name>src</name>
+      <file>
+        <name>$PROJ_DIR$\compiler_specific\src\access.c</name>
+      </file>
       <file>
         <name>$PROJ_DIR$\compiler_specific\src\copy_section_to_ram.c</name>
       </file>

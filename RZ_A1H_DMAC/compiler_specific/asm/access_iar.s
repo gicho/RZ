@@ -37,23 +37,23 @@
     SECTION ACCESS_IAR:CODE(4)
     ARM
        
-    PUBLIC enable_neon_vfp_access_priv
-    PUBLIC enable_neon_vfp_access_full
-    PUBLIC disable_neon_vfp_access
-    PUBLIC neon_vfp_on
-    PUBLIC neon_vfp_off
-    PUBLIC enable_mmu
-    PUBLIC disable_mmu
-    PUBLIC VbarSet
-    PUBLIC SetLowVectors    
-    PUBLIC SetHighVectors
+    PUBLIC enable_neon_vfp_access_priv_asm
+    PUBLIC enable_neon_vfp_access_full_asm
+    PUBLIC disable_neon_vfp_access_asm
+    PUBLIC neon_vfp_on_asm
+    PUBLIC neon_vfp_off_asm
+    PUBLIC enable_mmu_asm
+    PUBLIC disable_mmu_asm
+    PUBLIC VbarSet_asm
+    PUBLIC SetLowVectors_asm  
+    PUBLIC SetHighVectors_asm
 
 /* ========================================================================== */
 /* Enable access to NEON/VFP by enabling access to Coprocessors 10 and 11.    */
 /* Enables Privileged Access i.e. in both privileged and non privileged modes */
 /* ========================================================================== */
 
-enable_neon_vfp_access_priv:
+enable_neon_vfp_access_priv_asm:
     MRC  p15, 0, r0, c1, c0, 2 /* Read Coprocessor Access Register (CPACR)    */
     ORR  r0, r0, #(0x5 << 20)  /* Enable access to CP 10 & 11                 */
     BIC  r0, r0, #(3 << 30)    /* Clear ASEDIS/D32DIS if set                  */
@@ -66,9 +66,9 @@ enable_neon_vfp_access_priv:
 /* Enables Full Access i.e. in both privileged and non privileged modes       */
 /* ========================================================================== */
 
-enable_neon_vfp_access_full:
+enable_neon_vfp_access_full_asm:
     MRC  p15, 0, r0, c1, c0, 2 /* Read Coprocessor Access Register (CPACR)    */
-    ORR  r0, r0, #(0xF << 22)  /* Enable access to CP 10 & 11                 */
+    ORR  r0, r0, #(0xF << 20)  /* Enable access to CP 10 & 11                 */
     BIC  r0, r0, #(3 << 30)    /* Clear ASEDIS/D32DIS if set                  */
     MCR  p15, 0, r0, c1, c0, 2 /* Write Coprocessor Access Register (CPACR)   */
     ISB
@@ -78,7 +78,7 @@ enable_neon_vfp_access_full:
 /* Disable access to NEON/VFP by enabling access to Coprocessors 10 and 11.   */
 /* ========================================================================== */
 
-disable_neon_vfp_access:
+disable_neon_vfp_access_asm:
     MRC  p15, 0, r0, c1, c0, 2 /* Read Coprocessor Access Register (CPACR)    */
     BIC  r0, r0, #(0xF << 20)  /* Disable access to CP 10 & 11                */
     MCR  p15, 0, r0, c1, c0, 2 /* Write Coprocessor Access Register (CPACR)   */
@@ -88,7 +88,7 @@ disable_neon_vfp_access:
 /* ========================================================================== */
 /*  Switch on the VFP and NEON hardware                                       */
 /* ========================================================================== */
-neon_vfp_on:
+neon_vfp_on_asm:
     MOV  r0, #0x40000000
     VMSR FPEXC, r0                        /* Write FPEXC register, EN bit set */
     ISB
@@ -97,7 +97,7 @@ neon_vfp_on:
 /* ========================================================================== */
 /*  Switch off the VFP and NEON hardware                                      */
 /* ========================================================================== */
-neon_vfp_off:
+neon_vfp_off_asm:
     MOV  r0, #0x00000000
     VMSR FPEXC, r0                      /* Write FPEXC register, EN bit clear */
     ISB
@@ -115,7 +115,7 @@ M_BIT EQU 0x1
 /* Enable MMU                                                                 */
 /* Leaving the caches disabled.                                               */
 /* ========================================================================== */
-enable_mmu:
+enable_mmu_asm:
     /* Read CP15 SCTLR */
     MRC  p15, 0, r0, c1, c0, 0
 
@@ -143,7 +143,7 @@ enable_mmu:
 /* Disable MMU                                                                */
 /* Leaving the caches disabled.                                               */
 /* ========================================================================== */
-disable_mmu:
+disable_mmu_asm:
     /* Read CP15 SCTLR */
     MRC  p15, 0, r0, c1, c0, 0
 
@@ -169,7 +169,7 @@ disable_mmu:
 /* ========================================================================== */
 /* VbarSet                                                                    */
 /* ========================================================================== */
-VbarSet:
+VbarSet_asm:
 /* ========================================================================== */
 /* Reconfigure Vector Base Address Register to point to application's vector table    */
 /* ========================================================================== */
@@ -182,7 +182,7 @@ VbarSet:
 /*      0 = Normal (Low address) Vectors                                      */
 /*      1 = High (High address) Vectors                                       */
 /* ========================================================================== */
-SetLowVectors:
+SetLowVectors_asm:
     /* Read CP15 SCTLR */
     MRC  p15, 0, r0, c1, c0, 0
 
@@ -200,7 +200,7 @@ SetLowVectors:
 /*      0 = Normal (Low address) Vectors                                      */
 /*      1 = High (High address) Vectors                                       */
 /* ========================================================================== */
-SetHighVectors:
+SetHighVectors_asm:
     /* Read CP15 SCTLR */
     MRC  p15, 0, r0, c1, c0, 0
 

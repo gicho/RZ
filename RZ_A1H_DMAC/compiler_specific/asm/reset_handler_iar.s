@@ -124,7 +124,7 @@ goToSleep:
 #endif
 
 /* ========================================================================= */
-/* Cache and MMU maintenance    					     */
+/* Cache and MMU maintenance    											 */
 /* ========================================================================= */
 /* Disable cache and MMU just to be sure */
 
@@ -146,24 +146,39 @@ goToSleep:
 
     /* Write value back to CP15 SCR */
     MCR  p15, 0, r0, c1, c0, 0
-
-    MOV  r0,#0
-/* ========================================================================= */
-/* Invalidate instruction cache						     */
-/* ========================================================================= */
-    MCR  p15, 0, r0, c7, c5, 0
+	ISB
 
 /* ========================================================================= */
-/*  Branch prediction maintenance, Invalidate branch prediction array		 */
+/* Invalidate instruction cache												 */
+/* ========================================================================= */
+	MOV  r0,#0
+	MCR  p15, 0, r0, c7, c5, 0
+/* ========================================================================= */
+/*  Invalidate branch prediction array		 								 */
 /* ========================================================================= */
     MCR  p15, 0, r0, c7, c5, 6
+/* ========================================================================= */
+/* Invalidate TLB															 */
+/* ========================================================================= */
+  	MCR  p15, 0, r0, c8, c7, 0	/* Invalidate entire unified TLB */
+   	MCR  p15, 0, r0, c8, c6, 0	/* Invalidate entire data TLB*/
+  	MCR  p15, 0, r0, c8, c5, 0	/* Invalidate entire instruction TLB*/
+	ISB
+/* ========================================================================= */
+/* Enable instruction cache & branch prediction							     */
+/* ========================================================================= */
+    MRC  p15, 0, r0, c1, c0, 0
+    ORR  r0, r0, #(I_BIT)
+    ORR  r0, r0, #(Z_BIT)
+    MCR  p15, 0, r0, c1, c0, 0
+	ISB
 
 /* ========================================================================= */
-/*  TLB maintenance, Invalidate Unified Data and Instruction TLBs            */
+/* Setup domain control register - Enable all domains to client mode         */
 /* ========================================================================= */
-    MCR  p15, 0, r0, c8, c7, 0
-
-    ISB	/* Sync barrier */
+	MRC  p15, 0, r0, c3, c0, 0     /* Read Domain Access Control Register    */
+	LDR  r0, =0x55555555    /* Initialize every domain entry to b01 (client) */
+	MCR  p15, 0, r0, c3, c0, 0       /* Write Domain Access Control Register */
 
 /* ========================================================================= */
 /* Clock Setting							     */
@@ -311,9 +326,9 @@ frqcr2_wait:
 /* Enables Full Access i.e. in both privileged and non privileged modes      */
 /* ========================================================================= */
     MRC  p15, 0, r0, c1, c0, 2   /* Read Coprocessor Access Control Register */
-/* TODO check if this is correct */
-    ORR  r0, r0, #(0xF << 20)                 /* Enable access to CP 10 & 11 */
-    MCR  p15, 0, r0, c1, c0, 2  /* Write Coprocessor Access Control Register */
+    ORR  r0, r0, #(0xF << 20)    /* Enable access to CP 10 & 11 */
+    BIC  r0, r0, #(3 << 30)      /* Clear ASEDIS/D32DIS if set */
+    MCR  p15, 0, r0, c1, c0, 2   /* Write Coprocessor Access Control Register */
     ISB
 
 /* ========================================================================= */

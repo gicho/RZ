@@ -46,6 +46,7 @@ extern void L1D_PrefetchEnable(void);
 extern void L1_DisableBranchPrediction(void);
 extern void L1_EnableBranchPrediction(void);
 
+extern void VbarSet(uint32_t address);
 
 
 /*******************************************************************************

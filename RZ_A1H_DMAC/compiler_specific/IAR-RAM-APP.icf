@@ -222,6 +222,12 @@ define block RAM_CODE_IN_ROM { section .textrw_init };
 
 do not initialize  { section .noinit };
 do not initialize  { section MMU_TT };
+do not initialize  { 
+section .DMA_BUFFER_IRAM ,
+section .DMA_BUFFER_SDRAM,
+section .DMA_BUFFER_CACHED_IRAM, 
+section .DMA_BUFFER_CACHED_SDRAM
+};
 initialize manually { section .data };
 initialize manually { section .bss };
 initialize manually { section .textrw };
@@ -250,6 +256,12 @@ place in RAM0L_region { block HEAP };
   block FIQ_STACK,
   block UND_STACK,
   block ABT_STACK }; 
+
+place in RAM1L_MIRROR_region { section .DMA_BUFFER_IRAM };
+place in SDRAM_MIRROR_region { section .DMA_BUFFER_SDRAM };
+place in RAM1U_region { section .DMA_BUFFER_CACHED_IRAM }; 
+place in SDRAM_region { section .DMA_BUFFER_CACHED_SDRAM };
+  
   
 /* END OF FILE */  
 

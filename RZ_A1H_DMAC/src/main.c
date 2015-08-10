@@ -79,6 +79,7 @@ Includes   <System Includes> , "Project Includes"
 #include "l1_cache.h"
 #include "l2_cache.h"
 
+#include "access.h"
 #include "assembler_macros.h"
 
 /******************************************************************************
@@ -1328,6 +1329,7 @@ int main(void)
     VbarSet(VectorTableEntry);  
 
     /* Initial setting of the level 1 cache */
+    L1D_CacheInvalidate();
     L1_CachesEnable();
     L2CacheInit();
 
@@ -1429,11 +1431,11 @@ int main(void)
     // tests for internal ram only
 #if 1
 
+    Display_On();
     Clear_Display(COL_WHITE);
     Display_Image (&RGB888_LOGO[0], 128, 24, 0, 104);
     Display_LCD(0, (uint8_t *)" RSK+RZA1H");
     Display_LCD(1, (uint8_t *)" DMAC L1 cache test");
-    Display_On();
 
     /* uncached memory */
     dmac_uncached_uncached();
