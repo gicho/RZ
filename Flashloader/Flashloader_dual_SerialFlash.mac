@@ -50,13 +50,11 @@ __var Reg;
 execUserFlashInit()  // Called by debugger before loading flash loader in RAM.
 {
   __message "----- Prepare hardware for flashloader -----\n";
-  __hwReset(0);
   setup();
 }
 
 execUserPreload()
 {
   __message "----- Prepare hardware for debug -----\n";
-  __hwReset(0);
   setup();
 }
