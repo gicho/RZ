@@ -26,4 +26,4 @@ Exe
 .Debug_DUAL_QSPIlinker
 .Debug_SINGLE_QSPIlinker
 .DebugfromRAMlinker
-*.ewt
+
