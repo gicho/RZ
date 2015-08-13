@@ -1,0 +1,7 @@
+execUserReset()
+{
+  __message "reset.mac: Reset and run to 0x18000000.\n";
+  __message "reset.mac: This mechanism executes the QSPI boot loader.\n";
+  
+  __hwResetRunToBp(0, 0x18000000, 0);
+}

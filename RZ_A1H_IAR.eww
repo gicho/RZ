@@ -2,9 +2,6 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\Flashloader\Flashloader.ewp</path>
-  </project>
-  <project>
     <path>$WS_DIR$\RZ_A1H_DMAC\RZ_A1H_DMAC.ewp</path>
   </project>
   <project>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<workspace>
+  <project>
+    <path>$WS_DIR$\Flashloader_RZL\Flashloader_RZL.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\RZ_A1L_DMAC\RZ_A1L_DMAC.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\RZ_A1L_QSPI_LOADER\RZ_A1L_QSPI_LOADER.ewp</path>
+  </project>
+  <batchBuild/>
+</workspace>
+
+

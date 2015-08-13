@@ -1,0 +1,121 @@
+setup()
+{
+  __var Reg;
+  __hwReset(0);
+
+  // Enable I Cache
+  // Disable MMU and enable ICache
+  Reg = __jtagCP15ReadReg(1, 0, 0, 0);
+  Reg &= 0xFFFFFFFA;
+  Reg |= 1<<12;
+  __jtagCP15WriteReg(1, 0, 0, 0, Reg);
+
+  __writeMemory32(0x00000001, 0x3FFFFF80, "Memory");     // L2CC_POWER_CTRL
+  __readMemory32(0x3FFFFF80, "Memory");
+
+  __writeMemory16(0x0035, 0xFCFE0010, "Memory");     // FRQCR
+
+  // Turn on clock for SPI
+  Reg = __readMemory8(0xFCFE0438, "Memory");       // STBCR9.MSTP93
+  Reg &= 0xEF;
+  __writeMemory8(Reg, 0xFCFE0438, "Memory"); 
+
+  ////////////////////////////////////////////////////
+  // Configure PORTS for SPI (serial flash 1)
+  ////////////////////////////////////////////////////
+  // P4.2 SPBIO20
+  // P4.3 SPBIO30
+  // P4.4 SPBCLK0
+  // P4.5 SPBSSL0
+  // P4.6 SPBIO00 / SPBM00
+  // P4.7 SPBIO10 / SPBMI0  
+  
+  // see table 41.6 of hw manual rev.2 (alternative mode selection)
+  // PMC4 2-7 -> set to 1 (alternative mode)
+  // when PMC set to 1, PIBCn is ignored
+  Reg = __readMemory16(0xFCFE3410, "Memory");
+  Reg |= 0x00FC;
+  __writeMemory16(Reg, 0xFCFE3410, "Memory"); 
+
+  // PFCAE4 2-7 -> set to 0 
+  Reg = __readMemory16(0xFCFE3A10, "Memory"); 
+  Reg &= 0xFF03; 
+  __writeMemory16(Reg, 0xFCFE3A10, "Memory"); 
+
+  // PFCE4 2-7 -> set to 0  
+  Reg = __readMemory16(0xFCFE3610,"Memory"); 
+  Reg &= 0xFF03; 
+  __writeMemory16(Reg, 0xFCFE3610,"Memory"); 
+  
+  // PFC4 2-7 -> alt mode, 2nd alternative
+  Reg = __readMemory16(0xFCFE3510, "Memory");
+  Reg |= 0x00FC; 
+  __writeMemory16(Reg, 0xFCFE3510, "Memory");  
+  
+  // PIPC4 2-7 -> (direct io control)
+  // When PIPC set to 1, PMn ignored
+  Reg = __readMemory16(0xFCFE7210, "Memory");
+  Reg |= 0x00FC;
+  __writeMemory16(Reg, 0xFCFE7210, "Memory");     
+  
+  ////////////////////////////////////////////////////
+  // Configure PORTS for SPI (serial flash 2)
+  ////////////////////////////////////////////////////
+  // P3.10 SPBIO01 / SPBM01
+  // P3.11 SPBIO11 / SPBMI1
+  // P3.12 SPBIO21
+  // P3.13 SPBIO31
+
+  // see table 41.6 of hw manual rev.2 (alternative mode selection)
+  // PMC3 10-13 -> set to 1 (alternative mode)
+  // when PMC set to 1, PIBCn is ignored
+  Reg = __readMemory16(0xFCFE340C, "Memory");
+  Reg |= 0x3C00;
+  __writeMemory16(Reg, 0xFCFE340C, "Memory"); 
+  
+  // PFCAE3 10-13 -> set to 0 
+  Reg = __readMemory16(0xFCFE3A0C, "Memory"); 
+  Reg &= 0xC3FF; 
+  __writeMemory16(Reg, 0xFCFE3A0C, "Memory");   
+
+  // PFCE3 10-13 -> set to 0  
+  Reg = __readMemory16(0xFCFE360C,"Memory"); 
+  Reg &= 0xC3FF; 
+  __writeMemory16(Reg, 0xFCFE360C,"Memory"); 
+  
+  // PFC3 10-13 -> alt mode, 2nd alternative
+  Reg = __readMemory16(0xFCFE350C, "Memory");
+  Reg |= 0x3C00; 
+  __writeMemory16(Reg, 0xFCFE350C, "Memory");  
+  
+  // PIPC3 10-13 -> (direct io control)
+  // When PIPC set to 1, PMn ignored
+  Reg = __readMemory16(0xFCFE720C, "Memory");
+  Reg |= 0x3C00;
+  __writeMemory16(Reg, 0xFCFE720C, "Memory"); 
+
+  // Configure SPI for SPI mode
+  __writeMemory32(0x81AA4020, 0x3FEFA000, "Memory"); // SPI_CMNCR 1-memory, CPHA=0, CPOL=0, SFDE=1
+
+  // Set Bit Rate
+  __writeMemory32(0x00000003, 0x3FEFA008, "Memory"); // SPI_SPBCR SPBR=0, BRDV=3
+
+  // Flush Read Cache
+  Reg = __readMemory32(0x3FEFA00C, "Memory");        // Read SPI_DRCR_0
+  Reg |= 0x00000200;                                 // Set RCF bit
+  __writeMemory32(Reg, 0x3FEFA00C, "Memory");        // Set SPI_DRCR_0
+  __readMemory32(0x3FEFA00C, "Memory");
+
+}
+
+execUserFlashInit()  // Called by debugger before loading flash loader in RAM.
+{
+  __message "----- Prepare RZL hardware for flashloader -----\n";
+  setup();
+}
+
+execUserPreload()
+{
+  __message "----- Prepare RZL hardware for debug -----\n";
+  setup();
+}

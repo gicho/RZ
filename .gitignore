@@ -20,3 +20,10 @@ Exe
 *.trace
 *.lst
 *.i
+.Debug-SINGLE-QSPI
+.Debug-DUAL-QSPI
+*.out
+.Debug_DUAL_QSPIlinker
+.Debug_SINGLE_QSPIlinker
+.DebugfromRAMlinker
+*.ewt
