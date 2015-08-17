@@ -49,35 +49,26 @@ MEMORY
 	RETRAM3 (rwx)   : ORIGIN = 0x20010000, LENGTH = 0x00010000  /* Retention ram page 3 ( 64KB) H'20010000 to H'2001FFFF */
 	
 	RETRAM (rwx)	: ORIGIN = 0x20000000, LENGTH = 0x00020000	/* Complete range of retention RAM */
-	
-	/* Internal RAM memory map */
-	RAM0L (rwx)   : ORIGIN = 0x20020000, LENGTH = 0x000E0000  /* Page 0 Lower bank ( 896KB) H'20020000 to H'200FFFFF */
-	RAM1L (rwx)   : ORIGIN = 0x20100000, LENGTH = 0x00100000  /* Page 1 Lower bank (1024KB) H'20100000 to H'201FFFFF */
-	RAM2L (rwx)   : ORIGIN = 0x20200000, LENGTH = 0x00100000  /* Page 2 Lower bank (1024KB) H'20200000 to H'202FFFFF */
-	RAM3L (rwx)   : ORIGIN = 0x20300000, LENGTH = 0x00100000  /* Page 3 Lower bank (1024KB) H'20300000 to H'203FFFFF */
-	RAM4L (rwx)   : ORIGIN = 0x20400000, LENGTH = 0x00100000  /* Page 4 Lower bank (1024KB) H'20400000 to H'204FFFFF */
-	RAM0U (rwx)   : ORIGIN = 0x20500000, LENGTH = 0x00100000  /* Page 0 Upper bank (1024KB) H'20500000 to H'205FFFFF */
-	RAM1U (rwx)   : ORIGIN = 0x20600000, LENGTH = 0x00100000  /* Page 1 Upper bank (1024KB) H'20600000 to H'206FFFFF */
-	RAM2U (rwx)   : ORIGIN = 0x20700000, LENGTH = 0x00100000  /* Page 2 Upper bank (1024KB) H'20700000 to H'207FFFFF */
-	RAM3U (rwx)   : ORIGIN = 0x20800000, LENGTH = 0x00100000  /* Page 3 Upper bank (1024KB) H'20800000 to H'208FFFFF */
-	RAM4U (rwx)   : ORIGIN = 0x20900000, LENGTH = 0x00100000  /* Page 4 Upper bank (1024KB) H'20900000 to H'209FFFFF */
 
-	RAM0L_MIRROR (rwx)   : ORIGIN = 0x60020000, LENGTH = 0x000E0000  /* Page 0 Lower bank ( 896KB) H'60020000 to H'600FFFFF */
-	RAM0U_MIRROR (rwx)   : ORIGIN = 0x60100000, LENGTH = 0x00100000  /* Page 0 Upper bank (1024KB) H'60100000 to H'601FFFFF */
-	RAM1U_MIRROR (rwx)   : ORIGIN = 0x60200000, LENGTH = 0x00100000  /* Page 1 Upper bank (1024KB) H'60200000 to H'602FFFFF */
-	RAM1L_MIRROR (rwx)   : ORIGIN = 0x60300000, LENGTH = 0x00100000  /* Page 1 Lower bank (1024KB) H'60300000 to H'603FFFFF */
-	RAM2L_MIRROR (rwx)   : ORIGIN = 0x60400000, LENGTH = 0x00100000  /* Page 2 Lower bank (1024KB) H'60400000 to H'604FFFFF */
-	RAM2U_MIRROR (rwx)   : ORIGIN = 0x60500000, LENGTH = 0x00100000  /* Page 2 Upper bank (1024KB) H'60500000 to H'605FFFFF */
-	RAM3U_MIRROR (rwx)   : ORIGIN = 0x60600000, LENGTH = 0x00100000  /* Page 3 Upper bank (1024KB) H'60600000 to H'606FFFFF */
-	RAM3L_MIRROR (rwx)   : ORIGIN = 0x60700000, LENGTH = 0x00100000  /* Page 3 Lower bank (1024KB) H'60700000 to H'607FFFFF */
-	RAM4L_MIRROR (rwx)   : ORIGIN = 0x60800000, LENGTH = 0x00100000  /* Page 4 Lower bank (1024KB) H'60800000 to H'608FFFFF */
-	RAM4U_MIRROR (rwx)   : ORIGIN = 0x60900000, LENGTH = 0x00100000  /* Page 4 Upper bank (1024KB) H'60900000 to H'609FFFFF */
+
+	/* Internal RAM memory map */
+	RAM0 (rwx)   : ORIGIN = 0x20020000, LENGTH = 0x00060000  /* Page 0 bank (384KB) H'20020000 to H'2007FFFF */
+	RAM1 (rwx)   : ORIGIN = 0x20080000, LENGTH = 0x00080000  /* Page 1 bank (512KB) H'20080000 to H'200FFFFF */
+	RAM2 (rwx)   : ORIGIN = 0x20100000, LENGTH = 0x00080000  /* Page 2 bank (512KB) H'20100000 to H'2017FFFF */
+	RAM3 (rwx)   : ORIGIN = 0x20180000, LENGTH = 0x00080000  /* Page 3 bank (512KB) H'20180000 to H'201FFFFF */
+	RAM4 (rwx)   : ORIGIN = 0x20200000, LENGTH = 0x00100000  /* Page 4 bank (  1MB) H'20200000 to H'202FFFFF */
+
+	RAM0_MIRROR (rwx)   : ORIGIN = 0x60020000, LENGTH = 0x00060000  /* Page 0 bank (384KB) H'60020000 to H'6007FFFF */
+	RAM1_MIRROR (rwx)   : ORIGIN = 0x60080000, LENGTH = 0x00080000  /* Page 1 bank (512KB) H'60080000 to H'600FFFFF */
+	RAM2_MIRROR (rwx)   : ORIGIN = 0x60100000, LENGTH = 0x00080000  /* Page 2 bank (512KB) H'60100000 to H'6017FFFF */
+	RAM3_MIRROR (rwx)   : ORIGIN = 0x60180000, LENGTH = 0x00080000  /* Page 3 bank (512KB) H'60180000 to H'601FFFFF */
+	RAM4_MIRROR (rwx)   : ORIGIN = 0x60200000, LENGTH = 0x00100000  /* Page 4 bank (  1MB) H'60200000 to H'602FFFFF */
 	
 	SDRAM (rwx)   		: ORIGIN = 0x08000000, LENGTH = 0x02000000  /* SDRAM 32MB attached to CS2 H'08000000 to H'09FFFFFF */
 	SDRAM_MIRROR (rwx)  : ORIGIN = 0x48000000, LENGTH = 0x02000000  /* SDRAM 32MB attached to CS2 H'48000000 to H'49FFFFFF */
 
-	RAM (rwx)		: ORIGIN = 0x20020000, LENGTH = 0x009E0000	/* Complete range of always-on RAM */
-	RAM_MIRROR (rwx): ORIGIN = 0x60020000, LENGTH = 0x009E0000	/* Complete range of always-on RAM mirror area */
+	RAM (rwx)		: ORIGIN = 0x20020000, LENGTH = 0x002E0000	/* Complete range of always-on RAM */
+	RAM_MIRROR (rwx): ORIGIN = 0x60020000, LENGTH = 0x002E0000	/* Complete range of always-on RAM mirror area */
 	
 	/* QSPI ROM attached to H'18000000, 2 chips of 0x4000000 size each (64 Mb) */ 
 	/* Total addressable space from the QSPI internal address map is 0x18000000 to H'1BFFFFFF (64Mb page) */
@@ -92,8 +83,8 @@ PROGRAM_STACK_SIZE    = 0x8000;      /* Application stack                  */
 IRQ_STACK_SIZE	      = 0x2000;      /* IRQ mode stack                     */
 FIQ_STACK_SIZE	      = 0x2000;      /* Fast IRQ mode stack                */
 SVC_STACK_SIZE	      = 0x2000;      /* SVC mode stack                     */
-ABT_STACK_SIZE	      = 0x2000;      /* Abort mode stack                   */
-UND_STACK_SIZE	      = 0x2000;      /* Undefined mode stack               */
+ABT_STACK_SIZE	      = 0x100;      /* Abort mode stack                   */
+UND_STACK_SIZE	      = 0x100;      /* Undefined mode stack               */
 TTB_SIZE              = 0x8000;      /* Level-1 Translation Table for MMU  */
 
 SECTIONS

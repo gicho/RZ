@@ -56,7 +56,7 @@
 								<option id="com.renesas.cdt.rz.Debug.Compiler.option.debugLevel.2131989328" name="Debug Level" superClass="com.renesas.cdt.rz.Debug.Compiler.option.debugLevel" value="com.renesas.cdt.rz.Debug.Compiler.option.debugLevel.level3" valueType="enumerated"/>
 								<option id="com.renesas.cdt.rz.Debug.Compiler.option.floatingpointabi.1231987637" name="Floating-point ABI (-mfloat-abi=name)" superClass="com.renesas.cdt.rz.Debug.Compiler.option.floatingpointabi" value="com.renesas.cdt.rz.Debug.Compiler.option.floatingpointabi.hard" valueType="enumerated"/>
 								<option id="com.renesas.cdt.rz.Debug.Compiler.option.stackFramForAPCS.1637104449" name="Generate a stack frame for ARM Procedure Call Standard" superClass="com.renesas.cdt.rz.Debug.Compiler.option.stackFramForAPCS" value="true" valueType="boolean"/>
-								<option id="com.renesas.cdt.core.Compiler.option.generateListFile.827597708" superClass="com.renesas.cdt.core.Compiler.option.generateListFile" value="false" valueType="boolean"/>
+								<option id="com.renesas.cdt.core.Compiler.option.generateListFile.827597708" name="Generate list file(-Wa,-a)" superClass="com.renesas.cdt.core.Compiler.option.generateListFile" value="false" valueType="boolean"/>
 								<inputType id="%Base.Compiler.C.InputType.Id.321671044" name="C Input" superClass="%Base.Compiler.C.InputType.Id"/>
 								<inputType id="Base.Compiler.CPP.InputType.Id.982490854" name="C++ Input" superClass="Base.Compiler.CPP.InputType.Id"/>
 							</tool>

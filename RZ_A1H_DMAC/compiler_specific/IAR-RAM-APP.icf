@@ -183,23 +183,6 @@ define symbol SDRAM_MIRROR_end    =   0x49FFFFFF;
 define region SDRAM_MIRROR_region = mem:[from SDRAM_MIRROR_start to SDRAM_MIRROR_end];
 
 /*----------------------------------------------------------------------------*/        
-/* DEFINITION OF QSPI MEMORY REGIONS                                          */
-/*----------------------------------------------------------------------------*/
-/* RZ/A RSK: QSPI ROM attached to H'18000000, 2 chips of 0x4000000 size each (64 Mb) */ 
-/* Total addressable space from the QSPI internal address map is 0x18000000 to H'1BFFFFFF (64Mb page) */
-/* Size of block is 0x40000, first two blocks are reserved to the BL */
-/* Defined length accounts for the split between the BL and the application located @ 18080000 */
-/* Needs to match #define DEF_USER_PROGRAM_SRC 0x18080000 in qspi_setup.h, set at (ORIGIN + LENGTH) */	
-define symbol QSPI_FLASH_start = 0x18000000;
-define symbol QSPI_FLASH_end   = 0x1807FFFF;
-define region QSPI_FLASH_region = mem:[from QSPI_FLASH_start to QSPI_FLASH_end];	
-
-define symbol QSPI_FLASH_MIRROR_start = 0x58000000;
-define symbol QSPI_FLASH_MIRROR_end   = 0x5807FFFF;
-define region QSPI_FLASH_MIRROR_region = mem:[from QSPI_FLASH_MIRROR_start to QSPI_FLASH_MIRROR_end];
-
-
-/*----------------------------------------------------------------------------*/        
 /* MEMORY PLACEMENT SECTION                                                   */
 /*----------------------------------------------------------------------------*/
 define block CSTACK    with alignment = 8, size = PROGRAM_STACK_SIZE   { };
@@ -211,43 +194,43 @@ define block ABT_STACK with alignment = 8, size = ABT_STACK_SIZE { };
 define block HEAP      with alignment = 8, size = HEAP_SIZE      { };
 define block MMU_TABLE with alignment = 0x4000, size = 0x8000 { section MMU_TT }; 
 
-/* data and bss are initialized manually */
 define block RAM_DATA { section .data };
 define block RAM_DATA_IN_ROM { section .data_init };
 define block RAM_BSS { section .bss };
 
 /* .textrw are functions which are specified to run from RAM (__ramfunc) */
+/* kept like this for compatibility with the QSPI usage scenario */
+/* where functions runniing from ram need to be defined like this */
 define block RAM_CODE { section .textrw };
 define block RAM_CODE_IN_ROM { section .textrw_init };
 
-do not initialize  { section .noinit };
-do not initialize  { section MMU_TT };
 do not initialize  { 
+section .noinit,
+section MMU_TT,
 section .DMA_BUFFER_IRAM ,
 section .DMA_BUFFER_SDRAM,
 section .DMA_BUFFER_CACHED_IRAM, 
 section .DMA_BUFFER_CACHED_SDRAM
 };
-initialize manually { section .data };
-initialize manually { section .bss };
-initialize manually { section .textrw };
 
-/* Vector table located in QSPI */
-place in QSPI_FLASH_region { first readonly section .intvec };
+initialize by copy { readwrite, section .textrw };
 
-/* Locate constants and rest of non-ram code in QSPI */
-place in QSPI_FLASH_region { readonly }; 
+/* Vector table located already in RAM */
+place in RAM0L_region { first readonly section .intvec };
 
-/* RAM code and .data initializers go in QSPI */
-place in QSPI_FLASH_region { block RAM_CODE_IN_ROM }; 
-place in QSPI_FLASH_region { block RAM_DATA_IN_ROM }; 
-
-/* everything else in RAM */
+/* Locate everything in ram */
+place in RAM0L_region { readonly }; 
 place in RAM0L_region { block RAM_CODE };
 place in RAM0L_region { block RAM_DATA };
 place in RAM0L_region { block RAM_BSS };
 place in RAM0L_region { block MMU_TABLE };
 place in RAM0L_region { block HEAP };
+
+/* RAM code initializer and .data initializers go in other page of RAM because are compressed */
+/* so the linker cannot place the initializer section and the data in the same section as they */
+/* depend from each other */
+place in RAM0U_region { block RAM_CODE_IN_ROM }; 
+place in RAM0U_region { block RAM_DATA_IN_ROM }; 
 
 "STACKS_AREA": place at end of RAM0U_region { 
   block CSTACK,
