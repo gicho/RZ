@@ -45,36 +45,6 @@ __interwork int __low_level_init(void);
 
 __interwork int __low_level_init(void)
 {
-    
-//    uint32_t volatile * VectorTableEntry;
-//        
-//    /* copy vector table to ram */
-//    VectorTableEntry = (uint32_t volatile *) __section_begin("RAM_IRQ_VECTOR_TABLE");
-//
-//    /* setup the primary vector table in RAM */
-//    *(VectorTableEntry++) = (LDR_PC_PC | 0x18);
-//    *(VectorTableEntry++) = (LDR_PC_PC | 0x18);
-//    *(VectorTableEntry++) = (LDR_PC_PC | 0x18);
-//    *(VectorTableEntry++) = (LDR_PC_PC | 0x18);
-//    *(VectorTableEntry++) = (LDR_PC_PC | 0x18);
-//    *(VectorTableEntry++) = (LDR_PC_PC | 0x18);
-//    *(VectorTableEntry++) = (LDR_PC_PC | 0x18);
-//    *(VectorTableEntry++) = (LDR_PC_PC | 0x18);
-//
-//    /* setup the literal entries for the vector table in RAM */
-//    *(VectorTableEntry++) = (uint32_t) &APP_reset_handler; 	/* this is in QSPI */
-//    *(VectorTableEntry++) = (uint32_t) &APP_undefined_handler;  /* self loop could be coded as 0x04U */
-//    *(VectorTableEntry++) = (uint32_t) &APP_svc_handler;	/* self loop could be coded as 0x08U */
-//    *(VectorTableEntry++) = (uint32_t) &APP_prefetch_handler; 	/* self loop could be coded as 0x0CU */
-//    *(VectorTableEntry++) = (uint32_t) &APP_abort_handler;	/* self loop could be coded as 0x10U */
-//    *(VectorTableEntry++) = (uint32_t) &APP_reserved_handler;	/* self loop could be coded as 0x14U */
-//    *(VectorTableEntry++) = (uint32_t) &APP_irq_handler;	/* IRQ and FIQ handler are located in RAM */
-//    *(VectorTableEntry++) = (uint32_t) &APP_fiq_handler;
-//
-//    // set VBAR to the vector table in RAM
-//    VectorTableEntry = (uint32_t volatile *) __section_begin("RAM_IRQ_VECTOR_TABLE");
-//    VbarSet(VectorTableEntry);
-
     /* Now start initializing the hardware */
     /* enable all module clocks */
     STB_Init();

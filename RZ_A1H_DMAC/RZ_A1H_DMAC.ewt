@@ -3163,9 +3163,6 @@
         <name>$PROJ_DIR$\compiler_specific\asm\l1_cache_iar.s</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\compiler_specific\asm\l1_cache_init_iar.s</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$\compiler_specific\asm\reset_handler_iar.s</name>
       </file>
       <file>

@@ -115,7 +115,7 @@ void PowerON_Reset (void)
 #endif
         
 	/* warning this is copying in multiple of 4 bytes */
-	copy_arm_code_section_to_ram(rom_code_start, ram_code_start, ram_code_end);
+	copy_arm_code_section_to_ram((uint32_t *)rom_code_start, (uint32_t *)ram_code_start, (uint32_t *)ram_code_end);
 
 #ifdef __GNUC__
         

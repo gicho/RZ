@@ -221,7 +221,7 @@ define block RAM_CODE_IN_ROM { section .textrw_init };
 
 do not initialize  { 
 section .noinit,
-section MMU_TT
+section MMU_TT,
 section .DMA_BUFFER_IRAM ,
 section .DMA_BUFFER_SDRAM,
 section .DMA_BUFFER_CACHED_IRAM, 

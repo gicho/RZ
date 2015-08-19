@@ -173,10 +173,8 @@ define block ABT_STACK with alignment = 8, size = ABT_STACK_SIZE { };
 define block HEAP      with alignment = 8, size = HEAP_SIZE      { };
 define block MMU_TABLE with alignment = 0x4000, size = 0x8000 { section MMU_TT }; 
 
-/* data and bss are initialized manually */
+/* data and bss */
 define block RAM_DATA { section .data };
-// define block RAM_DATA_IN_ROM { section .data_init };
-
 define block RAM_BSS { section .bss };
 
 /* .textrw are functions which are specified to run from RAM (__ramfunc) */
@@ -196,29 +194,18 @@ section .DMA_BUFFER_CACHED_SDRAM
 initialize by copy { readwrite, section .textrw };
 initialize by copy { section RAM_IRQ_VECTOR_TABLE };
 
-/*
-initialize manually { section .data };
-initialize manually { section .bss };
-initialize manually { section .textrw };
-*/
-
 /* Default vector table located in QSPI */
 place at address mem:QSPI_FLASH_start { section .intvec };
 place at address mem:(QSPI_FLASH_start+0x40) { section APPLICATION_SIGNATURE };
-// place in QSPI_FLASH_region { first readonly section .intvec };
 
 /* Runtime vector table re-located in RAM */
 place in RAM0_region { first section RAM_IRQ_VECTOR_TABLE };
 
-
-
 /* Locate constants and rest of non-ram code in QSPI */
 place in QSPI_FLASH_region { readonly }; 
 
-/* RAM code and .data initializers go in QSPI */
+/* RAM code initializers goes in QSPI */
 place in QSPI_FLASH_region { block RAM_CODE_IN_ROM }; 
-//place in QSPI_FLASH_region { block RAM_DATA_IN_ROM }; 
-
 
 
 /* everything else in RAM */

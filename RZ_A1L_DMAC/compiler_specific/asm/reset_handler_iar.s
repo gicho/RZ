@@ -105,23 +105,7 @@ M_BIT EQU 0x1
 __iar_program_start:
 APP_reset_handler:
 
-/* ========================================================================= */
-/* Multi-core startup (future proofing boot code)                            */
-/* Check core, if not core 0  put to sleep.                                  */
-/* ========================================================================= */
-/* not needed on single processor systems, removed from module */
-#if 0
-        MRC     p15, 0, r0, c0, c0, 5	/* cp,  OP1,  Rd,  CRn, CRm,  OP2 */
-        								/* read in R0 the value of the MPIDR register */
-        ANDS    r0, r0, #3				/* bit[1:0] = CPU ID */
-        								/* bit[11:8] = Cluster ID */
-        								/* bit[30] = U Bit, 1 means uniprocessor */
-        								/* bit[31] = always 1 */
-goToSleep:
-        WFINE							/* if non zero, sleep */
-        BNE     goToSleep
 
-#endif
 
 /* ========================================================================= */
 /* Cache and MMU maintenance    											 */
@@ -242,6 +226,7 @@ frqcr_wait:
  Bit [1,0] = 01b - Graphics clock ratio of 2/3
  GCLK = 266,67 MHz
 */
+/* not supported on RZ-L
 set_frqcr2_reg:
 
 GFC_BITS EQU 0x1
@@ -252,12 +237,14 @@ GFC_BITS EQU 0x1
     ISB
     LDRH r0, [r0]
 
-/* check if frequency change is in progress*/
+; check if frequency change is in progress
 	LDR  r0, =CPUSTS_REG
 frqcr2_wait:
     LDRB r1, [r0]
     ANDS r1, r1, #ISBUSY_BIT
     BNE  frqcr2_wait
+
+*/
 
 /* enable data retention ram via SYSCR3 register */
     LDR  r0, =0xFCFE0408
@@ -277,7 +264,7 @@ frqcr2_wait:
  Here we use VBAR
 */
 
-/* Now set Vbar to the BL vector table instead of the ROM vector table  */
+/* Now set Vbar to the APP vector table instead of the BL vector table  */
     LDR r0, = APP_vector_table
     MCR p15, 0, r0, c12, c0, 0
 

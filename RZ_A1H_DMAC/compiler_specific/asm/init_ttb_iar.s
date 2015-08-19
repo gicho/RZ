@@ -38,10 +38,9 @@
        
     PUBLIC init_TTB
     
-    IMPORT MMU_TABLE$$Start
-    IMPORT SVC_STACK$$Limit
+    IMPORT MMU_TT$$Base
     
-__mmu_table_base__ EQU SVC_STACK$$Limit
+__mmu_table_base__ EQU MMU_TT$$Base
 
 /* settings of the table entry format
 *  31           20|19 18|17|16| 15|14 12|11 10|9|8    5|4 |3 2|1 0|

@@ -28,6 +28,8 @@
     SECTION ASM_MACROS:CODE:NOROOT(4)
     ARM
   
+        PUBLIC L1_CachesEnable_asm  
+        
    	PUBLIC L1_D_CacheOperation_asm
    	PUBLIC L1_I_CacheInvalidate_asm
 
@@ -65,6 +67,33 @@ M_BIT EQU 0x1
     Clear M bit  0 to disable MMU
 */
 
+L1_CachesEnable_asm:
+/******************************************************************************/
+/* Enable all caches                                                          */
+/******************************************************************************/
+    /* Read CP15 SCTLR */
+    MRC  p15, 0, r0, c1, c0, 0
+
+    /* 	Set I bit 12 to enable I Cache
+    	Set Z bit 11 to enable flow prediction
+    	Set C bit  2 to enable D Cache
+    */
+    /* BIC has 8 bit immediate + 4 bit rotation so cannot address directly above first byte */
+    ORR  r0, r0, #(I_BIT)
+    ORR  r0, r0, #(Z_BIT)
+    ORR  r0, r0, #(C_BIT)
+    MCR  p15, 0, r0, c1, c0, 0		     /* Write CP15 register 1 */
+    ISB
+    
+/******************************************************************************/
+/* Enable D-side prefetch                                                     */
+/******************************************************************************/
+    MRC  p15, 0, r0, c1, c0, 1         /* Read Auxiliary Control Register */
+    ORR  r0, r0, #(0x1 << 2)		     /* Enable Dside prefetch */
+    MCR  p15, 0, r0, c1, c0, 1	  /* Write Auxiliary Control Register */
+    ISB
+    BX   lr
+    
 
 /******************************************************************************
 * Function Name : L1_D_CacheOperationAsm

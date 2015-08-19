@@ -177,7 +177,9 @@ section .DMA_BUFFER_CACHED_SDRAM
 initialize by copy { readwrite, section .textrw };
 
 /* Vector table located already in RAM */
-place in RAM0_region { first readonly section .intvec };
+/* This would be initialized from QSPI to RAM */
+/* In this case we ignore the .intvec table and use just the RAM version */
+place in RAM0_region { first readonly section RAM_IRQ_VECTOR_TABLE };
 
 /* Locate everything in ram */
 place in RAM0_region { readonly }; 

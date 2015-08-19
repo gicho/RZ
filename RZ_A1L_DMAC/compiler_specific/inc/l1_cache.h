@@ -27,7 +27,8 @@
 #include <stdint.h>
 #include "assembler_macros.h"
 
-extern void L1_CachesEnable(void);	/* enables all caches (I,D), branch prediction, D-Side prefetch */
+/* enables all caches (I,D), branch prediction, D-Side prefetch */
+extern void L1_CachesEnable(void);	
 
 extern void L1_D_CacheDisable(void);
 extern void L1_D_CacheEnsable(void);

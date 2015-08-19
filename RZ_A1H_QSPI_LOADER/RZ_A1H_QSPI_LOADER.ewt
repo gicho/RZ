@@ -2336,9 +2336,6 @@
     <file>
       <name>$PROJ_DIR$\src\qspi_change_config.c</name>
       <configuration>
-        <name>Dual_QSPI_Debug</name>
-      </configuration>
-      <configuration>
         <name>Single_QSPI_Debug</name>
       </configuration>
     </file>
