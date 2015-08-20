@@ -36,6 +36,7 @@
 #ifndef __PFC_IODEFINE_H__
 #define __PFC_IODEFINE_H__
 
+// TODO: change this to use stdint types and eliminate typedefine.h
 #include "typedefine.h"
 
 struct st_pfc_n {                              /* struct PFC    */

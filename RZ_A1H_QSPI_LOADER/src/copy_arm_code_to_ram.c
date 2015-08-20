@@ -1,7 +1,7 @@
 /*
 * Copyright 2015 Giancarlo Parodi
 * 
-* flash_type_definitions.h
+* copy_arm_code_to_ram.c
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -16,34 +16,28 @@
 * limitations under the License.
 */
 
-#ifndef COMPILER_SETTINGS_H
-#define COMPILER_SETTINGS_H
+#include "iodefine.h"
+#include "rza_io_regrw.h"
 
-#ifdef __ICCARM__
+void copyArmCodeToRam(uint32_t* rom_start, uint32_t* ram_start, uint32_t* ram_end)
+{
 
-#include "intrinsics.h"
+	/* Variables for program copy */
+    uint32_t i;
+    uint32_t region_size;
 
-#define SOFT_DELAY	__no_operation()
-#define EXEC_RAM        __ramfunc
-#define WEAK            __weak
+    /* load and execution region are the same, nothing to do */
+    if(rom_start == ram_start) return;
 
-#endif
+    /* Calculate the length of the copied section */
+    region_size = (uint32_t)ram_end - (uint32_t)ram_start;
 
+    /* Copy the next load module. */
+    for(i = 0; i < (region_size/4); i++)
+    {
+        *ram_start++ = *rom_start++;
+    }
 
-#ifdef __GNUC__
-
-#define SOFT_DELAY __asm__("nop")
-#define EXEC_RAM 
-
-#endif
-
-extern void __enable_irq(void);
-extern void __disable_irq(void);
-extern void __enable_fiq(void);
-extern void __disable_fiq(void);
-
-
-/* COMPILER_SETTINGS_H */
-#endif  
+}
 
 /* End of File */

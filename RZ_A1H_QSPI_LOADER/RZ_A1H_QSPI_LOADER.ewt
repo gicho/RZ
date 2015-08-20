@@ -2111,6 +2111,12 @@
         <name>$PROJ_DIR$\compiler_specific\inc\compiler_settings.h</name>
       </file>
     </group>
+    <group>
+      <name>src</name>
+      <file>
+        <name>$PROJ_DIR$\src\power_on_reset.c</name>
+      </file>
+    </group>
     <file>
       <name>$PROJ_DIR$\compiler_specific\IAR-QSPI-BL.icf</name>
     </file>
@@ -2292,9 +2298,6 @@
       <name>$PROJ_DIR$\inc\qspi_setup.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\inc\r_typedefs.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$\inc\rza_io_regrw.h</name>
     </file>
     <file>
@@ -2328,19 +2331,10 @@
   <group>
     <name>src</name>
     <file>
-      <name>$PROJ_DIR$\src\check_image.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\src\copy_section_to_ram.c</name>
+      <name>$PROJ_DIR$\src\copy_arm_code_to_ram.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\src\qspi_change_config.c</name>
-      <configuration>
-        <name>Single_QSPI_Debug</name>
-      </configuration>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\src\resetprg.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\src\rza_io_regrw.c</name>
