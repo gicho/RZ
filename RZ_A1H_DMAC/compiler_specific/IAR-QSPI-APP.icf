@@ -233,7 +233,6 @@ initialize by copy { section RAM_IRQ_VECTOR_TABLE };
 
 /* Default vector table located in QSPI */
 place at address mem:QSPI_FLASH_start { section .intvec };
-place at address mem:(QSPI_FLASH_start+0x40) { section APPLICATION_SIGNATURE };
 
 /* Runtime vector table re-located in RAM */
 place in RAM0L_region { first section RAM_IRQ_VECTOR_TABLE };

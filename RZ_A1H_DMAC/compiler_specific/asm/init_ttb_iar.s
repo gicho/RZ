@@ -1,42 +1,25 @@
-/*******************************************************************************
-* DISCLAIMER
-* This software is supplied by Renesas Electronics Corporation and is only
-* intended for use with Renesas products. No other uses are authorized. This
-* software is owned by Renesas Electronics Corporation and is protected under
-* all applicable laws, including copyright laws.
-* THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIES REGARDING
-* THIS SOFTWARE, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING BUT NOT
-* LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
-* AND NON-INFRINGEMENT. ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED.
-* TO THE MAXIMUM EXTENT PERMITTED NOT PROHIBITED BY LAW, NEITHER RENESAS
-* ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES SHALL BE LIABLE
-* FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR
-* ANY REASON RELATED TO THIS SOFTWARE, EVEN IF RENESAS OR ITS AFFILIATES HAVE
-* BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-* Renesas reserves the right, without notice, to make changes to this software
-* and to discontinue the availability of this software. By using this software,
-* you agree to the additional terms and conditions found by accessing the
-* following link:
-* http://www.renesas.com/disclaimer
+/*
+* Copyright 2015 Giancarlo Parodi
+* 
+* init_ttb_iar.s
 *
-* Copyright (C) 2014 Renesas Electronics Corporation. All rights reserved.
-*******************************************************************************/
-/*******************************************************************************
-* File Name     : init_ttb.s
-* Device(s)     : RZ/A1H (R7S721001)
-* Tool-Chain    : GNUARM-RZv13.01-EABI
-* H/W Platform  : RSK+RZA1H CPU Board
-* Description   : Sample Program - TTB initialise
-*******************************************************************************
-* History       : DD.MM.YYYY Version Description
-*               : 18.06.2013 1.00
-*               : 21.03.2014 2.00
-*******************************************************************************/
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+* 
+*     http://www.apache.org/licenses/LICENSE-2.0
+* 
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
     NAME INIT_TTB_IAR_S
     SECTION INIT_TTB_IAR:CODE(4)
     ARM
        
-    PUBLIC init_TTB
+    PUBLIC init_TTB_asm
     
     IMPORT MMU_TT$$Base
     
@@ -96,12 +79,12 @@ M_SIZE_SPI_M    EQU 128         /* [Area09] SPI, SP2 area (for Serial flash) (mi
 M_SIZE_RAM_M    EQU 10          /* [Area10] Internal RAM (mirror) */
 M_SIZE_IO_2     EQU 2550        /* [Area11] I/O area 2 */
 
-init_TTB:
-/*******************************************************************************
+init_TTB_asm:
+/*
 * Cortex-A9 MMU Configuration
 * Set translation table base
 * see B3.12.24 CP15 c2, Translation table support registers
-*******************************************************************************/
+*/
     /* Cortex-A9 supports two translation tables */
     /* Configure translation table base (TTB) control register cp15,c2 */
     /* to a value of all zeros, indicates we are using TTB register 0. */
@@ -124,7 +107,7 @@ init_TTB:
     /* TTBR0 */
     MCR  p15, 0, r0, c2, c0, 0       
 
-/*******************************************************************************
+/*
 * PAGE TABLE generation 
 * Generate the page tables 
 * Build a flat translation table for the whole address space. 
@@ -145,7 +128,7 @@ init_TTB:
 *                 (except for the descriptor where code segment is based, 
 *                  see below) 
 * Bits[1:0]=10  - Indicate entry is a 1MB section 
-*******************************************************************************/
+*/
     LDR  r0,=__mmu_table_base__          /* start of table from .ld file */
     LDR  r1,=0xFFF
     LDR  r2,=11

@@ -78,8 +78,8 @@ Includes   <System Includes> , "Project Includes"
 
 #include "l1_cache.h"
 #include "l2_cache.h"
+#include "cp15_access.h"
 
-#include "access.h"
 #include "assembler_macros.h"
 
 /******************************************************************************
@@ -1310,7 +1310,6 @@ uint32_t volatile init_test = 0xCAFECAFE;
 
 #pragma section="RAM_IRQ_VECTOR_TABLE"
 
-void VbarSet(uint32_t value);
 #endif
 
 /******************************************************************************

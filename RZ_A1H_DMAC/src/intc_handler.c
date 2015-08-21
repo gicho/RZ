@@ -73,7 +73,7 @@ void INTC_Handler_Interrupt(uint32_t icciar)
     uint16_t int_id;
     uint32_t volatile * addr;
 
-    int_id = (uint16_t)(icciar & 0x000003FFuL); /* Obtain interrupt ID */
+    int_id = (uint16_t)(icciar & 0x3FFuL); /* Obtain interrupt ID */
 
     if (int_id >= INTC_ID_TOTAL)    /* In case of unsupported interrupt ID */
     {
@@ -81,7 +81,7 @@ void INTC_Handler_Interrupt(uint32_t icciar)
     }
 
     /* ==== Interrupt handler call ==== */
-    __enable_irq();         /* IRQ interrupt enabled */
+    // __enable_irq();         /* IRQ interrupt enabled */
 
     /* ICDICFRn has 16 sources in the 32 bits                                  */
     /* The n can be calculated by int_id / 16                                  */
@@ -100,7 +100,7 @@ void INTC_Handler_Interrupt(uint32_t icciar)
 
     Userdef_INTC_HandlerExe(int_id, int_sense);     /* Call interrupt handler */
 
-    __disable_irq();        /* IRQ interrupt disabled */
+    // __disable_irq();        /* IRQ interrupt disabled */
 }
 
 /*******************************************************************************
@@ -110,9 +110,22 @@ void INTC_Handler_Interrupt(uint32_t icciar)
 * Arguments    : none
 * Return Value : none
 *******************************************************************************/
+#define NMIF_BIT	(0x0002)
 void FiqHandler_Interrupt(void)
 {
-    Userdef_FIQ_HandlerExe();
+	uint16_t dummy_read = 0;
+
+	/* Set the NMI status bit in the user flag */
+//    g_switch_press_flg |= NMI_SET_FLG;
+
+    /* Clearing the status flag requires a dummy read */
+    dummy_read = INTC.ICR0;
+
+    /* Clear the NMI interrupt flag */
+    if (NMIF_BIT == (dummy_read & NMIF_BIT))
+	{
+    	INTC.ICR0 &= 0xFFFD;
+	}
 }
 
 

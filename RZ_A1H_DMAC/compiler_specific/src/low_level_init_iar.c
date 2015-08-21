@@ -28,7 +28,6 @@ extern "C" {
 #include "r_typedefs.h"
 #include "devdrv_common.h"
 #include "devdrv_intc.h"
-#include "resetprg.h"
 #include "stb_init.h"
 #include "bsc_userdef.h"
 #include "sio_char.h"
