@@ -222,12 +222,12 @@ void PowerON_Reset (void)
     R_INTC_Init();
 
     // invalidate all L2 and L1
-    L2CacheInvalidate();
     L1D_CacheInvalidate();
+	L2CacheInvalidate();
+    L1_CachesEnable();
 
     /* Enable L1 and L2 */
     L2CacheInit();
-    L1_CachesEnable();
 
     __enable_irq();
     __enable_fiq();

@@ -16,6 +16,14 @@
 * limitations under the License.
 */
     NAME INIT_TTB_IAR_S
+
+    
+    SECTION MMU_TT:DATA(14)
+    ; reserve space for the MMU table
+    ; align to 0x4000
+    DS8 0x8000    
+
+
     SECTION INIT_TTB_IAR:CODE(4)
     ARM
        

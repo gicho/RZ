@@ -50,20 +50,13 @@ APP_vector_table:
         DATA
 
 Reset_Addr:     DCD   __iar_program_start
-Undefined_Addr: DCD   APP_dummy_handler
-SVC_Addr:       DCD   APP_dummy_handler
-Prefetch_Addr:  DCD   APP_dummy_handler
-Abort_Addr:     DCD   APP_dummy_handler
+Undefined_Addr: DCD   APP_undefined_handler
+SVC_Addr:       DCD   APP_svc_handler
+Prefetch_Addr:  DCD   APP_prefetch_handler
+Abort_Addr:     DCD   APP_abort_handler
 Reserved_Addr:  DCD   APP_dummy_handler 
-IRQ_Addr:       DCD   APP_dummy_handler
-FIQ_Addr:       DCD   APP_dummy_handler
-
-        CODE
-        
-APP_dummy_handler:
-    B APP_dummy_handler
-
-
+IRQ_Addr:       DCD   APP_irq_handler
+FIQ_Addr:       DCD   APP_fiq_handler
 
 
     SECTION RAM_IRQ_VECTOR_TABLE:CODE:ROOT(4)
@@ -75,7 +68,6 @@ APP_dummy_handler:
 * This is the vector table located in RAM, so here we do find the real 
 * interrupt handler addresses for the application
 */
-
 
 APP_vector_table_RAM:
 
@@ -100,11 +92,13 @@ IRQ_Addr_RAM:       DCD   APP_irq_handler
 FIQ_Addr_RAM:       DCD   APP_fiq_handler
 
 
+
+        SECTION DEFAULT_INT_VECTORS:CODE:ROOT(4)
+        ARM
 /*
 * Interrupt routines might be overridden when used
 * Default empty implementations are provided in this file
 */
-        CODE
 
 APP_undefined_handler:
     B    APP_undefined_handler
@@ -123,6 +117,10 @@ APP_irq_handler:
 
 APP_fiq_handler:
     B    APP_fiq_handler
+
+        
+APP_dummy_handler:
+    B APP_dummy_handler
 
         END 
 

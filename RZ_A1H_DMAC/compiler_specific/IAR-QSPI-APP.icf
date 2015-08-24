@@ -79,7 +79,9 @@ define region RETRAM3_region = mem:[from RETRAM3_start to RETRAM3_end];
 /* Page 4 Upper bank (1024KB) H'20900000 to H'209FFFFF */
 
 define symbol RAM_start    =   0x20020000; 
-define symbol RAM0L_start  =   0x20020000; 
+define symbol RAM0L_vector_table_start  = 0x20020000;
+define symbol RAM0L_vector_table_end    = 0x2002003F;
+define symbol RAM0L_start  =   0x20020040; 
 define symbol RAM0L_end    =   0x200FFFFF;
 define symbol RAM1L_start  =   0x20100000; 
 define symbol RAM1L_end    =   0x201FFFFF;
@@ -101,10 +103,14 @@ define symbol RAM4U_start  =   0x20900000;
 define symbol RAM4U_end    =   0x209FFFFF;
 define symbol RAM_end      =   0x209FFFFF;
 
+/* These are defined for relocating the vector table to ram */
+
+
 /*----------------------------------------------------------------------------*/        
 /* DEFINITION OF MEMORY REGIONS - ALWAYS-ON RAM, NORMAL ADDRESSES             */
 /*----------------------------------------------------------------------------*/
 
+define region RAM0L_vector_table_region = mem:[from RAM0L_vector_table_start to RAM0L_vector_table_end];
 define region RAM0L_region = mem:[from RAM0L_start to RAM0L_end];
 define region RAM1L_region = mem:[from RAM1L_start to RAM1L_end];
 define region RAM2L_region = mem:[from RAM2L_start to RAM2L_end];
@@ -132,7 +138,9 @@ define region RAM_region = mem:[from RAM_start to RAM_end];
 /* Page 4 Upper bank (1024KB) H'60900000 to H'609FFFFF */
 
 define symbol RAM_MIRROR_start    =   0x60020000; 
-define symbol RAM0L_MIRROR_start  =   0x60020000; 
+define symbol RAM0L_mirror_vector_table_start  = 0x60020000;
+define symbol RAM0L_mirror_vector_table_end    = 0x6002003F;
+define symbol RAM0L_MIRROR_start  =   0x60020040; 
 define symbol RAM0L_MIRROR_end    =   0x600FFFFF;
 define symbol RAM0U_MIRROR_start  =   0x60100000; 
 define symbol RAM0U_MIRROR_end    =   0x601FFFFF;
@@ -158,6 +166,7 @@ define symbol RAM_MIRROR_end      =   0x609FFFFF;
 /* DEFINITION OF MEMORY REGIONS - ALWAYS-ON RAM, MIRRORED ADDRESSES           */
 /*----------------------------------------------------------------------------*/
 
+define region RAM0L_MIRROR_vector_table_region = mem:[from RAM0L_mirror_vector_table_start to RAM0L_mirror_vector_table_end];
 define region RAM0L_MIRROR_region = mem:[from RAM0L_MIRROR_start to RAM0L_MIRROR_end];
 define region RAM0U_MIRROR_region = mem:[from RAM0U_MIRROR_start to RAM0U_MIRROR_end];
 define region RAM1U_MIRROR_region = mem:[from RAM1U_MIRROR_start to RAM1U_MIRROR_end];
@@ -229,13 +238,15 @@ section .DMA_BUFFER_CACHED_SDRAM
 };
 
 initialize by copy { readwrite, section .textrw };
-initialize by copy { section RAM_IRQ_VECTOR_TABLE };
+
+initialize manually { section RAM_IRQ_VECTOR_TABLE };
 
 /* Default vector table located in QSPI */
 place at address mem:QSPI_FLASH_start { section .intvec };
 
 /* Runtime vector table re-located in RAM */
-place in RAM0L_region { first section RAM_IRQ_VECTOR_TABLE };
+place in QSPI_FLASH_region { section RAM_IRQ_VECTOR_TABLE_init };
+place in RAM0L_vector_table_region { section RAM_IRQ_VECTOR_TABLE };
 
 /* Locate constants and rest of non-ram code in QSPI */
 place in QSPI_FLASH_region { readonly }; 

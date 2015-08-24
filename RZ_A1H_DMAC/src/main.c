@@ -1,44 +1,21 @@
-/******************************************************************************
-* DISCLAIMER
-* This software is supplied by Renesas Electronics Corporation and is only
-* intended for use with Renesas products. No other uses are authorized. This
-* software is owned by Renesas Electronics Corporation and is protected under
-* all applicable laws, including copyright laws.
-* THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIES REGARDING
-* THIS SOFTWARE, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING BUT NOT
-* LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
-* AND NON-INFRINGEMENT. ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED.
-* TO THE MAXIMUM EXTENT PERMITTED NOT PROHIBITED BY LAW, NEITHER RENESAS
-* ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES SHALL BE LIABLE
-* FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR
-* ANY REASON RELATED TO THIS SOFTWARE, EVEN IF RENESAS OR ITS AFFILIATES HAVE
-* BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-* Renesas reserves the right, without notice, to make changes to this software
-* and to discontinue the availability of this software. By using this software,
-* you agree to the additional terms and conditions found by accessing the
-* following link:
-* http://www.renesas.com/disclaimer
+/*
+* Copyright 2015 Giancarlo Parodi
+* 
+* cp15_access.h
 *
-* Copyright (C) 2014 Renesas Electronics Corporation. All rights reserved.
-******************************************************************************/
-/******************************************************************************
-* File Name     : main.c
-* Device(s)     : RZ/A1H (R7S721001)
-* Tool-Chain    : GNUARM-RZv13.01-EABI
-* H/W Platform  : RSK+RZA1H CPU Board
-* Description   : This is the RZ/A1H DMA sample main code
-* Operation     : Please see the Description.txt file in the doc folder.
-* Limitations   : Please see the Description.txt file in the doc folder.
-******************************************************************************/
-/******************************************************************************
-* History       : DD.MM.YYYY Version Description
-*               : 18.06.2013 1.00
-*               : 21.03.2014 2.00
-******************************************************************************/
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+* 
+*     http://www.apache.org/licenses/LICENSE-2.0
+* 
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 
-/******************************************************************************
-Includes   <System Includes> , "Project Includes"
-******************************************************************************/
 /* System header */
 #include <stdio.h>
 #include <stdint.h>
@@ -152,43 +129,17 @@ uint32_t getPaFromVa(uint32_t address) {
 	return(address);
 }
 
-/******************************************************************************
-* Function Name: Sample_DMAC3_Interrupt
-* Description  : DMAC3 Interrupt handler
-* Arguments    : uint32_t int_sense : Interrupt detection setting
-*              :                    :   INTC_LEVEL_SENSITIVE : Level Sense
-*              :                    :   INTC_EDGE_TRIGGER    : Edge Trigger
-* Return Value : None
-******************************************************************************/
 void Sample_DMAC3_Interrupt(uint32_t int_sense)
 {
     dmac_ch3_trans_flg = true;
 }
 
-/******************************************************************************
-* Function Name: Sample_DMAC0_Interrupt
-* Description  : DMAC0 Interrupt handler
-* Arguments    : uint32_t int_sense : Interrupt detection setting
-*              :                    :   INTC_LEVEL_SENSITIVE : Level Sense
-*              :                    :   INTC_EDGE_TRIGGER    : Edge Trigger
-* Return Value : None
-******************************************************************************/
 void Sample_DMAC0_Interrupt(uint32_t int_sense)
 {
     dmac_ch0_trans_flg = true;
 }
 
 
-/******************************************************************************
-* Function Name: initialise_data
-* Description  : Initialise memory block with specified data,
-*              : memory block must be allocated prior to calling this function
-*              : size should not specify more bytes than allocated
-* Arguments    : uint8_t  *src : pointer to start of data to initialise
-*              : uint8_t  data : byte value to initialise data block
-*              : uint32_t size : number of bytes to initialise
-* Return Value : None
-******************************************************************************/
 void initialise_data(uint8_t *src, uint8_t data, uint32_t size)
 {
     while(size--)
@@ -197,7 +148,7 @@ void initialise_data(uint8_t *src, uint8_t data, uint32_t size)
     }
 }
 
-/******************************************************************************
+/*
 * Function Name: initialise_dma8bit_extrequest
 * Description  : Initialise data transfer on channel 0 of the dma controller
 *              : memory block must be allocated prior to calling this function
@@ -209,7 +160,7 @@ void initialise_data(uint8_t *src, uint8_t data, uint32_t size)
 *              : uint8_t  *dst : pointer to start of data transfer destination
 *              : uint32_t size : number of bytes to transfer
 * Return Value : None
-******************************************************************************/
+*/
 void initialise_dma8bit_extrequest(uint8_t *src, uint8_t *dst, uint32_t size)
 {
     volatile uint32_t dummy = 0u;
@@ -306,7 +257,7 @@ void initialise_dma8bit_extrequest(uint8_t *src, uint8_t *dst, uint32_t size)
 
 }
 
-/******************************************************************************
+/*
 * Function Name: initialise_dma8bit
 * Description  : Initialise data transfer on channel 3 of the dma controller
 *              : memory block must be allocated prior to calling this function
@@ -315,7 +266,7 @@ void initialise_dma8bit_extrequest(uint8_t *src, uint8_t *dst, uint32_t size)
 *              : uint8_t  *dst : pointer to start of data transfer destination
 *              : uint32_t size : number of bytes to transfer
 * Return Value : None
-******************************************************************************/
+*/
 void initialise_dma8bit(uint8_t *src, uint8_t *dst, uint32_t size)
 {
     volatile uint32_t dummy = 0u;
@@ -1312,24 +1263,22 @@ uint32_t volatile init_test = 0xCAFECAFE;
 
 #endif
 
-/******************************************************************************
+/*
 * Function Name: main
 * Description  : Main function, configures IIC channels 0 and 3, initialises
 *                the user switches, LEDs and Pmod display. Displays information
 *                on the Pmod before calling the dmac transfer function.
 * Arguments    : none
 * Return Value : 0
-******************************************************************************/
+*/
 int main(void)
 {
 #ifdef __ICCARM__  
   
-    volatile uint32_t VectorTableEntry = (uint32_t) __section_begin("RAM_IRQ_VECTOR_TABLE");
-    VbarSet(VectorTableEntry);  
-
     /* Initial setting of the level 1 cache */
     L1D_CacheInvalidate();
     L1_CachesEnable();
+    enable_mmu();
     L2CacheInit();
 
     /* Enable interrupts */

@@ -35,9 +35,21 @@ extern "C" {
 
 #include "peripheral_early_init.h"
 #include "intc_handler.h"
+#include "cp15_access.h"  
   
 #pragma section = "RAM_IRQ_VECTOR_TABLE"
+  #pragma section = "RAM_IRQ_VECTOR_TABLE_init"
   
+
+extern void APP_reset_handler(void);
+extern void APP_undefined_handler(void);
+extern void APP_abort_handler(void);
+extern void APP_svc_handler(void);
+extern void APP_prefetch_handler(void);
+extern void APP_reserved_handler(void);
+extern void APP_irq_handler(void);
+extern void APP_fiq_handler(void);
+
 #pragma language=extended
 
 __interwork int __low_level_init(void);
@@ -45,11 +57,24 @@ __interwork int __low_level_init(void);
 __interwork int __low_level_init(void)
 {
     
-//    uint32_t volatile * VectorTableEntry;
-//        
-//    /* copy vector table to ram */
-//    VectorTableEntry = (uint32_t volatile *) __section_begin("RAM_IRQ_VECTOR_TABLE");
-//
+    uint32_t volatile * VectorTableEntry, * VectorTableRomEntry;
+    uint8_t i;
+    
+    /* copy vector table to ram */
+    VectorTableEntry = (uint32_t volatile *) __section_begin("RAM_IRQ_VECTOR_TABLE");
+    VectorTableRomEntry = (uint32_t volatile *) __section_begin("RAM_IRQ_VECTOR_TABLE_init");
+
+    // Size is 0x40
+    for(i=0;i<0x10;i++)
+      *(VectorTableEntry++) = *(VectorTableRomEntry++);
+
+    /* Get the vector table entry again */
+    VectorTableEntry = (uint32_t volatile *) __section_begin("RAM_IRQ_VECTOR_TABLE");
+    VbarSet((uint32_t)VectorTableEntry);  
+    
+    /* Set to low vectors after QSPI boot */
+    SetLowVectors();
+    
 //    /* setup the primary vector table in RAM */
 //    *(VectorTableEntry++) = (LDR_PC_PC | 0x18);
 //    *(VectorTableEntry++) = (LDR_PC_PC | 0x18);

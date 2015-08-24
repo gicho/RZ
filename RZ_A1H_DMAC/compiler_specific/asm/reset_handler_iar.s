@@ -262,7 +262,7 @@ frqcr2_wait:
     BL neon_vfp_on_asm
 
 /* Enable MMU - does not change the caches configuration */
-    BL enable_mmu_asm
+;    BL enable_mmu_asm
 	
 /* Branch to C library entry point */
     B __cmain
