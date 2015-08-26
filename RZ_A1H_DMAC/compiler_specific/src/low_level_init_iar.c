@@ -38,7 +38,7 @@ extern "C" {
 #include "cp15_access.h"  
   
 #pragma section = "RAM_IRQ_VECTOR_TABLE"
-  #pragma section = "RAM_IRQ_VECTOR_TABLE_init"
+#pragma section = "RAM_IRQ_VECTOR_TABLE_init"
   
 
 extern void APP_reset_handler(void);
@@ -50,11 +50,7 @@ extern void APP_reserved_handler(void);
 extern void APP_irq_handler(void);
 extern void APP_fiq_handler(void);
 
-#pragma language=extended
-
-__interwork int __low_level_init(void);
-
-__interwork int __low_level_init(void)
+int __low_level_init(void)
 {
     
     uint32_t volatile * VectorTableEntry, * VectorTableRomEntry;

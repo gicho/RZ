@@ -3023,7 +3023,7 @@
         </option>
         <option>
           <name>RunToName</name>
-          <state>main</state>
+          <state>__iar_program_start</state>
         </option>
         <option>
           <name>CExtraOptionsCheck</name>

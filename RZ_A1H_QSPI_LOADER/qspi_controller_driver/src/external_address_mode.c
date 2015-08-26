@@ -74,12 +74,13 @@ EXEC_RAM void qspiConfigureExternalAddressTransfer(const externalAddressTransfer
 
 EXEC_RAM void qspiExternalAddressFlushReadCache(void) {
 
-    volatile uint32_t dummyRead;
+    volatile uint32_t dummyRead, i;
 
     /* flush cache */
     SPIBSC0.DRCR |= (1u << 9);
 
     dummyRead = SPIBSC0.DRCR;
+    for(i=0;i<100;i++) SOFT_DELAY;
 }
 
 

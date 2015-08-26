@@ -305,34 +305,5 @@ frqcr2_wait:
     LDR  r12,=PowerON_Reset
     BX   r12                              /* Branch to C library entry point */
 
-
-APP_reset_handler_end:
-	B APP_reset_handler_end
-
-/* ========================================================================= */
-/* Other Handlers                                                            */
-/* ========================================================================= */
-APP_undefined_handler:
-    B    APP_undefined_handler
-
-APP_svc_handler:
-    B    APP_svc_handler
-
-APP_prefetch_handler:
-    B    APP_prefetch_handler
-
-APP_abort_handler:
-    B    APP_abort_handler
-
-APP_reserved_handler:
-    B    APP_reserved_handler
-
-
-APP_dummy_handler:
-	B APP_dummy_handler
-
-.end
-
-
-.end
+	.end
 

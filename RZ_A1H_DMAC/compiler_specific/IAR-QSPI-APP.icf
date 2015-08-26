@@ -238,7 +238,6 @@ section .DMA_BUFFER_CACHED_SDRAM
 };
 
 initialize by copy { readwrite, section .textrw };
-
 initialize manually { section RAM_IRQ_VECTOR_TABLE };
 
 /* Default vector table located in QSPI */
@@ -249,18 +248,18 @@ place in QSPI_FLASH_region { section RAM_IRQ_VECTOR_TABLE_init };
 place in RAM0L_vector_table_region { section RAM_IRQ_VECTOR_TABLE };
 
 /* Locate constants and rest of non-ram code in QSPI */
-place in QSPI_FLASH_region { readonly }; 
-
 /* RAM code and .data initializers go in QSPI */
-place in QSPI_FLASH_region { block RAM_CODE_IN_ROM }; 
+place in QSPI_FLASH_region { readonly, block RAM_CODE_IN_ROM }; 
+
 
 /* everything else in RAM */
-place in RAM0L_region { block RAM_CODE };
-place in RAM0L_region { block RAM_DATA };
-place in RAM0L_region { block RAM_BSS };
-place in RAM0L_region { block MMU_TABLE };
-place in RAM0L_region { block HEAP };
-
+place in RAM0L_region { block RAM_CODE,
+                        block RAM_DATA,
+                        block RAM_BSS,
+                        block MMU_TABLE,
+                        block HEAP
+};
+ 
 "STACKS_AREA": place at end of RAM0U_region { 
   block CSTACK,
   block SVC_STACK,

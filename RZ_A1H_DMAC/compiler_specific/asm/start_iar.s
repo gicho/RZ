@@ -18,9 +18,6 @@
 
     MODULE RESET_HANDLER_MOD
     
-    SECTION .intvec:CODE:ROOT(4)
-    ARM
-    
     PUBLIC APP_vector_table
     EXTERN  __iar_program_start
     
@@ -29,7 +26,10 @@
     PUBWEAK APP_prefetch_handler
     PUBWEAK APP_abort_handler
     PUBWEAK APP_irq_handler
-    PUBWEAK APP_fiq_handler    
+    PUBWEAK APP_fiq_handler 
+    
+    SECTION .intvec:CODE:ROOT(4)
+    ARM    
 
 /*
 * This is the vector table located in Flash, does not use interrupts yet
@@ -38,16 +38,14 @@
 
 APP_vector_table:
 
-        LDR     PC,Reset_Addr           ; Reset
-        LDR     PC,Undefined_Addr       ; Undefined instructions
-        LDR     PC,SVC_Addr             ; Software interrupt (SWI/SVC)
-        LDR     PC,Prefetch_Addr        ; Prefetch abort
-        LDR     PC,Abort_Addr           ; Data abort
-        LDR     PC,Reserved_Addr        ; RESERVED
-        LDR     PC,IRQ_Addr             ; IRQ
-        LDR     PC,FIQ_Addr             ; FIQ
-
-        DATA
+        LDR     PC, Reset_Addr           
+        LDR     PC, Undefined_Addr       
+        LDR     PC, SVC_Addr             
+        LDR     PC, Prefetch_Addr        
+        LDR     PC, Abort_Addr          
+        LDR     PC, Reserved_Addr     
+        LDR     PC, IRQ_Addr            
+        LDR     PC, FIQ_Addr        
 
 Reset_Addr:     DCD   __iar_program_start
 Undefined_Addr: DCD   APP_undefined_handler
@@ -71,30 +69,30 @@ FIQ_Addr:       DCD   APP_fiq_handler
 
 APP_vector_table_RAM:
 
-        LDR     PC,Reset_Addr_RAM           
-        LDR     PC,Undefined_Addr_RAM       
-        LDR     PC,SVC_Addr_RAM             
-        LDR     PC,Prefetch_Addr_RAM        
-        LDR     PC,Abort_Addr_RAM           
-        LDR     PC,Reserved_Addr_RAM        
-        LDR     PC,IRQ_Addr_RAM             
-        LDR     PC,FIQ_Addr_RAM             
+        LDR     PC, RAM_Reset_Addr           
+        LDR     PC, RAM_Undefined_Addr       
+        LDR     PC, RAM_SVC_Addr             
+        LDR     PC, RAM_Prefetch_Addr        
+        LDR     PC, RAM_Abort_Addr          
+        LDR     PC, RAM_Reserved_Addr     
+        LDR     PC, RAM_IRQ_Addr            
+        LDR     PC, RAM_FIQ_Addr        
 
-        DATA
-
-Reset_Addr_RAM:     DCD   __iar_program_start
-Undefined_Addr_RAM: DCD   APP_undefined_handler
-SVC_Addr_RAM:       DCD   APP_svc_handler
-Prefetch_Addr_RAM:  DCD   APP_prefetch_handler
-Abort_Addr_RAM:     DCD   APP_abort_handler
-Reserved_Addr_RAM:  DCD   APP_dummy_handler 
-IRQ_Addr_RAM:       DCD   APP_irq_handler
-FIQ_Addr_RAM:       DCD   APP_fiq_handler
+RAM_Reset_Addr:     DCD   __iar_program_start
+RAM_Undefined_Addr: DCD   APP_undefined_handler
+RAM_SVC_Addr:       DCD   APP_svc_handler
+RAM_Prefetch_Addr:  DCD   APP_prefetch_handler
+RAM_Abort_Addr:     DCD   APP_abort_handler
+RAM_Reserved_Addr:  DCD   APP_dummy_handler 
+RAM_IRQ_Addr:       DCD   APP_irq_handler
+RAM_FIQ_Addr:       DCD   APP_fiq_handler
 
 
 
         SECTION DEFAULT_INT_VECTORS:CODE:ROOT(4)
         ARM
+    
+        
 /*
 * Interrupt routines might be overridden when used
 * Default empty implementations are provided in this file

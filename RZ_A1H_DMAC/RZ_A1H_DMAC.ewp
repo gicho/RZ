@@ -2021,7 +2021,7 @@
         </option>
         <option>
           <name>GenLowLevelInterface</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>GEndianModeBE</name>
@@ -2948,6 +2948,9 @@
       <name>src</name>
       <file>
         <name>$PROJ_DIR$\compiler_specific\src\copy_section_to_ram.c</name>
+        <excluded>
+          <configuration>Debug-from-RAM</configuration>
+        </excluded>
       </file>
       <file>
         <name>$PROJ_DIR$\compiler_specific\src\cp15_access.c</name>
@@ -3217,6 +3220,9 @@
   </group>
   <group>
     <name>scripts</name>
+    <file>
+      <name>$PROJ_DIR$\scripts\reset.mac</name>
+    </file>
     <file>
       <name>$PROJ_DIR$\scripts\RZ_RSK_QSPI_init.mac</name>
     </file>

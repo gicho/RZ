@@ -41,7 +41,7 @@
 #include "r_typedefs.h"
 #include "devdrv_common.h"
 #include "devdrv_intc.h"
-#include "resetprg.h"
+
 #include "stb_init.h"
 #include "bsc_userdef.h"
 #include "sio_char.h"
@@ -60,6 +60,7 @@
 
 #include "l1_cache.h"
 #include "l2_cache.h"
+#include "cp15_access.h"
 
 /* These are related to the code which runs at startup */
 /* Global variables are specified in the linker script (GCC-QSPI-BL.ld) */
@@ -89,7 +90,7 @@ extern uint32_t APP_irq_handler;
 extern uint32_t APP_fiq_handler;
 
 extern void copy_arm_code_section_to_ram(uint32_t* rom_start, uint32_t* ram_start, uint32_t* ram_end);
-extern void VbarSet(uint32_t address);
+
 
 /*******************************************************************************
 * Function Name: PowerON_Reset
@@ -98,6 +99,8 @@ extern void VbarSet(uint32_t address);
 * Return Value : none
 *******************************************************************************/
 static uint32_t const LDR_PC_PC = 0xE59FF000U;
+
+extern int main(void);
 
 /* note: no global or initialized variables can be used since .data is not yet initialized */
 void PowerON_Reset (void)

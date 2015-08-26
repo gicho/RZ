@@ -33,53 +33,46 @@
     
 QSPI_BL_vector_table:
 
-    LDR     PC,Reset_Addr           ; Reset
-    LDR     PC,Undefined_Addr       ; Undefined instructions
-    LDR     PC,SVC_Addr             ; Software interrupt (SWI/SVC)
-    LDR     PC,Prefetch_Addr        ; Prefetch abort
-    LDR     PC,Abort_Addr           ; Data abort
-    LDR     PC,Reserved_Addr        ; RESERVED
-    LDR     PC,IRQ_Addr             ; IRQ
-    LDR     PC,FIQ_Addr             ; FIQ
-
-    DATA
-
-Reset_Addr:     DCD   __iar_program_start
-Undefined_Addr: DCD   QSPI_BL_undefined_handler
-SVC_Addr:       DCD   QSPI_BL_svc_handler
-Prefetch_Addr:  DCD   QSPI_BL_prefetch_handler
-Abort_Addr:     DCD   QSPI_BL_abort_handler
-Reserved_Addr:  DCD   QSPI_BL_reserved_handler 
-IRQ_Addr:       DCD   QSPI_BL_irq_handler
-FIQ_Addr:       DCD   QSPI_BL_fiq_handler
+    LDR     PC, =__iar_program_start        ; Reset
+    LDR     PC, =QSPI_BL_undefined_handler  ; Undefined instructions
+    LDR     PC, =QSPI_BL_svc_handler        ; Software interrupt (SWI/SVC)
+    LDR     PC, =QSPI_BL_prefetch_handler   ; Prefetch abort
+    LDR     PC, =QSPI_BL_abort_handler      ; Data abort
+    LDR     PC, =QSPI_BL_reserved_handler   ; RESERVED
+    LDR     PC, =QSPI_BL_irq_handler        ; IRQ
+    LDR     PC, =QSPI_BL_fiq_handler        ; FIQ
 
 
 /*
 * Interrupt routines might be overridden when used
 * Default empty implementations are provided in this file
 */
-    CODE
+    SECTION .dummy_handlers:CODE:ROOT(4)
+    ARM
 
 QSPI_BL_undefined_handler:
-    B    QSPI_BL_undefined_handler
-
+    B QSPI_BL_undefined_handler
+    
 QSPI_BL_svc_handler:
-    B    QSPI_BL_svc_handler
+    B QSPI_BL_svc_handler
+    
+QSPI_BL_reserved_handler:
+    B QSPI_BL_reserved_handler
 
 QSPI_BL_prefetch_handler:
-    B    QSPI_BL_prefetch_handler
+    B QSPI_BL_prefetch_handler
 
 QSPI_BL_abort_handler:
-    B    QSPI_BL_abort_handler
-
-QSPI_BL_reserved_handler:
-    B    QSPI_BL_reserved_handler
-
+    B QSPI_BL_abort_handler
+    
 QSPI_BL_irq_handler:
-    B    QSPI_BL_irq_handler
-
+    B QSPI_BL_irq_handler
+    
 QSPI_BL_fiq_handler:
-    B    QSPI_BL_fiq_handler
+    B QSPI_BL_fiq_handler
+    
+QSPI_BL_dummy_handler:
+    B    QSPI_BL_dummy_handler
 
 
     END 

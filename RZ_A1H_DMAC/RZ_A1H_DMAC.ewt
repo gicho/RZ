@@ -3461,6 +3461,9 @@
   <group>
     <name>scripts</name>
     <file>
+      <name>$PROJ_DIR$\scripts\reset.mac</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\scripts\RZ_RSK_QSPI_init.mac</name>
     </file>
   </group>

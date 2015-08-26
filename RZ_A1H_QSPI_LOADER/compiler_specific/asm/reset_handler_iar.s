@@ -26,8 +26,8 @@
 
 
     IMPORT QSPI_BL_vector_table /* Vector table */
-    IMPORT PowerON_Reset        /* C initalization routine */
-
+    IMPORT __cmain              /* C initalization routine */
+    
 /* 
 * The stack definitions are exported from the linker script (.icf)
 */
@@ -243,12 +243,8 @@ frqcr2_wait:
     CPS  #SYS_MODE 
     LDR  sp, =__program_stack_end__
 
-/* 
-* Now branch to C initialization sequence
-* Safe to do so since the SYS mode stack is setup
-*/
-    LDR  r12,=PowerON_Reset
-    BX   r12
+/* Branch to C library entry point */
+    B __cmain
 
     END
           

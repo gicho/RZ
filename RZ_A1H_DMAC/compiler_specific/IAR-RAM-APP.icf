@@ -195,7 +195,7 @@ define block HEAP      with alignment = 8, size = HEAP_SIZE      { };
 define block MMU_TABLE with alignment = 0x4000, size = 0x8000 { section MMU_TT }; 
 
 define block RAM_DATA { section .data };
-define block RAM_DATA_IN_ROM { section .data_init };
+/*define block RAM_DATA_IN_ROM { section .data_init };*/
 define block RAM_BSS { section .bss };
 
 /* .textrw are functions which are specified to run from RAM (__ramfunc) */
@@ -213,24 +213,27 @@ section .DMA_BUFFER_CACHED_IRAM,
 section .DMA_BUFFER_CACHED_SDRAM
 };
 
-initialize by copy { readwrite, section .textrw };
+initialize by copy { section .data, section .textrw };
 
 /* Vector table located already in RAM */
-place in RAM0L_region { first readonly section .intvec };
+place at address mem: RAM0L_start { section .intvec };
 
 /* Locate everything in ram */
-place in RAM0L_region { readonly }; 
-place in RAM0L_region { block RAM_CODE };
-place in RAM0L_region { block RAM_DATA };
-place in RAM0L_region { block RAM_BSS };
-place in RAM0L_region { block MMU_TABLE };
-place in RAM0L_region { block HEAP };
+place in RAM0L_region { 
+  readonly,
+  block RAM_CODE_IN_ROM
+};
 
 /* RAM code initializer and .data initializers go in other page of RAM because are compressed */
 /* so the linker cannot place the initializer section and the data in the same section as they */
 /* depend from each other */
-place in RAM0U_region { block RAM_CODE_IN_ROM }; 
-place in RAM0U_region { block RAM_DATA_IN_ROM }; 
+place in RAM0U_region {
+  block RAM_CODE,
+  block RAM_DATA,
+  block RAM_BSS,
+  block MMU_TABLE,
+  block HEAP  
+}; 
 
 "STACKS_AREA": place at end of RAM0U_region { 
   block CSTACK,

@@ -1,48 +1,22 @@
-/*******************************************************************************
-* DISCLAIMER
-* This software is supplied by Renesas Electronics Corporation and is only
-* intended for use with Renesas products. No other uses are authorized. This
-* software is owned by Renesas Electronics Corporation and is protected under
-* all applicable laws, including copyright laws.
-* THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIES REGARDING
-* THIS SOFTWARE, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING BUT NOT
-* LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
-* AND NON-INFRINGEMENT. ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED.
-* TO THE MAXIMUM EXTENT PERMITTED NOT PROHIBITED BY LAW, NEITHER RENESAS
-* ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES SHALL BE LIABLE
-* FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR
-* ANY REASON RELATED TO THIS SOFTWARE, EVEN IF RENESAS OR ITS AFFILIATES HAVE
-* BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-* Renesas reserves the right, without notice, to make changes to this software
-* and to discontinue the availability of this software. By using this software,
-* you agree to the additional terms and conditions found by accessing the
-* following link:
-* http://www.renesas.com/disclaimer
+/*
+* Copyright 2015 Giancarlo Parodi
 *
-*******************************************************************************/
-/*******************************************************************************
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
-*******************************************************************************/
-/******************************************************************************
-* File Name     : reset_handler.S
-* Device(s)     : RZ/A1H RSK2+RZA1H
-* Tool-Chain    : GNUARM-RZv13.01-EABI
-* H/W Platform  : RSK2+RZA1H CPU Board
-* Description   : Called by reset vector (start.S/mirrorstart.S)
-*               : As such its the startpoint for this software
-******************************************************************************/
-/******************************************************************************
-* History       : DD.MM.YYYY Version Description
-*               : 03.03.2014 1.00
-******************************************************************************/
+* reset_handler.s
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
     .global QSPI_BL_reset_handler
-    .global QSPI_BL_undefined_handler
-    .global QSPI_BL_svc_handler
-    .global QSPI_BL_prefetch_handler
-    .global QSPI_BL_abort_handler
-    .global QSPI_BL_reserved_handler
-    .global QSPI_BL_irq_handler
-    .global QSPI_BL_fiq_handler
+
 
     .text
     
@@ -65,36 +39,7 @@
     .equ    A_BIT , 0x2
     .equ    M_BIT , 0x1
 
-/* ========================================================================= */
-/* Entry point for the Reset handler */
-/* ========================================================================= */
-//;******************************************************************************
-//; Function Name : reset_handler
-//; Description   : This function is the assembler function executed after reset
-//;               : cancellation. After initial setting for the stack pointer or
-//;               : the MMU and reset cancellation, executes initial setting for
-//;               : the minimum required peripheral functions. Calls the __main
-//;               : of the standard library function to execute the main function.
-//;******************************************************************************
 QSPI_BL_reset_handler:
-
-/* ========================================================================= */
-/* Multi-core startup (future proofing boot code)                            */
-/* Check core, if not core 0  put to sleep.                                  */
-/* ========================================================================= */
-/* not needed on single processor systems, removed from module */
-#if 0
-        MRC     p15, 0, r0, c0, c0, 5	/* cp,  OP1,  Rd,  CRn, CRm,  OP2 */
-        								/* read in R0 the value of the MPIDR register */
-        ANDS    r0, r0, #3				/* bit[1:0] = CPU ID */
-        								/* bit[11:8] = Cluster ID */
-        								/* bit[30] = U Bit, 1 means uniprocessor */
-        								/* bit[31] = always 1 */
-goToSleep:
-        WFINE							/* if non zero, sleep */
-        BNE     goToSleep
-
-#endif
 
 /* ========================================================================= */
 /* Cache and MMU maintenance    											 */
@@ -290,35 +235,6 @@ frqcr2_wait:
     /* safe to do so since the SVC stack is setup */
     LDR  r12,=PowerON_Reset
     BX   r12
-
-
-QSPI_BL_reset_handler_end:
-    B    QSPI_BL_reset_handler_end
-
-/* ========================================================================= */
-/* Other Handlers                                                            */
-/* ========================================================================= */
-QSPI_BL_undefined_handler:
-    B    QSPI_BL_undefined_handler
-
-QSPI_BL_svc_handler:
-    B    QSPI_BL_svc_handler
-
-QSPI_BL_prefetch_handler:
-    B    QSPI_BL_prefetch_handler
-
-QSPI_BL_abort_handler:
-    B    QSPI_BL_abort_handler
-
-QSPI_BL_reserved_handler:
-    B    QSPI_BL_reserved_handler
-
-QSPI_BL_irq_handler:
-    B    QSPI_BL_irq_handler
-
-QSPI_BL_fiq_handler:
-    B    QSPI_BL_fiq_handler
-
 
 .end
 

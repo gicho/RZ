@@ -209,38 +209,36 @@ define block FIQ_STACK with alignment = 8, size = FIQ_STACK_SIZE { };
 define block UND_STACK with alignment = 8, size = UND_STACK_SIZE { };
 define block ABT_STACK with alignment = 8, size = ABT_STACK_SIZE { };
 define block HEAP      with alignment = 8, size = HEAP_SIZE      { };
-define block MMU_TABLE with alignment = 0x4000, size = 0x8000 { section MMU_TT }; 
 
-/* data and bss are initialized manually */
-define block RAM_DATA { section .data };
-define block RAM_DATA_IN_ROM { section .data_init };
+/* Not used in the bootloader */
+/* define block MMU_TABLE with alignment = 0x4000, size = 0x8000 { section MMU_TT }; */
+/* do not initialize  { section MMU_TT }; */
+/* place in RAM0L_region { block MMU_TABLE }; */
+
 define block RAM_BSS { section .bss };
+define block RAM_DATA { section .data };
 
 /* .textrw are functions which are specified to run from RAM (__ramfunc) */
-define block RAM_CODE { section .textrw };
+define block RAM_CODE { section .textrw, section ASM_MACROS_RAM };
 define block RAM_CODE_IN_ROM { section .textrw_init };
 
 do not initialize  { section .noinit };
-do not initialize  { section MMU_TT };
-initialize manually { section .data };
-initialize manually { section .bss };
-initialize manually { section .textrw };
+
+initialize by copy { section .data, section .textrw, section ASM_MACROS_RAM };
 
 /* Vector table located in QSPI */
-place in QSPI_FLASH_region { first readonly section .intvec };
+place at address mem:QSPI_FLASH_start { section .intvec };
 
 /* Locate constants and rest of non-ram code in QSPI */
 place in QSPI_FLASH_region { readonly }; 
 
-/* RAM code and .data initializers go in QSPI */
+/* RAM code initializers in QSPI */
 place in QSPI_FLASH_region { block RAM_CODE_IN_ROM }; 
-place in QSPI_FLASH_region { block RAM_DATA_IN_ROM }; 
 
 /* everything else in RAM */
-place in RAM0L_region { block RAM_CODE };
+place in RAM0L_region { block RAM_CODE }; 
 place in RAM0L_region { block RAM_DATA };
 place in RAM0L_region { block RAM_BSS };
-place in RAM0L_region { block MMU_TABLE };
 place in RAM0L_region { block HEAP };
 
 "STACKS_AREA": place at end of RAM0U_region { 

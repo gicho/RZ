@@ -114,11 +114,7 @@ SECTIONS
 
 		__vector_table_ram_end__ = .;
         PROVIDE(__vector_table_ram_end__ = .); 
-        		
-		/* the application signature follows directly the vector table in the example */
-		
-		*application_signature.o(.rodata)
-		
+        			
 		. = ALIGN(0x4);  
 		      
 	} > RAM0L 

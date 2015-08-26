@@ -37,15 +37,19 @@
   #define QSPI_HARDWARE	DUAL_MEMORY
 #endif
 
-/* this defines where in flash the application is located, @0x18080000 */
-/* needs to be a multiple of the flash sector size! */
-/* it refers to the second logical sector for a single QSPI */
-/* for a dual spi, it refers to the first logical sector for each chip */
-/* offset is fixed to 0x18080000 and matches the application linker script */
+/*
+* this defines where in flash the application is located, @0x18080000 
+* needs to be a multiple of the flash sector size! 
+* it refers to the second logical sector for a single QSPI 
+* for a dual spi, it refers to the first logical sector for each chip 
+* offset is fixed to 0x18080000 and matches the application linker script 
+*/
 #define APPLICATION_FLASH_OFFSET	0x80000
 
-// define where the user program image is located
-// needs to match the application linker script
+/*
+* define where the user program image is located
+* needs to match the application linker script
+*/
 #define DEF_USER_PROGRAM_SRC (SPI_BASE_ADDRESS + APPLICATION_FLASH_OFFSET)
 
 

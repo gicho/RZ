@@ -22,6 +22,7 @@
 
 #include "qspi_controller.h"
 
+#include "l1_cache.h"
 
 #define BYTEREAD_TEST 0
 
@@ -52,7 +53,7 @@ static externalAddressTransfer_t quadIoRead4b = {
   .optionalDataBitSize = OPTIONAL_DATA_4BIT,
   .optionalDataEnable = OPTIONAL_DATA_3,
   
-  .readBurstLenght = BURST_LEN_1,
+  .readBurstLenght = BURST_LEN_4,
   .burstMode = READ_BURST_ON,
   .readDataBitSize = READ_DATA_4BIT,
   .sslNegateAfterBurst = SSL_NEGATE_AFTER_BURST,
@@ -150,7 +151,7 @@ static spiConfig_t spiMode_33Mhz = {
   
   .divisionRatio = DIV_RATIO_4,
   .outputShift = SHIFT_ON_EVEN_EDGE,
-  .inputLatch = LATCH_ON_ODD_EDGE
+  .inputLatch = LATCH_ON_EVEN_EDGE
 
 };
 
@@ -188,6 +189,8 @@ static spiConfig_t spiMode_66Mhz = {
 static spiConfig_t* spiConfiguration;
 static externalAddressTransfer_t* extAddressTransfer;
 
+typedef void (*fPtr)(void);
+
 EXEC_RAM void qspiReconfigure(void)
 {
   flashStatusRegister1 statusReg1_device0, statusReg1_device1;
@@ -195,6 +198,8 @@ EXEC_RAM void qspiReconfigure(void)
   flashStatusRegister2 statusReg2_device0, statusReg2_device1;
   
   deviceSignature signature0, signature1;
+  
+  fPtr applicationEntry = (fPtr) DEF_USER_PROGRAM_SRC;  
   
   qspiExternalAddressForceIdleAndWait();
   
@@ -353,7 +358,6 @@ EXEC_RAM void qspiReconfigure(void)
 #endif
   
   /* now prepare scenario for external address mode */
-  
   /*
   * Switch to external address mode
   * Note: if the application space is configured in dual mode, the
@@ -368,9 +372,16 @@ EXEC_RAM void qspiReconfigure(void)
   spiConfiguration->operatingMode = EXTERNAL_ADDRESS_SPACE;
 
   qspiControllerConfigure(spiConfiguration);
+
+  /* flush the read cache */
+  qspiExternalAddressFlushReadCache();  
   
-  /* finally flush the read cache */
-  qspiExternalAddressFlushReadCache();
+  L1_I_CacheInvalidate();
+  
+  /* now jump to the program application entry point */
+  (*applicationEntry)();
+  
+  while(1);
 }
 
 

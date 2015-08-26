@@ -1522,7 +1522,7 @@
         </option>
         <option>
           <name>MacFile</name>
-          <state></state>
+          <state>C:\work\projects\mysoftware\RZ\RZ_A1H_QSPI_LOADER\scripts\reset.mac</state>
         </option>
         <option>
           <name>MemOverride</name>
@@ -1534,11 +1534,11 @@
         </option>
         <option>
           <name>RunToEnable</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>RunToName</name>
-          <state>0x18080000</state>
+          <state>main</state>
         </option>
         <option>
           <name>CExtraOptionsCheck</name>
@@ -2088,7 +2088,7 @@
         </option>
         <option>
           <name>IjetCpuClockEdit</name>
-          <state>72.0</state>
+          <state></state>
         </option>
         <option>
           <name>IjetSwoPrescalerList</name>
