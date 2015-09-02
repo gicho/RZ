@@ -92,7 +92,6 @@ void PowerON_Reset (void)
 	uint8_t  *src, *dst, *end;
 
 	// TODO add one stage to speed up QSPI to 33 Mhz first?
-#ifdef __GNUC__
         /* copy the reconfiguration routine in RAM */
 	/* these are the destination (run-time) locations of the code */
 	ram_code_start = &__qspi_reconfigure_code_start__;
@@ -100,56 +99,22 @@ void PowerON_Reset (void)
 
     /* this is where in rom the section is located */
 	rom_code_start = &__qspi_reconfigure_code_rom_start__;
-#endif
 
-#ifdef __ICCARM__     
-        
-        /* Copy QSPI reconfiguration code to ram */
-	/* these are the destination (run-time) locations of the code */
-	ram_code_start = __section_begin("RAM_CODE");
-	ram_code_end = __section_end("RAM_CODE");
-
-        /* this is where in rom the section is located */
-	rom_code_start = __section_begin("RAM_CODE_IN_ROM");
-#endif
-        
 	/* warning this is copying in multiple of 4 bytes */
 	copy_arm_code_section_to_ram((uint32_t *)rom_code_start, (uint32_t *)ram_code_start, (uint32_t *)ram_code_end);
 
-#ifdef __GNUC__
-        
 	/* setup any of the other .data, .const or .bss initialized sections */
 	src = (uint8_t*) &__data_rom_start__;
 	dst = (uint8_t*) &__data_start__;
 	end = (uint8_t*) &__data_end__;
 
-#endif
-        
-#ifdef __ICCARM__   
-        
-        /* Initialize data in ram */
-	src = __section_begin("RAM_DATA_IN_ROM");
-	dst = __section_begin("RAM_DATA");
-	end = __section_end("RAM_DATA");
-
-#endif        
 	/* ROM has data at end of text; copy it. */
 	while (dst < end) {
 	  *dst++ = *src++;
 	}
 
-#ifdef __GNUC__
-        
 	dst = (uint8_t*) &__bss_start__;
 	end = (uint8_t*) &__bss_end__;
-
-#endif
-        
-#ifdef __ICCARM__  
-	dst = __section_begin("RAM_BSS");
-	end = __section_end("RAM_BSS");
-
-#endif
         
 	/* Zero bss */
 	while(dst< end)

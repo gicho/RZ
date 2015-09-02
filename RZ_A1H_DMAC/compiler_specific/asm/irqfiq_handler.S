@@ -127,8 +127,5 @@ APP_irq_handler_end:
 
     RFEFD   sp!						// return from the SYSTEM mode stack
 
-
-Literals3:
-
     .endfunc
     .end

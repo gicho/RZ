@@ -17,7 +17,7 @@
 
 #else
 
-        #define DMA_FROM_DEVICE (1)
+    #define DMA_FROM_DEVICE (1)
 	#define DMA_TO_DEVICE 	2
 
 #endif

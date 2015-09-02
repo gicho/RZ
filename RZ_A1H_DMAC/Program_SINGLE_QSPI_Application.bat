@@ -1,7 +1,7 @@
 @echo off
 rem  This batch file will load the code into single mode QSPI devices.
 rem  Please change the JLINK.EXE path below if it is different in your system. 
-echo LOAD CODE INTO QSPI FLASH DUAL MODE (IC26)
+echo LOAD CODE INTO QSPI FLASH SINGLE MODE (IC26)
 echo .
 
 rem <> Manually set path to JLink install directory here if you do not

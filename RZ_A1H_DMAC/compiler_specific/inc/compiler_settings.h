@@ -76,8 +76,11 @@ Macro definitions
 #define DSB()               __asm__("dsb")
 #define DMB()               __asm__("dmb")
 
-#define SOFT_DELAY          __asm__("nop")
+#define MUTEX(foo) _Pragma("data_alignment=32") mutex_t foo = UNLOCKED;
+
+#define SOFT_DELAY()        	__asm__("nop")
 #define EXEC_RAM 
+#define WAIT_FOR_INTERRUPT()    __asm__("wfi")
 
 #define INITIALIZATION_CODE __attribute__((section (".hardware_init")))  
 
