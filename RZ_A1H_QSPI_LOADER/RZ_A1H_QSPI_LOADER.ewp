@@ -1947,174 +1947,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$\compiler_specific\asm\start_iar.s</name>
-        <configuration>
-          <name>Single_QSPI_Debug</name>
-          <settings>
-            <name>AARM</name>
-            <data>
-              <version>9</version>
-              <wantNonLocal>0</wantNonLocal>
-              <debug>1</debug>
-              <option>
-                <name>AObjPrefix</name>
-                <state>1</state>
-              </option>
-              <option>
-                <name>AEndian</name>
-                <state>1</state>
-              </option>
-              <option>
-                <name>ACaseSensitivity</name>
-                <state>1</state>
-              </option>
-              <option>
-                <name>MacroChars</name>
-                <version>0</version>
-                <state>0</state>
-              </option>
-              <option>
-                <name>AWarnEnable</name>
-                <state>0</state>
-              </option>
-              <option>
-                <name>AWarnWhat</name>
-                <state>0</state>
-              </option>
-              <option>
-                <name>AWarnOne</name>
-                <state></state>
-              </option>
-              <option>
-                <name>AWarnRange1</name>
-                <state></state>
-              </option>
-              <option>
-                <name>AWarnRange2</name>
-                <state></state>
-              </option>
-              <option>
-                <name>ADebug</name>
-                <state>1</state>
-              </option>
-              <option>
-                <name>AltRegisterNames</name>
-                <state>0</state>
-              </option>
-              <option>
-                <name>ADefines</name>
-                <state></state>
-              </option>
-              <option>
-                <name>AList</name>
-                <state>1</state>
-              </option>
-              <option>
-                <name>AListHeader</name>
-                <state>1</state>
-              </option>
-              <option>
-                <name>AListing</name>
-                <state>1</state>
-              </option>
-              <option>
-                <name>Includes</name>
-                <state>0</state>
-              </option>
-              <option>
-                <name>MacDefs</name>
-                <state>0</state>
-              </option>
-              <option>
-                <name>MacExps</name>
-                <state>1</state>
-              </option>
-              <option>
-                <name>MacExec</name>
-                <state>0</state>
-              </option>
-              <option>
-                <name>OnlyAssed</name>
-                <state>0</state>
-              </option>
-              <option>
-                <name>MultiLine</name>
-                <state>0</state>
-              </option>
-              <option>
-                <name>PageLengthCheck</name>
-                <state>0</state>
-              </option>
-              <option>
-                <name>PageLength</name>
-                <state>80</state>
-              </option>
-              <option>
-                <name>TabSpacing</name>
-                <state>8</state>
-              </option>
-              <option>
-                <name>AXRef</name>
-                <state>0</state>
-              </option>
-              <option>
-                <name>AXRefDefines</name>
-                <state>0</state>
-              </option>
-              <option>
-                <name>AXRefInternal</name>
-                <state>0</state>
-              </option>
-              <option>
-                <name>AXRefDual</name>
-                <state>0</state>
-              </option>
-              <option>
-                <name>AProcessor</name>
-                <state>1</state>
-              </option>
-              <option>
-                <name>AFpuProcessor</name>
-                <state>1</state>
-              </option>
-              <option>
-                <name>AOutputFile</name>
-                <state>$FILE_BNAME$.o</state>
-              </option>
-              <option>
-                <name>AMultibyteSupport</name>
-                <state>0</state>
-              </option>
-              <option>
-                <name>ALimitErrorsCheck</name>
-                <state>0</state>
-              </option>
-              <option>
-                <name>ALimitErrorsEdit</name>
-                <state>100</state>
-              </option>
-              <option>
-                <name>AIgnoreStdInclude</name>
-                <state>0</state>
-              </option>
-              <option>
-                <name>AUserIncludes</name>
-                <state></state>
-              </option>
-              <option>
-                <name>AExtraOptionsCheckV2</name>
-                <state>0</state>
-              </option>
-              <option>
-                <name>AExtraOptionsV2</name>
-                <state></state>
-              </option>
-              <option>
-                <name>AsmNoLiteralPool</name>
-                <state>0</state>
-              </option>
-            </data>
-          </settings>
-        </configuration>
       </file>
     </group>
     <group>
@@ -2128,9 +1960,6 @@
     </group>
     <group>
       <name>src</name>
-      <file>
-        <name>$PROJ_DIR$\compiler_specific\src\l1_cache.c</name>
-      </file>
       <file>
         <name>$PROJ_DIR$\compiler_specific\src\low_level_init_iar.c</name>
       </file>
@@ -2348,9 +2177,6 @@
   </group>
   <group>
     <name>scripts</name>
-    <file>
-      <name>$PROJ_DIR$\scripts\reset.mac</name>
-    </file>
   </group>
   <group>
     <name>src</name>

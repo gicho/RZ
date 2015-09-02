@@ -109,7 +109,7 @@ void (*g_switch_release_callback_func) (void) = 0;
 * Arguments    : none
 * Return Value : none
 *******************************************************************************/
-void Init_Switches (void)
+void rsk_init_switches (void)
 {
     /* Set SW1 (IRQ3) as input pin (P1_9) */
 	/* 3rd function */
@@ -385,7 +385,7 @@ static void switch_debounce_delay (void)
 	/* Wait for the the 10ms period to expire */
 	while (0x01 != (MTU2.TSR_4 & 0x01))
     {
-    	SOFT_DELAY;
+    	SOFT_DELAY();
     }
 
 	/* Reload the period */

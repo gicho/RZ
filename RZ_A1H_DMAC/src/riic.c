@@ -24,39 +24,35 @@
 /*******************************************************************************
 * File Name     : riic.c
 * Device(s)     : RZ/A1H (R7S721001)
-* Tool-Chain    : GNUARM-RZv13.01-EABI
+* Tool-Chain    : GNUARM-NONEv14.02-EABI
 * H/W Platform  : RSK+RZA1H CPU Board
 * Description   : RIIC driver support for all 4 available i2c channels
 *******************************************************************************/
 /*******************************************************************************
 * History       : DD.MM.YYYY Version Description
-*               : 18.06.2013 1.00
-*               : 21.03.2014 2.00
+*               : 21.10.2014 1.00
 *******************************************************************************/
 
 /******************************************************************************
 Includes   <System Includes> , "Project Includes"
 ******************************************************************************/
-#include <stdint.h>
-
-/* Interchangeable compiler specific header */
-#include "compiler_settings.h"
-
 /* Default  type definition header */
-
 #include "r_typedefs.h"
 /* I/O Register root header */
 #include "iodefine.h"
-#include "riic_iobitmask.h"
-
 /* Device Driver common header */
 #include "dev_drv.h"
 /* RIIC Driver Header */
-#include "devdrv_riic.h"
+#include "riic.h"
 /* I2C RSK+RZA1H Eval-board header */
-#include "sample_riic_rza1h_rsk.h"
+#include "riic_rskrza1h.h"
 /* Low level register read/write header */
 #include "rza_io_regrw.h"
+
+#include "riic_iodefine.h"
+#include "riic_iobitmask.h"
+
+#include "compiler_settings.h"
 
 /******************************************************************************
 Typedef definitions
@@ -70,30 +66,20 @@ typedef enum riic_rx_mode
     RIIC_RX_MODE_STOP
 } riic_rx_mode_t;
 
-/******************************************************************************
-Macro definitions
-******************************************************************************/
-
-/******************************************************************************
-Imported global variables and functions (from other files)
-******************************************************************************/
-
-/******************************************************************************
-Exported global variables and functions (to be accessed by other files)
-******************************************************************************/
 
 /******************************************************************************
 Private global variables and functions
 ******************************************************************************/
-static void    RIIC_Receive(uint32_t channel, riic_rx_mode_t mode,
-		                                                      uint8_t * data);
-static int32_t RIIC_Transmit(uint32_t channel, uint8_t data);
-static void    RIIC_TransmitStart(uint32_t channel);
-static void    RIIC_TransmitRestart(uint32_t channel);
-static void    RIIC_TransmitStop(uint32_t channel);
-static void    RIIC_DetectStop(uint32_t channel);
-static void    RIIC_ClearNack(volatile struct st_riic * riic);
-volatile struct st_riic * RIIC_GetRegAddr(uint32_t channel);
+static void    riic_receive (uint32_t channel, riic_rx_mode_t mode,
+		                                                     uint8_t * pdata);
+static int32_t riic_transmit (uint32_t channel, uint8_t data);
+static void    riic_transmit_start (uint32_t channel);
+static void    riic_transmit_restart (uint32_t channel);
+static void    riic_transmit_stop (uint32_t channel);
+static void    riic_detect_stop (uint32_t channel);
+static void    riic_clear_nack (volatile struct st_riic * priic);
+
+volatile struct st_riic * priic_get_reg_addr (uint32_t channel);
 
 /******************************************************************************
 * Function Name: R_RIIC_Init
@@ -118,10 +104,10 @@ volatile struct st_riic * RIIC_GetRegAddr(uint32_t channel);
 * Return Value : DEVDRV_SUCCESS  : Success of RIIC initialisation
 *              : DEVDRV_ERROR    : Failure of RIIC initialisation
 ******************************************************************************/
-int32_t R_RIIC_Init(uint32_t channel, uint32_t cks, uint32_t brl, uint32_t brh)
+int32_t R_RIIC_Init (uint32_t channel, uint32_t cks, uint32_t brl, uint32_t brh)
 {
     /*  Argument check  */
-    if ((channel >= RIIC_CH_TOTAL) || (cks > 7) || (brl > 31) || (brh > 31))
+    if ((((channel >= RIIC_CH_TOTAL) || (cks > 7)) || (brl > 31)) || (brh > 31))
     {
         return DEVDRV_ERROR;        /* Argument error */
     }
@@ -130,19 +116,21 @@ int32_t R_RIIC_Init(uint32_t channel, uint32_t cks, uint32_t brl, uint32_t brh)
     switch (channel)
     {
         case DEVDRV_CH_0:
-            Userdef_RIIC0_Init(cks, brl, brh);
+            userdef_riic0_init(cks, brl, brh);
         break;
         case DEVDRV_CH_1:
-            Userdef_RIIC1_Init(cks, brl, brh);
+            userdef_riic1_init(cks, brl, brh);
         break;
         case DEVDRV_CH_2:
-            Userdef_RIIC2_Init(cks, brl, brh);
+            userdef_riic2_init(cks, brl, brh);
         break;
         case DEVDRV_CH_3:
-            Userdef_RIIC3_Init(cks, brl, brh);
+            userdef_riic3_init(cks, brl, brh);
         break;
         default:
+
             /* Do not reach here based on the assumption */
+          while(1);
         break;
     }
 
@@ -157,7 +145,7 @@ int32_t R_RIIC_Init(uint32_t channel, uint32_t cks, uint32_t brl, uint32_t brh)
 * Return Value : DEVDRV_SUCCESS   : Success of RIIC operation
 *              : DEVDRV_ERROR     : Failure of RIIC operation
 ******************************************************************************/
-int32_t R_RIIC_SingleRead(uint32_t channel, uint8_t * data)
+int32_t R_RIIC_SingleRead (uint32_t channel, uint8_t * pdata)
 {
     /* Ensure channel is valid */
     if (channel >= RIIC_CH_TOTAL)
@@ -166,7 +154,7 @@ int32_t R_RIIC_SingleRead(uint32_t channel, uint8_t * data)
     }
 
     /* Read single byte */
-    RIIC_Receive(channel, RIIC_RX_MODE_NORMAL, data);
+    riic_receive(channel, RIIC_RX_MODE_NORMAL, pdata);
 
     return DEVDRV_SUCCESS;
 }
@@ -186,9 +174,9 @@ int32_t R_RIIC_SingleRead(uint32_t channel, uint8_t * data)
 * Return Value : DEVDRV_SUCCESS   : Success of RIIC operation
 *              : DEVDRV_ERROR     : Failure of RIIC operation
 ******************************************************************************/
-int32_t R_RIIC_SingleWrite(uint32_t channel, uint8_t data, uint32_t mode)
+int32_t R_RIIC_SingleWrite (uint32_t channel, uint8_t data, uint32_t mode)
 {
-    volatile struct st_riic * riic;
+    volatile struct st_riic * priic;
     int32_t ret;
 
     /* Ensure channel is valid */
@@ -198,32 +186,34 @@ int32_t R_RIIC_SingleWrite(uint32_t channel, uint8_t data, uint32_t mode)
     }
 
     /* Write single byte */
-    ret = RIIC_Transmit(channel, data);
+    ret = riic_transmit(channel, data);
 
     if (DEVDRV_SUCCESS == ret)
     {
         switch (channel)
         {
             case DEVDRV_CH_0:
-                Userdef_RIIC0_WaitTransmitEnd(mode);
+                userdef_riic0_wait_tx_end(mode);
             break;
             case DEVDRV_CH_1:
-                Userdef_RIIC1_WaitTransmitEnd(mode);
+                userdef_riic1_wait_tx_end(mode);
             break;
             case DEVDRV_CH_2:
-                Userdef_RIIC2_WaitTransmitEnd(mode);
+                userdef_riic2_wait_tx_end(mode);
             break;
             case DEVDRV_CH_3:
-                Userdef_RIIC3_WaitTransmitEnd(mode);
+                userdef_riic3_wait_tx_end(mode);
             break;
             default:
+
                 /* Can not be reached due to parameter checking above */
+                while(1);
             break;
         }
 
         /* Check for transmission status */
-        riic = RIIC_GetRegAddr(channel);
-        if (0 == RZA_IO_RegRead_8(&(riic->RIICnSR2.UINT8[0]),
+        priic = priic_get_reg_addr(channel);
+        if (0 == RZA_IO_RegRead_8(&(priic->RIICnSR2.UINT8[0]),
         		                    RIICn_RIICnSR2_NACKF_SHIFT,
         		                    RIICn_RIICnSR2_NACKF))
         {
@@ -237,7 +227,7 @@ int32_t R_RIIC_SingleWrite(uint32_t channel, uint8_t data, uint32_t mode)
         }
     }
 
-    return ret;
+    return (ret);
 }
 
 /******************************************************************************
@@ -255,10 +245,10 @@ int32_t R_RIIC_SingleWrite(uint32_t channel, uint8_t data, uint32_t mode)
 * Return Value : DEVDRV_SUCCESS   : Success of RIIC operation
 *              : DEVDRV_ERROR     : Failure of RIIC operation
 ******************************************************************************/
-int32_t R_RIIC_WriteCond(uint32_t channel, uint32_t mode)
+int32_t R_RIIC_WriteCond (uint32_t channel, uint32_t mode)
 {
     /* Argument check */
-    if (channel >= RIIC_CH_TOTAL || mode > RIIC_TX_MODE_STOP)
+    if ((channel >= RIIC_CH_TOTAL) || (mode > RIIC_TX_MODE_STOP))
     {
     	/* Argument error */
         return DEVDRV_ERROR;
@@ -268,21 +258,24 @@ int32_t R_RIIC_WriteCond(uint32_t channel, uint32_t mode)
     switch (mode)
     {
         case RIIC_TX_MODE_START:
-            RIIC_TransmitStart(channel);
+            riic_transmit_start(channel);
         break;
         case RIIC_TX_MODE_RESTART:
-            RIIC_TransmitRestart(channel);
+            riic_transmit_restart(channel);
         break;
         case RIIC_TX_MODE_STOP:
-            RIIC_TransmitStop(channel);
+            riic_transmit_stop(channel);
         break;
         default:
+
             /* Do not reach here based on the assumption */
+            while(1);
         break;
     }
 
     return DEVDRV_SUCCESS;
 }
+
 /******************************************************************************
 * End of Function R_RIIC_WriteCond
 ******************************************************************************/
@@ -296,9 +289,9 @@ int32_t R_RIIC_WriteCond(uint32_t channel, uint32_t mode)
 * Return Value : DEVDRV_SUCCESS   : Success of RIIC operation
 *              : DEVDRV_ERROR     : Failure of RIIC operation
 ******************************************************************************/
-int32_t R_RIIC_Write(uint32_t channel, const uint8_t * buffer, uint32_t byte)
+int32_t R_RIIC_Write (uint32_t channel, const uint8_t * pbuffer, uint32_t byte)
 {
-    volatile struct st_riic * riic;
+    volatile struct st_riic * priic;
     uint32_t offset;
     int32_t  ret;
 
@@ -319,11 +312,12 @@ int32_t R_RIIC_Write(uint32_t channel, const uint8_t * buffer, uint32_t byte)
     for (offset = 0; offset < byte; offset++)
     {
         /* Single byte transmission */
-        ret = RIIC_Transmit(channel, *(buffer + offset));
+        ret = riic_transmit(channel, *(pbuffer + offset));
 
-        if (ret != DEVDRV_SUCCESS)
+        if (DEVDRV_SUCCESS != ret)
         {
-            break;
+            /* Exit the loop */
+            offset = byte;
         }
     }
 
@@ -332,35 +326,39 @@ int32_t R_RIIC_Write(uint32_t channel, const uint8_t * buffer, uint32_t byte)
         switch (channel)
         {
             case DEVDRV_CH_0:
-                Userdef_RIIC0_WaitTransmitEnd(RIIC_TEND_WAIT_TRANSMIT);
-                Userdef_RIIC0_InitTransmitEnd();
+                userdef_riic0_wait_tx_end(RIIC_TEND_WAIT_TRANSMIT);
+                userdef_riic0_init_tx_end();
             break;
             case DEVDRV_CH_1:
-                Userdef_RIIC1_WaitTransmitEnd(RIIC_TEND_WAIT_TRANSMIT);
-                Userdef_RIIC1_InitTransmitEnd();
+                userdef_riic1_wait_tx_end(RIIC_TEND_WAIT_TRANSMIT);
+                userdef_riic1_init_tx_end();
             break;
             case DEVDRV_CH_2:
-                Userdef_RIIC2_WaitTransmitEnd(RIIC_TEND_WAIT_TRANSMIT);
-                Userdef_RIIC2_InitTransmitEnd();
+                userdef_riic2_wait_tx_end(RIIC_TEND_WAIT_TRANSMIT);
+                userdef_riic2_init_tx_end();
             break;
             case DEVDRV_CH_3:
-                Userdef_RIIC3_WaitTransmitEnd(RIIC_TEND_WAIT_TRANSMIT);
-                Userdef_RIIC3_InitTransmitEnd();
+                userdef_riic3_wait_tx_end(RIIC_TEND_WAIT_TRANSMIT);
+                userdef_riic3_init_tx_end();
             break;
             default:
+
                 /* Do not reach here based on the assumption */
+                while(1);
             break;
         }
 
         /* Check for transmission status */
-        riic = RIIC_GetRegAddr(channel);
+        priic = priic_get_reg_addr(channel);
+
         /* ACK */
-        if (0 == RZA_IO_RegRead_8(&(riic->RIICnSR2.UINT8[0]),
+        if (0 == RZA_IO_RegRead_8(&(priic->RIICnSR2.UINT8[0]),
         		                    RIICn_RIICnSR2_NACKF_SHIFT,
         		                    RIICn_RIICnSR2_NACKF))
         {
             ret = DEVDRV_SUCCESS;
         }
+
         /* NACK */
         else
         {
@@ -368,8 +366,9 @@ int32_t R_RIIC_Write(uint32_t channel, const uint8_t * buffer, uint32_t byte)
         }
     }
 
-    return ret;
+    return (ret);
 }
+
 /******************************************************************************
 * End of Function R_RIIC_Write
 ******************************************************************************/
@@ -383,11 +382,12 @@ int32_t R_RIIC_Write(uint32_t channel, const uint8_t * buffer, uint32_t byte)
 * Return Value : DEVDRV_SUCCESS   : Success of RIIC operation
 *              : DEVDRV_ERROR     : Failure of RIIC operation
 ******************************************************************************/
-int32_t R_RIIC_Read(uint32_t channel, uint8_t * buffer, uint32_t byte)
+int32_t R_RIIC_Read (uint32_t channel, uint8_t * pbuffer, uint32_t byte)
 {
-    volatile struct st_riic * riic;
-    uint32_t  cnt;
-    uint8_t * buffer_ptr;
+    volatile struct st_riic * priic;
+    // uint32_t  cnt;
+    uint8_t * pbuffer2;
+    uint8_t dummy_buf;
 
     /* Ensure channel is valid (parameter checking) */
     if (channel >= RIIC_CH_TOTAL)
@@ -402,62 +402,53 @@ int32_t R_RIIC_Read(uint32_t channel, uint8_t * buffer, uint32_t byte)
         return DEVDRV_SUCCESS;
     }
 
-    buffer_ptr = buffer;
+    pbuffer2 = pbuffer;
 
+    /* 1 byte random read does not need a dummy read */
     if (1 == byte)
     {
         /* (In the case of only 1 byte) reception start */
-        /* Do Nothing */
-    }
+    	riic_receive(channel, RIIC_RX_MODE_NACK, pbuffer2);
 
-    else if (2 == byte)
-    {
-        /* (In the case of 2 bytes) reception start */
-        /* Complete first byte read*/
-        RIIC_Receive(channel, RIIC_RX_MODE_NACK, buffer_ptr);
-        buffer_ptr++;
+    	/* Last byte read */
+    	riic_receive(channel, RIIC_RX_MODE_STOP, pbuffer2);
     }
-
     else
     {
-        /* (In the case of 3 bytes or more) reception start */
-        cnt = byte;
-        while (cnt > 3)
-        {
-            /* Data lead of the first bytes to the last byte (-3) */
-            RIIC_Receive(channel, RIIC_RX_MODE_NORMAL, buffer_ptr);
-            buffer_ptr++;
-            cnt--;
-        }
+    	/* Start reading data */
+    	riic_receive(channel, RIIC_RX_MODE_ACK, pbuffer2);
 
-        /* Data read of the last byte (-2) */
-        RIIC_Receive(channel, RIIC_RX_MODE_LOW_HOLD, buffer_ptr);
-        buffer_ptr++;
+		/* Reads data bytes */
+		while (1 != byte)
+		{
+			riic_receive(channel, RIIC_RX_MODE_ACK, pbuffer2);
+			pbuffer2++;
+			byte--;
+		}
 
-        /* Data read of the last byte (-1) */
-        RIIC_Receive(channel, RIIC_RX_MODE_NACK, buffer_ptr);
-        buffer_ptr++;
+		/* Data read of the last byte (-1) */
+		riic_receive(channel, RIIC_RX_MODE_NACK, pbuffer2);
+
+		/* Last byte read */
+		riic_receive(channel, RIIC_RX_MODE_STOP, &dummy_buf);
     }
 
-    /* Last byte read */
-    RIIC_Receive(channel, RIIC_RX_MODE_STOP, buffer_ptr);
+    priic = priic_get_reg_addr(channel);
 
-
-    riic = RIIC_GetRegAddr(channel);
-
-    if( riic != (struct st_riic *)DEVDRV_ERROR)
+    if((struct st_riic *) DEVDRV_ERROR != priic)
     {
         /* Process next Read */
-        RZA_IO_RegWrite_8(&(riic->RIICnMR3.UINT8[0]),
+        RZA_IO_RegWrite_8(&(priic->RIICnMR3.UINT8[0]),
         		            0,
         		            RIICn_RIICnMR3_WAIT_SHIFT,
         		            RIICn_RIICnMR3_WAIT);
 
         /* Stop condition detection confirmation */
-        RIIC_DetectStop(channel);
+        riic_detect_stop(channel);
     }
     return DEVDRV_SUCCESS;
 }
+
 /******************************************************************************
 * End of Function R_RIIC_Read
 ******************************************************************************/
@@ -469,7 +460,7 @@ int32_t R_RIIC_Read(uint32_t channel, uint8_t * buffer, uint32_t byte)
 * Return Value : DEVDRV_SUCCESS   : Success of RIIC operation
 *              : DEVDRV_ERROR     : Failure of RIIC operation
 ******************************************************************************/
-int32_t R_RIIC_ReadDummy(uint32_t channel)
+int32_t R_RIIC_ReadDummy (uint32_t channel)
 {
     uint8_t dummy_buf_8b;
 
@@ -481,10 +472,11 @@ int32_t R_RIIC_ReadDummy(uint32_t channel)
     }
 
     /* Perform Dummy byte read */
-    RIIC_Receive(channel, RIIC_RX_MODE_NORMAL, &dummy_buf_8b);
+    riic_receive(channel, RIIC_RX_MODE_NORMAL, &dummy_buf_8b);
 
     return DEVDRV_SUCCESS;
 }
+
 /******************************************************************************
 * End of Function R_RIIC_ReadDummy
 ******************************************************************************/
@@ -496,7 +488,7 @@ int32_t R_RIIC_ReadDummy(uint32_t channel)
 * Return Value : DEVDRV_SUCCESS   : Success of RIIC operation
 *              : DEVDRV_ERROR     : Failure of RIIC operation
 ******************************************************************************/
-int32_t R_RIIC_DetectStop(uint32_t channel)
+int32_t R_RIIC_DetectStop (uint32_t channel)
 {
     /* Argument check */
     if (channel >= RIIC_CH_TOTAL)
@@ -506,10 +498,11 @@ int32_t R_RIIC_DetectStop(uint32_t channel)
     }
 
     /* Perform detection */
-    RIIC_DetectStop(channel);
+    riic_detect_stop(channel);
 
     return DEVDRV_SUCCESS;
 }
+
 /******************************************************************************
 * End of Function R_RIIC_DetectStop
 ******************************************************************************/
@@ -517,13 +510,13 @@ int32_t R_RIIC_DetectStop(uint32_t channel)
 /******************************************************************************
 * Function Name: R_RIIC_ClearNack
 * Description  : Clear NACK bit on selected channel
-* Arguments    : uint32_t channel : I2c channel selection
+* Arguments    : uint32_t channel : I2C channel selection
 * Return Value : DEVDRV_SUCCESS   : Success of RIIC operation
 *              : DEVDRV_ERROR     : Failure of RIIC operation
 ******************************************************************************/
-int32_t R_RIIC_ClearNack(uint32_t channel)
+int32_t R_RIIC_ClearNack (uint32_t channel)
 {
-    volatile struct st_riic * riic;
+    volatile struct st_riic * priic;
 
     /*  Argument check  */
     if (channel >= RIIC_CH_TOTAL)
@@ -531,12 +524,17 @@ int32_t R_RIIC_ClearNack(uint32_t channel)
         return DEVDRV_ERROR;
     }
 
+    priic = priic_get_reg_addr(channel);
+
     /* NACK clear flag */
-    riic = RIIC_GetRegAddr(channel);
-    RIIC_ClearNack(riic);
+    riic_clear_nack(priic);
 
     return DEVDRV_SUCCESS;
 }
+
+/******************************************************************************
+* End of Function R_RIIC_ClearNack
+******************************************************************************/
 
 /******************************************************************************
 * Function Name: R_RIIC_RiInterrupt
@@ -548,7 +546,7 @@ int32_t R_RIIC_ClearNack(uint32_t channel)
 * Return Value : DEVDRV_SUCCESS   : Function completes with no errors
 *              : DEVDRV_ERROR     : Function fails to complete with errors
 ******************************************************************************/
-int32_t R_RIIC_RiInterrupt(uint32_t channel)
+int32_t R_RIIC_RiInterrupt (uint32_t channel)
 {
     /*  Argument check  */
     if (channel >= RIIC_CH_TOTAL)
@@ -560,24 +558,30 @@ int32_t R_RIIC_RiInterrupt(uint32_t channel)
     switch (channel)
     {
         case DEVDRV_CH_0:
-            Userdef_RIIC0_SetReceiveFull();
+            userdef_riic0_set_rx_full();
         break;
         case DEVDRV_CH_1:
-            Userdef_RIIC1_SetReceiveFull();
+            userdef_riic1_set_rx_full();
         break;
         case DEVDRV_CH_2:
-            Userdef_RIIC2_SetReceiveFull();
+            userdef_riic2_set_rx_full();
         break;
         case DEVDRV_CH_3:
-            Userdef_RIIC3_SetReceiveFull();
+            userdef_riic3_set_rx_full();
         break;
         default:
+
             /* Do not reach here based on the assumption */
+            while(1);
         break;
     }
 
     return DEVDRV_SUCCESS;
 }
+
+/******************************************************************************
+* End of Function R_RIIC_RiInterrupt
+******************************************************************************/
 
 /******************************************************************************
 * Function Name: R_RIIC_TiInterrupt
@@ -589,7 +593,7 @@ int32_t R_RIIC_RiInterrupt(uint32_t channel)
 * Return Value : DEVDRV_SUCCESS   : Function completes with no errors
 *              : DEVDRV_ERROR     : Function fails to complete with errors
 ******************************************************************************/
-int32_t R_RIIC_TiInterrupt(uint32_t channel)
+int32_t R_RIIC_TiInterrupt (uint32_t channel)
 {
     /*  Argument check  */
     if (channel >= RIIC_CH_TOTAL)
@@ -602,24 +606,29 @@ int32_t R_RIIC_TiInterrupt(uint32_t channel)
     switch (channel)
     {
         case DEVDRV_CH_0:
-            Userdef_RIIC0_SetTransmitEmpty();
+            userdef_riic0_set_tx_empty();
         break;
         case DEVDRV_CH_1:
-            Userdef_RIIC1_SetTransmitEmpty();
+            userdef_riic1_set_tx_empty();
         break;
         case DEVDRV_CH_2:
-            Userdef_RIIC2_SetTransmitEmpty();
+            userdef_riic2_set_tx_empty();
         break;
         case DEVDRV_CH_3:
-            Userdef_RIIC3_SetTransmitEmpty();
+            userdef_riic3_set_tx_empty();
         break;
         default:
+
             /* Do not reach here based on the assumption */
         break;
     }
 
     return DEVDRV_SUCCESS;
 }
+
+/******************************************************************************
+* End of Function R_RIIC_TiInterrupt
+******************************************************************************/
 
 /******************************************************************************
 * Function Name: R_RIIC_TeiInterrupt
@@ -631,9 +640,9 @@ int32_t R_RIIC_TiInterrupt(uint32_t channel)
 * Return Value : DEVDRV_SUCCESS   : Function completes with no errors
 *              : DEVDRV_ERROR     : Function fails to complete with errors
 ******************************************************************************/
-int32_t R_RIIC_TeiInterrupt(uint32_t channel)
+int32_t R_RIIC_TeiInterrupt (uint32_t channel)
 {
-    volatile struct  st_riic * riic;
+    volatile struct  st_riic * priic;
     volatile uint8_t dummy_buf_8b = 0u;
 
     /* Suppresses the 'variable set but not used' warning */
@@ -648,30 +657,33 @@ int32_t R_RIIC_TeiInterrupt(uint32_t channel)
     switch (channel)
     {
         case DEVDRV_CH_0:
-            Userdef_RIIC0_SetTransmitEnd();
+            userdef_riic0_set_tx_end();
         break;
         case DEVDRV_CH_1:
-            Userdef_RIIC1_SetTransmitEnd();
+            userdef_riic1_set_tx_end();
         break;
         case DEVDRV_CH_2:
-            Userdef_RIIC2_SetTransmitEnd();
+            userdef_riic2_set_tx_end();
         break;
         case DEVDRV_CH_3:
-            Userdef_RIIC3_SetTransmitEnd();
+            userdef_riic3_set_tx_end();
         break;
         default:
+
             /* Do not reach here based on the assumption */
+            while(1);
         break;
     }
 
     /* Transmit end flag clear */
-    riic = RIIC_GetRegAddr(channel);
-    RZA_IO_RegWrite_8(&(riic->RIICnSR2.UINT8[0]),
+    priic = priic_get_reg_addr(channel);
+
+    RZA_IO_RegWrite_8(&(priic->RIICnSR2.UINT8[0]),
     		            0,
     		            RIICn_RIICnSR2_TEND_SHIFT,
     		            RIICn_RIICnSR2_TEND);
 
-    dummy_buf_8b = RZA_IO_RegRead_8(&(riic->RIICnSR2.UINT8[0]),
+    dummy_buf_8b = RZA_IO_RegRead_8(&(priic->RIICnSR2.UINT8[0]),
     		                          RIICn_RIICnSR2_TEND_SHIFT,
     		                          RIICn_RIICnSR2_TEND);
 
@@ -679,7 +691,11 @@ int32_t R_RIIC_TeiInterrupt(uint32_t channel)
 }
 
 /******************************************************************************
-* Function Name: RIIC_Receive
+* End of Function R_RIIC_TeiInterrupt
+******************************************************************************/
+
+/******************************************************************************
+* Function Name: riic_receive
 * Description  : Receive data (single byte)
 * Arguments    : uint32_t channel    : RIIC channel (0 to 3)
 *              : riic_rx_mode_t mode : receive mode
@@ -691,114 +707,123 @@ int32_t R_RIIC_TeiInterrupt(uint32_t channel)
 *              : uint8_t * data      : received data
 * Return Value : none
 ******************************************************************************/
-static void RIIC_Receive(uint32_t channel, riic_rx_mode_t mode, uint8_t * data)
+static void riic_receive (uint32_t channel, riic_rx_mode_t mode, uint8_t * pdata)
 {
-    volatile struct st_riic * riic;
+    volatile struct st_riic * priic;
 
     /* Wait until Receive data full conditions and clear receive-data-full
        condition have been satisfied */
     switch (channel)
     {
         case DEVDRV_CH_0:
-            Userdef_RIIC0_WaitReceiveFull();
-            Userdef_RIIC0_InitReceiveFull();
+            userdef_riic0_wait_rx_full();
+            userdef_riic0_init_rx_full();
         break;
         case DEVDRV_CH_1:
-            Userdef_RIIC1_WaitReceiveFull();
-            Userdef_RIIC1_InitReceiveFull();
+            userdef_riic1_wait_rx_full();
+            userdef_riic1_init_rx_full();
         break;
         case DEVDRV_CH_2:
-            Userdef_RIIC2_WaitReceiveFull();
-            Userdef_RIIC2_InitReceiveFull();
+            userdef_riic2_wait_rx_full();
+            userdef_riic2_init_rx_full();
         break;
         case DEVDRV_CH_3:
-            Userdef_RIIC3_WaitReceiveFull();
-            Userdef_RIIC3_InitReceiveFull();
+            userdef_riic3_wait_rx_full();
+            userdef_riic3_init_rx_full();
         break;
         default:
+
             /* Do not reach here based on the assumption */
+            while(1);
         break;
     }
 
-    riic = RIIC_GetRegAddr(channel);
+    priic = priic_get_reg_addr(channel);
 
     switch (mode)
     {
         case RIIC_RX_MODE_ACK:
+
         	/* Enable Modification of the ACKBT bit */
-            RZA_IO_RegWrite_8(&(riic->RIICnMR3.UINT8[0]),
+            RZA_IO_RegWrite_8(&(priic->RIICnMR3.UINT8[0]),
             		            1,
             		            RIICn_RIICnMR3_ACKWP_SHIFT,
             		            RIICn_RIICnMR3_ACKWP);
 
             /* Send '0' acknowledge bit NACK Transmission */
-            RZA_IO_RegWrite_8(&(riic->RIICnMR3.UINT8[0]),
+            RZA_IO_RegWrite_8(&(priic->RIICnMR3.UINT8[0]),
                                 0,
                                 RIICn_RIICnMR3_ACKBT_SHIFT,
                                 RIICn_RIICnMR3_ACKBT);
         break;
 
         case RIIC_RX_MODE_LOW_HOLD:
-        	/* Period between ninth clock cycle and first clock cycle is held low. */
-            RZA_IO_RegWrite_8(&(riic->RIICnMR3.UINT8[0]),
+
+        	/* Period between ninth clock cycle and first
+        	 * clock cycle is held low */
+            RZA_IO_RegWrite_8(&(priic->RIICnMR3.UINT8[0]),
             		            1,
             		            RIICn_RIICnMR3_WAIT_SHIFT,
             		            RIICn_RIICnMR3_WAIT);
         break;
 
         case RIIC_RX_MODE_NACK:
-            RZA_IO_RegWrite_8(&(riic->RIICnMR3.UINT8[0]),
+            RZA_IO_RegWrite_8(&(priic->RIICnMR3.UINT8[0]),
             		            1,
             		            RIICn_RIICnMR3_ACKWP_SHIFT,
             		            RIICn_RIICnMR3_ACKWP);
 
             /* Send '1' acknowledge bit NACK Transmission */
-            RZA_IO_RegWrite_8(&(riic->RIICnMR3.UINT8[0]),
+            RZA_IO_RegWrite_8(&(priic->RIICnMR3.UINT8[0]),
             		            1,
             		            RIICn_RIICnMR3_ACKBT_SHIFT,
             		            RIICn_RIICnMR3_ACKBT);
         break;
 
         case RIIC_RX_MODE_STOP:
+
         	/* Stop condition request */
-            RIIC_TransmitStop(channel);
+            riic_transmit_stop(channel);
         break;
 
         case RIIC_RX_MODE_NORMAL:
+
             /* Do Nothing */
         break;
 
         default:
+
             /* Do not reach here based on the assumption */
         break;
     }
 
     /* Read data from wire */
-    *data = riic->RIICnDRR.UINT8[0];
+    (*pdata) = priic->RIICnDRR.UINT8[0];
 }
 
 /******************************************************************************
-* Function Name: RIIC_Transmit
+* Function Name: riic_transmit
 * Description  : Transmit data (single byte)
 * Arguments    : uint32_t channel : RIIC channel (0 to 3)
 *              : uint8_t * data   : received data
 * Return Value : DEVDRV_SUCCESS   : Function completes with no errors
 *              : DEVDRV_ERROR     : Function fails to complete with errors
 ******************************************************************************/
-static int32_t RIIC_Transmit(uint32_t channel, uint8_t data)
+static int32_t riic_transmit (uint32_t channel, uint8_t data)
 {
-    volatile struct st_riic * riic;
+    volatile struct st_riic * priic;
     int32_t ret;
 
-    riic = RIIC_GetRegAddr(channel);
+    priic = priic_get_reg_addr(channel);
 
     /* ACK */
-    if (0 == RZA_IO_RegRead_8(&(riic->RIICnSR2.UINT8[0]),
+    if (0 == RZA_IO_RegRead_8(&(priic->RIICnSR2.UINT8[0]),
     		                    RIICn_RIICnSR2_NACKF_SHIFT,
     		                    RIICn_RIICnSR2_NACKF))
     {
         ret = DEVDRV_SUCCESS;
     }
+
     /* NACK */
     else
     {
@@ -810,35 +835,37 @@ static int32_t RIIC_Transmit(uint32_t channel, uint8_t data)
         switch (channel)
         {
             case DEVDRV_CH_0:
-                Userdef_RIIC0_WaitTransmitEmpty();
-                Userdef_RIIC0_InitTransmitEmpty();
+                userdef_riic0_wait_tx_empty();
+                userdef_riic0_init_tx_empty();
             break;
             case DEVDRV_CH_1:
-                Userdef_RIIC1_WaitTransmitEmpty();
-                Userdef_RIIC1_InitTransmitEmpty();
+                userdef_riic1_wait_tx_empty();
+                userdef_riic1_init_tx_empty();
             break;
             case DEVDRV_CH_2:
-                Userdef_RIIC2_WaitTransmitEmpty();
-                Userdef_RIIC2_InitTransmitEmpty();
+                userdef_riic2_wait_tx_empty();
+                userdef_riic2_init_tx_empty();
             break;
             case DEVDRV_CH_3:
-                Userdef_RIIC3_WaitTransmitEmpty();
-                Userdef_RIIC3_InitTransmitEmpty();
+                userdef_riic3_wait_tx_empty();
+                userdef_riic3_init_tx_empty();
             break;
             default:
+
                 /* Do not reach here based on the assumption */
+                while(1);
             break;
         }
 
         /* Write data to wire */
-        riic->RIICnDRT.UINT8[0] = data;
+        priic->RIICnDRT.UINT8[0] = data;
     }
 
-    return ret;
+    return (ret);
 }
 
 /******************************************************************************
-* Function Name: RIIC_TransmitStart
+* Function Name: riic_transmit_start
 * Description  : Make request to issue start condition fore selected channel
 *              : Perform the following sequence of actions
 *              : Wait till bus is free
@@ -849,53 +876,54 @@ static int32_t RIIC_Transmit(uint32_t channel, uint8_t data)
 * Arguments    : uint32_t channel : RIIC channel (0 to 3)
 * Return Value : none
 ******************************************************************************/
-static void RIIC_TransmitStart(uint32_t channel)
+static void riic_transmit_start (uint32_t channel)
 {
-    volatile struct st_riic * riic;
-
+    volatile struct st_riic * priic;
 
     switch (channel)
     {
         case DEVDRV_CH_0:
-            Userdef_RIIC0_WaitBusMastership(RIIC_BUS_MASTERSHIP_WAIT_FREE);
+            userdef_riic0_wait_bus_master(RIIC_BUS_MASTERSHIP_WAIT_FREE);
 
-            Userdef_RIIC0_InitReceiveFull();
-            Userdef_RIIC0_InitTransmitEmpty();
-            Userdef_RIIC0_InitTransmitEnd();
+            userdef_riic0_init_rx_full();
+            userdef_riic0_init_tx_empty();
+            userdef_riic0_init_tx_end();
         break;
         case DEVDRV_CH_1:
-            Userdef_RIIC1_WaitBusMastership(RIIC_BUS_MASTERSHIP_WAIT_FREE);
+            userdef_riic1_wait_bus_master(RIIC_BUS_MASTERSHIP_WAIT_FREE);
 
-            Userdef_RIIC1_InitReceiveFull();
-            Userdef_RIIC1_InitTransmitEmpty();
-            Userdef_RIIC1_InitTransmitEnd();
+            userdef_riic1_init_rx_full();
+            userdef_riic1_init_tx_empty();
+            userdef_riic1_init_tx_end();
         break;
         case DEVDRV_CH_2:
-            Userdef_RIIC2_WaitBusMastership(RIIC_BUS_MASTERSHIP_WAIT_FREE);
-            Userdef_RIIC2_InitReceiveFull();
-            Userdef_RIIC2_InitTransmitEmpty();
-            Userdef_RIIC2_InitTransmitEnd();
+            userdef_riic2_wait_bus_master(RIIC_BUS_MASTERSHIP_WAIT_FREE);
+            userdef_riic2_init_rx_full();
+            userdef_riic2_init_tx_empty();
+            userdef_riic2_init_tx_end();
         break;
         case DEVDRV_CH_3:
-            Userdef_RIIC3_WaitBusMastership(RIIC_BUS_MASTERSHIP_WAIT_FREE);
-            Userdef_RIIC3_InitReceiveFull();
-            Userdef_RIIC3_InitTransmitEmpty();
-            Userdef_RIIC3_InitTransmitEnd();
+            userdef_riic3_wait_bus_master(RIIC_BUS_MASTERSHIP_WAIT_FREE);
+            userdef_riic3_init_rx_full();
+            userdef_riic3_init_tx_empty();
+            userdef_riic3_init_tx_end();
         break;
         default:
+
             /* Do not reach here based on the assumption */
+            while(1);
         break;
     }
 
-    riic = RIIC_GetRegAddr(channel);
-    RZA_IO_RegWrite_8(&(riic->RIICnCR2.UINT8[0]),
+    priic = priic_get_reg_addr(channel);
+    RZA_IO_RegWrite_8(&(priic->RIICnCR2.UINT8[0]),
     		            1,
     		            RIICn_RIICnCR2_ST_SHIFT,
     		            RIICn_RIICnCR2_ST);
 }
 
 /******************************************************************************
-* Function Name: RIIC_TransmitRestart
+* Function Name: riic_transmit_restart
 * Description  : Make the request to issue a restart condition.
 *              : Perform the following sequence of actions
 *              : Wait till bus is busy
@@ -906,54 +934,56 @@ static void RIIC_TransmitStart(uint32_t channel)
 * Arguments    : uint32_t channel : RIIC channel (0 to 3)
 * Return Value : none
 ******************************************************************************/
-static void RIIC_TransmitRestart(uint32_t channel)
+static void riic_transmit_restart (uint32_t channel)
 {
-    volatile struct st_riic * riic;
+    volatile struct st_riic * priic;
 
     switch (channel)
     {
         case DEVDRV_CH_0:
-            Userdef_RIIC0_WaitBusMastership(RIIC_BUS_MASTERSHIP_WAIT_BUSY);
+            userdef_riic0_wait_bus_master(RIIC_BUS_MASTERSHIP_WAIT_BUSY);
 
-            Userdef_RIIC0_InitReceiveFull();
-            Userdef_RIIC0_InitTransmitEmpty();
-            Userdef_RIIC0_InitTransmitEnd();
+            userdef_riic0_init_rx_full();
+            userdef_riic0_init_tx_empty();
+            userdef_riic0_init_tx_end();
         break;
         case DEVDRV_CH_1:
-            Userdef_RIIC1_WaitBusMastership(RIIC_BUS_MASTERSHIP_WAIT_BUSY);
+            userdef_riic1_wait_bus_master(RIIC_BUS_MASTERSHIP_WAIT_BUSY);
 
-            Userdef_RIIC1_InitReceiveFull();
-            Userdef_RIIC1_InitTransmitEmpty();
-            Userdef_RIIC1_InitTransmitEnd();
+            userdef_riic1_init_rx_full();
+            userdef_riic1_init_tx_empty();
+            userdef_riic1_init_tx_end();
         break;
         case DEVDRV_CH_2:
-            Userdef_RIIC2_WaitBusMastership(RIIC_BUS_MASTERSHIP_WAIT_BUSY);
+            userdef_riic2_wait_bus_master(RIIC_BUS_MASTERSHIP_WAIT_BUSY);
 
-            Userdef_RIIC2_InitReceiveFull();
-            Userdef_RIIC2_InitTransmitEmpty();
-            Userdef_RIIC2_InitTransmitEnd();
+            userdef_riic2_init_rx_full();
+            userdef_riic2_init_tx_empty();
+            userdef_riic2_init_tx_end();
         break;
         case DEVDRV_CH_3:
-            Userdef_RIIC3_WaitBusMastership(RIIC_BUS_MASTERSHIP_WAIT_BUSY);
+            userdef_riic3_wait_bus_master(RIIC_BUS_MASTERSHIP_WAIT_BUSY);
 
-            Userdef_RIIC3_InitReceiveFull();
-            Userdef_RIIC3_InitTransmitEmpty();
-            Userdef_RIIC3_InitTransmitEnd();
+            userdef_riic3_init_rx_full();
+            userdef_riic3_init_tx_empty();
+            userdef_riic3_init_tx_end();
         break;
         default:
+
             /* Do not reach here based on the assumption */
+            SOFT_DELAY();
         break;
     }
 
-    riic = RIIC_GetRegAddr(channel);
-    RZA_IO_RegWrite_8(&(riic->RIICnCR2.UINT8[0]),
+    priic = priic_get_reg_addr(channel);
+    RZA_IO_RegWrite_8(&(priic->RIICnCR2.UINT8[0]),
     		            1,
     		            RIICn_RIICnCR2_RS_SHIFT,
     		            RIICn_RIICnCR2_RS);
 }
 
 /******************************************************************************
-* Function Name: RIIC_TransmitStop
+* Function Name: riic_transmit_stop
 * Description  : Make the request to issue a restart condition.
 *              : Perform the following sequence of actions
 *              : Clear Receive data full flag
@@ -961,27 +991,27 @@ static void RIIC_TransmitRestart(uint32_t channel)
 * Arguments    : uint32_t channel : RIIC channel (0 to 3)
 * Return Value : none
 ******************************************************************************/
-static void RIIC_TransmitStop(uint32_t channel)
+static void riic_transmit_stop (uint32_t channel)
 {
-    volatile struct st_riic * riic;
+    volatile struct st_riic * priic;
 
-    riic = RIIC_GetRegAddr(channel);
+    priic = priic_get_reg_addr(channel);
 
     /* Stop condition detection flag initialisation */
-    RZA_IO_RegWrite_8(&(riic->RIICnSR2.UINT8[0]),
+    RZA_IO_RegWrite_8(&(priic->RIICnSR2.UINT8[0]),
     		            0,
     		            RIICn_RIICnSR2_STOP_SHIFT,
     		            RIICn_RIICnSR2_STOP);
 
     /* Stop condition issuance request */
-    RZA_IO_RegWrite_8(&(riic->RIICnCR2.UINT8[0]),
+    RZA_IO_RegWrite_8(&(priic->RIICnCR2.UINT8[0]),
     		            1,
     		            RIICn_RIICnCR2_SP_SHIFT,
     		            RIICn_RIICnCR2_SP);
 }
 
 /******************************************************************************
-* Function Name: RIIC_DetectStop
+* Function Name: riic_detect_stop
 * Description  : Make the request to detect stop.
 *              : Perform the following sequence of actions
 *              : Detect stop condition
@@ -990,84 +1020,87 @@ static void RIIC_TransmitStop(uint32_t channel)
 * Arguments    : uint32_t channel : RIIC channel (0 to 3)
 * Return Value : none
 ******************************************************************************/
-static void RIIC_DetectStop(uint32_t channel)
+static void riic_detect_stop (uint32_t channel)
 {
-    volatile struct st_riic * riic;
+    volatile struct st_riic * priic;
 
     switch (channel)
     {
         case DEVDRV_CH_0:
-            Userdef_RIIC0_WaitStop();
+            userdef_riic0_wait_stop();
         break;
         case DEVDRV_CH_1:
-            Userdef_RIIC1_WaitStop();
+            userdef_riic1_wait_stop();
         break;
         case DEVDRV_CH_2:
-            Userdef_RIIC2_WaitStop();
+            userdef_riic2_wait_stop();
         break;
         case DEVDRV_CH_3:
-            Userdef_RIIC3_WaitStop();
+            userdef_riic3_wait_stop();
         break;
         default:
+
             /* Do not reach here based on the assumption */
         break;
     }
 
-    riic = RIIC_GetRegAddr(channel);
+    priic = priic_get_reg_addr(channel);
 
-    RIIC_ClearNack(riic);
-    RZA_IO_RegWrite_8(&(riic->RIICnSR2.UINT8[0]),
+    riic_clear_nack(priic);
+    RZA_IO_RegWrite_8(&(priic->RIICnSR2.UINT8[0]),
     		           0,
     		           RIICn_RIICnSR2_STOP_SHIFT,
     		           RIICn_RIICnSR2_STOP);
 }
 
 /******************************************************************************
-* Function Name: RIIC_ClearNack
+* Function Name: riic_clear_nack
 * Description  : Clear NACK detection flag of RIIC of channel that are
 *              : specified in the argument channel (NACKF)
 * Arguments    : struct st_riic * riic : specified RIIC channel register
 * Return Value : none
 ******************************************************************************/
-static void RIIC_ClearNack(volatile struct st_riic * riic)
+static void riic_clear_nack (volatile struct st_riic * priic)
 {
-    RZA_IO_RegWrite_8(&(riic->RIICnSR2.UINT8[0]),
+    RZA_IO_RegWrite_8(&(priic->RIICnSR2.UINT8[0]),
     		            0,
     		            RIICn_RIICnSR2_NACKF_SHIFT,
     		            RIICn_RIICnSR2_NACKF);
 }
 
+
 /******************************************************************************
-* Function Name: RIIC_GetRegAddr
+* Function Name: priic_get_reg_addr
 * Description  : Convert channel ID into pointer to RIIC channel register
 * Arguments    : uint32_t channel : RIIC channel (0 to 3)
 * Return Value : struct st_riic * : Start address of RIIC register by channel
 ******************************************************************************/
-volatile struct st_riic * RIIC_GetRegAddr(uint32_t channel)
+volatile struct st_riic * priic_get_reg_addr (uint32_t channel)
 {
-    volatile struct st_riic * riic;
+    volatile struct st_riic * priic;
 
     switch (channel)
     {
         case DEVDRV_CH_0:
-            riic = &RIIC0;
+            priic = (&RIIC0);
         break;
         case DEVDRV_CH_1:
-            riic = &RIIC1;
+            priic = (&RIIC1);
         break;
         case DEVDRV_CH_2:
-            riic = &RIIC2;
+            priic = (&RIIC2);
         break;
         case DEVDRV_CH_3:
-            riic = &RIIC3;
+            priic = (&RIIC3);
         break;
         default:
+
             /* Do not reach here based on the assumption */
-            riic = &RIIC0;
+            priic = (&RIIC0);
         break;
     }
 
-    return riic;
+    return (priic);
 }
 
 

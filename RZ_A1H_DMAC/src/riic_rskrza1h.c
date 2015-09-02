@@ -22,9 +22,9 @@
 * Copyright (C) 2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
-* File Name     : sample_riic_rza1h_rsk.c
+* File Name     : riic_rskrza1h.c
 * Device(s)     : RZ/A1H (R7S721001)
-* Tool-Chain    : GNUARM-RZv13.01-EABI
+* Tool-Chain    : GNUARM-NONEv14.02-EABI
 * H/W Platform  : RSK+RZA1H CPU Board
 * Description   : RSK+RZA1H RI2C Access sample,
 *               :
@@ -39,8 +39,7 @@
 *******************************************************************************/
 /*******************************************************************************
 * History       : DD.MM.YYYY Version Description
-*               : 18.06.2013 1.00
-*               : 21.03.2014 2.00
+*               : 21.10.2014 1.00
 *******************************************************************************/
 
 /*******************************************************************************
@@ -50,9 +49,6 @@ Includes   <System Includes> , "Project Includes"
 #include <stdio.h>
 #include <string.h>
 
-/* Interchangeable compiler specific header */
-#include "compiler_settings.h"
-
 /* Default  type definition header */
 #include "r_typedefs.h"
 /* I/O Register root header */
@@ -60,14 +56,18 @@ Includes   <System Includes> , "Project Includes"
 /* Device driver header */
 #include "dev_drv.h"
 /* RIIC Driver Header */
-#include "devdrv_riic.h"
+#include "riic.h"
 /* INTC Driver Header */
-#include "devdrv_intc.h"
+#include "intc.h"
 /* I2C RSK+RZA1H Eval-board header */
-#include "sample_riic_rza1h_rsk.h"
+#include "riic_rskrza1h.h"
 /* Low level register read/write header */
 #include "rza_io_regrw.h"
 
+#include "riic_iodefine.h"
+#include "riic_iobitmask.h"
+
+#include "compiler_settings.h"
 
 /*******************************************************************************
 Macro definitions
@@ -77,12 +77,15 @@ Macro definitions
 /* IIC data read code  */
 #define SAMPLE_RIIC_RWCODE_R        (1)
 /* Sampling loop */
-#define DELAY_TIME_1MS       (260000uL)
+#define DELAY_TIME_1MS              (260000uL)
+/* IIC channel attached to the audio Codec */
+#define CODEC_IIC_CH                (3)
 
 
 /******************************************************************************
 Imported global variables and functions (from other files)
 ******************************************************************************/
+
 
 /******************************************************************************
 Exported global variables and functions (to be accessed by other files)
@@ -90,14 +93,15 @@ Exported global variables and functions (to be accessed by other files)
 uint8_t  g_w_byte;
 uint8_t  g_config_io;
 uint8_t  g_r_buffer = 0u;
-uint8_t  port_x_state = 0u;
+uint8_t  g_port_x_state = 0u;
 
 int32_t  g_touch_read_request = 0;
 
 /******************************************************************************
 Private global variables and functions
 ******************************************************************************/
-
+// static volatile uint32_t * get_channel_address (uint32_t channel);
+extern volatile struct st_riic * priic_get_reg_addr (uint32_t channel);
 
 /******************************************************************************
 * Function Name: Delay1ms
@@ -105,7 +109,7 @@ Private global variables and functions
 * Arguments    : None
 * Return Value : None
 ******************************************************************************/
-static void Delay1ms(void)
+static void Delay1ms (void)
 {
     uint32_t    delay_count = 0u;
 
@@ -118,12 +122,12 @@ static void Delay1ms(void)
 
 
 /******************************************************************************
-* Function Name: RIIC0_PORT_Init
+* Function Name: riic0_port_init
 * Description  : Initialises channel 0 i2c port register for this board
 * Arguments    : None
 * Return Value : None
 ******************************************************************************/
-static void RIIC0_PORT_Init(void)
+static void riic0_port_init (void)
 {
     /* ---- P1_0 : SCL0 ---- */
     /* Port initialise */
@@ -132,6 +136,7 @@ static void RIIC0_PORT_Init(void)
     RZA_IO_RegWrite_16(&GPIO.PM1,    1, GPIO_PM1_PM10_SHIFT,       GPIO_PM1_PM10);
     RZA_IO_RegWrite_16(&GPIO.PMC1,   0, GPIO_PMC1_PMC10_SHIFT,     GPIO_PMC1_PMC10);
     RZA_IO_RegWrite_16(&GPIO.PIPC1,  1, GPIO_PIPC1_PIPC10_SHIFT,   GPIO_PIPC1_PIPC10);
+
     /* Port mode : Multiplex mode                     */
     /* Port function setting : 1st multiplex function */
     /* I/O control mode : Peripheral function         */
@@ -150,6 +155,7 @@ static void RIIC0_PORT_Init(void)
     RZA_IO_RegWrite_16(&GPIO.PM1,    1, GPIO_PM1_PM11_SHIFT,       GPIO_PM1_PM11);
     RZA_IO_RegWrite_16(&GPIO.PMC1,   0, GPIO_PMC1_PMC11_SHIFT,     GPIO_PMC1_PMC11);
     RZA_IO_RegWrite_16(&GPIO.PIPC1,  1, GPIO_PIPC1_PIPC11_SHIFT,   GPIO_PIPC1_PIPC11);
+
     /* Port mode : Multiplex mode                     */
     /* Port function setting : 1st multiplex function */
     /* I/O control mode : Peripheral function         */
@@ -171,7 +177,7 @@ static void RIIC0_PORT_Init(void)
 *              :                    :   INTC_EDGE_TRIGGER    : Edge trigger
 * Return Value : none
 ******************************************************************************/
-static void IntIRQ1_TouchPanel(uint32_t int_sense)
+static void int_irq1_touch_panel (uint32_t int_sense)
 {
 	UNUSED_PARAM(int_sense);
 
@@ -191,18 +197,18 @@ static void IntIRQ1_TouchPanel(uint32_t int_sense)
 }
 
 /******************************************************************************
-* Function Name: R_RIIC_Init_CH0
+* Function Name: r_riic_init_ch0
 * Description  : Initialises channel 0 i2c for this board
 * Arguments    : None
 * Return Value : None
 ******************************************************************************/
-void R_RIIC_Init_CH0(void)
+void r_riic_init_ch0 (void)
 {
 	uint32_t cks;
 	uint32_t brl;
 	uint32_t brh;
 
-	RIIC0_PORT_Init();
+	riic0_port_init();
 
 	/* End configuration register settings */
 	cks = RIIC_CKS_DIVISION_8;
@@ -226,7 +232,7 @@ void R_RIIC_Init_CH0(void)
 	R_INTC_SetPriority(INTC_ID_IRQ1, 10uL);
 
     /* Assign the IRQ1 function */
-    R_INTC_RegistIntFunc(INTC_ID_IRQ1, &IntIRQ1_TouchPanel);
+    R_INTC_RegistIntFunc(INTC_ID_IRQ1, &int_irq1_touch_panel);
 	
     /* Set the interrupt as edge trigger */
 	RZA_IO_RegWrite_16(&INTCICR1,1,INTC_ICR1_IRQ10S_SHIFT,INTC_ICR1_IRQ10S | INTC_ICR1_IRQ11S);
@@ -240,12 +246,12 @@ void R_RIIC_Init_CH0(void)
 }
 
 /******************************************************************************
-* Function Name: RIIC3_PORT_Init
+* Function Name: riic3_port_init
 * Description  : Initialises channel 3 port register for this board
 * Arguments    : None
 * Return Value : None
 ******************************************************************************/
-static void RIIC3_PORT_Init(void)
+static void riic3_port_init (void)
 {
 
 	/* ---- P1_6 : SCL3 ---- */
@@ -255,6 +261,7 @@ static void RIIC3_PORT_Init(void)
     RZA_IO_RegWrite_16(&GPIO.PM1,    1, GPIO_PM1_PM16_SHIFT,       GPIO_PM1_PM16);
     RZA_IO_RegWrite_16(&GPIO.PMC1,   0, GPIO_PMC1_PMC16_SHIFT,     GPIO_PMC1_PMC16);
     RZA_IO_RegWrite_16(&GPIO.PIPC1,  1, GPIO_PIPC1_PIPC16_SHIFT,   GPIO_PIPC1_PIPC16);
+
     /* Port mode : Multiplex mode                     */
     /* Port function setting : 1st multiplex function */
     /* I/O control mode : Peripheral function         */
@@ -273,6 +280,7 @@ static void RIIC3_PORT_Init(void)
     RZA_IO_RegWrite_16(&GPIO.PM1,    1, GPIO_PM1_PM17_SHIFT,       GPIO_PM1_PM17);
     RZA_IO_RegWrite_16(&GPIO.PMC1,   0, GPIO_PMC1_PMC17_SHIFT,     GPIO_PMC1_PMC17);
     RZA_IO_RegWrite_16(&GPIO.PIPC1,  1, GPIO_PIPC1_PIPC17_SHIFT,   GPIO_PIPC1_PIPC17);
+
     /* Port mode : Multiplex mode                     */
     /* Port function setting : 1st multiplex function */
     /* I/O control mode : Peripheral function         */
@@ -287,12 +295,12 @@ static void RIIC3_PORT_Init(void)
 }
 
 /******************************************************************************
-* Function Name: R_RIIC_Init_CH3
+* Function Name: r_riic_init_ch3
 * Description  : Initialises channel 3 i2c for this board
 * Arguments    : None
 * Return Value : None
 ******************************************************************************/
-void R_RIIC_Init_CH3(void)
+void rsk_init_riic_ch3 (void)
 {
 	uint32_t cks;
 	uint32_t brl;
@@ -300,116 +308,102 @@ void R_RIIC_Init_CH3(void)
 	uint8_t  iic_dev_io;
 	uint8_t  iic_w_value;
 
-	uint8_t buf[3] = {0,0,0};
-	uint8_t buffer = 0;
+	// uint8_t buf[3] = {0,0,0};
+	// uint8_t buffer = 0;
 
-	RIIC3_PORT_Init();
+	riic3_port_init();
 
-
-	cks = RIIC_CKS_DIVISION_8;
+	cks = RIIC_CKS_DIVISION_64;
 	brl = 19;
 	brh = 16;
 
 	R_RIIC_Init(DEVDRV_CH_3, cks, brl, brh);
 
-	/* Port Expander 1 */
-	R_RIIC_WriteCond(DEVDRV_CH_3, RIIC_TX_MODE_START);
+	/* ---- START Port Expander 1 & 2 Initial Output Setup ---- */
+	    /* Configure the port mode of each I/O of the port expander */
+	    iic_dev_io  = (uint8_t)(0xFF);	/* Modifying all bits of the register */
+	    iic_w_value = (uint8_t)(0xB7);  /* Set bits as per the table below */
 
-    /* Set the port expander device address */
-	buffer = (uint8_t)(((RZA1H_RSK_I2C_PX_IO1 & 0x7) << 1) | 0);
+		/* Indicates which I/O is to be modified
+	    IO[0] = LED1                   = 1 (OFF)
+	    IO[1] = LED2                   = 1 (OFF)
+	   	IO[2] = LED3                   = 1 (OFF)
+	    IO[3] = NOR A25                = 0
+		IO[4] = PMOD1 Reset            = 1
+	    IO[5] = PMOD2 Reset            = 1
+	    IO[6] = SD Header Power Enable = 0 (OFF)
+	    IO[7] = SD/MMC Power Enable    = 1 (ON) */
 
-	buf[0]   = buffer | (RZA1H_RSK_I2C_PX_IO1 & 0xF0);
-	buf[1]   = PX_CMD_CONFIG_REG;
-	buf[2]   = 0x00u;
-						/*
-						 * IO[0] = LED1 			(output)
-						 * IO[1] = LED2 			(output)
-						 * IO[2] = LED3 			(output)
-						 * IO[3] = NOR_A25 			(output)
-						 * IO[4] = PMOD1_RST 		(output)
-						 * IO[5] = PMOD2_RST 		(output)
-						 * IO[6] = SD_CONN_PWR_EN 	(output)
-						 * IO[7] = SD_MMC_PWR_EN 	(output)
-						 */
+	   Sample_RIIC_PortExpAccess(DEVDRV_CH_3, RZA1H_RSK_I2C_PX_IO1,
+	                   (uint8_t)PORTX_OUTPUT_REG, iic_dev_io, iic_w_value);
+		Delay1ms();
 
-	R_RIIC_Write(DEVDRV_CH_3, buf, 3);
 
-	R_RIIC_WriteCond(DEVDRV_CH_3, RIIC_TX_MODE_STOP);
-	R_RIIC_DetectStop(DEVDRV_CH_3);
+	    /* Configure the port mode of each I/O of the port expander */
+	    /* Indicates which I/O is to be modified */
+	    iic_dev_io  = (uint8_t)(0xFF);  /* Modifying all bits of the register */
+	    iic_w_value = (uint8_t)(0x11);  /* Set bits as per the table below */
 
-	Delay1ms();
+	    /*
+	    IO[0] = PX1_EN0 Enable  = 1 (LCD/DV signal select)
+	    IO[1] = PX1_EN1 Enable  = 0 (OFF)
+	    IO[2] = TFT_CS          = 0 (Optional SPI chip select for external TFTs)
+	    IO[3] = PX1_EN3 Enable  = 0 (SSIF/PWM signal select.)
+	    IO[4] = USB_OVR_CURRENT = 1 (USB over-current/thermal shutdown conditions.)
+	    IO[5] = USB_PWR_ENA     = 0 (VBUS0 power control. JP11 needs to be shorted)
+	    IO[6] = USB_PWR_ENB     = 0 (VBUS1 power control. JP12 needs to be shorted)
+	    IO[7] = PX1_EN7         = 0 (A18-A21 and SGOUTx signals select.)
+	    */
 
-	/* Port Expander 2 */
-	R_RIIC_WriteCond(DEVDRV_CH_3, RIIC_TX_MODE_START);
+	    Sample_RIIC_PortExpAccess(DEVDRV_CH_3, RZA1H_RSK_I2C_PX_IO2,
+	                         (uint8_t)PORTX_OUTPUT_REG, iic_dev_io, iic_w_value);
+		Delay1ms();
 
-   /* Set the port expander device address */
-	buffer = (uint8_t)(((RZA1H_RSK_I2C_PX_IO2 & 0x7) << 1) | 0);
+	 /* ---- END Port Expander 1 & 2 Initial Output Setup ---- */
 
-	buf[0]   = buffer | (RZA1H_RSK_I2C_PX_IO2 & 0xF0);
-	buf[1]   = PX_CMD_CONFIG_REG;
 
-	/* set the port pin directions */
-	buf[2]   = 0x10u;
-						/*
-						 * IO[0] = PX1_EN0 			(output)
-						 * IO[1] = PX1_EN1 			(output)
-						 * IO[2] = TFT_CS 			(output)
-						 * IO[3] = PX1_EN3 			(output)
-						 * IO[4] = USB_OVR_CURRENT 	(input)
-						 * IO[5] = USB_PWR_ENA 		(output)
-						 * IO[6] = USB_PWR_ENB 		(output)
-						 * IO[7] = PX1_EN7 			(output)
-						 */
 
-	R_RIIC_Write(DEVDRV_CH_3, buf, 3);
+	/* ---- START Port Expander 1 Port Direction Setup ---- */
+    iic_dev_io  = (uint8_t)(0xFF);  /* Modifying all bits of the register */
+    iic_w_value = (uint8_t)(0x00);  /* Set bits as per the table below */
 
-	R_RIIC_WriteCond(DEVDRV_CH_3, RIIC_TX_MODE_STOP);
-	R_RIIC_DetectStop(DEVDRV_CH_3);
+    Sample_RIIC_PortExpAccess(DEVDRV_CH_3, RZA1H_RSK_I2C_PX_IO1,
+                         (uint8_t)PORTX_CONFIG_REG, iic_dev_io, iic_w_value);
 
-	Delay1ms();
+    /*
+     * IO[0] = LED1 			(output - 0)
+     * IO[1] = LED2 			(output - 0)
+     * IO[2] = LED3 			(output - 0)
+     * IO[3] = NOR_A25 			(output - 0)
+     * IO[4] = PMOD1_RST 		(output - 0)
+     * IO[5] = PMOD2_RST 		(output - 0)
+     * IO[6] = SD_CONN_PWR_EN 	(output - 0)
+     * IO[7] = SD_MMC_PWR_EN 	(output - 0)
+     */
 
-    /* Configure the port mode of each I/O of the port expander */
-    iic_dev_io  = (uint8_t)(0xFF);	
-    iic_w_value = (uint8_t)(0xB7);  	
-	/* Indicates which I/O is to be modified
-    IO[0] = LED1                   = 1 (OFF)
-    IO[1] = LED2                   = 1 (OFF)
-   	IO[2] = LED3                   = 1 (OFF)
-    IO[3] = NOR A25                = 0
-	IO[4] = PMOD1 Reset            = 1
-    IO[5] = PMOD2 Reset            = 1
-    IO[6] = SD Header Power Enable = 0 (OFF)
-    IO[7] = SD/MMC Power Enable    = 1 (ON) */
+	/* ---- END Port Expander 1 Port Direction Setup ---- */
 
-    Sample_RIIC_PortExpAccess(DEVDRV_CH_3, RZA1H_RSK_I2C_PX_IO1, (uint8_t)PORTX_OUTPUT_REG, iic_dev_io, iic_w_value);
+	/* ---- START Port Expander 2 Port Direction Setup ---- */
+    iic_dev_io  = (uint8_t)(0xFF);  /* Modifying all bits of the register */
+    iic_w_value = (uint8_t)(0x10);  /* Set bits as per the table below */
 
-    /* Configure the port mode of each I/O of the port expander */
-    iic_dev_io  = (uint8_t)(0xFF);	//Indicates which I/O is to be modified
-    iic_w_value = (uint8_t)(0x11);  	//IO[0] = PX1_EN0 Enable        = 1 (Selects IC37/IC38 MUXes BL[x] signals. Also enables PMOD connectors as they use the SPI from IC38)
-										//IO[1] = PX1_EN1 Enable        = 0 (OFF) brings P3_3 on connector CN4/2
-										//IO[2] = TFT_CS                = 0 (Optional chip select for connecting to TFTs which use SPI. The RSK TFT is not configured by SPI.)
-										//IO[3] = PX1_EN3 Enable        = 0 (Selects Audio signals. If set to 1, selects optional PWM signals.)
-										//IO[4] = USB_OVR_CURRENT       = 1 (Input signal from IC7. By default it is pulled high. It signals overcurrent or thermal shutdown conditions.)
-										//IO[5] = USB_PWR_ENA           = 0 (Pulled low by default, enabling power to VBUS0. JP11 needs to be shorted)
-										//IO[6] = USB_PWR_ENB           = 0 (Pulled low by default, enabling power to VBUS1. JP12 needs to be shorted)
-										//IO[7] = PX1_EN7               = 0 (Pulled low by default, selecting A18 - A21 lines. If set to 1, SGOUTx signals are selected.)
+    Sample_RIIC_PortExpAccess(DEVDRV_CH_3, RZA1H_RSK_I2C_PX_IO2,
+                         (uint8_t)PORTX_CONFIG_REG, iic_dev_io, iic_w_value);
 
-    Sample_RIIC_PortExpAccess(DEVDRV_CH_3, RZA1H_RSK_I2C_PX_IO2, (uint8_t)PORTX_OUTPUT_REG, iic_dev_io, iic_w_value);
-
+    /*
+     * IO[0] = PX1_EN0 			(output - 0)
+     * IO[1] = PX1_EN1 			(output - 0)
+     * IO[2] = TFT_CS 			(output - 0)
+     * IO[3] = PX1_EN3 			(output - 0)
+     * IO[4] = USB_OVR_CURRENT 	(input - 1)
+     * IO[5] = USB_PWR_ENA 		(output - 0)
+     * IO[6] = USB_PWR_ENB 		(output - 0)
+     * IO[7] = PX1_EN7 			(output - 0)
+    */
+/* ---- END Port Expander 1 Port Direction Setup ---- */
 }
 
 
-/******************************************************************************
-* Function Name: R_RIIC_rza1h_rsk_init
-* Description  : Manages the initialisation of the i2c channels
-* Arguments    : None
-* Return Value : None
-******************************************************************************/
-void R_RIIC_rza1h_rsk_init(void)
-{
-    R_RIIC_Init_CH0();
-    R_RIIC_Init_CH3();
-}
 
 /******************************************************************************
 * Function Name: R_RIIC_rza1h_rsk_read
@@ -422,37 +416,137 @@ void R_RIIC_rza1h_rsk_init(void)
 * Return Value : DEVDRV_SUCCESS   : Success of RIIC operation
 *              : DEVDRV_ERROR     : Failure of RIIC operation
 ******************************************************************************/
-int32_t R_RIIC_rza1h_rsk_read(uint32_t channel, uint8_t d_adr, uint16_t r_adr,
+int32_t R_RIIC_rza1h_rsk_read_codec (uint8_t d_adr, uint16_t r_adr,
                                           uint32_t r_byte, uint8_t * r_buffer)
 {
+    int32_t   ret;
+    uint8_t   pw_buffer[3];
+    uint8_t   dummy_data;
+
+    pw_buffer[0] = (uint8_t)(d_adr | SAMPLE_RIIC_RWCODE_W);
+    pw_buffer[1] = (uint8_t)(r_adr & 0x00ff);
+    pw_buffer[2] = (uint8_t)(d_adr | SAMPLE_RIIC_RWCODE_R);
+
+    /* Is the bus free? */
+    while (0x00008 == (RIIC3.RIICnCR2.UINT32 & 0x0008))
+	{
+		SOFT_DELAY();
+	}
+
+    R_RIIC_WriteCond(RIIC_CH_3, RIIC_TX_MODE_START);
+
+	/* For EEPROM devices with 1 byte addressing */
+	ret = R_RIIC_Write(RIIC_CH_3, pw_buffer, 2);
+
+    if (DEVDRV_SUCCESS == ret)
+    {
+    	R_RIIC_WriteCond(RIIC_CH_3, RIIC_TX_MODE_RESTART);
+
+        ret = R_RIIC_SingleWrite(RIIC_CH_3, pw_buffer[2], RIIC_TEND_WAIT_RECEIVE);
+
+        if (DEVDRV_SUCCESS == ret)
+        {
+			R_RIIC_Read(RIIC_CH_3, r_buffer, 1);
+
+			R_RIIC_WriteCond(RIIC_CH_3, RIIC_TX_MODE_STOP);
+		}
+		else
+		{
+			R_RIIC_WriteCond(RIIC_CH_3, RIIC_TX_MODE_STOP);
+			R_RIIC_SingleRead(RIIC_CH_3, &dummy_data);
+			R_RIIC_DetectStop(RIIC_CH_3);
+		}
+    }
+
+    return (ret);
+}
+
+/******************************************************************************
+* Function Name: R_RIIC_rza1h_rsk_write_codec
+* Description  : Write data to slave in single byte addressing mode
+* Arguments    : uint32_t channel : RIIC channel (0 to 3)
+*              : uint8_t d_adr    : Slave device address
+*              : uint16_t w_adr   : Slave sub-address
+*              : uint32_t w_byte  : Number of bytes
+*              : uint8_t * pw_buffer : buffer for data
+* Return Value : DEVDRV_SUCCESS   : Success of RIIC operation
+*              : DEVDRV_ERROR     : Failure of RIIC operation
+******************************************************************************/
+int32_t R_RIIC_rza1h_rsk_write_codec (uint8_t d_adr, uint16_t w_adr,
+                                         uint32_t w_byte, uint8_t * pw_buffer)
+{
     int32_t  ret;
-    uint8_t  w_buffer[3];
+    uint8_t  buf[3];
+
+    buf[0] = (uint8_t)(d_adr | SAMPLE_RIIC_RWCODE_W);
+    buf[1] = (uint8_t)(w_adr  & 0x00ff);
+    buf[2] = (*pw_buffer);
+
+    /* Is the bus free? */
+    while (0x0008 == (RIIC3.RIICnCR2.UINT32 & 0x0008))
+	{
+		SOFT_DELAY();
+	}
+
+    R_RIIC_WriteCond(RIIC_CH_3, RIIC_TX_MODE_START);
+
+	ret = R_RIIC_Write(RIIC_CH_3, buf, (2 + w_byte));
+
+    R_RIIC_WriteCond(RIIC_CH_3, RIIC_TX_MODE_STOP);
+    R_RIIC_DetectStop(RIIC_CH_3);
+
+    return (ret);
+}
+
+
+/******************************************************************************
+* Function Name: R_RIIC_rza1h_rsk_read
+* Description  : Read data form slave in single byte addressing mode
+* Arguments    : uint32_t channel : RIIC channel (0 to 3)
+*              : uint8_t d_adr    : Slave device address
+*              : uint16_t r_adr   : Slave sub-address
+*              : uint32_t r_byte  : Number of bytes
+*              : uint8_t * r_buffer : buffer for data
+* Return Value : DEVDRV_SUCCESS   : Success of RIIC operation
+*              : DEVDRV_ERROR     : Failure of RIIC operation
+******************************************************************************/
+int32_t R_RIIC_rza1h_rsk_read (uint32_t channel, uint8_t d_adr, uint16_t r_adr,
+                               uint32_t r_byte,  uint8_t * r_buffer)
+{
+	volatile struct st_riic * priic;
+
+    int32_t   ret;
+    uint8_t   pw_buffer[3];
     uint8_t  dummy_data;
 
-    w_buffer[0] = (uint8_t)(d_adr | SAMPLE_RIIC_RWCODE_W);
-    w_buffer[1] = (uint8_t)(r_adr & 0x00ff);
-    w_buffer[2] = (uint8_t)(d_adr | SAMPLE_RIIC_RWCODE_R);
+    priic = priic_get_reg_addr(channel);
+
+    pw_buffer[0] = (uint8_t)(d_adr | SAMPLE_RIIC_RWCODE_W);
+    pw_buffer[1] = (uint8_t)(r_adr & 0x00ff);
+    pw_buffer[2] = (uint8_t)(d_adr | SAMPLE_RIIC_RWCODE_R);
+
+    /* Is the bus free? */
+    while (0x00008 == (priic->RIICnCR2.UINT32 & 0x0008))
+	{
+		SOFT_DELAY();
+	}
 
     R_RIIC_WriteCond(channel, RIIC_TX_MODE_START);
 
 	/* For EEPROM devices with 1 byte addressing */
-	ret = R_RIIC_Write(channel, w_buffer, 2);
+	ret = R_RIIC_Write(channel, pw_buffer, 2);
 
     if (DEVDRV_SUCCESS == ret)
     {
     	R_RIIC_WriteCond(channel, RIIC_TX_MODE_RESTART);
 
-        ret = R_RIIC_SingleWrite(channel, w_buffer[2], RIIC_TEND_WAIT_RECEIVE);
+        ret = R_RIIC_SingleWrite(channel, pw_buffer[2], RIIC_TEND_WAIT_RECEIVE);
 
         if (DEVDRV_SUCCESS == ret)
         {
-			R_RIIC_SingleRead(channel, &dummy_data);
-
 			R_RIIC_Read(channel, r_buffer, r_byte);
-
-			R_RIIC_WriteCond(channel, RIIC_TX_MODE_STOP);
 		}
-		else
+        else
 		{
 			R_RIIC_WriteCond(channel, RIIC_TX_MODE_STOP);
 			R_RIIC_SingleRead(channel, &dummy_data);
@@ -460,7 +554,7 @@ int32_t R_RIIC_rza1h_rsk_read(uint32_t channel, uint8_t d_adr, uint16_t r_adr,
 		}
     }
 
-    return ret;
+    return (ret);
 }
 
 /******************************************************************************
@@ -470,32 +564,51 @@ int32_t R_RIIC_rza1h_rsk_read(uint32_t channel, uint8_t d_adr, uint16_t r_adr,
 *              : uint8_t d_adr    : Slave device address
 *              : uint16_t w_adr   : Slave sub-address
 *              : uint32_t w_byte  : Number of bytes
-*              : uint8_t * w_buffer : buffer for data
+*              : uint8_t * pw_buffer : buffer for data
 * Return Value : DEVDRV_SUCCESS   : Success of RIIC operation
 *              : DEVDRV_ERROR     : Failure of RIIC operation
 ******************************************************************************/
-int32_t R_RIIC_rza1h_rsk_write(uint32_t channel, uint8_t d_adr,
-		                       uint16_t w_adr, uint32_t w_byte, uint8_t * w_buffer)
+int32_t R_RIIC_rza1h_rsk_write (uint32_t channel, uint8_t d_adr,
+		                        uint16_t w_adr,   uint32_t w_byte,
+		                        uint8_t * pw_buffer)
 {
     int32_t  ret;
-    uint8_t  buf[3];
+    uint8_t  buf[18];
+    uint8_t  count;
+    uint32_t delay = 200000;
+
+    volatile struct st_riic * priic;
+
+    priic = priic_get_reg_addr(channel);
 
     buf[0] = (uint8_t)(d_adr | SAMPLE_RIIC_RWCODE_W);
     buf[1] = (uint8_t)(w_adr  & 0x00ff);
 
+    for (count=2; count < (w_byte + 2); count++)
+    {
+    	buf[count] = (*pw_buffer++);
+    }
+
+    /* Is the channel's bus free? */
+    while (0x00008 == (priic->RIICnCR2.UINT32 & 0x0008))
+	{
+		SOFT_DELAY();
+	}
+
     R_RIIC_WriteCond(channel, RIIC_TX_MODE_START);
 
-	ret = R_RIIC_Write(channel, buf, 2);
-
-    if (DEVDRV_SUCCESS == ret)
-    {
-        ret = R_RIIC_Write(channel, w_buffer, w_byte);
-    }
+	ret = R_RIIC_Write(channel, buf, (2 + w_byte));
 
     R_RIIC_WriteCond(channel, RIIC_TX_MODE_STOP);
     R_RIIC_DetectStop(channel);
 
-    return ret;
+    /* Add delay to ensure IIC device has completed internal writes */
+    while (delay--)
+	{
+		SOFT_DELAY();
+	}
+
+    return (ret);
 }
 
 
@@ -509,18 +622,30 @@ int32_t R_RIIC_rza1h_rsk_write(uint32_t channel, uint8_t d_adr,
 *                w_byte      - output value.
 * Return Value : ret : error code
 ******************************************************************************/
-int32_t Sample_RIIC_PortExpAccess(uint32_t channel, uint8_t d_code,
-		               uint8_t reg_command, uint8_t config_io, uint8_t w_byte)
+
+int32_t Sample_RIIC_PortExpAccess (uint32_t channel,    uint8_t d_code,
+		                           uint8_t reg_command, uint8_t config_io,
+		                           uint8_t w_byte)
 {
     int32_t  ret = DEVDRV_ERROR;
     uint8_t  buf[3];
+    uint8_t  d_code_shifted;
+    uint8_t current[3];
     uint8_t j;
 
-	port_x_state = g_r_buffer;
+    volatile struct st_riic * priic;
+	priic = priic_get_reg_addr(channel);
 
-	/* Update the port expander's IO states if required */
-	if (PORTX_OUTPUT_REG == reg_command)
-	{
+	/* Set the port expander's device address */
+	d_code_shifted = (uint8_t)(((d_code & 0x7u) << 1u) | SAMPLE_RIIC_RWCODE_W);
+	d_code_shifted = (uint8_t)(d_code_shifted | (d_code & 0xF0));
+
+	/* Perform a read to get the current register value */
+    R_RIIC_rza1h_rsk_read(channel, d_code_shifted,
+    		             reg_command, 0x1, current);
+
+
+	  /* Update the port expander's registers if required */
 		/* Re-write the new bit sequence to the buffer */
 		for (j = 0u; j < 8u; j++)
 		{
@@ -531,12 +656,12 @@ int32_t Sample_RIIC_PortExpAccess(uint32_t channel, uint8_t d_code,
 				if (1u == ((uint8_t)1u & (w_byte >> j)))
 				{
 					/* Set the bit pointed by the loop counter j */
-					port_x_state |= (uint8_t)(1u << j);
+					current[0] |= (uint8_t)(1u << j);
 				}
 				else
 				{
 					/* Clear the bit pointed by the loop counter j */
-					port_x_state &= (uint8_t)(~(1u << j));
+					current[0] &= (uint8_t)(~(1u << j));
 				}
 			}
 		}
@@ -549,10 +674,13 @@ int32_t Sample_RIIC_PortExpAccess(uint32_t channel, uint8_t d_code,
 		buf[1] = reg_command;
 
 		/* Set the port expander's port data */
-		buf[2] = port_x_state;
+		buf[2] = current[0];
 
-		/* While for the bus to become free */
-	    R_RIIC_DetectStop(channel);
+		/* Is the bus free? */
+	    while (0x00008 == (priic->RIICnCR2.UINT32 & 0x0008))
+		{
+			SOFT_DELAY();
+		}
 
 	    R_RIIC_WriteCond(channel, RIIC_TX_MODE_START);
 
@@ -567,9 +695,8 @@ int32_t Sample_RIIC_PortExpAccess(uint32_t channel, uint8_t d_code,
 
 		/* Ensure to check for acknowledge */
 		__asm("nop");
-	}
 
-    return ret;
+    return (ret);
 }
 
 /******************************************************************************
@@ -579,11 +706,11 @@ int32_t Sample_RIIC_PortExpAccess(uint32_t channel, uint8_t d_code,
 * Arguments    : uint32_t channel : RIIC channel (0 to 3)
 * Return Value : none
 ******************************************************************************/
-int32_t Sample_RIIC_ScanPort(uint32_t channel)
+int32_t Sample_RIIC_ScanPort (uint32_t channel)
 {
     uint8_t  buf[32];
     uint8_t  dummy_data = 0u;
-    uint16_t  addr;
+    uint8_t  addr;
 
     /*  Argument check  */
     if (channel >= RIIC_CH_TOTAL)
@@ -615,7 +742,7 @@ int32_t Sample_RIIC_ScanPort(uint32_t channel)
 * Arguments    : uint8_t status : Active LED's PX_1_LED1, PX_1_LED2, PX_1_LED3
 * Return Value : none
 ******************************************************************************/
-void Sample_R_RIIC_LED_PE_Toggle(uint8_t status)
+void Sample_R_RIIC_LED_PE_Toggle (uint8_t status)
 {
 	uint8_t current;
 
@@ -627,7 +754,7 @@ void Sample_R_RIIC_LED_PE_Toggle(uint8_t status)
 	{
 		if(current & PX_1_LED1)
 		{
-			current = (uint8_t)(current & ~PX_1_LED1);
+			current = (uint8_t)(current & (~PX_1_LED1));
 		}
 		else
 		{
@@ -639,7 +766,7 @@ void Sample_R_RIIC_LED_PE_Toggle(uint8_t status)
 	{
 		if(current & PX_1_LED2)
 		{
-			current = (uint8_t)(current & ~PX_1_LED2);
+			current = (uint8_t)(current & (~PX_1_LED2));
 		}
 		else
 		{
@@ -651,7 +778,7 @@ void Sample_R_RIIC_LED_PE_Toggle(uint8_t status)
 	{
 		if(current & PX_1_LED3)
 		{
-			current = (uint8_t)(current & ~PX_1_LED3);
+			current = (uint8_t)(current & (~PX_1_LED3));
 		}
 		else
 		{
@@ -671,7 +798,7 @@ void Sample_R_RIIC_LED_PE_Toggle(uint8_t status)
 * Arguments    : uint8_t status : Active LED's PX_1_LED1, PX_1_LED2, PX_1_LED3
 * Return Value : none
 ******************************************************************************/
-void Sample_R_RIIC_LED_PE_On(uint8_t status)
+void Sample_R_RIIC_LED_PE_On (uint8_t status)
 {
 	uint8_t current;
 
@@ -681,17 +808,17 @@ void Sample_R_RIIC_LED_PE_On(uint8_t status)
 
 	if(PX_1_LED1 == (status & PX_1_LED1))
 	{
-		current = (uint8_t)(current & ~PX_1_LED1);
+		current = (uint8_t)(current & (~PX_1_LED1));
 	}
 
 	if(PX_1_LED2 == (status & PX_1_LED2))
 	{
-		current = (uint8_t)(current & ~PX_1_LED2);
+		current = (uint8_t)(current & (~PX_1_LED2));
 	}
 
 	if(PX_1_LED3 == (status & PX_1_LED3))
 	{
-		current = (uint8_t)(current & ~PX_1_LED3);
+		current = (uint8_t)(current & (~PX_1_LED3));
 	}
 
     R_RIIC_rza1h_rsk_write(DEVDRV_CH_3,
@@ -705,7 +832,7 @@ void Sample_R_RIIC_LED_PE_On(uint8_t status)
 * Arguments    : uint8_t status : Active LED's PX_1_LED1, PX_1_LED2, PX_1_LED3
 * Return Value : none
 ******************************************************************************/
-void Sample_R_RIIC_LED_PE_Off(uint8_t status)
+void Sample_R_RIIC_LED_PE_Off (uint8_t status)
 {
 	uint8_t current;
 
@@ -742,7 +869,7 @@ void Sample_R_RIIC_LED_PE_Off(uint8_t status)
 *              :                    :   INTC_EDGE_TRIGGER    : Edge trigger
 * Return Value : none
 ******************************************************************************/
-void Sample_RIIC_Ri0_Interrupt(uint32_t int_sense)
+void Sample_RIIC_Ri0_Interrupt (uint32_t int_sense)
 {
     UNUSED_PARAM(int_sense);
 
@@ -757,7 +884,7 @@ void Sample_RIIC_Ri0_Interrupt(uint32_t int_sense)
 *              :                    :   INTC_EDGE_TRIGGER    : Edge trigger
 * Return Value : none
 ******************************************************************************/
-void Sample_RIIC_Ti0_Interrupt(uint32_t int_sense)
+void Sample_RIIC_Ti0_Interrupt (uint32_t int_sense)
 {
     UNUSED_PARAM(int_sense);
 
@@ -772,7 +899,7 @@ void Sample_RIIC_Ti0_Interrupt(uint32_t int_sense)
 *              :                    :   INTC_EDGE_TRIGGER    : Edge trigger
 * Return Value : none
 ******************************************************************************/
-void Sample_RIIC_Tei0_Interrupt(uint32_t int_sense)
+void Sample_RIIC_Tei0_Interrupt (uint32_t int_sense)
 {
     UNUSED_PARAM(int_sense);
 
@@ -787,7 +914,7 @@ void Sample_RIIC_Tei0_Interrupt(uint32_t int_sense)
 *              :                    :   INTC_EDGE_TRIGGER    : Edge trigger
 * Return Value : none
 ******************************************************************************/
-void Sample_RIIC_Ri3_Interrupt(uint32_t int_sense)
+void Sample_RIIC_Ri3_Interrupt (uint32_t int_sense)
 {
     UNUSED_PARAM(int_sense);
 
@@ -802,7 +929,7 @@ void Sample_RIIC_Ri3_Interrupt(uint32_t int_sense)
 *              :                    :   INTC_EDGE_TRIGGER    : Edge trigger
 * Return Value : none
 ******************************************************************************/
-void Sample_RIIC_Ti3_Interrupt(uint32_t int_sense)
+void Sample_RIIC_Ti3_Interrupt (uint32_t int_sense)
 {
     UNUSED_PARAM(int_sense);
 
@@ -817,12 +944,13 @@ void Sample_RIIC_Ti3_Interrupt(uint32_t int_sense)
 *              :                    :   INTC_EDGE_TRIGGER    : Edge trigger
 * Return Value : none
 ******************************************************************************/
-void Sample_RIIC_Tei3_Interrupt(uint32_t int_sense)
+void Sample_RIIC_Tei3_Interrupt (uint32_t int_sense)
 {
     UNUSED_PARAM(int_sense);
 
     R_RIIC_TeiInterrupt(DEVDRV_CH_3);
 }
+
 
 /* End of File */
 

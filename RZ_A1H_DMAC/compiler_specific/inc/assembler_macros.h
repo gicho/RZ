@@ -5,8 +5,8 @@
  *      Author: ParodiG
  */
 
-#ifndef ASSEMBLER_MACROS_H_
-#define ASSEMBLER_MACROS_H_
+#ifndef ASSEMBLER_MACROS_H
+#define ASSEMBLER_MACROS_H
 
 #ifdef __GNUC__
 

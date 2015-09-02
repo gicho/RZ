@@ -62,7 +62,7 @@ Includes   <System Includes> , "Project Includes"
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void R_LED_Init(void)
+void rsk_init_led0(void)
 {
     /* ---- P7_1 : LED0 direct connection to IP */
     RZA_IO_RegWrite_16(&GPIO.PMC7,  0, GPIO_PMC7_PMC71_SHIFT,  GPIO_PMC7_PMC71);

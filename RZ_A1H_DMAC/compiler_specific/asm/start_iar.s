@@ -28,7 +28,11 @@
     PUBWEAK APP_irq_handler
     PUBWEAK APP_fiq_handler 
     
-    SECTION .intvec:CODE:ROOT(4)
+/*
+* Vector table must be aligned to 2 Byte boundary! (Bit 0-4 = 0)
+* use ROOT(5) as 2^5= 32
+*/    
+    SECTION .intvec:CODE:ROOT(5)
     ARM    
 
 /*
@@ -57,7 +61,7 @@ IRQ_Addr:       DCD   APP_irq_handler
 FIQ_Addr:       DCD   APP_fiq_handler
 
 
-    SECTION RAM_IRQ_VECTOR_TABLE:CODE:ROOT(4)
+    SECTION RAM_IRQ_VECTOR_TABLE:CODE:ROOT(5)
     ARM
     
     PUBLIC APP_vector_table_RAM

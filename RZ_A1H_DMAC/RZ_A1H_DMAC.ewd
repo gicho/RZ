@@ -37,7 +37,7 @@
         </option>
         <option>
           <name>MacFile</name>
-          <state></state>
+          <state>$PROJ_DIR$\scripts\RZ_RSK_RAM_init.mac</state>
         </option>
         <option>
           <name>MemOverride</name>
@@ -49,7 +49,7 @@
         </option>
         <option>
           <name>RunToEnable</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>RunToName</name>
@@ -117,7 +117,7 @@
         </option>
         <option>
           <name>FlashLoadersV3</name>
-          <state>$TOOLKIT_DIR$\config\flashloader\</state>
+          <state>$PROJ_DIR$\..\flashloader\RSK_single_qspi.board</state>
         </option>
         <option>
           <name>OCImagesSuppressCheck1</name>
@@ -145,7 +145,7 @@
         </option>
         <option>
           <name>OverrideDefFlashBoard</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OCImagesOffset1</name>
@@ -747,7 +747,7 @@
         <debug>1</debug>
         <option>
           <name>JLinkSpeed</name>
-          <state>15000</state>
+          <state>12000</state>
         </option>
         <option>
           <name>CCJLinkDoLogfile</name>
@@ -804,11 +804,11 @@
         </option>
         <option>
           <name>CCRDICatchReset</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCRDICatchUndef</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCRDICatchSWI</name>
@@ -816,11 +816,11 @@
         </option>
         <option>
           <name>CCRDICatchData</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCRDICatchPrefetch</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCRDICatchIRQ</name>
@@ -853,7 +853,7 @@
         <option>
           <name>CCJLinkResetList</name>
           <version>6</version>
-          <state>1</state>
+          <state>2</state>
         </option>
         <option>
           <name>CCJLinkInterfaceCmdLine</name>

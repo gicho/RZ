@@ -1,26 +1,20 @@
-/*******************************************************************************
-* DISCLAIMER
-* This software is supplied by Renesas Electronics Corporation and is only
-* intended for use with Renesas products. No other uses are authorized. This
-* software is owned by Renesas Electronics Corporation and is protected under
-* all applicable laws, including copyright laws.
-* THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIES REGARDING
-* THIS SOFTWARE, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING BUT NOT
-* LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
-* AND NON-INFRINGEMENT. ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED.
-* TO THE MAXIMUM EXTENT PERMITTED NOT PROHIBITED BY LAW, NEITHER RENESAS
-* ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES SHALL BE LIABLE
-* FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR
-* ANY REASON RELATED TO THIS SOFTWARE, EVEN IF RENESAS OR ITS AFFILIATES HAVE
-* BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-* Renesas reserves the right, without notice, to make changes to this software
-* and to discontinue the availability of this software. By using this software,
-* you agree to the additional terms and conditions found by accessing the
-* following link:
-* http://www.renesas.com/disclaimer
+/*
+* Copyright 2015 Giancarlo Parodi
+* 
+* l1_cache_iar_asm.s
 *
-* Copyright (C) 2015 Renesas Electronics Corporation. All rights reserved.
-*******************************************************************************/
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+* 
+*     http://www.apache.org/licenses/LICENSE-2.0
+* 
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 
     MODULE ASM_MACROS_MOD
     SECTION ASM_MACROS:CODE:NOROOT(4)
@@ -64,10 +58,11 @@ M_BIT EQU 0x1
     Clear M bit  0 to disable MMU
 */
 
+/*
+* Enable all caches
+*/
 L1_CachesEnable_asm:
-/******************************************************************************/
-/* Enable all caches                                                          */
-/******************************************************************************/
+
     /* Read CP15 SCTLR */
     MRC  p15, 0, r0, c1, c0, 0
 
@@ -75,28 +70,29 @@ L1_CachesEnable_asm:
     	Set Z bit 11 to enable flow prediction
     	Set C bit  2 to enable D Cache
     */
-    /* BIC has 8 bit immediate + 4 bit rotation so cannot address directly above first byte */
+    /* 
+    * BIC has 8 bit immediate + 4 bit rotation 
+    * so cannot address directly above first byte 
+    */
     ORR  r0, r0, #(I_BIT)
     ORR  r0, r0, #(Z_BIT)
     ORR  r0, r0, #(C_BIT)
     MCR  p15, 0, r0, c1, c0, 0		     /* Write CP15 register 1 */
     ISB
     
-/******************************************************************************/
-/* Enable D-side prefetch                                                     */
-/******************************************************************************/
+    /* Enable D-side prefetch */
     MRC  p15, 0, r0, c1, c0, 1         /* Read Auxiliary Control Register */
     ORR  r0, r0, #(0x1 << 2)		     /* Enable Dside prefetch */
     MCR  p15, 0, r0, c1, c0, 1	  /* Write Auxiliary Control Register */
     ISB
     BX   lr
     
-/******************************************************************************
+/*
 * Function Name : L1_D_CacheOperationAsm
 * Description   : r0 = 0 : DCISW. Invalidate data or unified cache line by set/way.
 *               : r0 = 1 : DCCSW. Clean data or unified cache line by set/way.
 *               : r0 = 2 : DCCISW. Clean and Invalidate data or unified cache line by set/way.
-*******************************************************************************/
+*/
 L1_D_CacheOperation_asm: 
 
     PUSH {r4-r11}
@@ -157,10 +153,10 @@ Finished:
     BX   lr
 
 
-/******************************************************************************
- * Function Name : L1_I_CacheInvalidate
- * Description   : Invalidate all instruction caches to PoU.
-******************************************************************************/
+/*
+* Function Name : L1_I_CacheInvalidate
+* Description   : Invalidate all instruction caches to PoU.
+*/
 L1_I_CacheInvalidate_asm:
 
     MOV  r0, #0
@@ -170,10 +166,10 @@ L1_I_CacheInvalidate_asm:
 
     BX   lr
 
-/******************************************************************************
+/*
 * Function Name : L1_I_CacheEnableAsm
 * Description   : Enable instruction caches.
-******************************************************************************/
+*/
 L1_I_CacheEnable_asm:
 
     MRC  p15, 0, r0, c1, c0, 0       ;Read CP15 register 1
@@ -182,10 +178,10 @@ L1_I_CacheEnable_asm:
 
     BX   lr
 
-/******************************************************************************
- Function Name : L1_I_CacheDisableAsm
- Description   : Disable instruction caches.
-******************************************************************************/
+/*
+* Function Name : L1_I_CacheDisableAsm
+* Description   : Disable instruction caches.
+*/
 L1_I_CacheDisable_asm:
 
     MRC  p15, 0, r0, c1, c0, 0          ;; Read CP15 register 1
@@ -195,10 +191,10 @@ L1_I_CacheDisable_asm:
 
     BX   lr
 
-/******************************************************************************
- Function Name : L1_D_CacheEnableAsm
- Description   : Enable data caches.
-******************************************************************************/
+/*
+* Function Name : L1_D_CacheEnableAsm
+* Description   : Enable data caches.
+*/
 L1_D_CacheEnable_asm:
 
     ;; D-cache is controlled by bit 2
@@ -209,10 +205,10 @@ L1_D_CacheEnable_asm:
 
     BX   lr
 
-/******************************************************************************
- Function Name : L1_D_CacheDisableAsm
- Description   : Disable data caches.
-******************************************************************************/
+/*
+* Function Name : L1_D_CacheDisableAsm
+* Description   : Disable data caches.
+*/
 L1_D_CacheDisable_asm: 
 
     ;; D-cache is controlled by bit 2
@@ -224,10 +220,10 @@ L1_D_CacheDisable_asm:
 
     BX   lr
 
-/******************************************************************************
- Function Name : L1_EnableBranchPrediction_asm
- Description   : Enable program flow prediction.
-******************************************************************************/
+/*
+* Function Name : L1_EnableBranchPrediction_asm
+* Description   : Enable program flow prediction.
+*/
 L1_EnableBranchPrediction_asm: 
 
     ;; Turning on branch prediction requires a general enable
@@ -244,10 +240,10 @@ L1_EnableBranchPrediction_asm:
 
     BX   lr
 
-/******************************************************************************
- Function Name : L1_DisableBranchPrediction_asm
- Description   : Disable program flow prediction.
-******************************************************************************/
+/*
+* Function Name : L1_DisableBranchPrediction_asm
+* Description   : Disable program flow prediction.
+*/
 L1_DisableBranchPrediction_asm:
 
     MRC  p15, 0, r0, c1, c0, 0          ;; Read System Control Register
@@ -256,10 +252,10 @@ L1_DisableBranchPrediction_asm:
 
     BX   lr
 
-/******************************************************************************
- Function Name : L1PrefetchEnableAsm
- Description   : Enable Dside prefetch.
-******************************************************************************/
+/*
+* Function Name : L1PrefetchEnableAsm
+* Description   : Enable Dside prefetch.
+*/
 L1D_PrefetchEnable_asm: 
 
     MRC  p15, 0, r0, c1, c0, 1          ;; Read Auxiliary Control Register
@@ -269,10 +265,10 @@ L1D_PrefetchEnable_asm:
 
     BX   lr
 
-/******************************************************************************
- Function Name : L1PrefetchDisableAsm
- Description   : Disable Dside prefetch
-******************************************************************************/
+/*
+* Function Name : L1PrefetchDisableAsm
+* Description   : Disable Dside prefetch
+*/
 L1D_PrefetchDisable_asm: 
 
     MRC  p15, 0, r0, c1, c0, 1          ;; Read Auxiliary Control Register
@@ -281,12 +277,6 @@ L1D_PrefetchDisable_asm:
 
     BX   lr
 
-
-/*******************************************************************************
-*
-* constant definitions
-*
-********************************************************************************/
 /*
  * dcache_line_size - get the minimum D-cache line size from the CTR register
  * on ARMv7.
@@ -312,15 +302,15 @@ icache_line_size macro reg tmp
 	mov	reg, reg, lsl tmp	; actual cache line size
         endm 
 
-/*******************************************************************************
- *	clean_dcache_range(start,end)
- *
- *	Used to clean a range of virtual addresses in data cache
- *
- *	start: virtual start address of cached region
- *	end: virtual end address of cached region
- *
-********************************************************************************/
+/*
+*	clean_dcache_range(start,end)
+*
+*	Used to clean a range of virtual addresses in data cache
+*
+*	start: virtual start address of cached region
+*	end: virtual end address of cached region
+*
+*/
 clean_dcache_range_asm:
 
 	dcache_line_size r2, r3

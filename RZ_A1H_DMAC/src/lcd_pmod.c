@@ -356,7 +356,7 @@ void DisplayDelay (uint32_t const units)
     /* Decrement the counter and wait */
     while (counter--)
     {
-        SOFT_DELAY;
+        SOFT_DELAY();
     }
 }
 /*******************************************************************************

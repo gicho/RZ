@@ -45,8 +45,16 @@ Macro definitions
 
 #include "intrinsics.h"
 
-#define SOFT_DELAY	__no_operation()
-#define EXEC_RAM        __ramfunc
+#define EXEC_RAM            __ramfunc
+
+#define SOFT_DELAY()	        __no_operation()
+#define WAIT_FOR_INTERRUPT()    __WFI()
+
+#define MUTEX(foo) _Pragma("data_alignment=32") mutex_t foo = UNLOCKED;
+
+#define ISB     __ISB
+#define DSB     __DSB
+#define DMB     __DMB
 
 #define INITIALIZATION_CODE _Pragma("location=\".hardware_init\"") 
 #define DMA_RAM_BUFFER _Pragma("location=\".DMA_BUFFER_IRAM\"")
@@ -55,16 +63,20 @@ Macro definitions
 #define DMA_SDRAM_CACHED_BUFFER _Pragma("location=\".DMA_BUFFER_CACHED_SDRAM\"")
 
 #define VRAM_SECTION  _Pragma("location=\".display_buffer_section\"")
-
 #define IMAGE_DATA_BUF _Pragma("location=\".IMAGE_DATA\"")
+
+
 
 #endif
 
 
 #ifdef __GNUC__
 
-#define __isb() __asm__("isb")
-#define SOFT_DELAY __asm__("nop")
+#define ISB()               __asm__("isb")
+#define DSB()               __asm__("dsb")
+#define DMB()               __asm__("dmb")
+
+#define SOFT_DELAY          __asm__("nop")
 #define EXEC_RAM 
 
 #define INITIALIZATION_CODE __attribute__((section (".hardware_init")))  

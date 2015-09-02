@@ -48,7 +48,7 @@ __irq_stack_end__ 		EQU IRQ_STACK$$Limit
 __fiq_stack_end__ 		EQU FIQ_STACK$$Limit
 __und_stack_end__ 		EQU UND_STACK$$Limit
 __abt_stack_end__ 		EQU ABT_STACK$$Limit
-__program_stack_end__ 	EQU  CSTACK$$Limit   
+__program_stack_end__ 	EQU CSTACK$$Limit   
 
 /* Standard definitions of mode bits and interrupt flags in PSRs */
 USR_MODE EQU 0x10
@@ -260,9 +260,6 @@ frqcr2_wait:
 
 /* Switch on the VFP and NEON hardware */
     BL neon_vfp_on_asm
-
-/* Enable MMU - does not change the caches configuration */
-;    BL enable_mmu_asm
 	
 /* Branch to C library entry point */
     B __cmain

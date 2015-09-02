@@ -77,6 +77,7 @@ QSPI_BL_reset_handler:
 * Clear M bit  0 to disable MMU
 */
 
+
 /* Disable cache and MMU just to be sure */
     MRC  p15, 0, r0, c1, c0, 0
 

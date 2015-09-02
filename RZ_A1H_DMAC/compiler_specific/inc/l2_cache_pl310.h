@@ -16,8 +16,8 @@
 * limitations under the License.
 */
 
-#ifndef _L2CACHE_PL310_
-#define _L2CACHE_PL310_
+#ifndef L2CACHE_PL310_H
+#define L2CACHE_PL310_H
 
 // initialize the cache controller
 void L2CacheInit(void);

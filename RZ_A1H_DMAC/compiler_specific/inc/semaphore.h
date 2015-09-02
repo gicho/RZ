@@ -1,7 +1,7 @@
 /*
 * Copyright 2015 Giancarlo Parodi
 * 
-* cp15_access.h
+* semaphore.h
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -14,26 +14,17 @@
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/
+*/    
+#ifndef MUTEX_H
+#define MUTEX_H
 
-#ifndef CP15_ACCESS_H
-#define CP15_ACCESS_H
+typedef uint32_t sempahore_t;
 
-#include <stdint.h>
+#define LOCKED   0
+#define UNLOCKED 1
 
-extern void enable_neon_vfp_access_priv(void);
-extern void enable_neon_vfp_access_full(void);
-extern void disable_neon_vfp_access(void);
-extern void neon_vfp_on(void);
-extern void neon_vfp_off(void);
+void semaphore_get(sempahore_t* mutex);
+void semaphore_put(sempahore_t* mutex);
 
-// does not change the cache configuration
-extern void enable_mmu(void);
-extern void disable_mmu(void);
 
-extern void VbarSet(const uint32_t location);
-extern void SetLowVectors(void);
-extern void SetHighVectors(void);
-      
 #endif
-

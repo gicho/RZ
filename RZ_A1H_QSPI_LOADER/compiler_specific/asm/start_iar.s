@@ -17,7 +17,7 @@
 */
 
     MODULE RESET_HANDLER_MOD
-    SECTION .intvec:CODE:ROOT(4)
+    SECTION .intvec:CODE:ROOT(5)
     ARM
     
     PUBLIC QSPI_BL_vector_table
@@ -47,7 +47,7 @@ QSPI_BL_vector_table:
 * Interrupt routines might be overridden when used
 * Default empty implementations are provided in this file
 */
-    SECTION .dummy_handlers:CODE:ROOT(4)
+    SECTION .dummy_handlers:CODE:ROOT
     ARM
 
 QSPI_BL_undefined_handler:

@@ -16,8 +16,8 @@
 * limitations under the License.
 */
 
-#ifndef _L2_CACHE_H
-#define _L2_CACHE_H
+#ifndef L2_CACHE_H
+#define L2_CACHE_H
 
 #define L2CACHE_ID_REG					0x000
 #define L2CACHE_TYPE_REG				0x004

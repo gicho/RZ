@@ -376,8 +376,7 @@ EXEC_RAM void qspiReconfigure(void)
   /* flush the read cache */
   qspiExternalAddressFlushReadCache();  
   
-  L1_I_CacheInvalidate();
-  
+
   /* now jump to the program application entry point */
   (*applicationEntry)();
   

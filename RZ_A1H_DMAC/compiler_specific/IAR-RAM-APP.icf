@@ -200,9 +200,9 @@ define block RAM_BSS { section .bss };
 
 /* .textrw are functions which are specified to run from RAM (__ramfunc) */
 /* kept like this for compatibility with the QSPI usage scenario */
-/* where functions runniing from ram need to be defined like this */
-define block RAM_CODE { section .textrw };
-define block RAM_CODE_IN_ROM { section .textrw_init };
+/* where functions running from ram need to be defined like this */
+define block RAM_CODE           with alignment = 4 { section .textrw };
+define block RAM_CODE_IN_ROM    with alignment = 4 { section .textrw_init };
 
 do not initialize  { 
 section .noinit,
@@ -214,6 +214,7 @@ section .DMA_BUFFER_CACHED_SDRAM
 };
 
 initialize by copy { section .data, section .textrw };
+initialize manually { section RAM_IRQ_VECTOR_TABLE };
 
 /* Vector table located already in RAM */
 place at address mem: RAM0L_start { section .intvec };
@@ -228,6 +229,7 @@ place in RAM0L_region {
 /* so the linker cannot place the initializer section and the data in the same section as they */
 /* depend from each other */
 place in RAM0U_region {
+  section RAM_IRQ_VECTOR_TABLE,
   block RAM_CODE,
   block RAM_DATA,
   block RAM_BSS,

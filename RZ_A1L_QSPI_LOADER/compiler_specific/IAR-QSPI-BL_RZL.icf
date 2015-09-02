@@ -180,8 +180,8 @@ define block RAM_DATA_IN_ROM { section .data_init };
 define block RAM_BSS { section .bss };
 
 /* .textrw are functions which are specified to run from RAM (__ramfunc) */
-define block RAM_CODE { section .textrw };
-define block RAM_CODE_IN_ROM { section .textrw_init };
+define block RAM_CODE with alignment = 4 { section .textrw };
+define block RAM_CODE_IN_ROM with alignment = 4 { section .textrw_init };
 
 do not initialize  { section .noinit };
 do not initialize  { section MMU_TT };

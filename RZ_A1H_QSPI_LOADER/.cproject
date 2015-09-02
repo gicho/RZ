@@ -56,7 +56,7 @@
 								<option id="com.renesas.cdt.rz.Debug.Compiler.option.debugLevel.2131989328" name="Debug Level" superClass="com.renesas.cdt.rz.Debug.Compiler.option.debugLevel" value="com.renesas.cdt.rz.Debug.Compiler.option.debugLevel.level3" valueType="enumerated"/>
 								<option id="com.renesas.cdt.rz.Debug.Compiler.option.floatingpointabi.1231987637" name="Floating-point ABI (-mfloat-abi=name)" superClass="com.renesas.cdt.rz.Debug.Compiler.option.floatingpointabi" value="com.renesas.cdt.rz.Debug.Compiler.option.floatingpointabi.hard" valueType="enumerated"/>
 								<option id="com.renesas.cdt.rz.Debug.Compiler.option.stackFramForAPCS.1637104449" name="Generate a stack frame for ARM Procedure Call Standard" superClass="com.renesas.cdt.rz.Debug.Compiler.option.stackFramForAPCS" value="true" valueType="boolean"/>
-								<option id="com.renesas.cdt.core.Compiler.option.generateListFile.827597708" name="Generate list file(-Wa,-a)" superClass="com.renesas.cdt.core.Compiler.option.generateListFile" value="false" valueType="boolean"/>
+								<option command="-Wa,-adlhn=&quot;$(basename $(notdir $&lt;)).lst&quot;" id="com.renesas.cdt.core.Compiler.option.generateListFile.827597708" name="Generate list file(-Wa,-a)" superClass="com.renesas.cdt.core.Compiler.option.generateListFile" value="false" valueType="boolean"/>
 								<inputType id="%Base.Compiler.C.InputType.Id.321671044" name="C Input" superClass="%Base.Compiler.C.InputType.Id"/>
 								<inputType id="Base.Compiler.CPP.InputType.Id.982490854" name="C++ Input" superClass="Base.Compiler.CPP.InputType.Id"/>
 							</tool>
@@ -113,7 +113,7 @@
 					</folderInfo>
 					<fileInfo id="com.renesas.cdt.rz.debug.win32.configuration.Id.1302943722.RSK_Programmer_QSPI_Boot_Reset" name="RSK_Programmer_QSPI_Boot_Reset" rcbsApplicability="disable" resourcePath="RSK_Programmer_QSPI_Boot_Reset" toolsToInvoke=""/>
 					<sourceEntries>
-						<entry excluding="compiler_specific/asm/start_iar.s|compiler_specific/asm/reset_handler_iar.s|src/spibsc_ioset_userdef.c|src/spibsc_ioset_drv.c|src/spibsc_ioset_api.c|src/spibsc_flash_userdef.c|src/spibsc_flash_api.c|src/qspi_change_speed.c|src/spibsc_init2.c|src/init_spibsc_init2_section.c|src/spibsc_init1.c|src/init_spibsc_init1_section.c|compiler_specific/asm/vbar_init.S|compiler_specific/asm/stack.S|compiler_specific/asm/initsct.S|RSK_Programmer_QSPI_Boot_Reset" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="compiler_specific/src/low_level_init_iar.c|compiler_specific/asm/cmain_iar.s|compiler_specific/asm/l1_cache_iar_asm.s|compiler_specific/asm/start_iar.s|compiler_specific/asm/reset_handler_iar.s|src/spibsc_ioset_userdef.c|src/spibsc_ioset_drv.c|src/spibsc_ioset_api.c|src/spibsc_flash_userdef.c|src/spibsc_flash_api.c|src/qspi_change_speed.c|src/spibsc_init2.c|src/init_spibsc_init2_section.c|src/spibsc_init1.c|src/init_spibsc_init1_section.c|compiler_specific/asm/vbar_init.S|compiler_specific/asm/stack.S|compiler_specific/asm/initsct.S|RSK_Programmer_QSPI_Boot_Reset" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -263,7 +263,7 @@
 					</folderInfo>
 					<fileInfo id="com.renesas.cdt.rz.debug.win32.configuration.Id.1302943722.1628408855.RSK_Programmer_QSPI_Boot_Reset" name="RSK_Programmer_QSPI_Boot_Reset" rcbsApplicability="disable" resourcePath="RSK_Programmer_QSPI_Boot_Reset" toolsToInvoke=""/>
 					<sourceEntries>
-						<entry excluding="compiler_specific/asm/start_iar.s|compiler_specific/asm/reset_handler_iar.s|src/spibsc_ioset_userdef.c|src/spibsc_ioset_drv.c|src/spibsc_ioset_api.c|src/spibsc_flash_userdef.c|src/spibsc_flash_api.c|src/qspi_change_speed.c|src/spibsc_init2.c|src/init_spibsc_init2_section.c|src/spibsc_init1.c|src/init_spibsc_init1_section.c|compiler_specific/asm/vbar_init.S|compiler_specific/asm/stack.S|compiler_specific/asm/initsct.S|RSK_Programmer_QSPI_Boot_Reset" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="compiler_specific/src/low_level_init_iar.c|compiler_specific/asm/cmain_iar.s|compiler_specific/asm/l1_cache_iar_asm.s|compiler_specific/asm/start_iar.s|compiler_specific/asm/reset_handler_iar.s|src/spibsc_ioset_userdef.c|src/spibsc_ioset_drv.c|src/spibsc_ioset_api.c|src/spibsc_flash_userdef.c|src/spibsc_flash_api.c|src/qspi_change_speed.c|src/spibsc_init2.c|src/init_spibsc_init2_section.c|src/spibsc_init1.c|src/init_spibsc_init1_section.c|compiler_specific/asm/vbar_init.S|compiler_specific/asm/stack.S|compiler_specific/asm/initsct.S|RSK_Programmer_QSPI_Boot_Reset" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

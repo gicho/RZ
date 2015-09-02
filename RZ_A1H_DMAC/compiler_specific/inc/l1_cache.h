@@ -15,24 +15,24 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-#ifndef _L1_CACHE_H_
-#define _L1_CACHE_H_
+#ifndef L1_CACHE_H
+#define L1_CACHE_H
 
 #include <stdint.h>
 #include "assembler_macros.h"
 
 extern void L1_CachesEnable(void);	/* enables all caches (I,D), branch prediction, D-Side prefetch */
 
-extern void L1_D_CacheDisable(void);
-extern void L1_D_CacheEnsable(void);
+extern void L1D_CacheDisable(void);
+extern void L1D_CacheEnable(void);
 
 extern void L1D_CacheInvalidate(void);
 extern void L1D_CacheClean(void);
 extern void L1D_CacheCleanAndInvalidate(void);
 
-extern void L1_I_CacheInvalidate(void);
-extern void L1_I_CacheDisable(void);
-extern void L1_I_CacheEnable(void);
+extern void L1I_CacheInvalidate(void);
+extern void L1I_CacheDisable(void);
+extern void L1I_CacheEnable(void);
 
 extern void L1D_PrefetchDisable(void);
 extern void L1D_PrefetchEnable(void);

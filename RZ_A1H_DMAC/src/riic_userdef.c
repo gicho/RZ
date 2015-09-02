@@ -24,43 +24,37 @@
 /*******************************************************************************
 * File Name     : riic_userdef.c
 * Device(s)     : RZ/A1H (R7S721001)
-* Tool-Chain    : GNUARM-RZv13.01-EABI
+* Tool-Chain    : GNUARM-NONEv14.02-EABI
 * H/W Platform  : RSK+RZA1H CPU Board
 * Description   : RIIC driver (User define function)
 *******************************************************************************/
 /*******************************************************************************
 * History       : DD.MM.YYYY Version Description
-*               : 18.06.2013 1.00
-*               : 21.03.2014 2.00
+*               : 21.10.2014 1.00
 *******************************************************************************/
 
 /******************************************************************************
 Includes   <System Includes> , "Project Includes"
 ******************************************************************************/
-
-#include <stdint.h>
-
-/* Interchangeable compiler specific header */
-#include "compiler_settings.h"
-
 /* Default  type definition header */
 #include "r_typedefs.h"
 /* I/O Register root header */
 #include "iodefine.h"
-#include "riic_iobitmask.h"
-
 /* Device driver header */
 #include "dev_drv.h"
 /* RIIC Driver header */
-#include "devdrv_riic.h"
+#include "riic.h"
 /* INTC Driver Header */
-#include "devdrv_intc.h"
+#include "intc.h"
 /* I2C RSK+RZA1H Eval-board header */
-#include "sample_riic_rza1h_rsk.h"
+#include "riic_rskrza1h.h"
 /* Interchangeable compiler specific header */
 #include "compiler_settings.h"
 /* Low level register read/write header */
 #include "rza_io_regrw.h"
+
+#include "riic_iodefine.h"
+#include "riic_iobitmask.h"
 
 /******************************************************************************
 Typedef definitions
@@ -93,7 +87,7 @@ static volatile uint8_t riic3_transmit_empty_flg = DEVDRV_FLAG_OFF;
 static volatile uint8_t riic3_transmit_end_flg   = DEVDRV_FLAG_OFF;
 
 /******************************************************************************
-* Function Name: Userdef_RIIC0_Init
+* Function Name: userdef_riic0_init
 * Description  : User-defined function.
 *              : Called to initialise the RIIC channel 0 peripheral
 *              : Uses the following interrupts:
@@ -114,7 +108,7 @@ static volatile uint8_t riic3_transmit_end_flg   = DEVDRV_FLAG_OFF;
 *              : uint32_t brh  : High byte value of the width of the SCL clock
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC0_Init(uint32_t cks, uint32_t brl, uint32_t brh)
+void userdef_riic0_init (uint32_t cks, uint32_t brl, uint32_t brh)
 {
     volatile uint8_t dummy_buf = 0u;
 
@@ -220,7 +214,7 @@ void Userdef_RIIC0_Init(uint32_t cks, uint32_t brl, uint32_t brh)
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC1_Init
+* Function Name: userdef_riic1_Init
 * Description  : User-defined function.
 *              : Called to initialise the RIIC channel 1 peripheral
 *              : Uses the following interrupts:
@@ -241,13 +235,13 @@ void Userdef_RIIC0_Init(uint32_t cks, uint32_t brl, uint32_t brh)
 *              : uint32_t brh  : High byte value of the width of the SCL clock
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC1_Init(uint32_t cks, uint32_t brl, uint32_t brh)
+void userdef_riic1_init (uint32_t cks, uint32_t brl, uint32_t brh)
 {
 	/* Channel 1 is unused */
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC2_Init
+* Function Name: userdef_riic2_Init
 * Description  : User-defined function.
 *              : Called to initialise the RIIC channel 2 peripheral
 *              : Uses the following interrupts:
@@ -268,13 +262,13 @@ void Userdef_RIIC1_Init(uint32_t cks, uint32_t brl, uint32_t brh)
 *              : uint32_t brh  : High byte value of the width of the SCL clock
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC2_Init(uint32_t cks, uint32_t brl, uint32_t brh)
+void userdef_riic2_init (uint32_t cks, uint32_t brl, uint32_t brh)
 {
 	/* Channel 2 is unused */
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC3_Init
+* Function Name: userdef_riic3_init
 * Description  : User-defined function.
 *              : Called to initialise the RIIC channel 3 peripheral
 *              : Uses the following interrupts:
@@ -295,22 +289,13 @@ void Userdef_RIIC2_Init(uint32_t cks, uint32_t brl, uint32_t brh)
 *              : uint32_t brh  : High byte value of the width of the SCL clock
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC3_Init(uint32_t cks, uint32_t brl, uint32_t brh)
+void userdef_riic3_init (uint32_t cks, uint32_t brl, uint32_t brh)
 {
     volatile uint8_t dummy_buf = 0u;
 
     UNUSED_VARIABLE(dummy_buf);
 
     /* ==== Module standby clear ==== */
-    /* ---- Supply clock to the RIIC(channel 3) ---- */
-    RZA_IO_RegWrite_8((uint8_t *)&CPG.STBCR9,
-    		          0,
-    		          CPG_STBCR9_MSTP94_SHIFT,
-    		          CPG_STBCR9_MSTP94);
-
-    dummy_buf = RZA_IO_RegRead_8((uint8_t *)&CPG.STBCR9,
-    		                     CPG_STBCR9_MSTP94_SHIFT,
-    		                     CPG_STBCR9_MSTP94);
 
     /* Clear the RIICn reset bit */
     RZA_IO_RegWrite_8(&(RIIC3.RIICnCR1.UINT8[0]),
@@ -378,11 +363,6 @@ void Userdef_RIIC3_Init(uint32_t cks, uint32_t brl, uint32_t brh)
     		            RIICn_RIICnCR1_IICRST_SHIFT,
     		            RIICn_RIICnCR1_IICRST);
 
-    /* Initialise flags */
-    riic3_receive_full_flg   = DEVDRV_FLAG_OFF;
-    riic3_transmit_empty_flg = DEVDRV_FLAG_OFF;
-    riic3_transmit_end_flg   = DEVDRV_FLAG_OFF;
-
     /* Register active interrupts */
     R_INTC_RegistIntFunc(INTC_ID_INTIICRI3,  Sample_RIIC_Ri3_Interrupt);
     R_INTC_RegistIntFunc(INTC_ID_INTIICTI3,  Sample_RIIC_Ti3_Interrupt);
@@ -400,442 +380,431 @@ void Userdef_RIIC3_Init(uint32_t cks, uint32_t brl, uint32_t brh)
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC0_InitReceiveFull
+* Function Name: userdef_riic0_init_rx_full
 * Description  : User-defined function.
 *              : Called to process INTC_ID_INTIICRI for channel 0
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC0_InitReceiveFull(void)
+void userdef_riic0_init_rx_full (void)
 {
     riic0_receive_full_flg = DEVDRV_FLAG_OFF;
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC1_InitReceiveFull
+* Function Name: userdef_riic1_init_rx_full
 * Description  : User-defined function.
 *              : Called to process INTC_ID_INTIICRI for channel 1
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC1_InitReceiveFull(void)
+void userdef_riic1_init_rx_full (void)
 {
 	/* Channel 1 is unused */
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC2_InitReceiveFull
+* Function Name: userdef_riic2_init_rx_full
 * Description  : User-defined function.
 *              : Called to process INTC_ID_INTIICRI for channel 2
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC2_InitReceiveFull(void)
+void userdef_riic2_init_rx_full (void)
 {
 	/* Channel 2 is unused */
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC3_InitReceiveFull
+* Function Name: userdef_riic3_init_rx_full
 * Description  : User-defined function.
 *              : Called to process INTC_ID_INTIICRI for channel 3
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC3_InitReceiveFull(void)
+void userdef_riic3_init_rx_full (void)
 {
 	riic3_receive_full_flg = DEVDRV_FLAG_OFF;
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC0_InitTransmitEmpty
+* Function Name: userdef_riic0_init_tx_empty
 * Description  : User-defined function.
 *              : Called to process INTC_ID_INTIICTI for channel 0
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC0_InitTransmitEmpty(void)
+void userdef_riic0_init_tx_empty (void)
 {
     riic0_transmit_empty_flg = DEVDRV_FLAG_OFF;
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC1_InitTransmitEmpty
+* Function Name: userdef_riic1_init_tx_empty
 * Description  : User-defined function.
 *              : Called to process INTC_ID_INTIICTI for channel 1
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC1_InitTransmitEmpty(void)
+void userdef_riic1_init_tx_empty (void)
 {
 	/* Channel 1 is unused */
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC2_InitTransmitEmpty
+* Function Name: userdef_riic2_init_tx_empty
 * Description  : User-defined function.
 *              : Called to process INTC_ID_INTIICTI for channel 2
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC2_InitTransmitEmpty(void)
+void userdef_riic2_init_tx_empty (void)
 {
 	/* Channel 2 is unused */
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC3_InitTransmitEmpty
+* Function Name: userdef_riic3_init_tx_empty
 * Description  : User-defined function.
 *              : Called to process INTC_ID_INTIICTI for channel 3
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC3_InitTransmitEmpty(void)
+void userdef_riic3_init_tx_empty (void)
 {
 	riic3_transmit_empty_flg = DEVDRV_FLAG_OFF;
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC0_InitTransmitEnd
+* Function Name: userdef_riic0_init_tx_end
 * Description  : User-defined function.
 *              : Called to process INTC_ID_INTIICTEI for channel 0
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC0_InitTransmitEnd(void)
+void userdef_riic0_init_tx_end (void)
 {
     riic0_transmit_end_flg = DEVDRV_FLAG_OFF;
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC1_InitTransmitEnd
+* Function Name: userdef_riic1_init_tx_end
 * Description  : User-defined function.
 *              : Called to process INTC_ID_INTIICTEI for channel 1
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC1_InitTransmitEnd(void)
+void userdef_riic1_init_tx_end (void)
 {
 	/* Channel 1 is unused */
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC2_InitTransmitEnd
+* Function Name: userdef_riic2_init_tx_end
 * Description  : User-defined function.
 *              : Called to process INTC_ID_INTIICTEI for channel 2
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC2_InitTransmitEnd(void)
+void userdef_riic2_init_tx_end (void)
 {
 	/* Channel 2 is unused */
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC3_InitTransmitEnd
+* Function Name: userdef_riic3_init_tx_end
 * Description  : User-defined function.
 *              : Called to process INTC_ID_INTIICTEI for channel 3
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC3_InitTransmitEnd(void)
+void userdef_riic3_init_tx_end (void)
 {
 	riic3_transmit_end_flg = DEVDRV_FLAG_OFF;
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC0_SetReceiveFull
+* Function Name: userdef_riic0_set_rx_full
 * Description  : User-defined function.
 *              : Set receive full flag for channel 0
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC0_SetReceiveFull(void)
+void userdef_riic0_set_rx_full (void)
 {
     riic0_receive_full_flg = DEVDRV_FLAG_ON;
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC1_SetReceiveFull
+* Function Name: userdef_riic1_set_rx_full
 * Description  : User-defined function.
 *              : Set receive full flag for channel 1
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC1_SetReceiveFull(void)
+void userdef_riic1_set_rx_full (void)
 {
 	/* Channel 1 is unused */
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC2_SetReceiveFull
+* Function Name: userdef_riic2_set_rx_full
 * Description  : User-defined function.
 *              : Set receive full flag for channel 2
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC2_SetReceiveFull(void)
+void userdef_riic2_set_rx_full (void)
 {
 	/* Channel 2 is unused */
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC3_SetReceiveFull
+* Function Name: userdef_riic3_set_rx_full
 * Description  : User-defined function.
 *              : Set receive full flag for channel 3
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC3_SetReceiveFull(void)
+void userdef_riic3_set_rx_full (void)
 {
-	riic0_receive_full_flg = DEVDRV_FLAG_ON;
+	riic3_receive_full_flg = DEVDRV_FLAG_ON;
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC0_SetTransmitEmpty
+* Function Name: userdef_riic0_set_tx_empty
 * Description  : User-defined function.
 *              : Set transmit empty flag for channel 0
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC0_SetTransmitEmpty(void)
+void userdef_riic0_set_tx_empty (void)
 {
     riic0_transmit_empty_flg = DEVDRV_FLAG_ON;
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC1_SetTransmitEmpty
+* Function Name: userdef_riic1_set_tx_empty
 * Description  : User-defined function.
 *              : Set transmit empty flag for channel 1
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC1_SetTransmitEmpty(void)
+void userdef_riic1_set_tx_empty (void)
 {
 	/* Channel 1 is unused */
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC2_SetTransmitEmpty
+* Function Name: userdef_riic2_set_tx_empty
 * Description  : User-defined function.
 *              : Set transmit empty flag for channel 2
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC2_SetTransmitEmpty(void)
+void userdef_riic2_set_tx_empty (void)
 {
 	/* Channel 2 is unused */
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC3_SetTransmitEmpty
+* Function Name: userdef_riic3_set_tx_empty
 * Description  : User-defined function.
 *              : Set transmit empty flag for channel 3
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC3_SetTransmitEmpty(void)
+void userdef_riic3_set_tx_empty (void)
 {
 	riic3_transmit_empty_flg = DEVDRV_FLAG_ON;
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC0_SetTransmitEnd
+* Function Name: userdef_riic0_set_tx_end
 * Description  : User-defined function.
 *              : Set transmit end flag for channel 0
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC0_SetTransmitEnd(void)
+void userdef_riic0_set_tx_end (void)
 {
     riic0_transmit_end_flg = DEVDRV_FLAG_ON;
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC1_SetTransmitEnd
+* Function Name: userdef_riic1_set_tx_end
 * Description  : User-defined function.
 *              : Set transmit end flag for channel 1
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC1_SetTransmitEnd(void)
+void userdef_riic1_set_tx_end (void)
 {
 	/* Channel 1 is unused */
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC2_SetTransmitEnd
+* Function Name: userdef_riic2_set_tx_end
 * Description  : User-defined function.
 *              : Set transmit end flag for channel 2
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC2_SetTransmitEnd(void)
+void userdef_riic2_set_tx_end (void)
 {
 	/* Channel 2 is unused */
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC3_SetTransmitEnd
+* Function Name: userdef_riic3_set_tx_end
 * Description  : User-defined function.
 *              : Set transmit end flag for channel 3
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC3_SetTransmitEnd(void)
+void userdef_riic3_set_tx_end (void)
 {
 	riic3_transmit_end_flg = DEVDRV_FLAG_ON;
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC0_WaitReceiveFull
+* Function Name: userdef_riic0_wait_rx_full
 * Description  : User-defined function.
 *              : Wait in function till receive full flag set for channel 0
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC0_WaitReceiveFull(void)
+void userdef_riic0_wait_rx_full (void)
 {
-	int32_t timeout = ICC0_MAX_TIMEOUT;
-
 	/* Wait */
-    while ((timeout != 0) & (DEVDRV_FLAG_OFF == riic0_receive_full_flg))
+    while ( (DEVDRV_FLAG_OFF == riic0_receive_full_flg))
     {
-    	timeout--;
+    	SOFT_DELAY();
     }
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC1_WaitReceiveFull
+* Function Name: userdef_riic1_wait_rx_full
 * Description  : User-defined function.
 *              : Wait in function till receive full flag set for channel 1
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC1_WaitReceiveFull(void)
+void userdef_riic1_wait_rx_full (void)
 {
 	/* Channel 1 is unused */
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC2_WaitReceiveFull
+* Function Name: userdef_riic2_wait_rx_full
 * Description  : User-defined function.
 *              : Wait in function till receive full flag set for channel 2
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC2_WaitReceiveFull(void)
-{
-	/* Channel 1 is unused */
-}
-
-/******************************************************************************
-* Function Name: Userdef_RIIC3_WaitReceiveFull
-* Description  : User-defined function.
-*              : Wait in function till receive full flag set for channel 3
-* Arguments    : none
-* Return Value : none
-******************************************************************************/
-void Userdef_RIIC3_WaitReceiveFull(void)
-{
-	int32_t timeout = ICC3_MAX_TIMEOUT;
-
-	/* Wait */
-    while ((timeout != 0) & (DEVDRV_FLAG_OFF == riic3_receive_full_flg))
-    {
-    	timeout--;
-    }
-}
-
-/******************************************************************************
-* Function Name: Userdef_RIIC0_WaitTransmitEmpty
-* Description  : User-defined function.
-*              : Wait in function till transmit empty flag set for channel 0
-* Arguments    : none
-* Return Value : none
-******************************************************************************/
-void Userdef_RIIC0_WaitTransmitEmpty(void)
-{
-	int32_t timeout = ICC0_MAX_TIMEOUT;
-
-	/* Wait */
-    while ((timeout != 0) & (DEVDRV_FLAG_OFF == riic0_transmit_empty_flg))
-    {
-    	timeout--;
-    }
-}
-
-/******************************************************************************
-* Function Name: Userdef_RIIC1_WaitTransmitEmpty
-* Description  : User-defined function.
-*              : Wait in function till transmit empty flag set for channel 1
-* Arguments    : none
-* Return Value : none
-******************************************************************************/
-void Userdef_RIIC1_WaitTransmitEmpty(void)
-{
-	/* Channel 1 is unused */
-}
-
-/******************************************************************************
-* Function Name: Userdef_RIIC2_WaitTransmitEmpty
-* Description  : User-defined function.
-*              : Wait in function till transmit empty flag set for channel 2
-* Arguments    : none
-* Return Value : none
-******************************************************************************/
-void Userdef_RIIC2_WaitTransmitEmpty(void)
+void userdef_riic2_wait_rx_full (void)
 {
 	/* Channel 2 is unused */
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC3_WaitTransmitEmpty
+* Function Name: userdef_riic3_wait_rx_full
+* Description  : User-defined function.
+*              : Wait in function till receive full flag set for channel 3
+* Arguments    : none
+* Return Value : none
+******************************************************************************/
+void userdef_riic3_wait_rx_full (void)
+{
+	/* Wait */
+    while ( (DEVDRV_FLAG_OFF == riic3_receive_full_flg))
+    {
+    	SOFT_DELAY();
+    }
+}
+
+/******************************************************************************
+* Function Name: userdef_riic0_wait_tx_empty
+* Description  : User-defined function.
+*              : Wait in function till transmit empty flag set for channel 0
+* Arguments    : none
+* Return Value : none
+******************************************************************************/
+void userdef_riic0_wait_tx_empty (void)
+{
+	/* Wait */
+    while ( (DEVDRV_FLAG_OFF == riic0_transmit_empty_flg))
+    {
+    	SOFT_DELAY();
+    }
+}
+
+/******************************************************************************
+* Function Name: userdef_riic1_wait_tx_empty
+* Description  : User-defined function.
+*              : Wait in function till transmit empty flag set for channel 1
+* Arguments    : none
+* Return Value : none
+******************************************************************************/
+void userdef_riic1_wait_tx_empty (void)
+{
+	/* Channel 1 is unused */
+}
+
+/******************************************************************************
+* Function Name: userdef_riic2_wait_tx_empty
+* Description  : User-defined function.
+*              : Wait in function till transmit empty flag set for channel 2
+* Arguments    : none
+* Return Value : none
+******************************************************************************/
+void userdef_riic2_wait_tx_empty (void)
+{
+	/* Channel 2 is unused */
+}
+
+/******************************************************************************
+* Function Name: userdef_riic3_wait_tx_empty
 * Description  : User-defined function.
 *              : Wait in function till transmit empty flag set for channel 3
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC3_WaitTransmitEmpty(void)
+void userdef_riic3_wait_tx_empty (void)
 {
-	int32_t timeout = ICC3_MAX_TIMEOUT;
-
 	/* Wait */
-    while ((timeout != 0) & (DEVDRV_FLAG_OFF == riic3_transmit_empty_flg))
+    while (DEVDRV_FLAG_OFF == riic3_transmit_empty_flg)
     {
-    	timeout--;
+    	SOFT_DELAY();
     }
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC0_WaitTransmitEnd
+* Function Name: userdef_riic0_wait_tx_end
 * Description  : User-defined function.
 *              : Wait in function till transmit end flag set for channel 0
 * Arguments    : uint32_t mode : RIIC_TEND_WAIT_TRANSMIT : Transmission Mode
 *              :               : RIIC_TEND_WAIT_RECEIVE  : Receive Mode
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC0_WaitTransmitEnd(uint32_t mode)
+void userdef_riic0_wait_tx_end (uint32_t mode)
 {
+	// int32_t timeout = ICC0_MAX_TIMEOUT;
+
     if (RIIC_TEND_WAIT_TRANSMIT == mode)
     {
-    	int32_t timeout = ICC0_MAX_TIMEOUT;
-
     	/* Wait */
-        while ((timeout != 0) & (DEVDRV_FLAG_OFF == riic0_transmit_end_flg))
+        while ( (DEVDRV_FLAG_OFF == riic0_transmit_end_flg))
         {
-        	timeout--;
+        	SOFT_DELAY();
         }
     }
     else
     {
-        /* Reception Mode */
-    	int32_t timeout = ICC0_MAX_TIMEOUT;
-
-    	/* Wait */
-        while ((timeout != 0) & (DEVDRV_FLAG_OFF == riic0_receive_full_flg))
+        /* Wait */
+        while ( (DEVDRV_FLAG_OFF == riic0_receive_full_flg))
         {
-        	timeout--;
+        	SOFT_DELAY();
         }
     }
 }
@@ -847,60 +816,57 @@ void Userdef_RIIC0_WaitTransmitEnd(uint32_t mode)
 *              :               : RIIC_TEND_WAIT_RECEIVE  : Receive Mode
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC1_WaitTransmitEnd(uint32_t mode)
+void userdef_riic1_wait_tx_end (uint32_t mode)
 {
 	/* Channel 1 is unused */
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC2_WaitTransmitEnd
+* Function Name: userdef_riic2_wait_tx_end
 * Description  : User-defined function.
 *              : Wait in function till transmit end flag set for channel 1
 * Arguments    : uint32_t mode : RIIC_TEND_WAIT_TRANSMIT : Transmission Mode
 *              :               : RIIC_TEND_WAIT_RECEIVE  : Receive Mode
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC2_WaitTransmitEnd(uint32_t mode)
+void userdef_riic2_wait_tx_end (uint32_t mode)
 {
 	/* Channel 2 is unused */
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC3_WaitTransmitEnd
+* Function Name: userdef_riic3_wait_tx_end
 * Description  : User-defined function.
 *              : Wait in function till transmit end flag set for channel 3
 * Arguments    : uint32_t mode : RIIC_TEND_WAIT_TRANSMIT : Transmission Mode
 *              :               : RIIC_TEND_WAIT_RECEIVE  : Receive Mode
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC3_WaitTransmitEnd(uint32_t mode)
+void userdef_riic3_wait_tx_end (uint32_t mode)
 {
+	// int32_t timeout = ICC3_MAX_TIMEOUT;
+
     if (RIIC_TEND_WAIT_TRANSMIT == mode)
     {
-    	int32_t timeout = ICC3_MAX_TIMEOUT;
-
     	/* Wait */
-        while ((timeout != 0) & (DEVDRV_FLAG_OFF == riic3_transmit_end_flg))
+        while ( (DEVDRV_FLAG_OFF == riic3_transmit_end_flg))
         {
-        	timeout--;
+        	SOFT_DELAY();
 
         }
     }
     else
     {
-        /* Reception Mode */
-    	int32_t timeout = ICC3_MAX_TIMEOUT;
-
-    	/* Wait */
-        while ((timeout != 0) & (DEVDRV_FLAG_OFF == riic3_receive_full_flg))
+        /* Wait */
+        while ( (DEVDRV_FLAG_OFF == riic3_receive_full_flg))
         {
-        	timeout--;
+        	SOFT_DELAY();
         }
     }
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC0_WaitBusMastership
+* Function Name: userdef_riic0_wait_bus_master
 * Description  : User-defined function.
 *              : Wait for bus busy or bus free state for channel 0
 * Arguments    : uint32_t mode
@@ -908,35 +874,33 @@ void Userdef_RIIC3_WaitTransmitEnd(uint32_t mode)
 *              :        : RIIC_BUS_MASTERSHIP_WAIT_BUSY : wait till bus busy
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC0_WaitBusMastership(uint32_t mode)
+void userdef_riic0_wait_bus_master (uint32_t mode)
 {
-	int32_t timeout = ICC0_MAX_TIMEOUT;
+	// int32_t timeout = ICC0_MAX_TIMEOUT;
     if (RIIC_BUS_MASTERSHIP_WAIT_FREE == mode)
     {
-        while ((timeout != 0) &
-        	   (1 == RZA_IO_RegRead_8(&(RIIC0.RIICnCR2.UINT8[0]),
-                                        RIICn_RIICnCR2_BBSY_SHIFT,
-                                        RIICn_RIICnCR2_BBSY)))
+        while (1 == RZA_IO_RegRead_8(&(RIIC0.RIICnCR2.UINT8[0]),
+                                       RIICn_RIICnCR2_BBSY_SHIFT,
+                                       RIICn_RIICnCR2_BBSY))
         {
             /* Wait */
-        	timeout--;
+        	SOFT_DELAY();
         }
     }
     else
     {
-        while ((timeout != 0) &
-               (0 == RZA_IO_RegRead_8(&(RIIC0.RIICnCR2.UINT8[0]),
-            		                    RIICn_RIICnCR2_BBSY_SHIFT,
-            		                    RIICn_RIICnCR2_BBSY)))
+        while (0 == RZA_IO_RegRead_8(&(RIIC0.RIICnCR2.UINT8[0]),
+            		                   RIICn_RIICnCR2_BBSY_SHIFT,
+            		                   RIICn_RIICnCR2_BBSY))
         {
             /* Wait */
-        	timeout--;
+        	SOFT_DELAY();
         }
     }
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC1_WaitBusMastership
+* Function Name: userdef_riic1_wait_bus_master
 * Description  : User-defined function.
 *              : Wait for bus busy or bus free state for channel 1
 * Arguments    : uint32_t mode
@@ -944,13 +908,13 @@ void Userdef_RIIC0_WaitBusMastership(uint32_t mode)
 *              :        : RIIC_BUS_MASTERSHIP_WAIT_BUSY : wait till bus busy
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC1_WaitBusMastership(uint32_t mode)
+void userdef_riic1_wait_bus_master (uint32_t mode)
 {
 	/* Channel 1 is unused */
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC2_WaitBusMastership
+* Function Name: userdef_riic2_wait_bus_master
 * Description  : User-defined function.
 *              : Wait for bus busy or bus free state for channel 2
 * Arguments    : uint32_t mode
@@ -958,13 +922,13 @@ void Userdef_RIIC1_WaitBusMastership(uint32_t mode)
 *              :        : RIIC_BUS_MASTERSHIP_WAIT_BUSY : wait till bus busy
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC2_WaitBusMastership(uint32_t mode)
+void userdef_riic2_wait_bus_master (uint32_t mode)
 {
 	/* Channel 2 is unused */
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC3_WaitBusMastership
+* Function Name: userdef_riic3_wait_bus_master
 * Description  : User-defined function.
 *              : Wait for bus busy or bus free state for channel 3
 * Arguments    : uint32_t mode
@@ -972,99 +936,89 @@ void Userdef_RIIC2_WaitBusMastership(uint32_t mode)
 *              :        : RIIC_BUS_MASTERSHIP_WAIT_BUSY : wait till bus busy
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC3_WaitBusMastership(uint32_t mode)
+void userdef_riic3_wait_bus_master (uint32_t mode)
 {
-	int32_t timeout = ICC0_MAX_TIMEOUT;
-
 	if (RIIC_BUS_MASTERSHIP_WAIT_FREE == mode)
     {
     	/* Wait till bus free */
-        while ((timeout != 0) &
-               (1 == RZA_IO_RegRead_8(&(RIIC3.RIICnCR2.UINT8[0]),
-            		                    RIICn_RIICnCR2_BBSY_SHIFT,
-            		                    RIICn_RIICnCR2_BBSY)))
+        while (1 == RZA_IO_RegRead_8(&(RIIC3.RIICnCR2.UINT8[0]),
+            		                   RIICn_RIICnCR2_BBSY_SHIFT,
+            		                   RIICn_RIICnCR2_BBSY))
         {
             /* Wait */
-        	timeout--;
+        	SOFT_DELAY();
         }
     }
     else
     {
     	/* Wait till bus busy */
-        while ((timeout != 0) &
-               (0 == RZA_IO_RegRead_8(&(RIIC3.RIICnCR2.UINT8[0]),
-                                        RIICn_RIICnCR2_BBSY_SHIFT,
-                                        RIICn_RIICnCR2_BBSY)))
+        while (0 == RZA_IO_RegRead_8(&(RIIC3.RIICnCR2.UINT8[0]),
+                                       RIICn_RIICnCR2_BBSY_SHIFT,
+                                       RIICn_RIICnCR2_BBSY))
         {
             /* Wait */
-        	timeout--;
+        	SOFT_DELAY();
         }
     }
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC0_WaitStop
+* Function Name: userdef_riic0_wait_stop
 * Description  : User-defined function.
 *              : Wait for stop bit state for channel 0
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC0_WaitStop(void)
+void userdef_riic0_wait_stop (void)
 {
-	int32_t timeout = ICC0_MAX_TIMEOUT;
-
 	/* Wait */
-    while ((timeout != 0) &
-           (0 == RZA_IO_RegRead_8(&(RIIC0.RIICnSR2.UINT8[0]),
-                                    RIICn_RIICnSR2_STOP_SHIFT,
-                                    RIICn_RIICnSR2_STOP)))
+    while (0 == RZA_IO_RegRead_8(&(RIIC0.RIICnSR2.UINT8[0]),
+                                   RIICn_RIICnSR2_STOP_SHIFT,
+                                   RIICn_RIICnSR2_STOP))
     {
-    	timeout--;
+    	SOFT_DELAY();
     }
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC1_WaitStop
+* Function Name: userdef_riic1_wait_stop
 * Description  : User-defined function.
 *              : Wait for stop bit state for channel 1
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC1_WaitStop(void)
+void userdef_riic1_wait_stop (void)
 {
 	/* Channel 1 is unused */
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC2_WaitStop
+* Function Name: userdef_riic2_wait_stop
 * Description  : User-defined function.
 *              : Wait for stop bit state for channel 2
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC2_WaitStop(void)
+void userdef_riic2_wait_stop (void)
 {
 	/* Channel 2 is unused */
 }
 
 /******************************************************************************
-* Function Name: Userdef_RIIC3_WaitStop
+* Function Name: userdef_riic3_wait_stop
 * Description  : User-defined function.
 *              : Wait for stop bit state for channel 3
 * Arguments    : none
 * Return Value : none
 ******************************************************************************/
-void Userdef_RIIC3_WaitStop(void)
+void userdef_riic3_wait_stop (void)
 {
-	int32_t timeout = ICC0_MAX_TIMEOUT;
-
 	/* Wait */
-    while ((timeout != 0) &
-           (0 == RZA_IO_RegRead_8(&(RIIC3.RIICnSR2.UINT8[0]),
-        		                    RIICn_RIICnSR2_STOP_SHIFT,
-        		                    RIICn_RIICnSR2_STOP)))
+    while (0 == RZA_IO_RegRead_8(&(RIIC3.RIICnSR2.UINT8[0]),
+        		                   RIICn_RIICnSR2_STOP_SHIFT,
+        		                   RIICn_RIICnSR2_STOP))
     {
-    	timeout--;
+    	SOFT_DELAY();
     }
 }
 

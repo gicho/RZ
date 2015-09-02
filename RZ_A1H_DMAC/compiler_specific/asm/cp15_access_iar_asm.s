@@ -98,7 +98,7 @@ M_BIT EQU 0x1
 * Enable MMU, does not change cache configuration 
 */
 enable_mmu_asm:
-    MRC  p15, 0, r0, c1, c0, 0
+    MRC  p15, 0, r1, c1, c0, 0
 
     /* 	Clear V bit 13 to set low vectors
     	Clear I bit 12 to disable I Cache
@@ -108,7 +108,7 @@ enable_mmu_asm:
     	Set   M bit  0 to enable MMU
     */
     ORR  r0, r0, #(M_BIT)
-    MCR  p15, 0, r0, c1, c0, 0
+    MCR  p15, 0, r1, c1, c0, 0
     ISB
     BX   lr
 

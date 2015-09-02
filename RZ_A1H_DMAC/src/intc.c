@@ -66,7 +66,7 @@ Macro definitions
 Private global variables and functions
 ******************************************************************************/
 /* Initial value table of Interrupt Configuration Registers */
-static uint32_t intc_icdicfrn_table[] =
+const static uint32_t intc_icdicfrn_table[] =
 {                          /*           Interrupt ID */
     0xAAAAAAAA,            /* ICDICFR0  :  15 to   0 */
     0x00000055,            /* ICDICFR1  :  19 to  16 */
@@ -129,8 +129,8 @@ int32_t R_INTC_RegistIntFunc(uint16_t int_id, void (* func)(uint32_t int_sense))
         return DEVDRV_ERROR;        /* Argument error */
     }
 
-    Userdef_INTC_RegistIntFunc(int_id, func);
-
+    intc_func_table[int_id] = func;
+    
     return DEVDRV_SUCCESS;
 }
 

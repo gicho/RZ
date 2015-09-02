@@ -1,9 +1,17 @@
+__var autoBreakpoint;
+
+remove()
+{
+  __clearBreak(autoBreakpoint);
+  return 1;
+}
+
 
 /* This is executed before the reset */
 execUserPreReset()
 {
   __message "reset.mac: Pre-reset -> setup a breakpoint at 0x18080000 to halts at entry point of Application.\n";
-  __setCodeBreak("0x18080000", 0, "1", "TRUE", "");
+  autoBreakpoint = __setCodeBreak("0x18080000", 0, "1", "TRUE", "remove()");
 }
 
 /* This is executed just after the reset has been issued */
@@ -16,8 +24,10 @@ execUserReset()
 
 
 /* This is called after target connection and before downloading */
+/*
 execUserPreload()
 {
   __message "reset.mac: ExecUserPreload -> run to 0x18000000 to execute the QSPI boot loader\n";
   __hwResetRunToBp(0, 0x18000000, 0);
 }
+*/

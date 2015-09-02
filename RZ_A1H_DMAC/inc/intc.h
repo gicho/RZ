@@ -22,21 +22,20 @@
 * Copyright (C) 2014 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /******************************************************************************
-* File Name     : devdrv_intc.h
+* File Name     : intc.h
 * Device(s)     : RZ/A1H (R7S721001)
-* Tool-Chain    : GNUARM-RZv13.01-EABI
+* Tool-Chain    : GNUARM-NONEv14.02-EABI
 * H/W Platform  : RSK+RZA1H CPU Board
 * Description   : INTC driver header
 ******************************************************************************/
 /*******************************************************************************
 * History       : DD.MM.YYYY Version Description
-*               : 18.06.2013 1.00
-*               : 21.03.2014 2.00
+*               : 21.10.2014 1.00
 *******************************************************************************/
 
 /* Multiple inclusion prevention macro */
-#ifndef DEVDRV_INTC_H
-#define DEVDRV_INTC_H
+#ifndef INTC_H
+#define INTC_H
 
 /******************************************************************************
 Macro definitions
@@ -566,31 +565,28 @@ Macro definitions
 /******************************************************************************
 Variable Externs
 ******************************************************************************/
-extern void (* intc_func_table[INTC_ID_TOTAL])(uint32_t int_sense);
+
 
 /******************************************************************************
 Functions Prototypes
 ******************************************************************************/
-
 /* ==== API functions ==== */
-int32_t R_INTC_RegistIntFunc(uint16_t int_id, void (* func)(uint32_t int_sense));
-
-INITIALIZATION_CODE void R_INTC_Init(void);
-
-int32_t R_INTC_Enable(uint16_t int_id);
-int32_t R_INTC_Disable(uint16_t int_id);
-int32_t R_INTC_SetPriority(uint16_t int_id, uint8_t priority);
-int32_t R_INTC_SetMaskLevel(uint8_t mask_level);
-void    R_INTC_GetMaskLevel(uint8_t * mask_level);
-int32_t R_INTC_GetPendingStatus(uint16_t int_id, uint32_t * icdicpr);
-int32_t R_INTC_SetConfiguration(uint16_t int_id, uint32_t int_sense);
+int32_t R_INTC_RegistIntFunc (uint16_t int_id, void (* func)(uint32_t int_sense));
+void    R_INTC_Init (void);
+int32_t R_INTC_Enable (uint16_t int_id);
+int32_t R_INTC_Disable (uint16_t int_id);
+int32_t R_INTC_SetPriority (uint16_t int_id, uint8_t priority);
+int32_t R_INTC_Set_Mask_Level (uint8_t mask_level);
+void    R_INTC_Get_Mask_Level (uint8_t * mask_level);
+int32_t R_INTC_Get_Pending_Status (uint16_t int_id, uint32_t * icdicpr);
+int32_t R_INTC_Set_Configuration (uint16_t int_id, uint32_t int_sense);
 
 /* ==== User-defined functions ==== */
-void    Userdef_INTC_RegistIntFunc(uint16_t int_id, void (* func)(uint32_t int_sense));
-void    Userdef_INTC_UndefId(uint16_t int_id);
-void    Userdef_INTC_HandlerExe(uint16_t int_id, uint32_t int_sense);
-void    Userdef_FIQ_HandlerExe(void);
+void    userdef_intc_regist_int_func (uint16_t int_id, void (* func)(uint32_t int_sense));
+void    userdef_intc_undef_id (uint16_t int_id);
+void    userdef_intc_handler_exe (uint16_t int_id, uint32_t int_sense);
+void    userdef_fiq_handler_exe (void);
 
-#endif  /* DEVDRV_INTC_H */
+#endif  /* INTC_H */
 
 /* End of File */

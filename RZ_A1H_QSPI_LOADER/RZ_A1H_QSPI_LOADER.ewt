@@ -2126,9 +2126,6 @@
     <group>
       <name>src</name>
       <file>
-        <name>$PROJ_DIR$\compiler_specific\src\l1_cache.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$\compiler_specific\src\low_level_init_iar.c</name>
       </file>
     </group>
@@ -2345,9 +2342,6 @@
   </group>
   <group>
     <name>scripts</name>
-    <file>
-      <name>$PROJ_DIR$\scripts\reset.mac</name>
-    </file>
   </group>
   <group>
     <name>src</name>

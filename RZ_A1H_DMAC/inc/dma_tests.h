@@ -1,7 +1,7 @@
 /*
 * Copyright 2015 Giancarlo Parodi
 * 
-* cp15_access.h
+* dma_tests.h
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -16,24 +16,20 @@
 * limitations under the License.
 */
 
-#ifndef CP15_ACCESS_H
-#define CP15_ACCESS_H
+void dmac_uncached_uncached_extrequest(void);
+void dmac_uncached_uncached(void);
+void dmac_cached_uncached(void);
+void dmac_uncached_cached(void);
+void dmac_cached_cached(void);
 
-#include <stdint.h>
+void dmac_ram_uncached_sdram_uncached(void);
+void dmac_ram_cached_sdram_uncached(void);
+void dmac_ram_uncached_sdram_cached(void);
+void dmac_ram_cached_sdram_cached(void);
+void dmac_sdram_uncached_ram_uncached(void);
+void dmac_sdram_cached_ram_uncached(void);
+void dmac_sdram_uncached_ram_cached(void);
+void dmac_sdram_cached_ram_cached(void);
+void dmac_sdram_cached_sdram_cached(void);
 
-extern void enable_neon_vfp_access_priv(void);
-extern void enable_neon_vfp_access_full(void);
-extern void disable_neon_vfp_access(void);
-extern void neon_vfp_on(void);
-extern void neon_vfp_off(void);
-
-// does not change the cache configuration
-extern void enable_mmu(void);
-extern void disable_mmu(void);
-
-extern void VbarSet(const uint32_t location);
-extern void SetLowVectors(void);
-extern void SetHighVectors(void);
-      
-#endif
 
