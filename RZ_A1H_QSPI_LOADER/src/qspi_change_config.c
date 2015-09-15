@@ -63,6 +63,7 @@ static externalAddressTransfer_t quadIoRead4b = {
   .optionalDataRateMode = OPTIONAL_DATA_SDR_TYPE
 };
 
+/*
 static externalAddressTransfer_t quadRead4b = {
 
   .addressBitSize = ADDRESS_1BIT,
@@ -94,7 +95,9 @@ static externalAddressTransfer_t quadRead4b = {
   .dataReadRateMode = DATA_READ_SDR_TYPE,
   .optionalDataRateMode = OPTIONAL_DATA_SDR_TYPE
 };
+*/
 
+/*
 static externalAddressTransfer_t fastRead4b = {
 
   .addressBitSize = ADDRESS_1BIT,
@@ -126,6 +129,7 @@ static externalAddressTransfer_t fastRead4b = {
   .dataReadRateMode = DATA_READ_SDR_TYPE,
   .optionalDataRateMode = OPTIONAL_DATA_SDR_TYPE
 };
+*/
 
 static spiConfig_t spiMode_33Mhz = {
 
@@ -177,8 +181,11 @@ static spiConfig_t spiMode_66Mhz = {
   .idleValue_20_21 = IDLE_HI_Z,
   .idleValue_30_31 = IDLE_HI_Z,
   
-  /* TODO: need to confirm why the odd setting works */
-  /* should be shift on even, latch on odd */
+  /*
+   * With division ratio 2, the latching is done on the even edge
+   * instead of the odd edge, to keep the setup time of the QSPI controller.
+   * In theory should have been shift on even, latch on odd
+  */
   .divisionRatio = DIV_RATIO_2,
   .outputShift = SHIFT_ON_EVEN_EDGE,
   .inputLatch = LATCH_ON_EVEN_EDGE
@@ -288,8 +295,12 @@ EXEC_RAM void qspiReconfigure(void)
     
   }
   
-  /* After boot the controller is in external address mode */
-  /* To change the configuration we need to put the controller back in SPI mode */
+  /* After boot the controller is in external address mode
+   * To change the configuration we need to put the controller back in SPI mode
+   * Note:
+   * Some commands might not use the fastest frequencies.
+   * Choose 33 MHz
+   */
   spiConfiguration = &spiMode_33Mhz;
   qspiControllerConfigure(spiConfiguration);
   
@@ -300,11 +311,10 @@ EXEC_RAM void qspiReconfigure(void)
   statusReg2_device0.stReg2 = statusReg2_device1.stReg2 = 0;
   
   /* Read out the manufacturer signature */
-  /* TODO: change to the new CFI information and not use the legacy command */
+  /* TODO: may change to use "new" CFI information instead of the legacy READ_EMS command */
   qspiReadElectronicManufacturerSignature(&signature0, &signature1, spiConfiguration->dataBusSize);
   
   /* check the EMS read was successful */
-  /* TODO: make this generic for other flash types */
   /* Stop booting if the flash is not recognized */
   if((signature0.deviceId != S25FL512S) || (signature0.manufacturerId != SPANSION_ID))
   {
@@ -329,7 +339,8 @@ EXEC_RAM void qspiReconfigure(void)
   configReg1_device0.QUAD = QUAD_MODE;
   
   /* always clear latency code to b'00 */
-  /* on RSK spansion device it means support up to 80 MHz frequency */
+  /* on RSK Spansion Flash device it means supporting up to 80 MHz clock frequency */
+  /* Slower frequencies can use the same latency code for faster frequency */
   configReg1_device0.LC0 = 0;
   configReg1_device0.LC1 = 0;
   
@@ -361,7 +372,7 @@ EXEC_RAM void qspiReconfigure(void)
   /*
   * Switch to external address mode
   * Note: if the application space is configured in dual mode, the
-  * "single spi" mode loader flash space cannot be accessed anymore
+  * "single spi" mode loader flash address space cannot be accessed anymore
   * after this point without reconfiguring again the controller
   */
   extAddressTransfer = &quadIoRead4b;
@@ -376,7 +387,6 @@ EXEC_RAM void qspiReconfigure(void)
   /* flush the read cache */
   qspiExternalAddressFlushReadCache();  
   
-
   /* now jump to the program application entry point */
   (*applicationEntry)();
   

@@ -50,17 +50,11 @@
 #include "peripheral_early_init.h"
 #include "intc_handler.h"
 
-#if defined(__thumb2__) || (defined(__thumb__) && defined(__ARM_ARCH_6M__))
-# define THUMB_V7_V6M
-#endif
-
-/* Defined if this target supports the BLX Rm instruction.  */
-# define HAVE_CALL_INDIRECT
-
-
 #include "l1_cache.h"
 #include "l2_cache.h"
 #include "cp15_access.h"
+
+#ifdef __GNUC__
 
 /* These are related to the code which runs at startup */
 /* Global variables are specified in the linker script (GCC-QSPI-BL.ld) */
@@ -79,6 +73,7 @@ extern uint32_t __data_end__;
 extern uint32_t __bss_start__;
 extern uint32_t __bss_end__;
 
+#endif
 
 extern uint32_t APP_reset_handler;
 extern uint32_t APP_undefined_handler;
@@ -90,17 +85,9 @@ extern uint32_t APP_irq_handler;
 extern uint32_t APP_fiq_handler;
 
 extern void copy_arm_code_section_to_ram(uint32_t* rom_start, uint32_t* ram_start, uint32_t* ram_end);
-
-
-/*******************************************************************************
-* Function Name: PowerON_Reset
-* Description  :
-* Arguments    : none
-* Return Value : none
-*******************************************************************************/
-static uint32_t const LDR_PC_PC = 0xE59FF000U;
-
 extern int main(void);
+
+static uint32_t const LDR_PC_PC = 0xE59FF000U;
 
 /* note: no global or initialized variables can be used since .data is not yet initialized */
 void PowerON_Reset (void)

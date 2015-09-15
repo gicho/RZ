@@ -1,32 +1,27 @@
-/*******************************************************************************
-* DISCLAIMER
-* This software is supplied by Renesas Electronics Corporation and is only
-* intended for use with Renesas products. No other uses are authorized. This
-* software is owned by Renesas Electronics Corporation and is protected under
-* all applicable laws, including copyright laws.
-* THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIES REGARDING
-* THIS SOFTWARE, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING BUT NOT
-* LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
-* AND NON-INFRINGEMENT. ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED.
-* TO THE MAXIMUM EXTENT PERMITTED NOT PROHIBITED BY LAW, NEITHER RENESAS
-* ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES SHALL BE LIABLE
-* FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR
-* ANY REASON RELATED TO THIS SOFTWARE, EVEN IF RENESAS OR ITS AFFILIATES HAVE
-* BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-* Renesas reserves the right, without notice, to make changes to this software
-* and to discontinue the availability of this software. By using this software,
-* you agree to the additional terms and conditions found by accessing the
-* following link:
-* http://www.renesas.com/disclaimer
+/*
+* Copyright 2015 Giancarlo Parodi
 *
-* Copyright (C) 2015 Renesas Electronics Corporation. All rights reserved.
-*******************************************************************************/
+* l1_cache.s
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 
 #include "assembler_macros.h"
 
     .text
     .arm
 
+	.global L1_CachesEnable_asm
    	.global L1_D_CacheOperation_asm
    	.global L1_I_CacheInvalidate_asm
 
@@ -41,9 +36,6 @@
 
    	.global L1_I_CacheDisable_asm
    	.global L1_I_CacheEnable_asm
-
-	.global dma_buffer_issue_asm
-	.global dma_buffer_reclaim_asm
 
 	.global clean_dcache_range_asm
 	.global invalidate_dcache_range_asm
@@ -66,6 +58,38 @@
     Clear A bit  1 to disable strict alignment
     Clear M bit  0 to disable MMU
 */
+
+	.align 4
+	.func L1_CachesEnable_asm
+L1_CachesEnable_asm:
+/******************************************************************************/
+/* Enable all caches                                                          */
+/******************************************************************************/
+    /* Read CP15 SCTLR */
+    MRC  p15, 0, r0, c1, c0, 0
+
+    /* 	Set I bit 12 to enable I Cache
+    	Set Z bit 11 to enable flow prediction
+    	Set C bit  2 to enable D Cache
+    */
+    /* BIC has 8 bit immediate + 4 bit rotation so cannot address directly above first byte */
+    ORR  r0, r0, #(I_BIT)
+    ORR  r0, r0, #(Z_BIT)
+    ORR  r0, r0, #(C_BIT)
+    MCR  p15, 0, r0, c1, c0, 0		     /* Write CP15 register 1 */
+    ISB
+
+/******************************************************************************/
+/* Enable D-side prefetch                                                     */
+/******************************************************************************/
+    MRC  p15, 0, r0, c1, c0, 1         /* Read Auxiliary Control Register */
+    ORR  r0, r0, #(0x1 << 2)		     /* Enable Dside prefetch */
+    MCR  p15, 0, r0, c1, c0, 1	  /* Write Auxiliary Control Register */
+    ISB
+    BX   lr
+
+	.endfunc
+	.align 4
 
 /******************************************************************************
 * Function Name : L1_D_CacheOperationAsm
@@ -345,75 +369,6 @@ L1D_PrefetchDisable_asm: @FUNCTION
 
 	.text
 	.code 32
-
-/*******************************************************************************
-*
-* constant definitions
-*
-********************************************************************************/
-
-@	.equ DMA_FROM_DEVICE , 1
-@	.equ DMA_TO_DEVICE , 2
-
-/*******************************************************************************
- *	dma_buffer_issue(start,size,direction)
- *
- *	Used by the CPU to provide a buffer to the dma controller
- *
- *	start: virtual start address of cached region
- *	size: size of the memory region
- *	direction: DMA_FROM_DEVICE or DMA_TO_DEVICE
- *
- *	if the dma needs to transfer data from memory to a device, the CPU needs to
- *	write back any buffer content that might be in L1 cache
- *
- *  if the dma needs to transfer data from a device to memory, the CPU needs to
- *	invalidate any old data still in L1 cache
- *
-********************************************************************************/
-   	.func dma_buffer_issue_asm
-  	.align 4
-
-dma_buffer_issue_asm:
-
-	add	r1, r1, r0					@ calculate the end address in r1
-	teq	r2, #DMA_FROM_DEVICE		@ check the direction
-	beq	invalidate_dcache_range_asm	@ if 'from device', invalidate data in L1 cache
-	b	clean_dcache_range_asm		@ otherwise if 'to device', write back CPU data in L1 before transfer
-
-  	.endfunc
-  	.align 4
-
-/*******************************************************************************
- *	dma_buffer_reclaim(start,size,direction)
- *
- *	Used by the CPU to reclaim a buffer from the dma controller
- *
- *	start: virtual start address of cached region
- *	size: size of the memory region
- *	direction: DMA_FROM_DEVICE or DMA_TO_DEVICE
- *
- *	if the dma has transferred from memory to a device, the CPU does not need to
- *	do anything since the data has been written back before issuing the buffer
- *  any new access to the buffer will be cached again as necessary
- *
- *  if the dma has transferred data from a device to memory, now the CPU needs to
- *	invalidate any old data still in L1 cache
- *
-********************************************************************************/
-   	.func dma_buffer_reclaim_asm
-  	.align 4
-
-dma_buffer_reclaim_asm:
-
-	add	r1, r1, r0					@ calculate the end address in r1
-	teq	r2, #DMA_TO_DEVICE			@ check the direction
-	bne	invalidate_dcache_range_asm	@ if 'from device', invalidate data in L1 cache
-	mov	pc, lr
-
-  	.endfunc
-  	.align 4
-
 
 /*******************************************************************************
  *	clean_dcache_range(start,end)

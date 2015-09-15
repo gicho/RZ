@@ -52,7 +52,7 @@ enable_neon_vfp_access_priv_asm:
     .func   enable_neon_vfp_access_full_asm
 enable_neon_vfp_access_full_asm:
     MRC  p15, 0, r0, c1, c0, 2 /* Read Coprocessor Access Register (CPACR)    */
-    ORR  r0, r0, #(0xF << 22)  /* Enable access to CP 10 & 11                 */
+    ORR  r0, r0, #(0xF << 20)  /* Enable access to CP 10 & 11                 */
     BIC  r0, r0, #(3 << 30)    /* Clear ASEDIS/D32DIS if set                  */
     MCR  p15, 0, r0, c1, c0, 2 /* Write Coprocessor Access Register (CPACR)   */
     ISB
@@ -62,7 +62,7 @@ enable_neon_vfp_access_full_asm:
 
     
 /* ========================================================================== */
-/* Disable access to NEON/VFP by enabling access to Coprocessors 10 and 11.   */
+/* Disable access to NEON/VFP by disabling access to Coprocessors 10 and 11   */
 /* ========================================================================== */
     .func   disable_neon_vfp_access_asm
 disable_neon_vfp_access_asm:
