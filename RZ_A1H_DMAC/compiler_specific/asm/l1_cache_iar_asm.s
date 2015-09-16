@@ -20,25 +20,25 @@
     SECTION ASM_MACROS:CODE:NOROOT(4)
     ARM
   
-    PUBLIC L1_CachesEnable_asm
-   	PUBLIC L1_D_CacheOperation_asm
-   	PUBLIC L1_I_CacheInvalidate_asm
+    PUBLIC L1_CachesEnable
+   	PUBLIC L1D_CacheOperation_asm
+   	PUBLIC L1I_CacheInvalidate
 
-   	PUBLIC L1D_PrefetchDisable_asm
-   	PUBLIC L1D_PrefetchEnable_asm
+   	PUBLIC L1D_PrefetchDisable
+   	PUBLIC L1D_PrefetchEnable
 
-   	PUBLIC L1_DisableBranchPrediction_asm
-   	PUBLIC L1_EnableBranchPrediction_asm
+   	PUBLIC L1_DisableBranchPrediction
+   	PUBLIC L1_EnableBranchPrediction
 
-   	PUBLIC L1_D_CacheDisable_asm
-	PUBLIC L1_D_CacheEnable_asm
+   	PUBLIC L1D_CacheDisable
+	PUBLIC L1D_CacheEnable
 
-   	PUBLIC L1_I_CacheDisable_asm
-   	PUBLIC L1_I_CacheEnable_asm
+   	PUBLIC L1I_CacheDisable
+   	PUBLIC L1I_CacheEnable
 
-	PUBLIC clean_dcache_range_asm
-	PUBLIC invalidate_dcache_range_asm
-	PUBLIC clean_invalidate_dcache_range_asm    
+	PUBLIC L1D_CacheCleanRange
+	PUBLIC L1D_CacheInvalidateRange
+	PUBLIC L1D_CacheCleanAndInvalidateRange    
         
         
 /* Standard definitions of CPSR bits */
@@ -61,7 +61,7 @@ M_BIT EQU 0x1
 /*
 * Enable all caches
 */
-L1_CachesEnable_asm:
+L1_CachesEnable:
 
     /* Read CP15 SCTLR */
     MRC  p15, 0, r0, c1, c0, 0
@@ -93,7 +93,7 @@ L1_CachesEnable_asm:
 *               : r0 = 1 : DCCSW. Clean data or unified cache line by set/way.
 *               : r0 = 2 : DCCISW. Clean and Invalidate data or unified cache line by set/way.
 */
-L1_D_CacheOperation_asm: 
+L1D_CacheOperation_asm: 
 
     PUSH {r4-r11}
 
@@ -157,7 +157,7 @@ Finished:
 * Function Name : L1_I_CacheInvalidate
 * Description   : Invalidate all instruction caches to PoU.
 */
-L1_I_CacheInvalidate_asm:
+L1I_CacheInvalidate:
 
     MOV  r0, #0
     MCR  p15, 0, r0, c7, c5, 0
@@ -167,10 +167,10 @@ L1_I_CacheInvalidate_asm:
     BX   lr
 
 /*
-* Function Name : L1_I_CacheEnableAsm
+* Function Name : L1_I_CacheEnable
 * Description   : Enable instruction caches.
 */
-L1_I_CacheEnable_asm:
+L1I_CacheEnable:
 
     MRC  p15, 0, r0, c1, c0, 0       ;Read CP15 register 1
     ORR  r0, r0, #(I_BIT)            ;Enable I Cache
@@ -179,10 +179,10 @@ L1_I_CacheEnable_asm:
     BX   lr
 
 /*
-* Function Name : L1_I_CacheDisableAsm
+* Function Name : L1_I_CacheDisable
 * Description   : Disable instruction caches.
 */
-L1_I_CacheDisable_asm:
+L1I_CacheDisable:
 
     MRC  p15, 0, r0, c1, c0, 0          ;; Read CP15 register 1
     BIC  r0, r0, #(0x1 << 12)           ;; Disable I Cache
@@ -192,10 +192,10 @@ L1_I_CacheDisable_asm:
     BX   lr
 
 /*
-* Function Name : L1_D_CacheEnableAsm
+* Function Name : L1_D_CacheEnable
 * Description   : Enable data caches.
 */
-L1_D_CacheEnable_asm:
+L1D_CacheEnable:
 
     ;; D-cache is controlled by bit 2
 
@@ -206,10 +206,10 @@ L1_D_CacheEnable_asm:
     BX   lr
 
 /*
-* Function Name : L1_D_CacheDisableAsm
+* Function Name : L1_D_CacheDisable
 * Description   : Disable data caches.
 */
-L1_D_CacheDisable_asm: 
+L1D_CacheDisable: 
 
     ;; D-cache is controlled by bit 2
 
@@ -221,10 +221,10 @@ L1_D_CacheDisable_asm:
     BX   lr
 
 /*
-* Function Name : L1_EnableBranchPrediction_asm
+* Function Name : L1_EnableBranchPrediction
 * Description   : Enable program flow prediction.
 */
-L1_EnableBranchPrediction_asm: 
+L1_EnableBranchPrediction: 
 
     ;; Turning on branch prediction requires a general enable
     ;; CP15, c1. Control Register
@@ -241,10 +241,10 @@ L1_EnableBranchPrediction_asm:
     BX   lr
 
 /*
-* Function Name : L1_DisableBranchPrediction_asm
+* Function Name : L1_DisableBranchPrediction
 * Description   : Disable program flow prediction.
 */
-L1_DisableBranchPrediction_asm:
+L1_DisableBranchPrediction:
 
     MRC  p15, 0, r0, c1, c0, 0          ;; Read System Control Register
     BIC  r0, r0, #(Z_BIT)
@@ -253,10 +253,10 @@ L1_DisableBranchPrediction_asm:
     BX   lr
 
 /*
-* Function Name : L1PrefetchEnableAsm
+* Function Name : L1_PrefetchEnable
 * Description   : Enable Dside prefetch.
 */
-L1D_PrefetchEnable_asm: 
+L1D_PrefetchEnable: 
 
     MRC  p15, 0, r0, c1, c0, 1          ;; Read Auxiliary Control Register
     ORR  r0, r0, #(0x1 << 2)            ;; Enable Dside prefetch
@@ -266,10 +266,10 @@ L1D_PrefetchEnable_asm:
     BX   lr
 
 /*
-* Function Name : L1PrefetchDisableAsm
+* Function Name : L1_PrefetchDisable
 * Description   : Disable Dside prefetch
 */
-L1D_PrefetchDisable_asm: 
+L1D_PrefetchDisable: 
 
     MRC  p15, 0, r0, c1, c0, 1          ;; Read Auxiliary Control Register
     BIC  r0, r0, #(0x1 << 2)            ;; Disable Dside prefetch
@@ -303,7 +303,7 @@ icache_line_size macro reg tmp
         endm 
 
 /*
-*	clean_dcache_range(start,end)
+*	L1D_CacheCleanRange(start,end)
 *
 *	Used to clean a range of virtual addresses in data cache
 *
@@ -311,7 +311,7 @@ icache_line_size macro reg tmp
 *	end: virtual end address of cached region
 *
 */
-clean_dcache_range_asm:
+L1D_CacheCleanRange:
 
 	dcache_line_size r2, r3
 	sub	r3, r2, #1
@@ -329,7 +329,7 @@ _loop_clean_dcache_range:
 	mov	pc, lr
 
 /*******************************************************************************
- *	invalidate_dcache_range(start,end)
+ *	L1D_CacheInvalidateRange(start,end)
  *
  *	Used to invalidate a range of virtual addresses in data cache
  *
@@ -337,9 +337,9 @@ _loop_clean_dcache_range:
  *	end: virtual end address of cached region
  *
 ********************************************************************************/
-invalidate_dcache_range_asm:
+L1D_CacheInvalidateRange:
     
-        dcache_line_size r2, r3
+    dcache_line_size r2, r3
 	sub	r3, r2, #1
 	bic	r0, r0, r3
 	dsb
@@ -356,7 +356,7 @@ _loop_invalidate_dcache_range:
 
 
 /*******************************************************************************
- *	clean_invalidate_dcache_range(start,end)
+ *	L1D_CacheCleanAndInvalidateRange(start,end)
  *
  *	Used to clean and invalidate a range of virtual addresses in data cache
  *
@@ -364,7 +364,7 @@ _loop_invalidate_dcache_range:
  *	end: virtual end address of cached region
  *
 ********************************************************************************/
-clean_invalidate_dcache_range_asm:
+L1D_CacheCleanAndInvalidateRange:
 
 	dcache_line_size r2, r3
 	sub	r3, r2, #1
@@ -374,14 +374,16 @@ clean_invalidate_dcache_range_asm:
 
 _loop_clean_invalidate_dcache_range:
 
-	mcr	p15, 0, r0, c7, c14, 1		; clean line by VA
+	mcr	p15, 0, r0, c7, c14, 1		; clean & invalidate line by VA
 	add	r0, r0, r2
 	cmp	r0, r1
 	blo	_loop_clean_invalidate_dcache_range
 	dsb
 	mov	pc, lr
 
-        END
+       
+       
+    END
 
 
 

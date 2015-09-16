@@ -30,6 +30,10 @@ extern void L1D_CacheInvalidate(void);
 extern void L1D_CacheClean(void);
 extern void L1D_CacheCleanAndInvalidate(void);
 
+extern void L1D_CacheInvalidateRange(const uint32_t start, const uint32_t end);
+extern void L1D_CacheCleanRange(const uint32_t start, const uint32_t end);
+extern void L1D_CacheCleanAndInvalidateRange(const uint32_t start, const uint32_t end);
+
 extern void L1I_CacheInvalidate(void);
 extern void L1I_CacheDisable(void);
 extern void L1I_CacheEnable(void);
