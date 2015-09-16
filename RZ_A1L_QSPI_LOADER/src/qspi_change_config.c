@@ -30,11 +30,11 @@
 /******************************************************************************
 Includes   <System Includes> , "Project Includes"
 ******************************************************************************/
+#include <stdint.h>
+
 #include "compiler_settings.h"
 
-#include "r_typedefs.h"
 #include "iodefine.h"
-// #include "spibsc.h"
 #include "rza_io_regrw.h"
 
 #include "qspi_setup.h"

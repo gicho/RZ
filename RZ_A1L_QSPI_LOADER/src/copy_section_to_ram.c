@@ -29,10 +29,11 @@
 /******************************************************************************
 Includes <System Includes> , "Project Includes"
 ******************************************************************************/
-#include "r_typedefs.h"
+#include <stdint.h>
 #include "iodefine.h"
-// #include "r_spibsc_ioset_api.h"
 #include "rza_io_regrw.h"
+
+
 
 /******************************************************************************
 Typedef definitions

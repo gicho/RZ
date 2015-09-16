@@ -37,8 +37,9 @@
 /******************************************************************************
 Includes   <System Includes> , "Project Includes"
 ******************************************************************************/
+#include <stdint.h>
 #include "compiler_settings.h"
-#include "r_typedefs.h"                   /* Default  type definition header */
+
 
 /******************************************************************************
 Typedef definitions

@@ -30,8 +30,8 @@
 /******************************************************************************
 Includes   <System Includes> , "Project Includes"
 ******************************************************************************/
+#include <stdint.h>
 #include "compiler_settings.h"
-#include "r_typedefs.h"
 #include "iodefine.h"
 #include "spibsc_iobitmask.h"
 #include "rza_io_regrw.h"

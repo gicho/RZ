@@ -30,15 +30,14 @@
 /******************************************************************************
 Includes   <System Includes> , "Project Includes"
 ******************************************************************************/
-#include "r_typedefs.h"
+#include <stdint.h>
 #include "iodefine.h"
 #include "spibsc_iobitmask.h"
 
-// #include "spibsc.h"
-// #include "r_spibsc_ioset_api.h"
+
 #include "rza_io_regrw.h"
 
-//#include "sflash.h"
+
 #include "qspi_setup.h"
 
 #include "qspi_controller.h"

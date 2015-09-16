@@ -35,19 +35,11 @@
 * History       : DD.MM.YYYY Version Description
 *               : 18.06.2013 1.00
 ******************************************************************************/
-#include "r_typedefs.h"
+#include <stdint.h>
 #include "iodefine.h"
-// #include "spibsc.h"
 #include "rza_io_regrw.h"
 
 #include "qspi_setup.h"
-
-#if defined(__thumb2__) || (defined(__thumb__) && defined(__ARM_ARCH_6M__))
-# define THUMB_V7_V6M
-#endif
-
-/* This target supports the BLX Rm instruction.  */
-# define HAVE_CALL_INDIRECT
 
 #ifdef __GNUC__
 
