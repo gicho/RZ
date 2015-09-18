@@ -5,26 +5,19 @@
   <fileChecksum>609256338</fileChecksum>
   <configuration>
     <name>Dual_QSPI_Debug</name>
-    <outputs>
-      <file>$PROJ_DIR$\src\main.c</file>
-      <file>$PROJ_DIR$\src\qspi_change_config.c</file>
-      <file>$PROJ_DIR$\src\rza_io_regrw.c</file>
-      <file>$PROJ_DIR$\startup\reset_handler_iar.s</file>
-      <file>$PROJ_DIR$\startup\start_iar.s</file>
-      <file>$PROJ_DIR$\startup\cmain_iar.s</file>
-      <file>$PROJ_DIR$\..\toolchain_support\compiler_settings.h</file>
-    </outputs>
+    <outputs/>
   </configuration>
   <configuration>
     <name>Single_QSPI_Debug</name>
     <outputs>
-      <file>$PROJ_DIR$\inc\iodefines\wdt_iodefine.h</file>
-      <file>$PROJ_DIR$\inc\iodefines\spibsc_iodefine.h</file>
-      <file>$PROJ_DIR$\inc\iodefines\ssif_iodefine.h</file>
+      <file>$PROJ_DIR$\inc\iodefines\lin_iodefine.h</file>
+      <file>$PROJ_DIR$\inc\iodefines\irda_iodefine.h</file>
+      <file>$PROJ_DIR$\inc\iodefines\intc_iodefine.h</file>
       <file>$PROJ_DIR$\inc\iobitmasks\bsc_iobitmask.h</file>
+      <file>$PROJ_DIR$\..\toolchain_support\compiler_settings.h</file>
       <file>$PROJ_DIR$\inc\iobitmasks\cpg_iobitmask.h</file>
-      <file>$PROJ_DIR$\inc\iobitmasks\gpio_iobitmask.h</file>
       <file>$PROJ_DIR$\inc\iobitmasks\intc_iobitmask.h</file>
+      <file>$PROJ_DIR$\inc\iobitmasks\gpio_iobitmask.h</file>
       <file>$PROJ_DIR$\inc\iobitmasks\ostm_iobitmask.h</file>
       <file>$PROJ_DIR$\inc\iobitmasks\scif_iobitmask.h</file>
       <file>$PROJ_DIR$\inc\iobitmasks\spibsc_iobitmask.h</file>
@@ -40,14 +33,11 @@
       <file>$PROJ_DIR$\inc\iodefines\gpio_iodefine.h</file>
       <file>$PROJ_DIR$\inc\iodefines\ieb_iodefine.h</file>
       <file>$PROJ_DIR$\inc\iodefines\inb_iodefine.h</file>
-      <file>$PROJ_DIR$\inc\iodefines\intc_iodefine.h</file>
-      <file>$PROJ_DIR$\inc\iodefines\irda_iodefine.h</file>
-      <file>$PROJ_DIR$\inc\iodefines\jcu_iodefine.h</file>
       <file>$PROJ_DIR$\inc\iodefines\l2c_iodefine.h</file>
-      <file>$PROJ_DIR$\inc\iodefines\lin_iodefine.h</file>
+      <file>$PROJ_DIR$\inc\iodefines\jcu_iodefine.h</file>
       <file>$PROJ_DIR$\inc\iodefines\lvds_iodefine.h</file>
-      <file>$PROJ_DIR$\inc\iodefines\mlb_iodefine.h</file>
       <file>$PROJ_DIR$\inc\iodefines\mmc_iodefine.h</file>
+      <file>$PROJ_DIR$\inc\iodefines\mlb_iodefine.h</file>
       <file>$PROJ_DIR$\inc\iodefines\mtu2_iodefine.h</file>
       <file>$PROJ_DIR$\inc\iodefines\ostm_iodefine.h</file>
       <file>$PROJ_DIR$\inc\iodefines\pfv_iodefine.h</file>
@@ -58,33 +48,39 @@
       <file>$PROJ_DIR$\inc\iodefines\rspi_iodefine.h</file>
       <file>$PROJ_DIR$\inc\iodefines\rtc_iodefine.h</file>
       <file>$PROJ_DIR$\inc\iodefines\scif_iodefine.h</file>
-      <file>$PROJ_DIR$\inc\iodefines\spdif_iodefine.h</file>
+      <file>$PROJ_DIR$\inc\iodefines\scim_iodefine.h</file>
       <file>$PROJ_DIR$\inc\iodefines\scux_iodefine.h</file>
       <file>$PROJ_DIR$\inc\iodefines\sdg_iodefine.h</file>
+      <file>$PROJ_DIR$\inc\iodefines\spdif_iodefine.h</file>
+      <file>$PROJ_DIR$\inc\iodefines\spibsc_iodefine.h</file>
+      <file>$PROJ_DIR$\inc\iodefines\ssif_iodefine.h</file>
       <file>$PROJ_DIR$\inc\iodefines\usb20_iodefine.h</file>
-      <file>$PROJ_DIR$\inc\iodefines\scim_iodefine.h</file>
-      <file>$PROJ_DIR$\.Single_QSPI_Debug\Obj\external_address_mode.o</file>
-      <file>$PROJ_DIR$\.Single_QSPI_Debug\Obj\cmain_iar.o</file>
-      <file>$PROJ_DIR$\.Single_QSPI_Debug\Obj\main.o</file>
-      <file>$PROJ_DIR$\.Single_QSPI_Debug\Obj\main.pbi</file>
-      <file>$PROJ_DIR$\.Single_QSPI_Debug\Obj\external_address_mode.pbi</file>
-      <file>$PROJ_DIR$\.Single_QSPI_Debug\Obj\RZ_A1H_QSPI_LOADER.pbd</file>
       <file>$PROJ_DIR$\inc\iodefines\vdc5_iodefine.h</file>
-      <file>$PROJ_DIR$\inc\iodefine.h</file>
+      <file>$PROJ_DIR$\inc\iodefines\wdt_iodefine.h</file>
       <file>$PROJ_DIR$\inc\qspi_setup.h</file>
+      <file>$PROJ_DIR$\inc\iodefine.h</file>
       <file>$PROJ_DIR$\inc\rza_io_regrw.h</file>
-      <file>$PROJ_DIR$\qspi_controller_driver\inc\flash_type_definitions.h</file>
       <file>$PROJ_DIR$\qspi_controller_driver\inc\qspi_controller.h</file>
+      <file>$PROJ_DIR$\qspi_controller_driver\inc\flash_type_definitions.h</file>
       <file>$PROJ_DIR$\qspi_controller_driver\src\external_address_mode.c</file>
       <file>$PROJ_DIR$\qspi_controller_driver\src\qspi_controller.c</file>
       <file>$PROJ_DIR$\qspi_controller_driver\src\spi_mode.c</file>
       <file>$PROJ_DIR$\src\main.c</file>
       <file>$PROJ_DIR$\src\qspi_change_config.c</file>
       <file>$PROJ_DIR$\src\rza_io_regrw.c</file>
-      <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
-      <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
+      <file>$PROJ_DIR$\.Single_QSPI_Debug\Obj\main.o</file>
+      <file>$PROJ_DIR$\startup\cmain_iar.s</file>
+      <file>$PROJ_DIR$\startup\reset_handler_iar.s</file>
+      <file>$PROJ_DIR$\startup\start_iar.s</file>
+      <file>$PROJ_DIR$\.Single_QSPI_Debug\Obj\cmain_iar.o</file>
+      <file>$PROJ_DIR$\.Single_QSPI_Debug\Obj\external_address_mode.o</file>
       <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
       <file>$TOOLKIT_DIR$\inc\c\xencoding_limits.h</file>
+      <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
+      <file>$PROJ_DIR$\.Single_QSPI_Debug\Obj\RZ_A1H_QSPI_LOADER.pbd</file>
+      <file>$PROJ_DIR$\.Single_QSPI_Debug\Obj\external_address_mode.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
+      <file>$PROJ_DIR$\.Single_QSPI_Debug\Obj\main.pbi</file>
       <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
       <file>$TOOLKIT_DIR$\inc\c\DLib_Threads.h</file>
       <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
@@ -101,17 +97,13 @@
       <file>$PROJ_DIR$\.Single_QSPI_Debug\Obj\rza_io_regrw.o</file>
       <file>$PROJ_DIR$\.Single_QSPI_Debug\Obj\start_iar.o</file>
       <file>$PROJ_DIR$\.Single_QSPI_Debug\Obj\qspi_change_config.pbi</file>
-      <file>$PROJ_DIR$\startup\reset_handler_iar.s</file>
-      <file>$PROJ_DIR$\startup\start_iar.s</file>
-      <file>$PROJ_DIR$\startup\cmain_iar.s</file>
-      <file>$PROJ_DIR$\..\toolchain_support\compiler_settings.h</file>
     </outputs>
     <file>
       <name>[ROOT_NODE]</name>
       <outputs>
         <tool>
           <name>ILINK</name>
-          <file> 75</file>
+          <file> 79</file>
         </tool>
       </outputs>
     </file>
@@ -120,17 +112,17 @@
       <outputs>
         <tool>
           <name>ICCARM</name>
-          <file> 45</file>
+          <file> 63</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 49</file>
+          <file> 68</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 34 18 71 10 26 42 56 70 14 22 30 38 43 63 3 54 9 12 16 20 24 28 32 36 44 1 0 69 4 8 53 52 64 11 13 15 17 19 21 23 25 27 29 31 33 35 37 39 41 40 2 51 67 65 66 68 86 6 7 5 55</file>
+          <file> 32 19 75 11 0 40 50 74 15 2 28 36 44 66 3 49 10 13 17 21 24 27 30 34 38 42 46 73 5 9 47 48 69 12 14 16 18 20 22 1 23 25 26 29 31 33 35 37 39 41 43 45 71 64 65 72 4 6 8 7 51</file>
         </tool>
       </inputs>
     </file>
@@ -139,63 +131,102 @@
       <outputs>
         <tool>
           <name>ICCARM</name>
-          <file> 74</file>
+          <file> 78</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 72</file>
+          <file> 76</file>
         </tool>
       </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 44 15 28 2 36 7 75 11 19 0 32 40 65 72 71 6 74 49 13 17 21 24 27 30 34 38 42 46 64 4 8 47 10 50 69 12 14 16 18 20 22 1 23 25 26 29 31 33 35 37 39 41 43 45 66 73 5 3 9 48 51</file>
+        </tool>
+      </inputs>
     </file>
     <file>
       <name>$PROJ_DIR$\qspi_controller_driver\src\spi_mode.c</name>
       <outputs>
         <tool>
           <name>ICCARM</name>
-          <file> 78</file>
+          <file> 82</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 79</file>
+          <file> 83</file>
         </tool>
       </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 25 12 41 20 33 71 75 66 16 1 29 37 45 9 4 49 69 14 18 22 23 26 31 35 39 43 73 5 51 10 50 11 13 15 17 19 21 2 24 0 27 28 30 32 34 36 38 40 42 44 46 64 65 72 3 48 6 8 7 74 47</file>
+        </tool>
+      </inputs>
     </file>
     <file>
       <name>$PROJ_DIR$\src\main.c</name>
       <outputs>
         <tool>
           <name>ICCARM</name>
-          <file> 47</file>
+          <file> 58</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 48</file>
+          <file> 70</file>
         </tool>
       </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 39 49 3 23 69 18 31 14 22 26 35 43 65 72 71 12 16 20 1 25 29 33 37 41 45 64 5 9 47 74 75 48 11 13 15 17 19 21 2 24 0 27 28 30 32 34 36 38 40 42 44 46 66 73 4 6 8 7</file>
+        </tool>
+      </inputs>
     </file>
     <file>
       <name>$PROJ_DIR$\src\qspi_change_config.c</name>
       <outputs>
         <tool>
           <name>ICCARM</name>
-          <file> 77</file>
+          <file> 81</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 82</file>
+          <file> 86</file>
         </tool>
       </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 30 17 46 24 38 73 7 13 21 27 34 42 75 6 4 49 74 11 15 19 2 0 28 32 36 40 44 66 8 51 48 50 69 12 14 16 18 20 22 1 23 25 26 29 31 33 35 37 39 41 43 45 71 64 65 72 5 3 9 47</file>
+        </tool>
+      </inputs>
     </file>
     <file>
       <name>$PROJ_DIR$\src\rza_io_regrw.c</name>
       <outputs>
         <tool>
           <name>ICCARM</name>
-          <file> 80</file>
+          <file> 84</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 73</file>
+          <file> 77</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 74 75 71 69 72 4 64 65 66 73</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\startup\cmain_iar.s</name>
+      <outputs>
+        <tool>
+          <name>AARM</name>
+          <file> 62</file>
         </tool>
       </outputs>
     </file>
@@ -204,7 +235,7 @@
       <outputs>
         <tool>
           <name>AARM</name>
-          <file> 76</file>
+          <file> 80</file>
         </tool>
       </outputs>
     </file>
@@ -213,16 +244,7 @@
       <outputs>
         <tool>
           <name>AARM</name>
-          <file> 81</file>
-        </tool>
-      </outputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\startup\cmain_iar.s</name>
-      <outputs>
-        <tool>
-          <name>AARM</name>
-          <file> 46</file>
+          <file> 85</file>
         </tool>
       </outputs>
     </file>
