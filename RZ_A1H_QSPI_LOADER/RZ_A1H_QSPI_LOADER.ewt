@@ -2095,43 +2095,52 @@
     </settings>
   </configuration>
   <group>
-    <name>compiler_specific</name>
+    <name>common</name>
     <group>
-      <name>asm</name>
-      <file>
-        <name>$PROJ_DIR$\compiler_specific\asm\cmain_iar.s</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\compiler_specific\asm\l1_cache_iar_asm.s</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\compiler_specific\asm\reset_handler_iar.s</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\compiler_specific\asm\start_iar.s</name>
-        <configuration>
-          <name>Single_QSPI_Debug</name>
-        </configuration>
-      </file>
+      <name>architecture_support</name>
+      <group>
+        <name>CA9</name>
+        <group>
+          <name>asm</name>
+        </group>
+        <group>
+          <name>inc</name>
+        </group>
+        <group>
+          <name>src</name>
+        </group>
+      </group>
     </group>
     <group>
-      <name>inc</name>
-      <file>
-        <name>$PROJ_DIR$\compiler_specific\inc\compiler_settings.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\compiler_specific\inc\l1_cache.h</name>
-      </file>
+      <name>board_support</name>
+      <group>
+        <name>RSK</name>
+      </group>
     </group>
     <group>
-      <name>src</name>
+      <name>chip_support</name>
+      <group>
+        <name>RZA_RZM</name>
+        <group>
+          <name>asm</name>
+          <group>
+            <name>iar</name>
+          </group>
+        </group>
+        <group>
+          <name>inc</name>
+        </group>
+        <group>
+          <name>src</name>
+        </group>
+      </group>
+    </group>
+    <group>
+      <name>toolchain_support</name>
       <file>
-        <name>$PROJ_DIR$\compiler_specific\src\low_level_init_iar.c</name>
+        <name>$PROJ_DIR$\..\toolchain_support\compiler_settings.h</name>
       </file>
     </group>
-    <file>
-      <name>$PROJ_DIR$\compiler_specific\IAR-QSPI-BL.icf</name>
-    </file>
   </group>
   <group>
     <name>inc</name>
@@ -2317,6 +2326,12 @@
     </file>
   </group>
   <group>
+    <name>linker_script</name>
+    <file>
+      <name>$PROJ_DIR$\linker_script\RZA_IAR_QSPI_BL.icf</name>
+    </file>
+  </group>
+  <group>
     <name>qspi_controller_driver</name>
     <group>
       <name>inc</name>
@@ -2353,6 +2368,18 @@
     </file>
     <file>
       <name>$PROJ_DIR$\src\rza_io_regrw.c</name>
+    </file>
+  </group>
+  <group>
+    <name>startup</name>
+    <file>
+      <name>$PROJ_DIR$\startup\cmain_iar.s</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\startup\reset_handler_iar.s</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\startup\start_iar.s</name>
     </file>
   </group>
 </project>

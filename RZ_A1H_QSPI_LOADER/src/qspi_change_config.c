@@ -22,8 +22,6 @@
 
 #include "qspi_controller.h"
 
-#include "l1_cache.h"
-
 #define BYTEREAD_TEST 0
 
 #if BYTEREAD_TEST

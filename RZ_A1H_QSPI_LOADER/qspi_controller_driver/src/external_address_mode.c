@@ -80,7 +80,7 @@ EXEC_RAM void qspiExternalAddressFlushReadCache(void) {
     SPIBSC0.DRCR |= (1u << 9);
 
     dummyRead = SPIBSC0.DRCR;
-    for(i=0;i<100;i++) SOFT_DELAY;
+    for(i=0;i<100;i++) SOFT_DELAY();
 }
 
 
