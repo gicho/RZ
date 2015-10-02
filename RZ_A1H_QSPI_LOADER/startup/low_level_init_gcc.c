@@ -22,8 +22,6 @@
 #include "qspi_setup.h"
 
 
-#ifdef __GNUC__
-
 /* Global variables are specified in the linker script (GCC-QSPI-BL.ld) */
 /* These are related to the code which gets copied to ram and reconfigures the QSPI */
 extern uint32_t __qspi_reconfigure_code_start__;
@@ -38,10 +36,8 @@ extern uint32_t __data_end__;
 extern uint32_t __bss_start__;
 extern uint32_t __bss_end__;
 
-#endif
 
-
-extern void copy_arm_code_section_to_ram(uint32_t* rom_start, uint32_t* ram_start, uint32_t* ram_end);
+static void copy_arm_code_section_to_ram(uint32_t* rom_start, uint32_t* ram_start, uint32_t* ram_end);
 extern int main(void);
 
 /*******************************************************************************
@@ -95,5 +91,24 @@ void PowerON_Reset (void)
 }
 
 
+void copy_arm_code_section_to_ram(uint32_t* rom_start, uint32_t* ram_start, uint32_t* ram_end)
+{
 
+	/* Variables for program copy */
+    uint32_t i;
+    uint32_t region_size;
+
+    // check if executing already from ram (when debugging)
+    if(rom_start == ram_start) return;
+
+    /* Calculate the length of the copied section */
+    region_size     = (uint32_t)ram_end - (uint32_t)ram_start;
+
+    /* Copy the next load module. */
+    for(i = 0; i < (region_size/4); i++)
+    {
+        *ram_start++ = *rom_start++;
+    }
+
+}
 

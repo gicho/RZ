@@ -29,6 +29,10 @@
         .global VbarSet_asm
         .global SetLowVectors_asm
         .global SetHighVectors_asm
+		.global __disable_irq
+    	.global __enable_irq
+    	.global __disable_fiq
+    	.global __enable_fiq
 
 /* ========================================================================== */
 /* Enable access to NEON/VFP by enabling access to Coprocessors 10 and 11.    */
@@ -173,6 +177,28 @@ SetHighVectors_asm:
     ISB
     BX        lr
     .endfunc
+
+__disable_irq:
+    CPSID   I
+    BX      LR
+
+__enable_irq:
+    CPSIE   I
+    ISB
+    BX      LR
+
+__disable_fiq:
+    CPSID   F
+    BX      LR
+
+__enable_fiq:
+    CPSIE   F
+    ISB
+    BX      LR
+
+    .END
+
+
 	.align 4
 	.end
 
