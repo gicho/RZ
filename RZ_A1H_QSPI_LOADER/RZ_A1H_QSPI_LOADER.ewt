@@ -2328,7 +2328,7 @@
   <group>
     <name>linker_script</name>
     <file>
-      <name>$PROJ_DIR$\linker_script\RZA_IAR_QSPI_BL.icf</name>
+      <name>$PROJ_DIR$\linker_script\RZA1H_IAR_QSPI_BL.icf</name>
     </file>
   </group>
   <group>

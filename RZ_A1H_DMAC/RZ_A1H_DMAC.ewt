@@ -3221,9 +3221,6 @@
         <group>
           <name>src</name>
           <file>
-            <name>$PROJ_DIR$\..\chip_support\RZA_RZM\src\copy_section_to_ram.c</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$\..\chip_support\RZA_RZM\src\l2_cache.c</name>
           </file>
           <file>
@@ -3473,10 +3470,10 @@
   <group>
     <name>linker_script</name>
     <file>
-      <name>$PROJ_DIR$\linker_script\RZA_IAR_QSPI_APP.icf</name>
+      <name>$PROJ_DIR$\linker_script\RZA1H_IAR_QSPI_APP.icf</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\linker_script\RZA_IAR_RAM_APP.icf</name>
+      <name>$PROJ_DIR$\linker_script\RZA1H_IAR_RAM_APP.icf</name>
     </file>
   </group>
   <group>
@@ -3504,9 +3501,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$\src\intc_handler.c</name>
-      <configuration>
-        <name>Debug-DUAL-QSPI</name>
-      </configuration>
     </file>
     <file>
       <name>$PROJ_DIR$\src\intc_userdef.c</name>

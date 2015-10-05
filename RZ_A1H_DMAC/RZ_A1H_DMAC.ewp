@@ -731,7 +731,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$\linker_script\RZA_IAR_RAM_APP.icf</state>
+          <state>$PROJ_DIR$\linker_script\RZA1H_IAR_RAM_APP.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -1697,7 +1697,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$\linker_script\RZA_IAR_QSPI_APP.icf</state>
+          <state>$PROJ_DIR$\linker_script\RZA1H_IAR_QSPI_APP.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -2663,7 +2663,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$\linker_script\RZA_IAR_QSPI_APP.icf</state>
+          <state>$PROJ_DIR$\linker_script\RZA1H_IAR_QSPI_APP.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -2981,9 +2981,6 @@
         <group>
           <name>src</name>
           <file>
-            <name>$PROJ_DIR$\..\chip_support\RZA_RZM\src\copy_section_to_ram.c</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$\..\chip_support\RZA_RZM\src\l2_cache.c</name>
           </file>
           <file>
@@ -3233,10 +3230,10 @@
   <group>
     <name>linker_script</name>
     <file>
-      <name>$PROJ_DIR$\linker_script\RZA_IAR_QSPI_APP.icf</name>
+      <name>$PROJ_DIR$\linker_script\RZA1H_IAR_QSPI_APP.icf</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\linker_script\RZA_IAR_RAM_APP.icf</name>
+      <name>$PROJ_DIR$\linker_script\RZA1H_IAR_RAM_APP.icf</name>
     </file>
   </group>
   <group>
