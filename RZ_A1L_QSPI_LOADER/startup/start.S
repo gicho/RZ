@@ -19,37 +19,38 @@
 * following link:
 * http://www.renesas.com/disclaimer
 *
-* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.
 *******************************************************************************/
 /*******************************************************************************
-* File Name     : typedefine.h
-* Description   : Defines exact width integer types.
+* Copyright (C) 2014 Renesas Electronics Corporation. All rights reserved.
+*******************************************************************************/
+/*******************************************************************************
+* File Name     : start.S
+* Device(s)     : RZ/A1H RSK2+RZA1H
+* Tool-Chain    : GCC
+* H/W Platform  : RSK2+RZA1H CPU Board
+* Description   : This is the vector table
 *******************************************************************************/
 /*******************************************************************************
 * History       : DD.MM.YYYY Version Description
-*               : 18.06.2013 1.00
+*               : 24.06.2013 1.01 added comments on directives
 *******************************************************************************/
-#ifndef TYPE_DEFINE_H
-#define TYPE_DEFINE_H
+    .text
+    .code 32
+    .global QSPI_BL_vector_table
 
-#include <stddef.h>
-#include <stdbool.h>
-#include <stdint.h>
+QSPI_BL_vector_table:
 
-/*******************************************************************************
-Typedef definitions
-*******************************************************************************/
-typedef signed   char      _SBYTE;
-typedef unsigned char      _UBYTE;
-typedef signed   short     _SWORD;
-typedef unsigned short     _UWORD;
-typedef signed   int       _SINT;
-typedef unsigned int       _UINT;
-typedef signed   long      _SDWORD;
-typedef unsigned long      _UDWORD;
-typedef signed   long long _SQWORD;
-typedef unsigned long long _UQWORD;
+    LDR pc, =QSPI_BL_reset_handler
+    LDR pc, =QSPI_BL_undefined_handler
+    LDR pc, =QSPI_BL_svc_handler
+    LDR pc, =QSPI_BL_prefetch_handler
+    LDR pc, =QSPI_BL_abort_handler
+    LDR pc, =QSPI_BL_reserved_handler
+    LDR pc, =QSPI_BL_irq_handler
+    LDR pc, =QSPI_BL_fiq_handler
 
-#endif	/* TYPE_DEFINE_H */
+    .align 4
+    .end
 
-/* End of File */
+    
+

@@ -1,0 +1,220 @@
+/*###ICF### Section handled by ICF editor, don't touch! ****/
+/*-Editor annotation file-*/
+/* IcfEditorFile="$TOOLKIT_DIR$\config\ide\IcfEditor\a_v1_0.xml" */
+/*-Specials-*/
+define symbol __ICFEDIT_intvec_start__ = 0x20020000;
+/*-Memory Regions-*/
+define symbol __ICFEDIT_region_ROM_start__ = 0x0;
+define symbol __ICFEDIT_region_ROM_end__   = 0x0;
+define symbol __ICFEDIT_region_RAM_start__ = 0x20020040;
+define symbol __ICFEDIT_region_RAM_end__   = 0x202FFFFF;
+/*-Sizes-*/
+define symbol __ICFEDIT_size_cstack__   = 0x8000;
+define symbol __ICFEDIT_size_svcstack__ = 0x40;
+define symbol __ICFEDIT_size_irqstack__ = 0x40;
+define symbol __ICFEDIT_size_fiqstack__ = 0x40;
+define symbol __ICFEDIT_size_undstack__ = 0x40;
+define symbol __ICFEDIT_size_abtstack__ = 0x40;
+define symbol __ICFEDIT_size_heap__     = 0x8000;
+/**** End of ICF editor section. ###ICF###*/
+
+define memory mem with size = 4G;
+
+/*----------------------------------------------------------------------------*/        
+/* DEFINITION OF STACK, HEAP, TTB SIZE                                        */
+/*----------------------------------------------------------------------------*/        
+define symbol PROGRAM_STACK_SIZE    = 0x8000; /* Application stack */
+define symbol IRQ_STACK_SIZE	    = 0x2000; /* IRQ mode stack */
+define symbol FIQ_STACK_SIZE	    = 0x2000; /* Fast IRQ mode stack */
+define symbol SVC_STACK_SIZE	    = 0x2000; /* SVC mode stack */
+define symbol ABT_STACK_SIZE	    = 0x2000; /* Abort mode stack */
+define symbol UND_STACK_SIZE	    = 0x2000; /* Undefined mode stack */
+define symbol HEAP_SIZE	            = 0x2000; /* Heap */
+define symbol TTB_SIZE              = 0x8000; /* Level-1 MMU Translation Table*/
+
+/*----------------------------------------------------------------------------*/        
+/* DEFINITION OF MEMORY RANGES - RETENTION RAM                                */
+/*----------------------------------------------------------------------------*/        
+
+/* RAM H'2000_0000 to H'2001_FFFF is data retention RAM */
+/* Write access has to be enabled first using registers SYSCR1 and SYSCR2 */
+/* Retention ram page 0 ( 16KB) H'20000000 to H'20003FFF */
+/* Retention ram page 1 ( 16KB) H'20004000 to H'20007FFF */
+/* Retention ram page 2 ( 32KB) H'20008000 to H'2000FFFF */
+/* Retention ram page 3 ( 64KB) H'20010000 to H'2001FFFF */
+
+define symbol RETRAM_start   =   0x20000000;
+define symbol RETRAM0_start  =   0x20000000; 
+define symbol RETRAM0_end    =   0x20003FFF;
+define symbol RETRAM1_start  =   0x20004000; 
+define symbol RETRAM1_end    =   0x20007FFF;
+define symbol RETRAM2_start  =   0x20008000; 
+define symbol RETRAM2_end    =   0x2000FFFF;
+define symbol RETRAM3_start  =   0x20010000; 
+define symbol RETRAM3_end    =   0x2001FFFF;
+define symbol RETRAM_end     =   0x2001FFFF;
+
+/*----------------------------------------------------------------------------*/        
+/* DEFINITION OF MEMORY REGIONS - RETENTION RAM                               */
+/*----------------------------------------------------------------------------*/        
+
+define region RETRAM_region = mem:[from RETRAM_start to RETRAM_end];
+define region RETRAM0_region = mem:[from RETRAM0_start to RETRAM0_end];
+define region RETRAM1_region = mem:[from RETRAM0_start to RETRAM0_end];
+define region RETRAM2_region = mem:[from RETRAM2_start to RETRAM2_end];
+define region RETRAM3_region = mem:[from RETRAM3_start to RETRAM3_end];
+
+/*----------------------------------------------------------------------------*/        
+/* DEFINITION OF MEMORY RANGES - ALWAYS-ON RAM, NORMAL ADDRESSES              */
+/*----------------------------------------------------------------------------*/
+/* Page 0 bank (384KB) H'20020000 to H'2007FFFF */
+/* Page 1 bank (512KB) H'20080000 to H'200FFFFF */
+/* Page 2 bank (512KB) H'20100000 to H'2017FFFF */
+/* Page 3 bank (512KB) H'20180000 to H'201FFFFF */
+/* Page 4 bank (  1MB) H'20200000 to H'202FFFFF */
+
+define symbol RAM_start    =   0x20020000; 
+define symbol RAM0_start   =   0x20020000; 
+define symbol RAM0_end     =   0x2007FFFF;
+define symbol RAM1_start   =   0x20080000; 
+define symbol RAM1_end     =   0x200FFFFF;
+define symbol RAM2_start   =   0x20100000; 
+define symbol RAM2_end     =   0x2017FFFF;
+define symbol RAM3_start   =   0x20180000; 
+define symbol RAM3_end     =   0x201FFFFF;
+define symbol RAM4_start   =   0x20200000; 
+define symbol RAM4_end     =   0x202FFFFF;
+define symbol RAM_end      =   0x202FFFFF;
+
+/*----------------------------------------------------------------------------*/        
+/* DEFINITION OF MEMORY REGIONS - ALWAYS-ON RAM, NORMAL ADDRESSES             */
+/*----------------------------------------------------------------------------*/
+
+define region RAM0_region = mem:[from RAM0_start to RAM0_end];
+define region RAM1_region = mem:[from RAM1_start to RAM1_end];
+define region RAM2_region = mem:[from RAM2_start to RAM2_end];
+define region RAM3_region = mem:[from RAM3_start to RAM3_end];
+define region RAM4_region = mem:[from RAM4_start to RAM4_end];
+define region RAM_region = mem:[from RAM_start to RAM_end];
+
+/*----------------------------------------------------------------------------*/        
+/* DEFINITION OF MEMORY RANGES - ALWAYS-ON RAM, MIRRORED ADDRESSES            */
+/*----------------------------------------------------------------------------*/
+/* Page 0 bank (384KB) H'60020000 to H'6007FFFF */
+/* Page 1 bank (512KB) H'60080000 to H'600FFFFF */
+/* Page 2 bank (512KB) H'60100000 to H'6017FFFF */
+/* Page 3 bank (512KB) H'60180000 to H'601FFFFF */
+/* Page 4 bank (  1MB) H'60200000 to H'602FFFFF */
+
+define symbol RAM_MIRROR_start    =   0x60020000; 
+define symbol RAM0_MIRROR_start   =   0x60020000; 
+define symbol RAM0_MIRROR_end     =   0x6007FFFF;
+define symbol RAM1_MIRROR_start   =   0x60080000; 
+define symbol RAM1_MIRROR_end     =   0x600FFFFF;
+define symbol RAM2_MIRROR_start   =   0x60100000; 
+define symbol RAM2_MIRROR_end     =   0x6017FFFF;
+define symbol RAM3_MIRROR_start   =   0x60180000; 
+define symbol RAM3_MIRROR_end     =   0x601FFFFF;
+define symbol RAM4_MIRROR_start   =   0x60200000;
+define symbol RAM4_MIRROR_end     =   0x602FFFFF;
+define symbol RAM_MIRROR_end      =   0x602FFFFF;
+
+/*----------------------------------------------------------------------------*/        
+/* DEFINITION OF MEMORY REGIONS - ALWAYS-ON RAM, MIRRORED ADDRESSES           */
+/*----------------------------------------------------------------------------*/
+
+define region RAM0_MIRROR_region = mem:[from RAM0_MIRROR_start to RAM0_MIRROR_end];
+define region RAM1_MIRROR_region = mem:[from RAM1_MIRROR_start to RAM1_MIRROR_end];
+define region RAM2_MIRROR_region = mem:[from RAM2_MIRROR_start to RAM2_MIRROR_end];
+define region RAM3_MIRROR_region = mem:[from RAM3_MIRROR_start to RAM3_MIRROR_end];
+define region RAM4_MIRROR_region = mem:[from RAM4_MIRROR_start to RAM4_MIRROR_end];
+define region RAM_MIRROR_region   = mem:[from RAM_MIRROR_start to RAM_MIRROR_end]; 
+ 
+/*----------------------------------------------------------------------------*/        
+/* DEFINITION OF SDRAM MEMORY REGIONS                                         */
+/*----------------------------------------------------------------------------*/
+/* RZ/A Stream-it Kit: SDRAM 32MB attached to CS2 H'08000000 to H'09FFFFFF */
+/* TBD */
+/*
+define symbol SDRAM_start  =   0x08000000; 
+define symbol SDRAM_end    =   0x09FFFFFF;
+define region SDRAM_region = mem:[from SDRAM_start to SDRAM_end];
+
+define symbol SDRAM_MIRROR_start  =   0x48000000; 
+define symbol SDRAM_MIRROR_end    =   0x49FFFFFF;
+define region SDRAM_MIRROR_region = mem:[from SDRAM_MIRROR_start to SDRAM_MIRROR_end];
+*/
+
+/*----------------------------------------------------------------------------*/        
+/* DEFINITION OF QSPI MEMORY REGIONS                                          */
+/*----------------------------------------------------------------------------*/
+/* RZ/A Stream-it! Kit: QSPI ROM attached to H'18000000, 2 chips of 0x4000000 size each (64 Mb) */ 
+/* Total addressable space from the QSPI internal address map is 0x18000000 to H'1BFFFFFF (64Mb page) */
+/* Size of block is 0x40000, first two blocks are reserved to the BL */
+/* Defined length accounts for the split between the BL and the application located @ 18080000 */
+/* Needs to match #define DEF_USER_PROGRAM_SRC 0x18080000 in qspi_setup.h, set at (ORIGIN + LENGTH) */	
+define symbol QSPI_FLASH_start = 0x18000000;
+define symbol QSPI_FLASH_end   = 0x1807FFFF;
+define region QSPI_FLASH_region = mem:[from QSPI_FLASH_start to QSPI_FLASH_end];	
+
+define symbol QSPI_FLASH_MIRROR_start = 0x58000000;
+define symbol QSPI_FLASH_MIRROR_end   = 0x5807FFFF;
+define region QSPI_FLASH_MIRROR_region = mem:[from QSPI_FLASH_MIRROR_start to QSPI_FLASH_MIRROR_end];
+
+
+/*----------------------------------------------------------------------------*/        
+/* MEMORY PLACEMENT SECTION                                                   */
+/*----------------------------------------------------------------------------*/
+define block CSTACK    with alignment = 8, size = PROGRAM_STACK_SIZE   { };
+define block SVC_STACK with alignment = 8, size = SVC_STACK_SIZE { };
+define block IRQ_STACK with alignment = 8, size = IRQ_STACK_SIZE { };
+define block FIQ_STACK with alignment = 8, size = FIQ_STACK_SIZE { };
+define block UND_STACK with alignment = 8, size = UND_STACK_SIZE { };
+define block ABT_STACK with alignment = 8, size = ABT_STACK_SIZE { };
+define block HEAP      with alignment = 8, size = HEAP_SIZE      { };
+define block MMU_TABLE with alignment = 0x4000, size = 0x8000 { section MMU_TT }; 
+
+/* data and bss are initialized manually */
+define block RAM_DATA { section .data };
+define block RAM_DATA_IN_ROM { section .data_init };
+define block RAM_BSS { section .bss };
+
+/* .textrw are functions which are specified to run from RAM (__ramfunc) */
+define block RAM_CODE with alignment = 4 { section .textrw };
+define block RAM_CODE_IN_ROM with alignment = 4 { section .textrw_init };
+
+do not initialize  { section .noinit };
+do not initialize  { section MMU_TT };
+initialize manually { section .data };
+initialize manually { section .bss };
+initialize manually { section .textrw };
+
+/* Vector table located in QSPI */
+place in QSPI_FLASH_region { first readonly section .intvec };
+
+/* Locate constants and rest of non-ram code in QSPI */
+place in QSPI_FLASH_region { readonly }; 
+
+/* RAM code and .data initializers go in QSPI */
+place in QSPI_FLASH_region { block RAM_CODE_IN_ROM }; 
+place in QSPI_FLASH_region { block RAM_DATA_IN_ROM }; 
+
+/* everything else in RAM */
+place in RAM0_region { block RAM_CODE };
+place in RAM0_region { block RAM_DATA };
+place in RAM0_region { block RAM_BSS };
+place in RAM0_region { block MMU_TABLE };
+place in RAM0_region { block HEAP };
+
+"STACKS_AREA": place at end of RAM0_region { 
+  block CSTACK,
+  block SVC_STACK,
+  block IRQ_STACK,
+  block FIQ_STACK,
+  block UND_STACK,
+  block ABT_STACK }; 
+  
+/* END OF FILE */  
+
+
+

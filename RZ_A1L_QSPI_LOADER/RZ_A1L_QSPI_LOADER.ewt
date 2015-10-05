@@ -2134,28 +2134,13 @@
     </group>
     <group>
       <name>toolchain_support</name>
-    </group>
-  </group>
-  <group>
-    <name>compiler_specific</name>
-    <group>
-      <name>asm</name>
       <file>
-        <name>$PROJ_DIR$\compiler_specific\asm\reset_handler_iar.s</name>
+        <name>$PROJ_DIR$\..\toolchain_support\assembler_macros.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\compiler_specific\asm\start_iar.s</name>
+        <name>$PROJ_DIR$\..\toolchain_support\compiler_settings.h</name>
       </file>
     </group>
-    <group>
-      <name>inc</name>
-      <file>
-        <name>$PROJ_DIR$\compiler_specific\inc\compiler_settings.h</name>
-      </file>
-    </group>
-    <file>
-      <name>$PROJ_DIR$\compiler_specific\IAR-QSPI-BL_RZL.icf</name>
-    </file>
   </group>
   <group>
     <name>inc</name>
@@ -2334,13 +2319,13 @@
       <name>$PROJ_DIR$\inc\qspi_setup.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\inc\r_typedefs.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$\inc\rza_io_regrw.h</name>
     </file>
+  </group>
+  <group>
+    <name>linker_script</name>
     <file>
-      <name>$PROJ_DIR$\inc\typedefine.h</name>
+      <name>$PROJ_DIR$\linker_script\RZA1L_IAR_QSPI_BL.icf</name>
     </file>
   </group>
   <group>
@@ -2370,10 +2355,7 @@
   <group>
     <name>src</name>
     <file>
-      <name>$PROJ_DIR$\src\check_image.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\src\copy_section_to_ram.c</name>
+      <name>$PROJ_DIR$\src\main.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\src\qspi_change_config.c</name>
@@ -2382,10 +2364,22 @@
       </configuration>
     </file>
     <file>
-      <name>$PROJ_DIR$\src\resetprg.c</name>
+      <name>$PROJ_DIR$\src\rza_io_regrw.c</name>
+    </file>
+  </group>
+  <group>
+    <name>startup</name>
+    <file>
+      <name>$PROJ_DIR$\startup\cmain_iar.s</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\src\rza_io_regrw.c</name>
+      <name>$PROJ_DIR$\startup\low_level_init_iar.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\startup\reset_handler_iar.s</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\startup\start_iar.s</name>
     </file>
   </group>
 </project>
