@@ -2120,7 +2120,7 @@
     <group>
       <name>chip_support</name>
       <group>
-        <name>RZA_RZM</name>
+        <name>RZAH_RZAM</name>
         <group>
           <name>asm</name>
           <group>

@@ -312,7 +312,7 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$\..\toolchain_support</state>
           <state>$PROJ_DIR$\..\architecture_support\CA9\inc</state>
-          <state>$PROJ_DIR$\..\chip_support\RZA_RZM\inc</state>
+          <state>$PROJ_DIR$\..\chip_support\RZAH_RZAM\inc</state>
           <state>$PROJ_DIR$\inc</state>
           <state>$PROJ_DIR$\inc\iodefines</state>
           <state>$PROJ_DIR$\inc\iobitmasks</state>
@@ -1278,7 +1278,7 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$\..\toolchain_support</state>
           <state>$PROJ_DIR$\..\architecture_support\CA9\inc</state>
-          <state>$PROJ_DIR$\..\chip_support\RZA_RZM\inc</state>
+          <state>$PROJ_DIR$\..\chip_support\RZAH_RZAM\inc</state>
           <state>$PROJ_DIR$\inc</state>
           <state>$PROJ_DIR$\inc\iodefines</state>
           <state>$PROJ_DIR$\inc\iobitmasks</state>
@@ -2244,7 +2244,7 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$\..\toolchain_support</state>
           <state>$PROJ_DIR$\..\architecture_support\CA9\inc</state>
-          <state>$PROJ_DIR$\..\chip_support\RZA_RZM\inc</state>
+          <state>$PROJ_DIR$\..\chip_support\RZAH_RZAM\inc</state>
           <state>$PROJ_DIR$\inc</state>
           <state>$PROJ_DIR$\inc\iodefines</state>
           <state>$PROJ_DIR$\inc\iobitmasks</state>
@@ -2956,35 +2956,35 @@
     <group>
       <name>chip_support</name>
       <group>
-        <name>RZA_RZM</name>
+        <name>RZAH_RZAM</name>
         <group>
           <name>asm</name>
           <group>
             <name>iar</name>
             <file>
-              <name>$PROJ_DIR$\..\chip_support\RZA_RZM\asm\iar\init_ttb_iar.s</name>
+              <name>$PROJ_DIR$\..\chip_support\RZAH_RZAM\asm\iar\init_ttb_iar.s</name>
             </file>
             <file>
-              <name>$PROJ_DIR$\..\chip_support\RZA_RZM\asm\iar\irqfiq_handler_iar.s</name>
+              <name>$PROJ_DIR$\..\chip_support\RZAH_RZAM\asm\iar\irqfiq_handler_iar.s</name>
             </file>
           </group>
         </group>
         <group>
           <name>inc</name>
           <file>
-            <name>$PROJ_DIR$\..\chip_support\RZA_RZM\inc\l2_cache.h</name>
+            <name>$PROJ_DIR$\..\chip_support\RZAH_RZAM\inc\l2_cache.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$\..\chip_support\RZA_RZM\inc\l2_cache_pl310.h</name>
+            <name>$PROJ_DIR$\..\chip_support\RZAH_RZAM\inc\l2_cache_pl310.h</name>
           </file>
         </group>
         <group>
           <name>src</name>
           <file>
-            <name>$PROJ_DIR$\..\chip_support\RZA_RZM\src\l2_cache.c</name>
+            <name>$PROJ_DIR$\..\chip_support\RZAH_RZAM\src\l2_cache.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$\..\chip_support\RZA_RZM\src\l2_cache_pl310.c</name>
+            <name>$PROJ_DIR$\..\chip_support\RZAH_RZAM\src\l2_cache_pl310.c</name>
           </file>
         </group>
       </group>
