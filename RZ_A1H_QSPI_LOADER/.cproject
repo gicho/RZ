@@ -81,7 +81,7 @@
 									<listOptionValue builtIn="false" value="&quot;${TCINSTALL}/lib/gcc/arm-none-eabi/${GCC_VERSION}/fpu&quot;"/>
 								</option>
 								<option id="com.renesas.cdt.rz.Debug.Linker.option.dataEndian.354423553" name="Endian" superClass="com.renesas.cdt.rz.Debug.Linker.option.dataEndian" value="Little-endian" valueType="enumerated"/>
-								<option command=" -T&quot;C:/work/projects/mysoftware/RZ/RZ_A1H_QSPI_LOADER\Debug_SINGLE_QSPI\LinkerSubCommand.tmp&quot; -T" id="com.renesas.cdt.core.Linker.option.file.593569750" name="File" superClass="com.renesas.cdt.core.Linker.option.file" value="&quot;${ProjDirPath}\\linker_script\\RZA_GCC_QSPI_BL.ld&quot;" valueType="string"/>
+								<option command=" -T&quot;C:/work/projects/mysoftware/RZ/RZ_A1H_QSPI_LOADER\Debug_SINGLE_QSPI\LinkerSubCommand.tmp&quot; -T" id="com.renesas.cdt.core.Linker.option.file.593569750" name="File" superClass="com.renesas.cdt.core.Linker.option.file" value="&quot;${ProjDirPath}\\linker_script\\RZA1H_GCC_QSPI_BL.ld&quot;" valueType="string"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.core.Linker.option.linkOrderList.1149131378" name="" superClass="com.renesas.cdt.core.Linker.option.linkOrderList" valueType="stringList">
 									<listOptionValue builtIn="false" value="&quot;.\src\qspi_change_config.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\rza_io_regrw.o&quot;"/>
@@ -239,7 +239,7 @@
 									<listOptionValue builtIn="false" value="&quot;${TCINSTALL}/lib/gcc/arm-none-eabi/${GCC_VERSION}/fpu&quot;"/>
 								</option>
 								<option id="com.renesas.cdt.rz.Debug.Linker.option.dataEndian.93608252" name="Endian" superClass="com.renesas.cdt.rz.Debug.Linker.option.dataEndian" value="Little-endian" valueType="enumerated"/>
-								<option command=" -T&quot;C:/work/projects/mysoftware/RZ/RZ_A1H_QSPI_LOADER\Debug_DUAL_QSPI\LinkerSubCommand.tmp&quot; -T" id="com.renesas.cdt.core.Linker.option.file.1802266184" name="File" superClass="com.renesas.cdt.core.Linker.option.file" value="&quot;${ProjDirPath}\\linker_script\\RZA_GCC_QSPI_BL.ld&quot;" valueType="string"/>
+								<option command=" -T&quot;C:/work/projects/mysoftware/RZ/RZ_A1H_QSPI_LOADER\Debug_DUAL_QSPI\LinkerSubCommand.tmp&quot; -T" id="com.renesas.cdt.core.Linker.option.file.1802266184" name="File" superClass="com.renesas.cdt.core.Linker.option.file" value="&quot;${ProjDirPath}\\linker_script\\RZA1H_GCC_QSPI_BL.ld&quot;" valueType="string"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.core.Linker.option.linkOrderList.173956880" name="" superClass="com.renesas.cdt.core.Linker.option.linkOrderList" valueType="stringList">
 									<listOptionValue builtIn="false" value="&quot;.\src\qspi_change_config.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\rza_io_regrw.o&quot;"/>

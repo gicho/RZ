@@ -33,8 +33,10 @@
 								<option defaultValue="true" id="com.renesas.cdt.core.Compiler.option.misc2.1485206350" name="Don't search standard system directories for header files(-nostdinc)" superClass="com.renesas.cdt.core.Compiler.option.misc2" value="false" valueType="boolean"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.core.Compiler.option.includeFileDir.607045881" name="Include file directories" superClass="com.renesas.cdt.core.Compiler.option.includeFileDir" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${TC_PATH}/bin/newlib/libc/sys/arm&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../chip_support/RZA_RZM/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../architecture_support/CA9/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../toolchain_support&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/compiler_specific/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc/iobitmasks}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc/iodefines}&quot;"/>
 								</option>
@@ -80,7 +82,7 @@
 									<listOptionValue builtIn="false" value="&quot;${TCINSTALL}/lib/gcc/arm-none-eabi/${GCC_VERSION}/fpu&quot;"/>
 								</option>
 								<option id="com.renesas.cdt.rz.Debug.Linker.option.dataEndian.1006817551" name="Endian" superClass="com.renesas.cdt.rz.Debug.Linker.option.dataEndian" value="Little-endian" valueType="enumerated"/>
-								<option command=" -T&quot;C:/work/projects/mysoftware/RZ/RZ_A1H_DMAC\Debug from RAM\LinkerSubCommand.tmp&quot; -T" id="com.renesas.cdt.core.Linker.option.file.333556993" name="File" superClass="com.renesas.cdt.core.Linker.option.file" value="&quot;${ProjDirPath}\\compiler_specific\\GCC-RAM-APP.ld&quot;" valueType="string"/>
+								<option command=" -T&quot;C:/work/projects/mysoftware/RZ/RZ_A1H_DMAC\Debug from RAM\LinkerSubCommand.tmp&quot; -T" id="com.renesas.cdt.core.Linker.option.file.333556993" name="File" superClass="com.renesas.cdt.core.Linker.option.file" value="&quot;${ProjDirPath}\\linker_script\\RZA1H_GCC_RAM_APP.ld&quot;" valueType="string"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.core.Linker.option.linkOrderList.1092429161" name="" superClass="com.renesas.cdt.core.Linker.option.linkOrderList" valueType="stringList">
 									<listOptionValue builtIn="false" value="&quot;.\src\ascii.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\bsc.o&quot;"/>
@@ -144,7 +146,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="compiler_specific/src/syscalls.c|compiler_specific/src/mutex.c|compiler_specific/asm/semaphore_iar.s|compiler_specific/asm/mutex_iar.s|compiler_specific/src/access.c|compiler_specific/asm/l1_cache_iar_asm.s|compiler_specific/asm/cp15_access_iar_asm.s|compiler_specific/src/low_level_init_iar.c|compiler_specific/asm/cstartup_iar.s|compiler_specific/asm/cmain_iar.s|compiler_specific/asm/start_iar.s|compiler_specific/asm/reset_handler_iar.s|compiler_specific/asm/l1_cache_init_iar.s|compiler_specific/asm/l1_cache_iar.s|compiler_specific/asm/isr_iar.s|compiler_specific/asm/irqfiq_handler_iar.s|compiler_specific/asm/init_ttb_iar.s|compiler_specific/asm/application_signature_iar.s|compiler_specific/asm/access_iar.s|.Debug-DUAL-QSPI/|.Debug-from-RAM/|.Debug-SINGLE-QSPI/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+						<entry excluding="startup/start_iar.s|startup/reset_handler_iar.s|startup/low_level_init_iar.c|startup/cmain_iar.s|compiler_specific/src/syscalls.c|compiler_specific/src/mutex.c|compiler_specific/asm/semaphore_iar.s|compiler_specific/asm/mutex_iar.s|compiler_specific/src/access.c|compiler_specific/asm/l1_cache_iar_asm.s|compiler_specific/asm/cp15_access_iar_asm.s|compiler_specific/src/low_level_init_iar.c|compiler_specific/asm/cstartup_iar.s|compiler_specific/asm/cmain_iar.s|compiler_specific/asm/start_iar.s|compiler_specific/asm/reset_handler_iar.s|compiler_specific/asm/l1_cache_init_iar.s|compiler_specific/asm/l1_cache_iar.s|compiler_specific/asm/isr_iar.s|compiler_specific/asm/irqfiq_handler_iar.s|compiler_specific/asm/init_ttb_iar.s|compiler_specific/asm/application_signature_iar.s|compiler_specific/asm/access_iar.s|.Debug-DUAL-QSPI/|.Debug-from-RAM/|.Debug-SINGLE-QSPI/" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -184,8 +186,9 @@
 									<listOptionValue builtIn="false" value="&quot;${TC_PATH}/bin/newlib/libc/sys/arm&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../toolchain_support&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../architecture_support/CA9/inc&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../device_support/RZA_RZM/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../chip_support/RZA_RZM/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc/iobitmasks}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc/iodefines}&quot;"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.rz.Debug.Compiler.option.userDefinedOptions.1617710922" name="User defined options" superClass="com.renesas.cdt.rz.Debug.Compiler.option.userDefinedOptions" valueType="stringList">
@@ -229,7 +232,7 @@
 									<listOptionValue builtIn="false" value="&quot;${TCINSTALL}/lib/gcc/arm-none-eabi/${GCC_VERSION}/fpu&quot;"/>
 								</option>
 								<option id="com.renesas.cdt.rz.Debug.Linker.option.dataEndian.742181753" name="Endian" superClass="com.renesas.cdt.rz.Debug.Linker.option.dataEndian" value="Little-endian" valueType="enumerated"/>
-								<option command=" -T&quot;C:/work/projects/mysoftware/RZ/RZ_A1H_DMAC\Debug_QSPI\LinkerSubCommand.tmp&quot; -T" id="com.renesas.cdt.core.Linker.option.file.1326411336" name="File" superClass="com.renesas.cdt.core.Linker.option.file" value="&quot;${ProjDirPath}\\compiler_specific\\GCC-QSPI-APP.ld&quot;" valueType="string"/>
+								<option command=" -T&quot;C:/work/projects/mysoftware/RZ/RZ_A1H_DMAC\Debug_QSPI\LinkerSubCommand.tmp&quot; -T" id="com.renesas.cdt.core.Linker.option.file.1326411336" name="File" superClass="com.renesas.cdt.core.Linker.option.file" value="&quot;${ProjDirPath}\\linker_script\\RZA1H_GCC_QSPI_APP.ld&quot;" valueType="string"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.core.Linker.option.linkOrderList.1503120293" name="" superClass="com.renesas.cdt.core.Linker.option.linkOrderList" valueType="stringList">
 									<listOptionValue builtIn="false" value="&quot;.\src\ascii.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\bsc.o&quot;"/>
@@ -247,32 +250,28 @@
 									<listOptionValue builtIn="false" value="&quot;.\src\rspi_user.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\rza_io_regrw.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\sample_led.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\src\sample_riic_rza1h_rsk.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\scif_uart.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\scif_uart_userdef.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\sio_char.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\siorw.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\stb_init.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\switches.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/src\copy_section_to_ram.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/src\gnu_io.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/src\resetprg.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/src\syscalls.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\access.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\application_signature.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\init_ttb.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\initsct.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\irqfiq_handler.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\isr.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\l1_cache_init.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\other_handlers.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\proc-macros.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\reset_handler.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\start.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/src\l2_cache.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/src\l2_cache_pl310.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\l1_cache.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\libRZ_A1H_DMAC-DUAL.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\startup\low_level_init_gcc.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\startup\reset_handler.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\startup\start.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\src\dma_tests.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\src\riic_rskrza1h.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\RZA_RZM/src\l2_cache.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\RZA_RZM/src\l2_cache_pl310.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\RZA_RZM/asm/gcc\init_ttb.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\RZA_RZM/asm/gcc\irqfiq_handler.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\CA9/src\cp15_access.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\CA9/src\l1_cache.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\CA9/asm/gcc\cp15_access.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\CA9/asm/gcc\l1_cache.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\CA9/asm/gcc\mutex.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\CA9/asm/gcc\semaphore.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\libRZ_A1H_DMAC.a&quot;"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.rz.Debug.Linker.option.archiveLibraryFiles.1440505078" name="Archive (library) files" superClass="com.renesas.cdt.rz.Debug.Linker.option.archiveLibraryFiles" valueType="stringList">
 									<listOptionValue builtIn="false" value=""/>
@@ -292,7 +291,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="compiler_specific/src/syscalls.c|compiler_specific/src/mutex.c|compiler_specific/asm/semaphore_iar.s|compiler_specific/asm/mutex_iar.s|compiler_specific/src/access.c|compiler_specific/asm/l1_cache_iar_asm.s|compiler_specific/asm/cp15_access_iar_asm.s|.Debug-DUAL-QSPI|.Debug-SINGLE-QSPI|.Debug-from-RAM|.settings|compiler_specific/src/low_level_init_iar.c|compiler_specific/asm/low_level_init_iar.c|compiler_specific/asm/cstartup_iar.s|compiler_specific/asm/cmain_iar.s|compiler_specific/asm/start_iar.s|compiler_specific/asm/reset_handler_iar.s|compiler_specific/asm/proc-macros_iar.s|compiler_specific/asm/other_handlers_iar.s|compiler_specific/asm/l1_cache_init_iar.s|compiler_specific/asm/l1_cache_iar.s|compiler_specific/asm/isr_iar.s|compiler_specific/asm/irqfiq_handler_iar.s|compiler_specific/asm/init_ttb_iar.s|compiler_specific/asm/application_signature_iar.s|compiler_specific/asm/access_iar.s|compiler_specific/asm/other_handlers.s" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+						<entry excluding="startup/start_iar.s|startup/reset_handler_iar.s|startup/low_level_init_iar.c|startup/cmain_iar.s|compiler_specific/src/syscalls.c|compiler_specific/src/mutex.c|compiler_specific/asm/semaphore_iar.s|compiler_specific/asm/mutex_iar.s|compiler_specific/src/access.c|compiler_specific/asm/l1_cache_iar_asm.s|compiler_specific/asm/cp15_access_iar_asm.s|.Debug-DUAL-QSPI|.Debug-SINGLE-QSPI|.Debug-from-RAM|.settings|compiler_specific/src/low_level_init_iar.c|compiler_specific/asm/low_level_init_iar.c|compiler_specific/asm/cstartup_iar.s|compiler_specific/asm/cmain_iar.s|compiler_specific/asm/start_iar.s|compiler_specific/asm/reset_handler_iar.s|compiler_specific/asm/proc-macros_iar.s|compiler_specific/asm/other_handlers_iar.s|compiler_specific/asm/l1_cache_init_iar.s|compiler_specific/asm/l1_cache_iar.s|compiler_specific/asm/isr_iar.s|compiler_specific/asm/irqfiq_handler_iar.s|compiler_specific/asm/init_ttb_iar.s|compiler_specific/asm/application_signature_iar.s|compiler_specific/asm/access_iar.s|compiler_specific/asm/other_handlers.s" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

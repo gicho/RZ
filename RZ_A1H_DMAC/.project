@@ -96,6 +96,16 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>assembler_macros.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/toolchain_support/assembler_macros.h</locationURI>
+		</link>
+		<link>
+			<name>compiler_settings.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/toolchain_support/compiler_settings.h</locationURI>
+		</link>
+		<link>
 			<name>CA9/asm</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
