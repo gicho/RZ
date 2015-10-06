@@ -2353,6 +2353,9 @@
     </group>
   </group>
   <group>
+    <name>scripts</name>
+  </group>
+  <group>
     <name>src</name>
     <file>
       <name>$PROJ_DIR$\src\main.c</name>

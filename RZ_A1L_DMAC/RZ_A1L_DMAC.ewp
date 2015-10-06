@@ -3247,6 +3247,9 @@
   </group>
   <group>
     <name>scripts</name>
+    <file>
+      <name>$PROJ_DIR$\scripts\reset.mac</name>
+    </file>
   </group>
   <group>
     <name>src</name>
