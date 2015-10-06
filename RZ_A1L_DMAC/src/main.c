@@ -79,7 +79,7 @@ Includes   <System Includes> , "Project Includes"
 #include "l1_cache.h"
 #include "l2_cache.h"
 
-#include "access.h"
+#include "cp15_access.h"
 #include "assembler_macros.h"
 
 /******************************************************************************
@@ -1677,7 +1677,7 @@ int main(void)
     while(1)
     {
     	/* Program should not exit */
-	SOFT_DELAY;
+	SOFT_DELAY();
     }
 
     return 0;

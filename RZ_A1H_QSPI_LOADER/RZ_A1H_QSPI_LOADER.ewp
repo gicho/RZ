@@ -1958,7 +1958,7 @@
     <group>
       <name>chip_support</name>
       <group>
-        <name>RZAH_RZAM</name>
+        <name>RZA1H_RZA1M</name>
         <group>
           <name>asm</name>
           <group>

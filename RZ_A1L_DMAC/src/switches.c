@@ -385,7 +385,7 @@ static void switch_debounce_delay (void)
 	/* Wait for the the 10ms period to expire */
 	while (0x01 != (MTU2.TSR_4 & 0x01))
     {
-    	SOFT_DELAY;
+    	SOFT_DELAY();
     }
 
 	/* Reload the period */

@@ -2120,7 +2120,7 @@
     <group>
       <name>chip_support</name>
       <group>
-        <name>RZAH_RZAM</name>
+        <name>RZA1H_RZA1M</name>
         <group>
           <name>asm</name>
         </group>
@@ -2359,9 +2359,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$\src\qspi_change_config.c</name>
-      <configuration>
-        <name>Dual_QSPI_Debug</name>
-      </configuration>
     </file>
     <file>
       <name>$PROJ_DIR$\src\rza_io_regrw.c</name>

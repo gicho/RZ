@@ -317,8 +317,8 @@
           <state>$PROJ_DIR$\qspi_controller_driver\inc</state>
           <state>$PROJ_DIR$\..\toolchain_support</state>
           <state>$PROJ_DIR$\..\architecture_support\CA9\inc</state>
-          <state>$PROJ_DIR$\..\chip_support\inc</state>
-          <state>$PROJ_DIR$\..\board_support\inc</state>
+          <state>$PROJ_DIR$\..\chip_support\RZA1L\inc</state>
+          <state>$PROJ_DIR$\..\board_support\Stream_it\inc</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1285,8 +1285,8 @@
           <state>$PROJ_DIR$\qspi_controller_driver\inc</state>
           <state>$PROJ_DIR$\..\toolchain_support</state>
           <state>$PROJ_DIR$\..\architecture_support\CA9\inc</state>
-          <state>$PROJ_DIR$\..\chip_support\inc</state>
-          <state>$PROJ_DIR$\..\board_support\Stream_it</state>
+          <state>$PROJ_DIR$\..\chip_support\RZA1L\inc</state>
+          <state>$PROJ_DIR$\..\board_support\Stream_it\inc</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1964,7 +1964,7 @@
     <group>
       <name>chip_support</name>
       <group>
-        <name>RZAH_RZAM</name>
+        <name>RZA1H_RZA1M</name>
         <group>
           <name>asm</name>
         </group>
