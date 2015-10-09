@@ -182,7 +182,7 @@ SECTIONS
         __qspi_reconfigure_code_end__ = .;
 		PROVIDE(__qspi_reconfigure_code_end__ = .);       
 		
-	}  > RAM0L AT>QSPI_FLASH         
+	}  > RAM0 AT>QSPI_FLASH         
 	
     /* initialized data section */
 	.data_section : 
@@ -211,7 +211,7 @@ SECTIONS
 		__data_end__ = .;
         PROVIDE(__data_end__ = .);
         
-	} > RAM0L AT>QSPI_FLASH
+	} > RAM0 AT>QSPI_FLASH
 
     /* zero initialised data section */
     .bss_section (NOLOAD) :
@@ -236,7 +236,7 @@ SECTIONS
         PROVIDE(end = .); 
                 
         
-    } > RAM0L
+    } > RAM0
  
 	/* stacks need to be aligned to 8 bytes */
 	.irq_stack_section (NOLOAD) : ALIGN(0x8)
@@ -251,7 +251,7 @@ SECTIONS
 		__irq_stack_end__ = .;
 		PROVIDE(__irq_stack_end__ = .);   		
 		
-	} > RAM0U
+	} > RAM1
 		
 	/* stacks need to be aligned to 8 bytes */
 	.fiq_stack_section (NOLOAD) : ALIGN(0x8)
@@ -266,7 +266,7 @@ SECTIONS
 		__fiq_stack_end__ = .;
 		PROVIDE(__fiq_stack_end__ = .);
 		
-	} > RAM0U
+	} > RAM1
 		
 	/* stacks need to be aligned to 8 bytes */
 	.svc_stack_section (NOLOAD) : ALIGN(0x8)
@@ -281,7 +281,7 @@ SECTIONS
 		__svc_stack_end__ = .;
 		PROVIDE(__svc_stack_end__ = .);
 		
-	} > RAM0U
+	} > RAM1
 		
 	/* stacks need to be aligned to 8 bytes */
 	.abt_stack_section (NOLOAD) : ALIGN(0x8)
@@ -296,7 +296,7 @@ SECTIONS
 		__abt_stack_end__ = .;
 		PROVIDE(__abt_stack_end__ = .);
 		
-	} > RAM0U
+	} > RAM1
 
 	/* stacks need to be aligned to 8 bytes */
 	.und_stack_section (NOLOAD) : ALIGN(0x8)
@@ -311,7 +311,7 @@ SECTIONS
 		__und_stack_end__ = .;
 		PROVIDE(__und_stack_end__ = .);
 		
-	} > RAM0U
+	} > RAM1
 	
 	/* stacks need to be aligned to 8 bytes */
 	.program_stack_section (NOLOAD) : ALIGN(0x8)
@@ -326,7 +326,7 @@ SECTIONS
 		__program_stack_end__ = .;
 		PROVIDE(__program_stack_end__ = .); 
 		
-	} > RAM0U	
+	} > RAM1	
     
 	.stab 0 (NOLOAD) : { 
             *(.stab) 

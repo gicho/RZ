@@ -41,7 +41,6 @@
 #include "r_typedefs.h"
 #include "devdrv_common.h"
 #include "devdrv_intc.h"
-#include "resetprg.h"
 #include "stb_init.h"
 #include "bsc_userdef.h"
 #include "sio_char.h"
@@ -88,8 +87,8 @@ extern uint32_t APP_reserved_handler;
 extern uint32_t APP_irq_handler;
 extern uint32_t APP_fiq_handler;
 
-extern void copy_arm_code_section_to_ram(uint32_t* rom_start, uint32_t* ram_start, uint32_t* ram_end);
-extern void VbarSet(uint32_t address);
+static void copy_arm_code_section_to_ram(uint32_t* rom_start, uint32_t* ram_start, uint32_t* ram_end);
+extern int main(void);
 
 /*******************************************************************************
 * Function Name: PowerON_Reset
@@ -240,4 +239,27 @@ void PowerON_Reset (void)
 		__asm__("nop");
    	}
 }
+
+
+void copy_arm_code_section_to_ram(uint32_t* rom_start, uint32_t* ram_start, uint32_t* ram_end)
+{
+
+	/* Variables for program copy */
+    uint32_t i;
+    uint32_t region_size;
+
+    // check if executing already from ram (when debugging)
+    if(rom_start == ram_start) return;
+
+    /* Calculate the length of the copied section */
+    region_size     = (uint32_t)ram_end - (uint32_t)ram_start;
+
+    /* Copy the next load module. */
+    for(i = 0; i < (region_size/4); i++)
+    {
+        *ram_start++ = *rom_start++;
+    }
+
+}
+
 

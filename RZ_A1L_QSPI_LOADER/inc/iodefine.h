@@ -30,6 +30,9 @@
 #define R7S72100_IODEFINE_H
 #define IODEFINE_H_VERSION  101
 
+#include <stdint.h>
+
+
 enum iodefine_byte_select_t
 {
     L = 0, H = 1,

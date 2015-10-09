@@ -36,7 +36,9 @@
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/inc/iodefines&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/inc/iobitmasks&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/compiler_specific/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../toolchain_support&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../architecture_support/CA9/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../chip_support/RZA1L/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/qspi_controller_driver/inc&quot;"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.rz.Debug.Compiler.option.userDefinedOptions.1301680548" name="User defined options" superClass="com.renesas.cdt.rz.Debug.Compiler.option.userDefinedOptions" valueType="stringList">
@@ -81,19 +83,28 @@
 									<listOptionValue builtIn="false" value="&quot;${TCINSTALL}/lib/gcc/arm-none-eabi/${GCC_VERSION}/fpu&quot;"/>
 								</option>
 								<option id="com.renesas.cdt.rz.Debug.Linker.option.dataEndian.354423553" name="Endian" superClass="com.renesas.cdt.rz.Debug.Linker.option.dataEndian" value="Little-endian" valueType="enumerated"/>
-								<option command=" -T&quot;C:/work/projects/mysoftware/RZ/RZ_A1L_QSPI_LOADER\Debug_SINGLE_QSPI\LinkerSubCommand.tmp&quot; -T" id="com.renesas.cdt.core.Linker.option.file.593569750" name="File" superClass="com.renesas.cdt.core.Linker.option.file" value="&quot;${ProjDirPath}\\compiler_specific\\GCC-QSPI-BL_RZL.ld&quot;" valueType="string"/>
+								<option command=" -T&quot;C:/work/projects/mysoftware/RZ/RZ_A1L_QSPI_LOADER\Debug_SINGLE_QSPI\LinkerSubCommand.tmp&quot; -T" id="com.renesas.cdt.core.Linker.option.file.593569750" name="File" superClass="com.renesas.cdt.core.Linker.option.file" value="&quot;${ProjDirPath}\\linker_script\\RZA1L_GCC_QSPI_BL.ld&quot;" valueType="string"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.core.Linker.option.linkOrderList.1149131378" name="" superClass="com.renesas.cdt.core.Linker.option.linkOrderList" valueType="stringList">
-									<listOptionValue builtIn="false" value="&quot;.\src\check_image.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\src\copy_section_to_ram.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\qspi_change_config.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\src\resetprg.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\rza_io_regrw.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\qspi_controller_driver/src\external_address_mode.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\qspi_controller_driver/src\qspi_controller.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\qspi_controller_driver/src\spi_mode.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\reset_handler.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\start.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\libRZ_A1L_QSPI_LOADER-SINGLE.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\startup\low_level_init_gcc.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\startup\reset_handler.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\startup\start.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\src\main.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\RZA1L/src\l2_cache.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\RZA1L/src\l2_cache_pl310.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\RZA1L/asm/gcc\init_ttb.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\RZA1L/asm/gcc\irqfiq_handler.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\CA9/src\cp15_access.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\CA9/src\l1_cache.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\CA9/asm/gcc\cp15_access.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\CA9/asm/gcc\l1_cache.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\CA9/asm/gcc\mutex.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\CA9/asm/gcc\semaphore.o&quot;"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.rz.Debug.Linker.option.archiveLibraryFiles.1191382256" name="Archive (library) files" superClass="com.renesas.cdt.rz.Debug.Linker.option.archiveLibraryFiles" valueType="stringList">
 									<listOptionValue builtIn="false" value=""/>
@@ -114,7 +125,7 @@
 					</folderInfo>
 					<fileInfo id="com.renesas.cdt.rz.debug.win32.configuration.Id.1302943722.RSK_Programmer_QSPI_Boot_Reset" name="RSK_Programmer_QSPI_Boot_Reset" rcbsApplicability="disable" resourcePath="RSK_Programmer_QSPI_Boot_Reset" toolsToInvoke=""/>
 					<sourceEntries>
-						<entry excluding="compiler_specific/asm/start_iar.s|compiler_specific/asm/reset_handler_iar.s|src/spibsc_ioset_userdef.c|src/spibsc_ioset_drv.c|src/spibsc_ioset_api.c|src/spibsc_flash_userdef.c|src/spibsc_flash_api.c|src/qspi_change_speed.c|src/spibsc_init2.c|src/init_spibsc_init2_section.c|src/spibsc_init1.c|src/init_spibsc_init1_section.c|compiler_specific/asm/vbar_init.S|compiler_specific/asm/stack.S|compiler_specific/asm/initsct.S|RSK_Programmer_QSPI_Boot_Reset" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="RZA1L/asm/gcc/irqfiq_handler.s|RZA1L/asm/gcc/init_ttb.s|startup/start_iar.s|startup/reset_handler_iar.s|startup/low_level_init_iar.c|startup/cmain_iar.s|compiler_specific/asm/start_iar.s|compiler_specific/asm/reset_handler_iar.s|src/spibsc_ioset_userdef.c|src/spibsc_ioset_drv.c|src/spibsc_ioset_api.c|src/spibsc_flash_userdef.c|src/spibsc_flash_api.c|src/qspi_change_speed.c|src/spibsc_init2.c|src/init_spibsc_init2_section.c|src/spibsc_init1.c|src/init_spibsc_init1_section.c|compiler_specific/asm/vbar_init.S|compiler_specific/asm/stack.S|compiler_specific/asm/initsct.S|RSK_Programmer_QSPI_Boot_Reset" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -151,12 +162,13 @@
 							<tool id="com.renesas.cdt.rz.debug.win32.tool.compiler.Id.1914512751" name="Compiler" superClass="com.renesas.cdt.rz.debug.win32.tool.compiler.Id">
 								<option defaultValue="true" id="com.renesas.cdt.core.Compiler.option.misc2.327551723" name="Don't search standard system directories for header files(-nostdinc)" superClass="com.renesas.cdt.core.Compiler.option.misc2" value="false" valueType="boolean"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.core.Compiler.option.includeFileDir.466715042" name="Include file directories" superClass="com.renesas.cdt.core.Compiler.option.includeFileDir" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${TC_PATH}/bin/newlib/libc/sys/arm&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../chip_support/RZA1L/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../toolchain_support&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../architecture_support/CA9/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/inc/iodefines&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/inc/iobitmasks&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/qspi_controller_driver/inc&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/compiler_specific/inc&quot;"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.rz.Debug.Compiler.option.userDefinedOptions.598333884" name="User defined options" superClass="com.renesas.cdt.rz.Debug.Compiler.option.userDefinedOptions" valueType="stringList">
 									<listOptionValue builtIn="false" value="-std=c99"/>
@@ -230,20 +242,26 @@
 									<listOptionValue builtIn="false" value="&quot;${TCINSTALL}/lib/gcc/arm-none-eabi/${GCC_VERSION}/fpu&quot;"/>
 								</option>
 								<option id="com.renesas.cdt.rz.Debug.Linker.option.dataEndian.93608252" name="Endian" superClass="com.renesas.cdt.rz.Debug.Linker.option.dataEndian" value="Little-endian" valueType="enumerated"/>
-								<option command=" -T&quot;C:/work/projects/mysoftware/RZ/RZ_A1H_QSPI_LOADER\Debug_DUAL_QSPI\LinkerSubCommand.tmp&quot; -T" id="com.renesas.cdt.core.Linker.option.file.1802266184" name="File" superClass="com.renesas.cdt.core.Linker.option.file" value="&quot;${ProjDirPath}\\compiler_specific\\GCC-QSPI-BL.ld&quot;" valueType="string"/>
+								<option command=" -T&quot;C:/work/projects/mysoftware/RZ/RZ_A1L_QSPI_LOADER\Debug_DUAL_QSPI\LinkerSubCommand.tmp&quot; -T" id="com.renesas.cdt.core.Linker.option.file.1802266184" name="File" superClass="com.renesas.cdt.core.Linker.option.file" value="&quot;${ProjDirPath}\\linker_script\\RZA1L_GCC_QSPI_BL.ld&quot;" valueType="string"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.core.Linker.option.linkOrderList.173956880" name="" superClass="com.renesas.cdt.core.Linker.option.linkOrderList" valueType="stringList">
-									<listOptionValue builtIn="false" value="&quot;.\src\check_image.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\src\copy_section_to_ram.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\qspi_change_config.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\src\resetprg.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\src\rza_io_regrw.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\qspi_controller_driver/src\external_address_mode.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\qspi_controller_driver/src\qspi_controller.o&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;.\qspi_controller_driver/src\spi_mode.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\reset_handler.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\start.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\compiler_specific/asm\user_prog_jmp.o&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;.\libRZ_A1H_QSPI_LOADER.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\startup\low_level_init_gcc.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\startup\reset_handler.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\startup\start.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\src\main.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\RZA1L/src\l2_cache.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\RZA1L/src\l2_cache_pl310.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\CA9/src\cp15_access.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\CA9/src\l1_cache.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\CA9/asm/gcc\cp15_access.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\CA9/asm/gcc\l1_cache.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\CA9/asm/gcc\mutex.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\CA9/asm/gcc\semaphore.o&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;.\libRZ_A1L_QSPI_LOADER-DUAL.a&quot;"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.rz.Debug.Linker.option.archiveLibraryFiles.232779748" name="Archive (library) files" superClass="com.renesas.cdt.rz.Debug.Linker.option.archiveLibraryFiles" valueType="stringList">
 									<listOptionValue builtIn="false" value=""/>
@@ -264,7 +282,7 @@
 					</folderInfo>
 					<fileInfo id="com.renesas.cdt.rz.debug.win32.configuration.Id.1302943722.1628408855.RSK_Programmer_QSPI_Boot_Reset" name="RSK_Programmer_QSPI_Boot_Reset" rcbsApplicability="disable" resourcePath="RSK_Programmer_QSPI_Boot_Reset" toolsToInvoke=""/>
 					<sourceEntries>
-						<entry excluding="compiler_specific/asm/start_iar.s|compiler_specific/asm/reset_handler_iar.s|src/spibsc_ioset_userdef.c|src/spibsc_ioset_drv.c|src/spibsc_ioset_api.c|src/spibsc_flash_userdef.c|src/spibsc_flash_api.c|src/qspi_change_speed.c|src/spibsc_init2.c|src/init_spibsc_init2_section.c|src/spibsc_init1.c|src/init_spibsc_init1_section.c|compiler_specific/asm/vbar_init.S|compiler_specific/asm/stack.S|compiler_specific/asm/initsct.S|RSK_Programmer_QSPI_Boot_Reset" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="RZA1L/asm/gcc/irqfiq_handler.s|RZA1L/asm/gcc/init_ttb.s|startup/start_iar.s|startup/reset_handler_iar.s|startup/low_level_init_iar.c|startup/cmain_iar.s|compiler_specific/asm/start_iar.s|compiler_specific/asm/reset_handler_iar.s|src/spibsc_ioset_userdef.c|src/spibsc_ioset_drv.c|src/spibsc_ioset_api.c|src/spibsc_flash_userdef.c|src/spibsc_flash_api.c|src/qspi_change_speed.c|src/spibsc_init2.c|src/init_spibsc_init2_section.c|src/spibsc_init1.c|src/init_spibsc_init1_section.c|compiler_specific/asm/vbar_init.S|compiler_specific/asm/stack.S|compiler_specific/asm/initsct.S|RSK_Programmer_QSPI_Boot_Reset" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
