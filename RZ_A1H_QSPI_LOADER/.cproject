@@ -119,6 +119,20 @@
 							<tool id="com.renesas.cdt.rz.debug.win32.tool.objcopy.Id.794934974" name="Objcopy" superClass="com.renesas.cdt.rz.debug.win32.tool.objcopy.Id"/>
 						</toolChain>
 					</folderInfo>
+					<folderInfo id="com.renesas.cdt.rz.debug.win32.configuration.Id.1302943722.1304815301" name="/" resourcePath="CA9">
+						<toolChain id="com.renesas.cdt.rz.debug.win32.toolchain.Id.1508295933" name="KPIT GNUARM-NONE-EABI Toolchain" superClass="com.renesas.cdt.rz.debug.win32.toolchain.Id" unusedChildren="">
+							<tool id="com.renesas.cdt.rz.debug.win32.tool.libgen.Id.1886165313" name="Library Generator" superClass="com.renesas.cdt.rz.debug.win32.tool.libgen.Id.683563077"/>
+							<tool id="com.renesas.cdt.rz.debug.win32.tool.compiler.Id.1328264037" name="Compiler" superClass="com.renesas.cdt.rz.debug.win32.tool.compiler.Id.856760718">
+								<inputType id="%Base.Compiler.C.InputType.Id.1558340469" name="C Input" superClass="%Base.Compiler.C.InputType.Id"/>
+								<inputType id="Base.Compiler.CPP.InputType.Id.1413040188" name="C++ Input" superClass="Base.Compiler.CPP.InputType.Id"/>
+							</tool>
+							<tool id="com.renesas.cdt.rz.debug.win32.tool.assembler.Id.865792271" name="Assembler" superClass="com.renesas.cdt.rz.debug.win32.tool.assembler.Id.669296096">
+								<inputType id="%Base.Assembler.inputType.Id.1229344017" name="Assembler InputType" superClass="%Base.Assembler.inputType.Id"/>
+							</tool>
+							<tool id="com.renesas.cdt.rz.debug.win32.tool.linker.Id.1050288663" name="Linker" superClass="com.renesas.cdt.rz.debug.win32.tool.linker.Id.177854930"/>
+							<tool id="com.renesas.cdt.rz.debug.win32.tool.objcopy.Id.352016704" name="Objcopy" superClass="com.renesas.cdt.rz.debug.win32.tool.objcopy.Id.794934974"/>
+						</toolChain>
+					</folderInfo>
 					<fileInfo id="com.renesas.cdt.rz.debug.win32.configuration.Id.1302943722.RSK_Programmer_QSPI_Boot_Reset" name="RSK_Programmer_QSPI_Boot_Reset" rcbsApplicability="disable" resourcePath="RSK_Programmer_QSPI_Boot_Reset" toolsToInvoke=""/>
 					<sourceEntries>
 						<entry excluding="RZA_RZM/asm/gcc/irqfiq_handler.s|RZA_RZM/asm/gcc/init_ttb.s|scripts/reset.mac|linker_script/RZA_IAR_QSPI_BL.icf|startup/cmain_iar.s|startup/reset_handler_iar.s|startup/start_iar.s|startup/low_level_init_iar.c|compiler_specific/src/low_level_init_iar.c|compiler_specific/asm/cmain_iar.s|compiler_specific/asm/l1_cache_iar_asm.s|compiler_specific/asm/start_iar.s|compiler_specific/asm/reset_handler_iar.s|src/spibsc_ioset_userdef.c|src/spibsc_ioset_drv.c|src/spibsc_ioset_api.c|src/spibsc_flash_userdef.c|src/spibsc_flash_api.c|src/qspi_change_speed.c|src/spibsc_init2.c|src/init_spibsc_init2_section.c|src/spibsc_init1.c|src/init_spibsc_init1_section.c|compiler_specific/asm/vbar_init.S|compiler_specific/asm/stack.S|compiler_specific/asm/initsct.S|RSK_Programmer_QSPI_Boot_Reset" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
