@@ -33,7 +33,7 @@
 								<option defaultValue="true" id="com.renesas.cdt.core.Compiler.option.misc2.1485206350" name="Don't search standard system directories for header files(-nostdinc)" superClass="com.renesas.cdt.core.Compiler.option.misc2" value="false" valueType="boolean"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.renesas.cdt.core.Compiler.option.includeFileDir.607045881" name="Include file directories" superClass="com.renesas.cdt.core.Compiler.option.includeFileDir" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${TC_PATH}/bin/newlib/libc/sys/arm&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../chip_support/RZA_RZM/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../chip_support/RZA1H_RZA1M/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../architecture_support/CA9/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../toolchain_support&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
@@ -186,7 +186,7 @@
 									<listOptionValue builtIn="false" value="&quot;${TC_PATH}/bin/newlib/libc/sys/arm&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../toolchain_support&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../architecture_support/CA9/inc&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../chip_support/RZA_RZM/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../chip_support/RZA1H_RZA1M/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc/iobitmasks}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc/iodefines}&quot;"/>

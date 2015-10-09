@@ -91,7 +91,7 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>RZA_RZM</name>
+			<name>RZA1H_RZA1M</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -121,17 +121,17 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>RZA_RZM/asm</name>
+			<name>RZA1H_RZA1M/asm</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>RZA_RZM/inc</name>
+			<name>RZA1H_RZA1M/inc</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>RZA_RZM/src</name>
+			<name>RZA1H_RZA1M/src</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -171,29 +171,29 @@
 			<locationURI>PARENT-1-PROJECT_LOC/architecture_support/CA9/src/l1_cache.c</locationURI>
 		</link>
 		<link>
-			<name>RZA_RZM/asm/gcc</name>
+			<name>RZA1H_RZA1M/asm/gcc</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>RZA_RZM/inc/l2_cache.h</name>
+			<name>RZA1H_RZA1M/inc/l2_cache.h</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/chip_support/RZA_RZM/inc/l2_cache.h</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/chip_support/RZA1H_RZA1M/inc/l2_cache.h</locationURI>
 		</link>
 		<link>
-			<name>RZA_RZM/inc/l2_cache_pl310.h</name>
+			<name>RZA1H_RZA1M/inc/l2_cache_pl310.h</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/chip_support/RZA_RZM/inc/l2_cache_pl310.h</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/chip_support/RZA1H_RZA1M/inc/l2_cache_pl310.h</locationURI>
 		</link>
 		<link>
-			<name>RZA_RZM/src/l2_cache.c</name>
+			<name>RZA1H_RZA1M/src/l2_cache.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/chip_support/RZA_RZM/src/l2_cache.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/chip_support/RZA1H_RZA1M/src/l2_cache.c</locationURI>
 		</link>
 		<link>
-			<name>RZA_RZM/src/l2_cache_pl310.c</name>
+			<name>RZA1H_RZA1M/src/l2_cache_pl310.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/chip_support/RZA_RZM/src/l2_cache_pl310.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/chip_support/RZA1H_RZA1M/src/l2_cache_pl310.c</locationURI>
 		</link>
 		<link>
 			<name>CA9/asm/gcc/cp15_access.s</name>
@@ -216,14 +216,14 @@
 			<locationURI>PARENT-1-PROJECT_LOC/architecture_support/CA9/asm/gcc/semaphore.s</locationURI>
 		</link>
 		<link>
-			<name>RZA_RZM/asm/gcc/init_ttb.s</name>
+			<name>RZA1H_RZA1M/asm/gcc/init_ttb.s</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/chip_support/RZA_RZM/asm/gcc/init_ttb.s</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/chip_support/RZA1H_RZA1M/asm/gcc/init_ttb.s</locationURI>
 		</link>
 		<link>
-			<name>RZA_RZM/asm/gcc/irqfiq_handler.s</name>
+			<name>RZA1H_RZA1M/asm/gcc/irqfiq_handler.s</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/chip_support/RZA_RZM/asm/gcc/irqfiq_handler.s</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/chip_support/RZA1H_RZA1M/asm/gcc/irqfiq_handler.s</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
