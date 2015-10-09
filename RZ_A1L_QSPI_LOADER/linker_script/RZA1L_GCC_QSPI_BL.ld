@@ -101,13 +101,11 @@ SECTIONS
         
         *start.o (.text)
         *reset_handler.o (.text)
-		*resetprg.o (.text)        
-		*copy_section_to_ram.o (.text)
+		*low_level_init_gcc.o (.text)        
 
 		*start.o (.rodata)
 		*reset_handler.o (.rodata)
-		*resetprg.o (.rodata)
-		*copy_section_to_ram.o (.rodata) 
+		*low_level_init_gcc.o (.rodata)
 	
 		__reset_code_rom_end__ = .;
         PROVIDE(__reset_code_rom_end__ = .);                               
@@ -146,10 +144,7 @@ SECTIONS
 
         /* The QSPI re-configuration needs to be copied to RAM by this code */
 		*qspi_change_config.o (.text)
-
 		*rza_io_regrw.o (.text)
-		*check_image.o (.text)
-		*user_prog_jmp.o (.text)
 
 		*qspi_controller.o (.text)		
 		*spi_mode.o (.text)

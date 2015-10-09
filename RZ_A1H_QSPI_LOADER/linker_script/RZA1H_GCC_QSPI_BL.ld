@@ -153,9 +153,7 @@ SECTIONS
 
         /* The QSPI re-configuration needs to be copied to RAM by this code */
 		*qspi_change_config.o (.text)
-
 		*rza_io_regrw.o (.text)
-		*check_image.o (.text)
 
 		*qspi_controller.o (.text)		
 		*spi_mode.o (.text)
