@@ -15,16 +15,25 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */    
-#ifndef MUTEX_H
-#define MUTEX_H
+#ifndef SEMAPHORE_H
+#define SEMAPHORE_H
 
-typedef uint32_t sempahore_t;
+typedef uint32_t semaphore_t;
 
 #define LOCKED   0
 #define UNLOCKED 1
 
-void semaphore_get(sempahore_t* mutex);
-void semaphore_put(sempahore_t* mutex);
+/*
+*	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*	         WARNING WARNING WARNING
+*	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*	RZ does NOT support load/store exclusive (atomic access) on
+*   strongly ordered, device, normal-shareable, or normal non-shareable uncached memory
+*   Exclusive access *might* be used on normal non-shareable cached memory
+*   Check the TTB setup to make sure the MMU setting is consistent
+*/
+void semaphore_get(semaphore_t* mutex);
+void semaphore_put(semaphore_t* mutex);
 
 
 #endif

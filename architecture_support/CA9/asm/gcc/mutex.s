@@ -29,9 +29,18 @@
 .equ yield,     1
 .equ released,  2
 
+
 /*
-* R0 holds the mutex object address
-*/ 
+*	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*	         WARNING WARNING WARNING
+*	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*	RZ does NOT support load/store exclusive (atomic access) on
+*   strongly ordered, device, normal-shareable, or normal non-shareable uncached memory
+*   Exclusive access might be used on normal non-shareable cached memory
+*/
+
+/* Declare for use from C as extern void mutex_lock(void * mutex); */
+/* R0 holds the mutex object address */
 mutex_lock:
 
   MOV   r1, #LOCKED     /* Prepare the lock value */
@@ -53,9 +62,8 @@ wait_for_release:
 //  POP {r0-r3,r7,r12}                    
   B spin_lock
   
-/*
-* R0 holds the mutex object address
-*/  
+/* Declare for use from C as extern void mutex_unlock(void * mutex); */
+/* R0 holds the mutex object address */
 mutex_unlock:
 
   MOV r1, #UNLOCKED     /* prepare the unlock value */    

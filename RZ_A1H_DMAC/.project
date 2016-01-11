@@ -216,9 +216,9 @@
 			<locationURI>PARENT-1-PROJECT_LOC/architecture_support/CA9/asm/gcc/semaphore.s</locationURI>
 		</link>
 		<link>
-			<name>RZA1H_RZA1M/asm/gcc/init_ttb.s</name>
+			<name>RZA1H_RZA1M/asm/gcc/init_ttb_RZA1H.s</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/chip_support/RZA1H_RZA1M/asm/gcc/init_ttb.s</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/chip_support/RZA1H_RZA1M/asm/gcc/init_ttb_RZA1H.s</locationURI>
 		</link>
 		<link>
 			<name>RZA1H_RZA1M/asm/gcc/irqfiq_handler.s</name>

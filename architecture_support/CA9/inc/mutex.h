@@ -1,7 +1,7 @@
 /*
 * Copyright 2015 Giancarlo Parodi
 * 
-* mutex.c
+* mutex.h
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -23,6 +23,15 @@ typedef uint32_t mutex_t;
 #define LOCKED   0
 #define UNLOCKED 1
 
+/*
+*	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*	         WARNING WARNING WARNING
+*	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*	RZ does NOT support load/store exclusive (atomic access) on
+*   strongly ordered, device, normal-shareable, or normal non-shareable uncached memory
+*   Exclusive access *might* be used on normal non-shareable cached memory
+*   Check the TTB setup to make sure the MMU setting is consistent
+*/
 void mutex_lock(mutex_t* mutex);
 void mutex_unlock(mutex_t* mutex);
 

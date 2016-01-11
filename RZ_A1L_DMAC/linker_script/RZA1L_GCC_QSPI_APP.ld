@@ -1,39 +1,21 @@
-/*******************************************************************************
-* DISCLAIMER
-* This software is supplied by Renesas Electronics Corporation and is only
-* intended for use with Renesas products. No other uses are authorized. This
-* software is owned by Renesas Electronics Corporation and is protected under
-* all applicable laws, including copyright laws.
-* THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIES REGARDING
-* THIS SOFTWARE, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING BUT NOT
-* LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
-* AND NON-INFRINGEMENT. ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED.
-* TO THE MAXIMUM EXTENT PERMITTED NOT PROHIBITED BY LAW, NEITHER RENESAS
-* ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES SHALL BE LIABLE
-* FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR
-* ANY REASON RELATED TO THIS SOFTWARE, EVEN IF RENESAS OR ITS AFFILIATES HAVE
-* BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-* Renesas reserves the right, without notice, to make changes to this software
-* and to discontinue the availability of this software. By using this software,
-* you agree to the additional terms and conditions found by accessing the
-* following link:
-* http://www.renesas.com/disclaimer
+/*
+* Copyright 2015 Giancarlo Parodi
 *
-* Copyright (C) 2014 Renesas Electronics Corporation. All rights reserved.
-*******************************************************************************/
-/******************************************************************************
-* File Name     : GCC-QSPI-APP.ld
-* Device(s)     : RZ/A1H RSK2+RZA1H
-* H/W Platform  : RSK2+RZA1H CPU Board
-* Description   : Linker file for QSPI applications
-*				  Defines cached and un-cached buffer ranges for internal RAM
-*				  Defines direct and mirror address areas
-*				  
-******************************************************************************/
-/******************************************************************************
-* History       : DD.MM.YYYY Version Description
-*               : 17.09.2014 1.00
-******************************************************************************/
+* RZA1L_GCC_QSPI_APP.ld
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
+
 OUTPUT_FORMAT("elf32-littlearm", "elf32-bigarm", "elf32-littlearm")
 OUTPUT_ARCH(arm)
 ENTRY(APP_reset_handler)
@@ -206,7 +188,7 @@ SECTIONS
     } >QSPI_FLASH 
 
 
-    /* Executes from RAM */	
+    /* Placed in RAM */	
 	.ram_vector_table : {
         
         /* this is the location in ram where the vector table for the application gets relocated */
@@ -414,7 +396,7 @@ SECTIONS
 	} > RAM0U	
      
 	/* L1 translation table must be aligned to 16KB Boundary!           */
-	/* Please refer to Cortex-A Series Version: 4.0 Programmer�s Guide, */
+	/* Please refer to Cortex-A Series Version: 4.0 Programmer Guide, */
 	/* section 9.4 First level address translation                      */
 	.ttb_mmu1 : ALIGN(0x4000)
 	{

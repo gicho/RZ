@@ -1,38 +1,20 @@
-/*******************************************************************************
-* DISCLAIMER
-* This software is supplied by Renesas Electronics Corporation and is only
-* intended for use with Renesas products. No other uses are authorized. This
-* software is owned by Renesas Electronics Corporation and is protected under
-* all applicable laws, including copyright laws.
-* THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIES REGARDING
-* THIS SOFTWARE, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING BUT NOT
-* LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
-* AND NON-INFRINGEMENT. ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED.
-* TO THE MAXIMUM EXTENT PERMITTED NOT PROHIBITED BY LAW, NEITHER RENESAS
-* ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES SHALL BE LIABLE
-* FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR
-* ANY REASON RELATED TO THIS SOFTWARE, EVEN IF RENESAS OR ITS AFFILIATES HAVE
-* BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-* Renesas reserves the right, without notice, to make changes to this software
-* and to discontinue the availability of this software. By using this software,
-* you agree to the additional terms and conditions found by accessing the
-* following link:
-* http://www.renesas.com/disclaimer
+/*
+* Copyright 2015 Giancarlo Parodi
 *
-* Copyright (C) 2014 Renesas Electronics Corporation. All rights reserved.
-*******************************************************************************/
-/*******************************************************************************
-* File Name     : irqfiq_handler.s
-* Device(s)     : RZ/A1H (R7S721001)
-* Tool-Chain    : GNUARM-RZv13.01-EABI
-* H/W Platform  : RSK+RZA1H CPU Board
-* Description   : Sample Program - IRQ, FIQ handler
-*******************************************************************************/
-/*******************************************************************************
-* History       : DD.MM.YYYY Version Description
-*               : 18.06.2013 1.00
-*               : 21.03.2014 2.00
-/*******************************************************************************/
+* irqfiq_handler.s
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 
 /* Standard definitions of mode bits and interrupt (I & F) flags in PSRs */
     .equ    SYS_MODE          , 0x1F
@@ -40,7 +22,7 @@
     .equ    INTC_ICCHPIR_ADDR , 0xE8202018
     .equ    INTC_ICCEOIR_ADDR , 0xE8202010
     .equ    INTC_ICDIPR0_ADDR , 0xE8201400
-
+	.equ	INTC_ICDABR0_ADDR , 0xE8201300
 
 /* ================================================================== */
 /* Entry point for the FIQ handler */
@@ -94,38 +76,57 @@ APP_irq_handler:
     CPS     #SYS_MODE				// change to system mode
     PUSH    {r0-r3, r12}			// save AACPS stack on system mode stack
 
-    LDR     r2, =INTC_ICDIPR0_ADDR	// force recalculation of highest priority interrupt
-    LDR     r0, [r2]				// read interrupt priority register 0 into r0 - errata 733075 for GIC
-    STR		r0, [r2]				// write back the same value
-    DSB								// ensure write completes before other ICCHIPR or ICCIAR register reads
-
     LDR     r2, =INTC_ICCHPIR_ADDR	// load highest priority pending interrupt register address
-    LDR     r0, [r2]				// read into r0 - errata 801120 for GIC
-    								// can discard the result
+    LDR     r0, [r2]				// read into r0 - errata 801120 for GIC, can discard the result
 
     LDR     r2, =INTC_ICCIAR_ADDR	// load interrupt acknowledge register address
-    LDR     r0, [r2]				// read into r0
+    LDR     r0, [r2]				// read ICCIAR into r0
+
+    LDR     r2, =0x3FF         		// Load the interrupt ID mask
+    AND     r3, r0, r2				// Extract the interrupt ID (removing the SGI source CPU ID)
+    LDR     r1, =0x3FE         		// Interrupt IDs 0x3FE and 0x3FF are also possibly affected by 733075
+    CMP     r3, r1
+    BPL     APP_irq_not_active		// jump to spurious interrupt handling if >= 1023 (0x3FE)
+    CMP     r3, #0                  // Read data of 0x0 (SGI ID0 from CPU0) is possibly affected by 733075
+    BEQ     APP_irq_check			// if zero is detected check for the
+
+APP_irq_ok:
     PUSH    {r0}					// store r0 on the system mode stack (interrupt id, parameter for the handler)
 
     AND     r1, sp, #4				// align stack pointer to 8 bytes
     SUB     sp, sp, r1				// adjust as necessary
-    PUSH    {r1, lr}				//; store adjustment and lr to SYSTEM stack
+    PUSH    {r1, lr}				// store adjustment and lr to SYSTEM stack
+
+	CPSIE   i                       // enable nested interrupts
 
     BL      INTC_Handler_Interrupt	// branch to IRQ handler
+
+	CPSID   i                       // disable interrupts
 
     POP     {r1, lr}				// restore LR_sys
     ADD     sp, sp, r1				// un-adjust stack
 
     POP     {r0}					// get interrupt id back from stack
-
     LDR     r2, =INTC_ICCEOIR_ADDR  // load end of interrupt register address
     STR     r0, [r2]				// quit interrupt by writing id
 
-    POP     {r0-r3, r12}			// restore AACPS registers
-
 APP_irq_handler_end:
-
+    POP     {r0-r3, r12}			// restore AACPS registers
     RFEFD   sp!						// return from the SYSTEM mode stack
+
+APP_irq_check:
+    LDR     r2, =INTC_ICDABR0_ADDR  // Erratum 733075 - Only SGI ID0 from CPU0 can be affected by this erratum.
+    LDR     r3, [r2]
+    AND     r3, r3, #0x1     		// It is a real activation of ID0 if active bit is now set, and the active bit was not previously set
+    CMP     r3, #0
+    BNE     APP_irq_ok
+
+APP_irq_not_active:
+    LDR     r2, =INTC_ICDIPR0_ADDR	// force recalculation of highest priority interrupt
+    LDR     r3, [r2]				// read interrupt priority register 0 - errata 733075 for GIC
+    STR		r3, [r2]				// write back the same value
+    DSB								// ensure write completes before other ICCHIPR or ICCIAR register reads
+    B		APP_irq_handler_end
 
     .endfunc
     .end

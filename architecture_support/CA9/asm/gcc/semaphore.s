@@ -26,6 +26,14 @@
 .equ yield,     1
 .equ released,  2
 
+/*
+*	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*	         WARNING WARNING WARNING
+*	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*	RZ does NOT support load/store exclusive (atomic access) on
+*   strongly ordered, device, normal-shareable, or normal non-shareable uncached memory
+*   Exclusive access might be used on normal non-shareable cached memory
+*/
 /* Declare for use from C as extern void semaphore_get(void * semaphore); */
 semaphore_get:
 
@@ -48,6 +56,14 @@ semaphore_wait:
   B semaphore_get
   
 
+/*
+*	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*	         WARNING WARNING WARNING
+*	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*	RZ does NOT support load/store exclusive (atomic access) on
+*   strongly ordered, device, normal-shareable, or normal non-shareable uncached memory
+*   Exclusive access might be used on normal non-shareable cached memory
+*/
 /* Declare for use from C as extern void semaphore_put(void * semaphore); */
 semaphore_put:
   LDREX r1, [r0]        /* load the value from memory */
