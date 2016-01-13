@@ -43,8 +43,13 @@ and the QSPI_SINGLE_CHIP or QSPI_DUAL_CHIP is specified via the project build ru
 	
 
 No other configuration changes are made to the application/system.
+
+The MMU is NOT enabled but I cache is turned on - it must be invalidated before enabling the MMU in the application
+
 Relocation of application code into ram is done by the application itself.
+
 Any internal ram location can be reused for the application since the loader and the application projects are independent.
+
 The only constraints are:
 - not to use the first two sectors of QSPI flash inside the application linker script
 - to use a consistent configuration for application and loader (single or dual mode)
