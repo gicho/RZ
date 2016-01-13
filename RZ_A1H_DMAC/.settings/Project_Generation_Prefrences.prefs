@@ -1,4 +1,4 @@
-com.renesas.cdt.rz.Debug.Linker.option.archiveSearchDirectories.1008259335="${CWD}";"${TC_PATH}/arm-none-eabi/lib";"${TC_PATH}/lib/gcc/arm-none-eabi//${GCC_VERSION}";"${CONFIGDIR}";"${TCINSTALL}/lib/gcc/arm-none-eabi/${GCC_VERSION}/fpu";
+com.renesas.cdt.rz.Debug.Linker.option.archiveSearchDirectories.1008259335="${CWD}";"${CONFIGDIR}";"${TCINSTALL}/lib/gcc/arm-none-eabi/${GCC_VERSION}";
 com.renesas.cdt.rz.Debug.Linker.option.archiveSearchDirectories.1911385773="${CWD}";"${TC_PATH}/arm-none-eabi/lib";"${TC_PATH}/lib/gcc/arm-none-eabi//${GCC_VERSION}";"${CONFIGDIR}";"${TCINSTALL}/lib/gcc/arm-none-eabi/${GCC_VERSION}";
-com.renesas.cdt.rz.Debug.Linker.option.archiveSearchDirectories.2054458970="${CWD}";"${TC_PATH}/arm-none-eabi/lib";"${TC_PATH}/lib/gcc/arm-none-eabi//${GCC_VERSION}";"${CONFIGDIR}";"${TCINSTALL}/lib/gcc/arm-none-eabi/${GCC_VERSION}/fpu";
+com.renesas.cdt.rz.Debug.Linker.option.archiveSearchDirectories.2054458970="${CWD}";"${CONFIGDIR}";"${TCINSTALL}/lib/gcc/arm-none-eabi/${GCC_VERSION}";
 eclipse.preferences.version=1

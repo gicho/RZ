@@ -1,39 +1,21 @@
-/*******************************************************************************
-* DISCLAIMER
-* This software is supplied by Renesas Electronics Corporation and is only
-* intended for use with Renesas products. No other uses are authorized. This
-* software is owned by Renesas Electronics Corporation and is protected under
-* all applicable laws, including copyright laws.
-* THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIES REGARDING
-* THIS SOFTWARE, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING BUT NOT
-* LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
-* AND NON-INFRINGEMENT. ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED.
-* TO THE MAXIMUM EXTENT PERMITTED NOT PROHIBITED BY LAW, NEITHER RENESAS
-* ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES SHALL BE LIABLE
-* FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR
-* ANY REASON RELATED TO THIS SOFTWARE, EVEN IF RENESAS OR ITS AFFILIATES HAVE
-* BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-* Renesas reserves the right, without notice, to make changes to this software
-* and to discontinue the availability of this software. By using this software,
-* you agree to the additional terms and conditions found by accessing the
-* following link:
-* http://www.renesas.com/disclaimer
+/*
+* Copyright 2015 Giancarlo Parodi
 *
-* Copyright (C) 2014 Renesas Electronics Corporation. All rights reserved.
-*******************************************************************************/
-/******************************************************************************
-* File Name     : GCC-QSPI-APP.ld
-* Device(s)     : RZ/A1H RSK2+RZA1H
-* H/W Platform  : RSK2+RZA1H CPU Board
-* Description   : Linker file for QSPI applications
-*				  Defines cached and un-cached buffer ranges for internal RAM
-*				  Defines direct and mirror address areas
-*				  
-******************************************************************************/
-/******************************************************************************
-* History       : DD.MM.YYYY Version Description
-*               : 17.09.2014 1.00
-******************************************************************************/
+* RZA1H_GCC_QSPI_APP.ld
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
+
 OUTPUT_FORMAT("elf32-littlearm", "elf32-bigarm", "elf32-littlearm")
 OUTPUT_ARCH(arm)
 ENTRY(APP_reset_handler)
@@ -124,11 +106,7 @@ SECTIONS
 		PROVIDE(__vector_table_rom_start__ = LOADADDR (.vector_table));
  
         *start.o(.text)                        
-		
-		/* the application signature follows directly the vector table in the example */
-		
-		*application_signature.o(.rodata)
-		
+				
 		. = ALIGN(0x4);  
 		      
 	} > QSPI_FLASH 
@@ -141,34 +119,20 @@ SECTIONS
         __reset_code_rom_start__ = .;
         PROVIDE(__reset_code_rom_start__ = .);
         
-        *reset_handler.o (.text)
-		*reset_handler.o (.rodata)
-		
-		*resetprg.o (.text)  
-		*resetprg.o (.rodata)
+		*low_level_init_gcc.o (.text)  
+		*low_level_init_gcc.o (.rodata)
 
-		*rza_io_regrw.o(.text)
-		*rza_io_regrw.o(.rodata)		
-				      
+        *reset_handler.o (.text)
+		*reset_handler.o (.rodata)	
+			      
 		*copy_section_to_ram.o (.text)
 		*copy_section_to_ram.o (.rodata) 
 		
-		*init_ttb.o (.text)
-		*init_ttb.o (.rodata)
+		*init_ttb_RZA1H.o (.text)
+		*init_ttb_RZA1H.o (.rodata)
 		
-		*access.o(.text)
-		*access.o(.rodata)
-				
-		*peripheral_early_init.o(.text)
-		*peripheral_early_init.o(.rodata)
-		*port_init.o(.text)
-		*port_init.o(.rodata)
-		*stb_init.o(.text)
-		*stb_init.o(.rodata)		
-		*bsc_init.o(.text)
-		*bsc_init.o(.rodata)
-		*bsc_userdef.o(.text)
-		*bsc_userdef.o(.rodata)			
+		*cp15_access.o(.text)
+		*cp15_access.o(.rodata)		
 							
 		__reset_code_rom_end__ = .;
         PROVIDE(__reset_code_rom_end__ = .);                               
@@ -177,13 +141,25 @@ SECTIONS
 		      
 	} > QSPI_FLASH
 	
+	/* hardware init code is executed in place from QSPI since not needed afterwards */
 	.hardware_init :
 	{
 		. = ALIGN(0x4);  
 	        
 	    __hardware_init_code_rom_start__ = .;
         PROVIDE(__hardware_init_code_rom_start__ = .);
-	
+
+		*peripheral_early_init.o(.text)
+		*peripheral_early_init.o(.rodata)
+		
+		*stb_init.o(.text)
+		*stb_init.o(.rodata)		
+		
+		*bsc.o(.text)
+		*bsc.o(.rodata)
+		*bsc_userdef.o(.text)
+		*bsc_userdef.o(.rodata)	
+			
 		__hardware_init_code_rom_end__ = __hardware_init_code_rom_start__ + SIZEOF(.hardware_init);
         PROVIDE(__hardware_init_code_rom_end__ = __hardware_init_code_rom_start__ + SIZEOF(.hardware_init));
 
@@ -203,15 +179,14 @@ SECTIONS
         . = ALIGN(0x4);
         __exidx_end = .;
              
-    } >QSPI_FLASH 
+    } > QSPI_FLASH 
 
 
-    /* Executes from RAM */	
-	.ram_vector_table : {
-        
-        /* this is the location in ram where the vector table for the application gets relocated */
-		/* the vector table must be aligned to 32-bytes */
-        . = ALIGN(0x20);
+    /* Vector table in RAM */	
+    /* the vector table must be aligned to 32-bytes, see Vector Base Address Register (VBAR) */
+    /* within the arm v7 architecture manual */
+    .ram_vector_table : ALIGN(0x20) 
+    {
         
         __vector_table_ram_start__ = .;
         PROVIDE(__vector_table_ram_start__ = .);  
@@ -222,15 +197,12 @@ SECTIONS
 		__vector_table_ram_end__ = .;
         PROVIDE(__vector_table_ram_end__ = .);          
         
-        /* Any following code must be aligned to a 4 byte boundary. */
-		/* Important since the code copy routine works on 4 bytes size for efficiency */
-        . = ALIGN(0x4);
-
 	}  > RAM0L  
 
+	/* code running from internal ram, for time critical routines */
+	/* gets initialized within low_level_init_gcc.c module */
 	.fast_code_section : 
-	{
-        
+	{       
         /* Any following code must be aligned to a 4 byte boundary. */
 		/* Important since the code copy routine works on 4 bytes size for efficiency */
         . = ALIGN(0x4);
@@ -240,9 +212,49 @@ SECTIONS
 		
         __fast_code_start__ = .;
         PROVIDE(__fast_code_start__ = .);
+		
+		*irqfiq_handler.o(.text)
+		*irqfiq_handler.o(.rodata)
+
+		*intc_handler.o(.text)
+		*intc_handler.o(.rodata)
+
+		*l1_cache.o(.text)
+		*l1_cache.o(.rodata)
+
+		*l2_cache_pl310.o(.text)
+		*l2_cache_pl310.o(.rodata)
+		*l2_cache.o(.text)
+		*l2_cache.o(.rodata)		
+		
+		*mutex.o(.text)
+		*mutex.o(.rodata)
+		*semaphore.o(.text)
+		*semaphore.o(.rodata)
+		
+        /* Any following code needs to start at a 4 byte boundary. */
+		/* Important since the copy routine works on 4 bytes size */
+		. = ALIGN(0x4);
+		
+        __fast_code_end__ = .;
+		PROVIDE(__fast_code_end__ = .);       
+		
+	}  > RAM0L AT>QSPI_FLASH  
+	
+	/* this is the placeholder section for code which is not time critical and gety executed in place from QSPI */
+	.slow_code_section : 
+	{
+        
+        /* Any following code must be aligned to a 4 byte boundary. */
+        . = ALIGN(0x4);
+
+		__slow_code_rom_start__ = LOADADDR (.slow_code_section);
+		PROVIDE(__slow_code_rom_start__ = LOADADDR (.slow_code_section));
+		
+        __slow_code_start__ = .;
+        PROVIDE(__slow_code_start__ = .);
 
 		/* These are for static constructors and destructors under ELF */ 
-        . = ALIGN(0x4); 
         KEEP (*crtbegin.o(.ctors)) 
         KEEP (*(EXCLUDE_FILE (*crtend.o) .ctors)) 
         KEEP (*(SORT(.ctors.*))) 
@@ -251,24 +263,25 @@ SECTIONS
         KEEP (*(EXCLUDE_FILE (*crtend.o) .dtors)) 
         KEEP (*(SORT(.dtors.*))) 
         KEEP (*crtend.o(.dtors))
-		
-		/* catch-all for remaining sections */
-		*(.glue_7t) *(.glue_7) 				/* veneers */ 		
- 		*(.text .text.* .gnu.linkonce.t.*) 
-        *(.plt) 
-        *(.gnu.warning)
-          		 		 
+        
  		*(.init) 
         *(.fini)
 
-        /* Any following code is aligned to a 4 byte boundary. */
-		/* Important since the copy routine works on 4 bytes size */
-		. = ALIGN(0x4);
+        *(.plt) 
+        *(.gnu.warning)
 		
-        __fast_code_end__ = .;
-		PROVIDE(__fast_code_end__ = .);       
+		/* veneers */
+		*(.glue_7t) *(.glue_7) 				 		
+ 		
+ 		/* all remaining program code */
+ 		*(.text .text.* .gnu.linkonce.t.*) 
+          		 		 	
+        __slow_code_end__ = .;
+		PROVIDE(__slow_code_end__ = .);       
 		
-	}  > RAM0L AT>QSPI_FLASH         
+	}  > QSPI_FLASH 
+
+       
 	
     /* initialized data section */
 	.data_section : 

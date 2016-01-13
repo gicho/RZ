@@ -211,13 +211,23 @@ void PowerON_Reset (void)
     /* INTC setting */
     R_INTC_Init();
 
-    // invalidate all L2 and L1
+    /* invalidate all L2 and L1, outer first */
+    L2CacheInvalidate();
     L1D_CacheInvalidate();
-	L2CacheInvalidate();
+
+    /* Enable L1 caches */
     L1_CachesEnable();
 
-    /* Enable L1 and L2 */
+    /* Enable L2 caches */
     L2CacheInit();
+
+    /* enable MMU so that caching starts
+    * this code needs to be in a flat mapped memory area so that there are no address discontinuities
+    * between consecutive instructions
+    * L1I needs to be invalidated when enabling the MMU to be sure
+    */
+    L1I_CacheInvalidate();
+    enable_mmu();
 
     __enable_irq();
     __enable_fiq();
