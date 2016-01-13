@@ -1,7 +1,7 @@
 /*
 * Copyright 2015 Giancarlo Parodi
 *
-* start.s
+* cp15_access.s
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
