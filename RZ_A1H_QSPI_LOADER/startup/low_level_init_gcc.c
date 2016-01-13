@@ -53,7 +53,8 @@ void PowerON_Reset (void)
 	uint8_t  *src, *dst, *end;
 
 	// TODO add one stage to speed up QSPI to 33 Mhz first?
-        /* copy the reconfiguration routine in RAM */
+
+	/* copy the reconfiguration routine in RAM */
 	/* these are the destination (run-time) locations of the code */
 	ram_code_start = &__qspi_reconfigure_code_start__;
 	ram_code_end = &__qspi_reconfigure_code_end__;
