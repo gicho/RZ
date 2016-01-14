@@ -27,10 +27,10 @@
 <stringAttribute key="com.renesas.cdt.launch.dsf.launchSeqType" value="com.renesas.cdt.launch.dsf.launchSequence.e2GdbServer"/>
 <stringAttribute key="com.renesas.cdt.launch.dsf.serverPath" value="${eclipse_home}../DebugComp/e2-server-gdb.exe"/>
 <listAttribute key="com.renesas.cdt.launch.ui.address.mruList.memoryMonitorExpression">
+<listEntry value="0x200224a8"/>
 <listEntry value="0x2050ff68"/>
 <listEntry value="transferConfig-&gt;writeData0"/>
 <listEntry value="0x3fefa040"/>
-<listEntry value="0x18040000"/>
 </listAttribute>
 <booleanAttribute key="com.renesas.hardwaredebug.arm.jlink.break.allowSimulation" value="false"/>
 <booleanAttribute key="com.renesas.hardwaredebug.arm.jlink.break.useFlashBreakpoints" value="false"/>
@@ -123,7 +123,7 @@
 <listAttribute key="org.eclipse.debug.ui.favoriteGroups">
 <listEntry value="org.eclipse.debug.ui.launchGroup.debug"/>
 </listAttribute>
-<stringAttribute key="org.eclipse.dsf.launch.MEMORY_BLOCKS" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;memoryBlockExpressionList context=&quot;reserved-for-future-use&quot;&gt;&#13;&#10;&lt;gdbmemoryBlockExpression address=&quot;402653184&quot; label=&quot;0x18000000&quot;/&gt;&#13;&#10;&lt;gdbmemoryBlockExpression address=&quot;403177472&quot; label=&quot;0x18080000&quot;/&gt;&#13;&#10;&lt;gdbmemoryBlockExpression address=&quot;402915328&quot; label=&quot;0x18040000&quot;/&gt;&#13;&#10;&lt;gdbmemoryBlockExpression address=&quot;1072668736&quot; label=&quot;0x3fefa040&quot;&gt;&#13;&#10;&lt;memoryRendering id=&quot;org.eclipse.debug.ui.rendering.raw_memory&quot;&gt;&#13;&#10;&lt;renderingProperty name=&quot;org.eclipse.debug.ui.AbstractTableRendering.colSize&quot; value=&quot;2&quot;/&gt;&#13;&#10;&lt;renderingProperty name=&quot;org.eclipse.debug.ui.AbstractTableRendering.rowSize&quot; value=&quot;8&quot;/&gt;&#13;&#10;&lt;/memoryRendering&gt;&#13;&#10;&lt;/gdbmemoryBlockExpression&gt;&#13;&#10;&lt;gdbmemoryBlockExpression address=&quot;542179176&quot; label=&quot;0x2050ff68&quot;/&gt;&#13;&#10;&lt;/memoryBlockExpressionList&gt;&#13;&#10;"/>
+<stringAttribute key="org.eclipse.dsf.launch.MEMORY_BLOCKS" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;memoryBlockExpressionList context=&quot;reserved-for-future-use&quot;/&gt;&#13;&#10;"/>
 <stringAttribute key="process_factory_id" value="org.eclipse.cdt.dsf.gdb.GdbProcessFactory"/>
-<stringAttribute key="saved_expressions&lt;seperator&gt;Unknown" value="0x18000000,0x18040000"/>
+<stringAttribute key="saved_expressions&lt;seperator&gt;Unknown" value="0x18000000,0x18040000,0x200224a8"/>
 </launchConfiguration>

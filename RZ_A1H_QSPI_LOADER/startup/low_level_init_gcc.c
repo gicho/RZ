@@ -48,39 +48,29 @@ extern int main(void);
 *******************************************************************************/
 void PowerON_Reset (void)
 {
-    volatile uint32_t *ram_code_start,*ram_code_end;
-	uint32_t *rom_code_start;
-	uint8_t  *src, *dst, *end;
 
-	// TODO add one stage to speed up QSPI to 33 Mhz first?
+	uint32_t *pRam;
+	uint32_t *pRom;
 
 	/* copy the reconfiguration routine in RAM */
 	/* these are the destination (run-time) locations of the code */
-	ram_code_start = &__qspi_reconfigure_code_start__;
-	ram_code_end = &__qspi_reconfigure_code_end__;
-
-    /* this is where in rom the section is located */
-	rom_code_start = &__qspi_reconfigure_code_rom_start__;
-
+	/* this is where in rom the section is located */
 	/* warning this is copying in multiple of 4 bytes */
-	copy_arm_code_section_to_ram((uint32_t *)rom_code_start, (uint32_t *)ram_code_start, (uint32_t *)ram_code_end);
+	pRom = (uint32_t *)&__qspi_reconfigure_code_rom_start__;
+    for (pRam = &__qspi_reconfigure_code_start__; pRam < &__qspi_reconfigure_code_end__; pRam++) {
+        *pRam = *pRom++;
+    }
 
-	/* setup any of the other .data, .const or .bss initialized sections */
-	src = (uint8_t*) &__data_rom_start__;
-	dst = (uint8_t*) &__data_start__;
-	end = (uint8_t*) &__data_end__;
+	/* setup initialized data section */
+	pRom = (uint32_t *)&__data_rom_start__;
+    for (pRam = &__data_start__; pRam < &__data_end__; pRam++) {
+        *pRam = *pRom++;
+    }
 
-	/* ROM has data at end of text; copy it. */
-	while (dst < end) {
-	  *dst++ = *src++;
-	}
-
-	dst = (uint8_t*) &__bss_start__;
-	end = (uint8_t*) &__bss_end__;
-        
 	/* Zero bss */
-	while(dst< end)
-		*dst++ = 0;
+    for (pRam = &__bss_start__; pRam < &__bss_end__; pRam++) {
+        *pRam = 0;
+    }
     
     // at this point the qspi reconfigure code is in ram and initialized
     // jump in ram and reconfigure the QSPI
@@ -92,24 +82,5 @@ void PowerON_Reset (void)
 }
 
 
-void copy_arm_code_section_to_ram(uint32_t* rom_start, uint32_t* ram_start, uint32_t* ram_end)
-{
 
-	/* Variables for program copy */
-    uint32_t i;
-    uint32_t region_size;
-
-    // check if executing already from ram (when debugging)
-    if(rom_start == ram_start) return;
-
-    /* Calculate the length of the copied section */
-    region_size     = (uint32_t)ram_end - (uint32_t)ram_start;
-
-    /* Copy the next load module. */
-    for(i = 0; i < (region_size/4); i++)
-    {
-        *ram_start++ = *rom_start++;
-    }
-
-}
 

@@ -70,6 +70,8 @@ MEMORY
 	/* Needs to match #define DEF_USER_PROGRAM_SRC 0x18080000 in qspi_setup.h, set at (ORIGIN + LENGTH) */																
 }
 
+QSPI_BASE_ADDRESS = 0x18000000;
+
 PROGRAM_STACK_SIZE    = 0x8000;      /* Application stack                  */
 IRQ_STACK_SIZE	      = 0x2000;      /* IRQ mode stack                     */
 FIQ_STACK_SIZE	      = 0x2000;      /* Fast IRQ mode stack                */
@@ -81,29 +83,111 @@ TTB_SIZE              = 0x8000;      /* Level-1 Translation Table for MMU  */
 SECTIONS
 {
     /* Initial code section executing from QSPI @ 0x18000000 */
-    /* Vector table located in QSPI @ location QSPI_VECTOR_TABLE, first item */
+    /* Vector table located in QSPI @ location APP_VECTOR_TABLE, first item */
     /* the vector table must be aligned to 32-bytes, see Vector Base Address Register (VBAR) */
     /* within the arm v7 architecture manual */
-    .reset_section : ALIGN(0x20)
+    .vector_table QSPI_BASE_ADDRESS : ALIGN(0x20) 
     {
-        /* The start object file begins with the vector table, and so must be located here. */
+        /* The start.S object file defines the vector table, and so gets located here. */
+		__vector_table_rom_start__ = LOADADDR (.vector_table);
+		PROVIDE(__vector_table_rom_start__ = LOADADDR (.vector_table));
+ 
+        *start.o(.text)                        
+				
+		. = ALIGN(0x4);  
+		      
+	} > QSPI_FLASH 
+
+	.qspi_reconfigure_code_section : ALIGN(0x20)
+	{
+        /* Any following code must be aligned to a 4 byte boundary. */
+		/* Important since the copy routine works on 4 bytes size */
+        . = ALIGN(0x4);
+
+		__qspi_reconfigure_code_rom_start__ = LOADADDR (.qspi_reconfigure_code_section);
+		PROVIDE(__qspi_reconfigure_code_rom_start__ = LOADADDR (.qspi_reconfigure_code_section));
+		
+        __qspi_reconfigure_code_start__ = .;
+        PROVIDE(__qspi_reconfigure_code_start__ = .);
+
+		*qspi_change_config.o (.text)
+		*rza_io_regrw.o (.text)
+
+		*qspi_controller.o (.text)		
+		*spi_mode.o (.text)
+		*external_address_mode.o (.text)
+
+        /* Any following code is aligned to a 4 byte boundary. */
+		/* Important since the copy routine works on 4 bytes size */
+		. = ALIGN(0x4);
+		
+        __qspi_reconfigure_code_end__ = .;
+		PROVIDE(__qspi_reconfigure_code_end__ = .);       
+		
+	}  > RAM0L AT>QSPI_FLASH  
+
+    .reset_section  : ALIGN(0x20)
+    {
         __reset_code_rom_start__ = .;
         PROVIDE(__reset_code_rom_start__ = .);
         
-        *start.o (.text)
-        *reset_handler.o (.text)
-		*low_level_init_gcc.o (.text)        
-
-		*start.o (.rodata)
-		*reset_handler.o (.rodata)
+		*low_level_init_gcc.o (.text)  
 		*low_level_init_gcc.o (.rodata)
-	
+
+        *reset_handler.o (.text)
+		*reset_handler.o (.rodata)				
+			
+		*cp15_access.o(.text)
+		*cp15_access.o(.rodata)		
+							
 		__reset_code_rom_end__ = .;
         PROVIDE(__reset_code_rom_end__ = .);                               
 
 		. = ALIGN(0x4);  
 		      
 	} > QSPI_FLASH
+	
+	/* this is the placeholder section for code which is not time critical and gety executed in place from QSPI */
+	.slow_code_section : ALIGN(0x20) 
+	{
+        
+        /* Any following code must be aligned to a 4 byte boundary. */
+        . = ALIGN(0x4);
+
+		__slow_code_rom_start__ = LOADADDR (.slow_code_section);
+		PROVIDE(__slow_code_rom_start__ = LOADADDR (.slow_code_section));
+		
+        __slow_code_start__ = .;
+        PROVIDE(__slow_code_start__ = .);
+
+		/* These are for static constructors and destructors under ELF */        
+		__CTOR_LIST__ = .;
+      	LONG((__CTOR_END__ - __CTOR_LIST__) / 4 - 2)
+      	*(.ctors)
+      	LONG(0)
+      	__CTOR_END__ = .;
+      	__DTOR_LIST__ = .;
+      	LONG((__DTOR_END__ - __DTOR_LIST__) / 4 - 2)
+      	*(.dtors)
+      	LONG(0)
+      	__DTOR_END__ = .;        
+        
+ 		*(.init) 
+        *(.fini)
+
+        *(.plt) 
+        *(.gnu.warning)
+		
+		/* veneers */
+		*(.glue_7t) *(.glue_7) 				 		
+ 		
+ 		/* all remaining program code */
+ 		*(.text .text.* .gnu.linkonce.t.*) 
+          		 		 	
+        __slow_code_end__ = .;
+		PROVIDE(__slow_code_end__ = .);       
+		
+	}  > QSPI_FLASH 
 
     /* .ARM.exidx is sorted, so has to go in its own output section.  */ 
     .ARM.exidx : { 
@@ -116,62 +200,15 @@ SECTIONS
         . = ALIGN(0x4);
         __exidx_end = .;
              
-    } >QSPI_FLASH 
+    } > QSPI_FLASH 
 
     /* Modules for QSPI reconfiguration */
     /* Executes from RAM */
 	
-	.qspi_reconfigure_code_section : 
-	{
-        /* Any following code must be aligned to a 4 byte boundary. */
-		/* Important since the copy routine works on 4 bytes size */
-        . = ALIGN(0x4);
-
-		__qspi_reconfigure_code_rom_start__ = LOADADDR (.qspi_reconfigure_code_section);
-		PROVIDE(__qspi_reconfigure_code_rom_start__ = LOADADDR (.qspi_reconfigure_code_section));
-		
-        __qspi_reconfigure_code_start__ = .;
-        PROVIDE(__qspi_reconfigure_code_start__ = .);
-
-        /* The QSPI re-configuration needs to be copied to RAM by this code */
-		*qspi_change_config.o (.text)
-		*rza_io_regrw.o (.text)
-
-		*qspi_controller.o (.text)		
-		*spi_mode.o (.text)
-		*external_address_mode.o (.text)
-
-		/* These are for static constructors and destructors under ELF */ 
-        . = ALIGN(0x4); 
-        KEEP (*crtbegin.o(.ctors)) 
-        KEEP (*(EXCLUDE_FILE (*crtend.o) .ctors)) 
-        KEEP (*(SORT(.ctors.*))) 
-        KEEP (*crtend.o(.ctors)) 
-        KEEP (*crtbegin.o(.dtors)) 
-        KEEP (*(EXCLUDE_FILE (*crtend.o) .dtors)) 
-        KEEP (*(SORT(.dtors.*))) 
-        KEEP (*crtend.o(.dtors))
-		
-		/* catch-all for remaining sections */
-		*(.glue_7t) *(.glue_7) 				/* veneers */ 		
- 		*(.text .text.* .gnu.linkonce.t.*) 
-        *(.plt) 
-        *(.gnu.warning)
-          		 		 
- 		*(.init) 
-        *(.fini)
-
-        /* Any following code is aligned to a 4 byte boundary. */
-		/* Important since the copy routine works on 4 bytes size */
-		. = ALIGN(0x4);
-		
-        __qspi_reconfigure_code_end__ = .;
-		PROVIDE(__qspi_reconfigure_code_end__ = .);       
-		
-	}  > RAM0L AT>QSPI_FLASH         
+       
 	
     /* initialized data section */
-	.data_section : 
+	.data_section : ALIGN(0x20)
     {
         . = ALIGN(0x4);
 		
@@ -200,7 +237,7 @@ SECTIONS
 	} > RAM0L AT>QSPI_FLASH
 
     /* zero initialised data section */
-    .bss_section (NOLOAD) :
+    .bss_section (NOLOAD) : ALIGN(0x20)
     {
 		. = ALIGN(0x4);
 

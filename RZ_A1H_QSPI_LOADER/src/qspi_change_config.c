@@ -194,15 +194,16 @@ static spiConfig_t spiMode_66Mhz = {
 static spiConfig_t* spiConfiguration;
 static externalAddressTransfer_t* extAddressTransfer;
 
+static flashStatusRegister1 statusReg1_device0, statusReg1_device1;
+static flashConfigRegister1 configReg1_device0, configReg1_device1;
+static flashStatusRegister2 statusReg2_device0, statusReg2_device1;
+
+static deviceSignature signature0, signature1;
+
 typedef void (*fPtr)(void);
 
 EXEC_RAM void qspiReconfigure(void)
 {
-  flashStatusRegister1 statusReg1_device0, statusReg1_device1;
-  flashConfigRegister1 configReg1_device0, configReg1_device1;
-  flashStatusRegister2 statusReg2_device0, statusReg2_device1;
-  
-  deviceSignature signature0, signature1;
   
   fPtr applicationEntry = (fPtr) DEF_USER_PROGRAM_SRC;  
   

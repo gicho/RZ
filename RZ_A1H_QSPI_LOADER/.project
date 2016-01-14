@@ -176,6 +176,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>RZA1H_RZA1M/inc/RZA1H_RZA1M_target.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/chip_support/RZA1H_RZA1M/inc/RZA1H_RZA1M_target.h</locationURI>
+		</link>
+		<link>
 			<name>RZA1H_RZA1M/inc/l2_cache.h</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/chip_support/RZA1H_RZA1M/inc/l2_cache.h</locationURI>

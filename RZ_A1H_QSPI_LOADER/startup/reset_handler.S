@@ -53,7 +53,7 @@ QSPI_BL_reset_handler:
     	Clear I bit 12 to disable I Cache
     	Clear Z bit 11 to disable flow prediction
     	Clear C bit  2 to disable D Cache
-    	Clear A bit  1 to disable strict alignment
+    	Clear A bit  1 to disable strict alignment check
     	Clear M bit  0 to disable MMU
     */
     /* BIC has 8 bit immediate + 4 bit rotation so cannot address directly above first byte */
